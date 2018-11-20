@@ -8,5 +8,11 @@ namespace WXDataBLL
 {
     public class Class1
     {
+
+
+
+
+
+
     }
 }
