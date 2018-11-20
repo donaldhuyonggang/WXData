@@ -43,12 +43,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="1数据库\" />
     <Folder Include="2需求文档\" />
     <Folder Include="3设计文档\" />
     <Folder Include="4开发文档\" />
     <Folder Include="5测试文档\" />
     <Folder Include="6部署文档\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="1数据库\初始化数据.sql" />
+    <Content Include="1数据库\建库建表建约束.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
