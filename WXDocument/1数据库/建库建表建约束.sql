@@ -1,10 +1,16 @@
-ï»¿
+/*==============================================================*/
+/* DBMS name:      Microsoft SQL Server 2008                    */
+/* Created on:     2018-11-20 19:37:45                          */
+/*==============================================================*/
 create database WXData
+go 
+
+use WXData
 go
 
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2018-11-20 17:18:16                          */
+/* Created on:     2018-11-20 19:43:14                          */
 /*==============================================================*/
 
 
@@ -185,6 +191,20 @@ create table SYS_Log (
 )
 go
 
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÏµÍ³ÈÕÖ¾',
+   'user', @CurrentUser, 'table', 'SYS_Log'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÈÕÖ¾±àºÅ',
+   'user', @CurrentUser, 'table', 'SYS_Log', 'column', 'LogId'
+go
+
 /*==============================================================*/
 /* Table: SYS_Role                                              */
 /*==============================================================*/
@@ -194,6 +214,34 @@ create table SYS_Role (
    RoleName             nvarchar(50)         null,
    constraint PK_SYS_ROLE primary key (RoleId)
 )
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§½ÇÉ«',
+   'user', @CurrentUser, 'table', 'SYS_Role'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '½ÇÉ«±àºÅ',
+   'user', @CurrentUser, 'table', 'SYS_Role', 'column', 'RoleId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '½ÇÉ«±êÊ¶',
+   'user', @CurrentUser, 'table', 'SYS_Role', 'column', 'RoleSign'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '½ÇÉ«Ãû³Æ',
+   'user', @CurrentUser, 'table', 'SYS_Role', 'column', 'RoleName'
 go
 
 /*==============================================================*/
@@ -206,6 +254,41 @@ create table SYS_Setting (
    SettingValue         nvarchar(50)         null,
    constraint PK_SYS_SETTING primary key (SettingId)
 )
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÏµÍ³ÉèÖÃ±í',
+   'user', @CurrentUser, 'table', 'SYS_Setting'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÉèÖÃ±àºÅ',
+   'user', @CurrentUser, 'table', 'SYS_Setting', 'column', 'SettingId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅID',
+   'user', @CurrentUser, 'table', 'SYS_Setting', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÉèÖÃkey',
+   'user', @CurrentUser, 'table', 'SYS_Setting', 'column', 'SettingKey'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÉèÖÃValue',
+   'user', @CurrentUser, 'table', 'SYS_Setting', 'column', 'SettingValue'
 go
 
 /*==============================================================*/
@@ -226,6 +309,83 @@ create table SYS_User (
 )
 go
 
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÏµÍ³ÓÃ»§',
+   'user', @CurrentUser, 'table', 'SYS_User'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÏµÍ³ÓÃ»§±àºÅ',
+   'user', @CurrentUser, 'table', 'SYS_User', 'column', 'UserId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅID',
+   'user', @CurrentUser, 'table', 'SYS_User', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '½ÇÉ«±àºÅ',
+   'user', @CurrentUser, 'table', 'SYS_User', 'column', 'RoleId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÕËºÅ',
+   'user', @CurrentUser, 'table', 'SYS_User', 'column', 'LoginId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÃÜÂë',
+   'user', @CurrentUser, 'table', 'SYS_User', 'column', 'Password'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÐÕÃû',
+   'user', @CurrentUser, 'table', 'SYS_User', 'column', 'UserName'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'µç»°',
+   'user', @CurrentUser, 'table', 'SYS_User', 'column', 'Telphone'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÊÏä',
+   'user', @CurrentUser, 'table', 'SYS_User', 'column', 'Email'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'Î¢ÐÅºÅ',
+   'user', @CurrentUser, 'table', 'SYS_User', 'column', 'WXId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§×´Ì¬',
+   'user', @CurrentUser, 'table', 'SYS_User', 'column', 'UserState'
+go
+
 /*==============================================================*/
 /* Table: WX_App                                                */
 /*==============================================================*/
@@ -241,12 +401,68 @@ create table WX_App (
 )
 go
 
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅ',
+   'user', @CurrentUser, 'table', 'WX_App'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅID',
+   'user', @CurrentUser, 'table', 'WX_App', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅÃû³Æ',
+   'user', @CurrentUser, 'table', 'WX_App', 'column', 'AppName'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅÃÜÂë',
+   'user', @CurrentUser, 'table', 'WX_App', 'column', 'AppSecret'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'Î¢ÐÅºÅ',
+   'user', @CurrentUser, 'table', 'WX_App', 'column', 'WXId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅÀàÐÍ',
+   'user', @CurrentUser, 'table', 'WX_App', 'column', 'AppType'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅ×´Ì¬',
+   'user', @CurrentUser, 'table', 'WX_App', 'column', 'AppState'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '±¸×¢',
+   'user', @CurrentUser, 'table', 'WX_App', 'column', 'Remark'
+go
+
 /*==============================================================*/
 /* Table: WX_Media                                              */
 /*==============================================================*/
 create table WX_Media (
    MyMediaId            int                  identity,
-   AccountId            varchar(20)          null,
+   AppId                varchar(50)          null,
    MediaId              varchar(50)          null,
    MediaName            varchar(50)          null,
    MediaType            varchar(50)          null,
@@ -257,13 +473,76 @@ create table WX_Media (
 )
 go
 
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ËØ²Ä',
+   'user', @CurrentUser, 'table', 'WX_Media'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ËØ²ÄID',
+   'user', @CurrentUser, 'table', 'WX_Media', 'column', 'MyMediaId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅID',
+   'user', @CurrentUser, 'table', 'WX_Media', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'Î¢ÐÅËØ²ÄID',
+   'user', @CurrentUser, 'table', 'WX_Media', 'column', 'MediaId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ËØ²ÄÃû³Æ',
+   'user', @CurrentUser, 'table', 'WX_Media', 'column', 'MediaName'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'Ã½ÌåÀàÐÍ',
+   'user', @CurrentUser, 'table', 'WX_Media', 'column', 'MediaType'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'Ã½ÌåÄÚÈÝ',
+   'user', @CurrentUser, 'table', 'WX_Media', 'column', 'MediaContent'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '×´Ì¬',
+   'user', @CurrentUser, 'table', 'WX_Media', 'column', 'MediaState'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÉÏ´«Ê±¼ä',
+   'user', @CurrentUser, 'table', 'WX_Media', 'column', 'UploadTime'
+go
+
 /*==============================================================*/
 /* Table: WX_Menu                                               */
 /*==============================================================*/
 create table WX_Menu (
    MenuId               int                  identity,
-   AccountId            varchar(20)          null,
    ParentMenuId         int                  null,
+   AppId                varchar(50)          null,
    MenuName             nvarchar(50)         null,
    MenuType             int                  null,
    MenuKey              int                  null,
@@ -272,6 +551,76 @@ create table WX_Menu (
    MenuSort             int                  null,
    constraint PK_WX_MENU primary key (MenuId)
 )
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'Î¢ÐÅ²Ëµ¥',
+   'user', @CurrentUser, 'table', 'WX_Menu'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '²Ëµ¥ID',
+   'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'MenuId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¸¸²Ëµ¥ID',
+   'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'ParentMenuId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅID',
+   'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '²Ëµ¥Ãû³Æ',
+   'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'MenuName'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '²Ëµ¥ÀàÐÍ',
+   'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'MenuType'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '²Ëµ¥KEY',
+   'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'MenuKey'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '²Ëµ¥URL',
+   'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'MenuUrl'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÊÇ·ñ¿É¼û',
+   'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'MenuVisable'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÅÅÐòºÅ',
+   'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'MenuSort'
 go
 
 /*==============================================================*/
@@ -291,6 +640,76 @@ create table WX_Message (
 )
 go
 
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'Î¢ÐÅÏûÏ¢',
+   'user', @CurrentUser, 'table', 'WX_Message'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÏûÏ¢ID',
+   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'Msg_Id'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÏûÏ¢ÄÚÈÝ',
+   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'XmlContent'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '½ÓÊÕÕß',
+   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'ToUserName'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '·¢ËÍÕß',
+   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'FromUserName'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '·¢ËÍÊ±¼ä',
+   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'CreateTime'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÊÂ¼þÀàÐÍ',
+   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'Event'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '·¢ËÍÄÚÈÝ',
+   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'Content'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'Ã½ÌåID',
+   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'MediaId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÏûÏ¢ÀàÐÍ',
+   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'MsgType'
+go
+
 /*==============================================================*/
 /* Table: WX_Queue                                              */
 /*==============================================================*/
@@ -303,6 +722,55 @@ create table WX_Queue (
    CreateTime           datetime             null,
    constraint PK_WX_QUEUE primary key (MsgId)
 )
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÏûÏ¢¶ÓÁÐ',
+   'user', @CurrentUser, 'table', 'WX_Queue'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÏûÏ¢±àºÅ',
+   'user', @CurrentUser, 'table', 'WX_Queue', 'column', 'MsgId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§±êÊ¶',
+   'user', @CurrentUser, 'table', 'WX_Queue', 'column', 'OpenID'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÏûÏ¢ÀàÐÍ',
+   'user', @CurrentUser, 'table', 'WX_Queue', 'column', 'MsgType'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÏûÏ¢ÄÚÈÝ',
+   'user', @CurrentUser, 'table', 'WX_Queue', 'column', 'XmlContent'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÏûÏ¢×´Ì¬',
+   'user', @CurrentUser, 'table', 'WX_Queue', 'column', 'MsgState'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '´´½¨Ê±¼ä',
+   'user', @CurrentUser, 'table', 'WX_Queue', 'column', 'CreateTime'
 go
 
 /*==============================================================*/
@@ -332,6 +800,146 @@ create table WX_User (
 )
 go
 
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¶©ÔÄÓÃ»§±í',
+   'user', @CurrentUser, 'table', 'WX_User'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§±êÊ¶',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'OpenID'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§±êÇ©ID',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'TageId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§×é±àºÅ',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'GrooupId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅID',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§êÇ³Æ',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'UserNick'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§Ãû³Æ',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'UserName'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§Í·Ïñ',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'HeadImageUrl'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÐÔ±ð',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'UserSex'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§ÓïÑÔ',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'Language'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ËùÔÚ³ÇÊÐ',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'City'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ËùÔÚÊ¡·Ý',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'Province'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ËùÔÚ¹ú¼Ò',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'Country'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹Ø×¢Ê±¼ä',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'SubscribeTime'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÍË¶©Ê±¼ä',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'UnSubscribeTime'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'µç»°',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'Telphone'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÊÏä',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'Emial'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'µØÖ·',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'Address'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÊ±à',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'ZipCode'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '±¸×¢',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'Remark'
+go
+
 /*==============================================================*/
 /* Table: WX_UserGroup                                          */
 /*==============================================================*/
@@ -344,6 +952,41 @@ create table WX_UserGroup (
 )
 go
 
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¶©ÔÄÓÃ»§×é',
+   'user', @CurrentUser, 'table', 'WX_UserGroup'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§×é±àºÅ',
+   'user', @CurrentUser, 'table', 'WX_UserGroup', 'column', 'GroupId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅID',
+   'user', @CurrentUser, 'table', 'WX_UserGroup', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§×éÃû³Æ',
+   'user', @CurrentUser, 'table', 'WX_UserGroup', 'column', 'GroupName'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÅÅÐòºÅ',
+   'user', @CurrentUser, 'table', 'WX_UserGroup', 'column', 'GroupSort'
+go
+
 /*==============================================================*/
 /* Table: WX_UserTag                                            */
 /*==============================================================*/
@@ -354,6 +997,41 @@ create table WX_UserTag (
    UserCount            int                  null,
    constraint PK_WX_USERTAG primary key (TageId)
 )
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¶©ÔÄÓÃ»§±êÇ©',
+   'user', @CurrentUser, 'table', 'WX_UserTag'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§±êÇ©ID',
+   'user', @CurrentUser, 'table', 'WX_UserTag', 'column', 'TageId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅID',
+   'user', @CurrentUser, 'table', 'WX_UserTag', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§±êÇ©Ãû³Æ',
+   'user', @CurrentUser, 'table', 'WX_UserTag', 'column', 'TagName'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ÓÃ»§Êý',
+   'user', @CurrentUser, 'table', 'WX_UserTag', 'column', 'UserCount'
 go
 
 alter table SYS_Setting
@@ -372,12 +1050,12 @@ alter table SYS_User
 go
 
 alter table WX_Media
-   add constraint FK_WX_MEDIA_REFERENCE_WX_APP foreign key (AccountId)
+   add constraint FK_WX_MEDIA_REFERENCE_WX_APP foreign key (AppId)
       references WX_App (AppId)
 go
 
 alter table WX_Menu
-   add constraint FK_WX_MENU_REFERENCE_WX_APP foreign key (AccountId)
+   add constraint FK_WX_MENU_REFERENCE_WX_APP foreign key (AppId)
       references WX_App (AppId)
 go
 
@@ -415,4 +1093,5 @@ alter table WX_UserTag
    add constraint FK_WX_USERT_REFERENCE_WX_APP foreign key (AppId)
       references WX_App (AppId)
 go
+
 
