@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@section styles{
+    <link href="~/Content/WXCustom/Index.css" rel="stylesheet" />
+    <link href="~/Content/easyui/icon.css" rel="stylesheet" />
+}
+
+<div id="cc" class="easyui-layout" style="width:100%;height:100%;">
+    @*右侧常规操作（常用语）用户聊天记录，用户个人信息*@
+    <div class="padd" data-options="region:'east',title:'用户信息',split:true" style="width:350px;height:100%;max-width:400px;">
+        <div id="routine" class="easyui-tabs">
+            <div title="快捷语句" style="padding:20px;display:none;">
+
+            </div>
+            <div title="聊天记录" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
+                <div class="paging">
+                    <div id="pagingcontent" class="easyui-panel padd" style="height:85%"
+                         data-options="href:'show_content.php?page=1'">
+                        <div class="history-content">
+                            <div class="history-daytime text-center">2018-01-14</div>
+                            <div class="history-talk">
+                                <div class="history-talk-title"><small class="talk-name">陈洁</small>(<smaill class="talk-id">3as4dasdwad</smaill>)<small class="history-talk-time">16:38:45</small></div>
+                                <div class="history-talk-content">
+                                    <span>陈洁陈洁陈洁陈洁</span>
+                                </div>
+                            </div>
+                            <div class="history-talk">
+                                <div class="history-talk-title"><small class="talk-name">陈洁</small>(<smaill class="talk-id">3as4dasdwad</smaill>)<small class="history-talk-time">16:38:45</small></div>
+                                <div class="history-talk-content">
+                                    <span>陈洁陈洁陈洁陈洁</span>
+                                </div>
+                            </div>
+                            <div class="history-talk">
+                                <div class="history-talk-title"><small class="talk-name">陈洁</small>(<smaill class="talk-id">3as4dasdwad</smaill>)<small class="history-talk-time">16:38:45</small></div>
+                                <div class="history-talk-content">
+                                    <span>陈洁陈洁陈洁陈洁</span>
+                                </div>
+                            </div>
+                            <div class="history-talk">
+                                <div class="history-talk-title"><small class="talk-name">陈洁</small>&nbsp;(<smaill class="talk-id">3as4dasdwad</smaill>)&nbsp;<small class="history-talk-time">16:38:45</small></div>
+                                <div class="history-talk-content">
+                                    <span>陈洁陈洁陈洁陈洁</span>
+                                </div>
+                            </div>
+                            <div class="history-talk">
+                                <div class="history-talk-title"><small class="talk-name">陈洁</small> &nbsp;(<smaill class="talk-id">3as4dasdwad</smaill>)&nbsp;<small class="history-talk-time">16:38:45</small></div>
+                                <div class="history-talk-content">
+                                    <span>陈洁陈洁陈洁陈洁</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="easyui-pagination marg"
+                             data-options=@@"total: 200, pageSize: 10,onSelectPage: function(pageNumber, pageSize){ $('#content').panel('refresh', 'show_content.php?page='+pageNumber);
+                                }">
+
+                        </div>*@
+                </div>
+            </div>
+            @*<div title="个人信息" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:none;">
+
+                </div>*@
+        </div>
+    </div>
+
+    @*左侧用户分组*@
+    <div class="padd" data-options="region:'west',iconCls:'icon-reload',title:'用户分类',split:true" style="width:250px;max-width:350px">
+        <div id="ts" class="easyui-tabs">
+            <div title="分组分类" style="padding:10px 20px;display:none;">
+                <ul id="tree" class="easyui-tree"></ul>
+            </div>
+            <div title="标签分类" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
+                tab2
+            </div>
+            <div title="地区分类" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:none;">
+                tab3
+            </div>
+        </div>
+    </div>
+
+    @*中间用户聊天*@
+    <div class="padd" data-options="region:'center',title:'用户聊天'" style="background:#eee;">
+        <div id="tt" class="easyui-tabs">
+            @*这个是tab栏*@
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    <script src="~/Scripts/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
+    <script>
+
+
+        $(function () {
+            $('#tt').tabs({
+                fit: true,
+                closable: true,
+                plain: true
+            });
+
+            $('#tree').tree({
+                url: "/Home/GetUser",
+                onDblClick: function (node) {
+                    $('#routine').tabs('add', {
+                        title: '个人信息',
+                        href: '/home/GetUserInfo?openid=' + node.id,
+                        closable: true,
+                        fit: true,
+                    });
+                    $('#tt').tabs('add', {
+                        title: node.text,
+                        content: "<div class=\"talk-body Roll\" id=\"" + node.text + "\">" +
+                        //动态加载聊天内容
+                    "</div>" +
+                    "<div class=\"talk-bottom\">" +
+                        "<div class=\"emotion col-xs-11 text-right\">" +
+                           "<a href=\"#\" class=\"glyphicon glyphicon-time\"></a>" +
+                        "</div>" +
+                        "<div class=\"inputtext col-xs-12\">" +
+                            "<textarea rows=\"4\" id=\"note\"></textarea>" +
+                        "</div>" +
+                        "<div class=\"button col-xs-12 text-right\" style=\"margin-top:5px;\">" +
+                            "<a id=\"\"   class=\"btn btn-default btn_send\"> 发送 </a>" +
+                        "</div>" +
+                    "</div>",
+                        closable: true,
+                    }),
+                    Add(node.text); //添加聊天内容
+                },
+            });
+
+
+
+
+            //发送按钮点击
+            $(document).on("click", ".btn_send", function () {
+
+            });
+
+
+
+            //动态添加聊天内容
+            function Add(node) {
+                $.post("/Home/GetMessage/ads123", "", function (json) {
+                    var jsonStr = "<div class=\"talk-media\">" +
+                                "<div class=\"time\">" +
+                                //时间
+                        "</div>" +
+                        "</div>";
+                    $.each(json, function (i, obj) {
+                        if (obj.FromUserName == "admin") {
+                            var ad = "<div class=\"talk-media\">" +
+                                    "<img src=\"/Images/a6062fea7d34eb9a0ab531faba1ee3054d3ee6a9864c-eqrZQF_fw658.jpg\" class=\"user-head-r\" alt=\"头像\">" +
+                                    "<div class=\"user-note-r bg-color\">" +
+                                    "<div class=\"arrowr\"></div>" +
+                                    obj.Content +
+                                "</div>" +
+                            "</div>";
+                            jsonStr += ad;
+                        } else {
+                            var fr = "<div class=\"talk-media\">" +
+                            "<img src=\"/Images/a6062fea7d34eb9a0ab531faba1ee3054d3ee6a9864c-eqrZQF_fw658.jpg\" class=\"user-head-l\" alt=\"头像\">" +
+                               "<div class=\"user-note-l bg-color-f5\">" +
+                                   "<div class=\"arrowl\"></div>" +
+                                   obj.Content +
+                            "</div>" +
+                          "</div>";
+                            jsonStr += fr
+                        }
+                    });
+                    $("#" + node + "").html(jsonStr);
+                });
+            }
+
+            ////左侧用户分组选项卡
+            //$('#ts').tabs({
+            //    fit: true
+            //});
+
+            ////右侧常规操作选项卡
+            $('#routine').tabs({
+                fit: true
+            });
+        });//加载事件
+    </script>
+}

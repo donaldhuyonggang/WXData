@@ -124,6 +124,7 @@
     <Compile Include="Areas\Base\Controllers\HomeController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\WXApp\WXAppAreaRegistration.cs" />
+    <Compile Include="Areas\WXCustom\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXCustom\WXCustomAreaRegistration.cs" />
     <Compile Include="Areas\WXMedia\WXMediaAreaRegistration.cs" />
     <Compile Include="Areas\WXMenu\WXMenuAreaRegistration.cs" />
@@ -138,9 +139,12 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dashboard.css" />
     <Content Include="Content\easyui\color.css" />
     <Content Include="Content\easyui\icon.css" />
     <Content Include="Content\easyui\mobile.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\WXCustom\Index.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -161,6 +165,7 @@
     <Content Include="Areas\WXMedia\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Common\Views\web.config" />
     <Content Include="Areas\Base\Views\Home\Index.cshtml" />
+    <Content Include="Areas\WXCustom\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -197,7 +202,6 @@
     <Folder Include="Areas\WXApp\Controllers\" />
     <Folder Include="Areas\WXApp\Models\" />
     <Folder Include="Areas\WXApp\Views\Shared\" />
-    <Folder Include="Areas\WXCustom\Controllers\" />
     <Folder Include="Areas\WXCustom\Models\" />
     <Folder Include="Areas\WXCustom\Views\Shared\" />
     <Folder Include="Areas\WXMedia\Controllers\" />
