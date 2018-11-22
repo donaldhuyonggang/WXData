@@ -4,14 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace WXDataUI.Controllers
+namespace WXDataUI.Areas.Base.Controllers
 {
     public class HomeController : Controller
     {
+        // GET: Base/Home
         public ActionResult Index()
         {
-            return Content("");
+            return View();
         }
- 
     }
 }

@@ -121,10 +121,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Base\BaseAreaRegistration.cs" />
+    <Compile Include="Areas\Base\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\WXApp\WXAppAreaRegistration.cs" />
     <Compile Include="Areas\WXCustom\WXCustomAreaRegistration.cs" />
+    <Compile Include="Areas\WXMedia\WXMediaAreaRegistration.cs" />
     <Compile Include="Areas\WXMenu\WXMenuAreaRegistration.cs" />
     <Compile Include="Areas\WXUser\WXUserAreaRegistration.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -134,6 +138,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\easyui\color.css" />
+    <Content Include="Content\easyui\icon.css" />
+    <Content Include="Content\easyui\mobile.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -145,10 +152,21 @@
     <Content Include="Areas\WXCustom\Views\web.config" />
     <Content Include="Areas\WXApp\Views\web.config" />
     <Content Include="Areas\WXUser\Views\web.config" />
+    <Content Include="Areas\Base\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\WXCustom\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\WXMenu\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\WXUser\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\WXApp\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\WXMedia\Views\web.config" />
+    <Content Include="Areas\WXMedia\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Common\Views\web.config" />
+    <Content Include="Areas\Base\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.easyui.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -168,28 +186,33 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Base\Controllers\" />
     <Folder Include="Areas\Base\Models\" />
     <Folder Include="Areas\Base\Views\Shared\" />
+    <Folder Include="Areas\Common\Controllers\" />
+    <Folder Include="Areas\Common\Models\" />
+    <Folder Include="Areas\Common\Views\Shared\" />
     <Folder Include="Areas\WXApp\Controllers\" />
     <Folder Include="Areas\WXApp\Models\" />
     <Folder Include="Areas\WXApp\Views\Shared\" />
     <Folder Include="Areas\WXCustom\Controllers\" />
     <Folder Include="Areas\WXCustom\Models\" />
     <Folder Include="Areas\WXCustom\Views\Shared\" />
+    <Folder Include="Areas\WXMedia\Controllers\" />
+    <Folder Include="Areas\WXMedia\Models\" />
+    <Folder Include="Areas\WXMedia\Views\Shared\" />
     <Folder Include="Areas\WXMenu\Controllers\" />
     <Folder Include="Areas\WXMenu\Models\" />
     <Folder Include="Areas\WXMenu\Views\Shared\" />
     <Folder Include="Areas\WXUser\Controllers\" />
     <Folder Include="Areas\WXUser\Models\" />
     <Folder Include="Areas\WXUser\Views\Shared\" />
+    <Folder Include="Content\easyui\bootstrap\" />
+    <Folder Include="Content\easyui\icons\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

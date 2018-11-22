@@ -1,24 +1,24 @@
 ﻿using System.Web.Mvc;
 
-namespace WXDataUI.Areas.Base
+namespace WXDataUI.Areas.Common
 {
-    public class BaseAreaRegistration : AreaRegistration 
+    public class CommonAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
         {
             get 
             {
-                return "Base"; 
+                return "Common";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "Base_default",
-                "Base/{controller}/{action}/{id}",
+                "Common_default",
+                "Common/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional },
-                namespaces: new string[] { "WXDataUI.Areas.Base.Controllers" }
+                namespaces: new string[] { "WXDataUI.Areas.Common.Controllers" }
             );
         }
     }
