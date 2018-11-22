@@ -17,7 +17,8 @@ namespace WXDataUI.Areas.WXCustom
             context.MapRoute(
                 "WXCustom_default",
                 "WXCustom/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional },
+                 namespaces: new string[] { "WXDataUI.Areas.WXCustom.Controllers" }
             );
         }
     }
