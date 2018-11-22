@@ -1,18 +1,62 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2018-11-20 19:37:45                          */
+/* Created on:     2018-11-22 20:52:48                          */
 /*==============================================================*/
+
 create database WXData
 go 
 
 use WXData
 go
 
-/*==============================================================*/
-/* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2018-11-20 19:43:14                          */
-/*==============================================================*/
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('SYS_Department') and o.name = 'FK_SYS_DEPA_REFERENCE_SYS_DEPA')
+alter table SYS_Department
+   drop constraint FK_SYS_DEPA_REFERENCE_SYS_DEPA
+go
 
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('SYS_Department') and o.name = 'FK_SYS_DEPA_REFERENCE_WX_APP')
+alter table SYS_Department
+   drop constraint FK_SYS_DEPA_REFERENCE_WX_APP
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('SYS_Department') and o.name = 'FK_SYS_DEPA_REFERENCE_SYS_USER')
+alter table SYS_Department
+   drop constraint FK_SYS_DEPA_REFERENCE_SYS_USER
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('SYS_Function') and o.name = 'FK_SYS_FUNC_REFERENCE_SYS_FUNC')
+alter table SYS_Function
+   drop constraint FK_SYS_FUNC_REFERENCE_SYS_FUNC
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('SYS_Right') and o.name = 'FK_SYS_RIGH_REFERENCE_SYS_ROLE')
+alter table SYS_Right
+   drop constraint FK_SYS_RIGH_REFERENCE_SYS_ROLE
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('SYS_Right') and o.name = 'FK_SYS_RIGH_REFERENCE_SYS_FUNC')
+alter table SYS_Right
+   drop constraint FK_SYS_RIGH_REFERENCE_SYS_FUNC
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('SYS_Role') and o.name = 'FK_SYS_ROLE_REFERENCE_WX_APP')
+alter table SYS_Role
+   drop constraint FK_SYS_ROLE_REFERENCE_WX_APP
+go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -72,6 +116,13 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_User') and o.name = 'FK_WX_USER_REFERENCE_SYS_USER')
+alter table WX_User
+   drop constraint FK_WX_USER_REFERENCE_SYS_USER
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('WX_User') and o.name = 'FK_WX_USER_REFERENCE_WX_USERG')
 alter table WX_User
    drop constraint FK_WX_USER_REFERENCE_WX_USERG
@@ -100,9 +151,30 @@ go
 
 if exists (select 1
             from  sysobjects
+           where  id = object_id('SYS_Department')
+            and   type = 'U')
+   drop table SYS_Department
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('SYS_Function')
+            and   type = 'U')
+   drop table SYS_Function
+go
+
+if exists (select 1
+            from  sysobjects
            where  id = object_id('SYS_Log')
             and   type = 'U')
    drop table SYS_Log
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('SYS_Right')
+            and   type = 'U')
+   drop table SYS_Right
 go
 
 if exists (select 1
@@ -183,6 +255,47 @@ if exists (select 1
 go
 
 /*==============================================================*/
+/* Table: SYS_Department                                        */
+/*==============================================================*/
+create table SYS_Department (
+   DepartmentId         int                  not null,
+   DepartmentName       nvarchar(50)         null,
+   ParentId             int                  null,
+   AppId                varchar(50)          null,
+   UserId               int                  null,
+   constraint PK_SYS_DEPARTMENT primary key (DepartmentId)
+)
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '公众号ID',
+   'user', @CurrentUser, 'table', 'SYS_Department', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '系统用户编号',
+   'user', @CurrentUser, 'table', 'SYS_Department', 'column', 'UserId'
+go
+
+/*==============================================================*/
+/* Table: SYS_Function                                          */
+/*==============================================================*/
+create table SYS_Function (
+   FunctionID           int                  not null,
+   ParentID             int                  null,
+   FunctionName         nvarchar(50)         null,
+   FunctionUrl          nvarchar(255)        null,
+   FunctionType         nvarchar(50)         null,
+   Remark               nvarchar(255)        null,
+   constraint PK_SYS_FUNCTION primary key (FunctionID)
+)
+go
+
+/*==============================================================*/
 /* Table: SYS_Log                                               */
 /*==============================================================*/
 create table SYS_Log (
@@ -206,10 +319,29 @@ execute sp_addextendedproperty 'MS_Description',
 go
 
 /*==============================================================*/
+/* Table: SYS_Right                                             */
+/*==============================================================*/
+create table SYS_Right (
+   RightID              int                  not null,
+   RoleId               int                  not null,
+   FunctionID           int                  not null,
+   constraint PK_SYS_RIGHT primary key (RightID, RoleId, FunctionID)
+)
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '角色编号',
+   'user', @CurrentUser, 'table', 'SYS_Right', 'column', 'RoleId'
+go
+
+/*==============================================================*/
 /* Table: SYS_Role                                              */
 /*==============================================================*/
 create table SYS_Role (
    RoleId               int                  identity,
+   AppId                varchar(50)          null,
    RoleSign             varchar(50)          null,
    RoleName             nvarchar(50)         null,
    constraint PK_SYS_ROLE primary key (RoleId)
@@ -228,6 +360,13 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '角色编号',
    'user', @CurrentUser, 'table', 'SYS_Role', 'column', 'RoleId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '公众号ID',
+   'user', @CurrentUser, 'table', 'SYS_Role', 'column', 'AppId'
 go
 
 declare @CurrentUser sysname
@@ -396,6 +535,7 @@ create table WX_App (
    WXId                 varchar(50)          null,
    AppType              nvarchar(10)         null,
    AppState             nvarchar(10)         null,
+   CompanyName          nvarchar(50)         null,
    Remark               nvarchar(255)        null,
    constraint PK_WX_APP primary key (AppId)
 )
@@ -781,6 +921,7 @@ create table WX_User (
    TageId               int                  null,
    GrooupId             int                  null,
    AppId                varchar(50)          null,
+   UserId               int                  null,
    UserNick             VARCHAR(50)          null,
    UserName             VARCHAR(50)          null,
    HeadImageUrl         VARCHAR(200)         null,
@@ -833,6 +974,13 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '公众号ID',
    'user', @CurrentUser, 'table', 'WX_User', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '系统用户编号',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'UserId'
 go
 
 declare @CurrentUser sysname
@@ -1034,6 +1182,41 @@ execute sp_addextendedproperty 'MS_Description',
    'user', @CurrentUser, 'table', 'WX_UserTag', 'column', 'UserCount'
 go
 
+alter table SYS_Department
+   add constraint FK_SYS_DEPA_REFERENCE_SYS_DEPA foreign key (ParentId)
+      references SYS_Department (DepartmentId)
+go
+
+alter table SYS_Department
+   add constraint FK_SYS_DEPA_REFERENCE_WX_APP foreign key (AppId)
+      references WX_App (AppId)
+go
+
+alter table SYS_Department
+   add constraint FK_SYS_DEPA_REFERENCE_SYS_USER foreign key (UserId)
+      references SYS_User (UserId)
+go
+
+alter table SYS_Function
+   add constraint FK_SYS_FUNC_REFERENCE_SYS_FUNC foreign key (ParentID)
+      references SYS_Function (FunctionID)
+go
+
+alter table SYS_Right
+   add constraint FK_SYS_RIGH_REFERENCE_SYS_ROLE foreign key (RoleId)
+      references SYS_Role (RoleId)
+go
+
+alter table SYS_Right
+   add constraint FK_SYS_RIGH_REFERENCE_SYS_FUNC foreign key (FunctionID)
+      references SYS_Function (FunctionID)
+go
+
+alter table SYS_Role
+   add constraint FK_SYS_ROLE_REFERENCE_WX_APP foreign key (AppId)
+      references WX_App (AppId)
+go
+
 alter table SYS_Setting
    add constraint FK_SYS_SETT_REFERENCE_WX_APP foreign key (AppId)
       references WX_App (AppId)
@@ -1075,6 +1258,11 @@ alter table WX_User
 go
 
 alter table WX_User
+   add constraint FK_WX_USER_REFERENCE_SYS_USER foreign key (UserId)
+      references SYS_User (UserId)
+go
+
+alter table WX_User
    add constraint FK_WX_USER_REFERENCE_WX_USERG foreign key (GrooupId)
       references WX_UserGroup (GroupId)
 go
@@ -1093,5 +1281,4 @@ alter table WX_UserTag
    add constraint FK_WX_USERT_REFERENCE_WX_APP foreign key (AppId)
       references WX_App (AppId)
 go
-
 
