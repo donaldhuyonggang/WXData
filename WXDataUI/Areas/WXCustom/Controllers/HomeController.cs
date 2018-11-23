@@ -13,7 +13,18 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 用户个人信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UserInfo() {
+            return PartialView();
+        }
 
+
+        public ActionResult TakeToUser() {
+            return View();
+        }
 
     }
 }
