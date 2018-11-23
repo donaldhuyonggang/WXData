@@ -1,0 +1,1303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WXDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="SYS_Department">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="int" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="SYS_Function">
+          <Key>
+            <PropertyRef Name="FunctionID" />
+          </Key>
+          <Property Name="FunctionID" Type="int" Nullable="false" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="FunctionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FunctionUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="FunctionType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="SYS_Log">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_Right">
+          <Key>
+            <PropertyRef Name="RightID" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="FunctionID" />
+          </Key>
+          <Property Name="RightID" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="FunctionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="RoleSign" Type="varchar" MaxLength="50" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_Setting">
+          <Key>
+            <PropertyRef Name="SettingId" />
+          </Key>
+          <Property Name="SettingId" Type="int" Nullable="false" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="SettingKey" Type="nvarchar" MaxLength="50" />
+          <Property Name="SettingValue" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="LoginId" Type="varchar" MaxLength="20" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Telphone" Type="varchar" MaxLength="15" />
+          <Property Name="Email" Type="nvarchar" MaxLength="20" />
+          <Property Name="WXId" Type="varchar" MaxLength="50" />
+          <Property Name="UserState" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="WX_App">
+          <Key>
+            <PropertyRef Name="AppId" />
+          </Key>
+          <Property Name="AppId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppName" Type="nvarchar" MaxLength="50" />
+          <Property Name="AppSecret" Type="varchar" MaxLength="50" />
+          <Property Name="WXId" Type="varchar" MaxLength="50" />
+          <Property Name="AppType" Type="nvarchar" MaxLength="10" />
+          <Property Name="AppState" Type="nvarchar" MaxLength="10" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="WX_Media">
+          <Key>
+            <PropertyRef Name="MyMediaId" />
+          </Key>
+          <Property Name="MyMediaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="MediaId" Type="varchar" MaxLength="50" />
+          <Property Name="MediaName" Type="varchar" MaxLength="50" />
+          <Property Name="MediaType" Type="varchar" MaxLength="50" />
+          <Property Name="MediaContent" Type="nvarchar(max)" />
+          <Property Name="MediaState" Type="int" />
+          <Property Name="UploadTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WX_Menu">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentMenuId" Type="int" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="MenuName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MenuType" Type="int" />
+          <Property Name="MenuKey" Type="int" />
+          <Property Name="MenuUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="MenuVisable" Type="int" />
+          <Property Name="MenuSort" Type="int" />
+        </EntityType>
+        <EntityType Name="WX_Message">
+          <Key>
+            <PropertyRef Name="Msg_Id" />
+          </Key>
+          <Property Name="Msg_Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="XmlContent" Type="nvarchar" MaxLength="50" />
+          <Property Name="ToUserName" Type="varchar" MaxLength="50" />
+          <Property Name="FromUserName" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Event" Type="varchar" MaxLength="20" />
+          <Property Name="Content" Type="nvarchar" MaxLength="255" />
+          <Property Name="MediaId" Type="varchar" MaxLength="50" />
+          <Property Name="MsgType" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="WX_Queue">
+          <Key>
+            <PropertyRef Name="MsgId" />
+          </Key>
+          <Property Name="MsgId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OpenID" Type="varchar" MaxLength="50" />
+          <Property Name="MsgType" Type="varchar" MaxLength="20" />
+          <Property Name="XmlContent" Type="nvarchar(max)" />
+          <Property Name="MsgState" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WX_User">
+          <Key>
+            <PropertyRef Name="OpenID" />
+          </Key>
+          <Property Name="OpenID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TageId" Type="int" />
+          <Property Name="GrooupId" Type="int" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="UserNick" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="HeadImageUrl" Type="varchar" MaxLength="200" />
+          <Property Name="UserSex" Type="nchar" MaxLength="1" />
+          <Property Name="Language" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Province" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubscribeTime" Type="datetime" />
+          <Property Name="UnSubscribeTime" Type="datetime" />
+          <Property Name="Telphone" Type="varchar" MaxLength="15" />
+          <Property Name="Emial" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="255" />
+          <Property Name="ZipCode" Type="char" MaxLength="6" />
+          <Property Name="Remark" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="WX_UserGroup">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
+          <Property Name="GroupSort" Type="int" />
+        </EntityType>
+        <EntityType Name="WX_UserTag">
+          <Key>
+            <PropertyRef Name="TageId" />
+          </Key>
+          <Property Name="TageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="TagName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserCount" Type="int" />
+        </EntityType>
+        <Association Name="FK_SYS_DEPA_REFERENCE_SYS_DEPA">
+          <End Role="SYS_Department" Type="Self.SYS_Department" Multiplicity="0..1" />
+          <End Role="SYS_Department1" Type="Self.SYS_Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="SYS_Department1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_DEPA_REFERENCE_SYS_USER">
+          <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="0..1" />
+          <End Role="SYS_Department" Type="Self.SYS_Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="SYS_Department">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_DEPA_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="SYS_Department" Type="Self.SYS_Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="SYS_Department">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_FUNC_REFERENCE_SYS_FUNC">
+          <End Role="SYS_Function" Type="Self.SYS_Function" Multiplicity="0..1" />
+          <End Role="SYS_Function1" Type="Self.SYS_Function" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_Function">
+              <PropertyRef Name="FunctionID" />
+            </Principal>
+            <Dependent Role="SYS_Function1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_RIGH_REFERENCE_SYS_FUNC">
+          <End Role="SYS_Function" Type="Self.SYS_Function" Multiplicity="1" />
+          <End Role="SYS_Right" Type="Self.SYS_Right" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_Function">
+              <PropertyRef Name="FunctionID" />
+            </Principal>
+            <Dependent Role="SYS_Right">
+              <PropertyRef Name="FunctionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_RIGH_REFERENCE_SYS_ROLE">
+          <End Role="SYS_Role" Type="Self.SYS_Role" Multiplicity="1" />
+          <End Role="SYS_Right" Type="Self.SYS_Right" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="SYS_Right">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_ROLE_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="SYS_Role" Type="Self.SYS_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="SYS_Role">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_SETT_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="SYS_Setting" Type="Self.SYS_Setting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="SYS_Setting">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_USER_REFERENCE_SYS_ROLE">
+          <End Role="SYS_Role" Type="Self.SYS_Role" Multiplicity="0..1" />
+          <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="SYS_User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_USER_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="SYS_User">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_MEDIA_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_Media" Type="Self.WX_Media" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_Media">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_MENU_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_Menu" Type="Self.WX_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_Menu">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_MENU_REFERENCE_WX_MENU">
+          <End Role="WX_Menu" Type="Self.WX_Menu" Multiplicity="0..1" />
+          <End Role="WX_Menu1" Type="Self.WX_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_Menu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="WX_Menu1">
+              <PropertyRef Name="ParentMenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_QUEUE_REFERENCE_WX_USER">
+          <End Role="WX_User" Type="Self.WX_User" Multiplicity="0..1" />
+          <End Role="WX_Queue" Type="Self.WX_Queue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_User">
+              <PropertyRef Name="OpenID" />
+            </Principal>
+            <Dependent Role="WX_Queue">
+              <PropertyRef Name="OpenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USER_REFERENCE_SYS_USER">
+          <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="0..1" />
+          <End Role="WX_User" Type="Self.WX_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="WX_User">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USER_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_User" Type="Self.WX_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_User">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USER_REFERENCE_WX_USERG">
+          <End Role="WX_UserGroup" Type="Self.WX_UserGroup" Multiplicity="0..1" />
+          <End Role="WX_User" Type="Self.WX_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_UserGroup">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="WX_User">
+              <PropertyRef Name="GrooupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USER_REFERENCE_WX_USERT">
+          <End Role="WX_UserTag" Type="Self.WX_UserTag" Multiplicity="0..1" />
+          <End Role="WX_User" Type="Self.WX_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_UserTag">
+              <PropertyRef Name="TageId" />
+            </Principal>
+            <Dependent Role="WX_User">
+              <PropertyRef Name="TageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USERG_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_UserGroup" Type="Self.WX_UserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_UserGroup">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USERT_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_UserTag" Type="Self.WX_UserTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_UserTag">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WXDataModelStoreContainer">
+          <EntitySet Name="SYS_Department" EntityType="Self.SYS_Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Function" EntityType="Self.SYS_Function" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Log" EntityType="Self.SYS_Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Right" EntityType="Self.SYS_Right" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Role" EntityType="Self.SYS_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Setting" EntityType="Self.SYS_Setting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_User" EntityType="Self.SYS_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_App" EntityType="Self.WX_App" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_Media" EntityType="Self.WX_Media" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_Menu" EntityType="Self.WX_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_Message" EntityType="Self.WX_Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_Queue" EntityType="Self.WX_Queue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_User" EntityType="Self.WX_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_UserGroup" EntityType="Self.WX_UserGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_UserTag" EntityType="Self.WX_UserTag" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_SYS_DEPA_REFERENCE_SYS_DEPA" Association="Self.FK_SYS_DEPA_REFERENCE_SYS_DEPA">
+            <End Role="SYS_Department" EntitySet="SYS_Department" />
+            <End Role="SYS_Department1" EntitySet="SYS_Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_DEPA_REFERENCE_SYS_USER" Association="Self.FK_SYS_DEPA_REFERENCE_SYS_USER">
+            <End Role="SYS_User" EntitySet="SYS_User" />
+            <End Role="SYS_Department" EntitySet="SYS_Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_DEPA_REFERENCE_WX_APP" Association="Self.FK_SYS_DEPA_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="SYS_Department" EntitySet="SYS_Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_FUNC_REFERENCE_SYS_FUNC" Association="Self.FK_SYS_FUNC_REFERENCE_SYS_FUNC">
+            <End Role="SYS_Function" EntitySet="SYS_Function" />
+            <End Role="SYS_Function1" EntitySet="SYS_Function" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_RIGH_REFERENCE_SYS_FUNC" Association="Self.FK_SYS_RIGH_REFERENCE_SYS_FUNC">
+            <End Role="SYS_Function" EntitySet="SYS_Function" />
+            <End Role="SYS_Right" EntitySet="SYS_Right" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_RIGH_REFERENCE_SYS_ROLE" Association="Self.FK_SYS_RIGH_REFERENCE_SYS_ROLE">
+            <End Role="SYS_Role" EntitySet="SYS_Role" />
+            <End Role="SYS_Right" EntitySet="SYS_Right" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_ROLE_REFERENCE_WX_APP" Association="Self.FK_SYS_ROLE_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="SYS_Role" EntitySet="SYS_Role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_SETT_REFERENCE_WX_APP" Association="Self.FK_SYS_SETT_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="SYS_Setting" EntitySet="SYS_Setting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_USER_REFERENCE_SYS_ROLE" Association="Self.FK_SYS_USER_REFERENCE_SYS_ROLE">
+            <End Role="SYS_Role" EntitySet="SYS_Role" />
+            <End Role="SYS_User" EntitySet="SYS_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_USER_REFERENCE_WX_APP" Association="Self.FK_SYS_USER_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="SYS_User" EntitySet="SYS_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_MEDIA_REFERENCE_WX_APP" Association="Self.FK_WX_MEDIA_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_Media" EntitySet="WX_Media" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_MENU_REFERENCE_WX_APP" Association="Self.FK_WX_MENU_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_Menu" EntitySet="WX_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_MENU_REFERENCE_WX_MENU" Association="Self.FK_WX_MENU_REFERENCE_WX_MENU">
+            <End Role="WX_Menu" EntitySet="WX_Menu" />
+            <End Role="WX_Menu1" EntitySet="WX_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_QUEUE_REFERENCE_WX_USER" Association="Self.FK_WX_QUEUE_REFERENCE_WX_USER">
+            <End Role="WX_User" EntitySet="WX_User" />
+            <End Role="WX_Queue" EntitySet="WX_Queue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USER_REFERENCE_SYS_USER" Association="Self.FK_WX_USER_REFERENCE_SYS_USER">
+            <End Role="SYS_User" EntitySet="SYS_User" />
+            <End Role="WX_User" EntitySet="WX_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USER_REFERENCE_WX_APP" Association="Self.FK_WX_USER_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_User" EntitySet="WX_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USER_REFERENCE_WX_USERG" Association="Self.FK_WX_USER_REFERENCE_WX_USERG">
+            <End Role="WX_UserGroup" EntitySet="WX_UserGroup" />
+            <End Role="WX_User" EntitySet="WX_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USER_REFERENCE_WX_USERT" Association="Self.FK_WX_USER_REFERENCE_WX_USERT">
+            <End Role="WX_UserTag" EntitySet="WX_UserTag" />
+            <End Role="WX_User" EntitySet="WX_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USERG_REFERENCE_WX_APP" Association="Self.FK_WX_USERG_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_UserGroup" EntitySet="WX_UserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USERT_REFERENCE_WX_APP" Association="Self.FK_WX_USERT_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_UserTag" EntitySet="WX_UserTag" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WXDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="SYS_Department">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="SYS_Department1" Relationship="Self.FK_SYS_DEPA_REFERENCE_SYS_DEPA" FromRole="SYS_Department" ToRole="SYS_Department1" />
+          <NavigationProperty Name="SYS_Department2" Relationship="Self.FK_SYS_DEPA_REFERENCE_SYS_DEPA" FromRole="SYS_Department1" ToRole="SYS_Department" />
+          <NavigationProperty Name="SYS_User" Relationship="Self.FK_SYS_DEPA_REFERENCE_SYS_USER" FromRole="SYS_Department" ToRole="SYS_User" />
+          <NavigationProperty Name="WX_App" Relationship="Self.FK_SYS_DEPA_REFERENCE_WX_APP" FromRole="SYS_Department" ToRole="WX_App" />
+        </EntityType>
+        <EntityType Name="SYS_Function">
+          <Key>
+            <PropertyRef Name="FunctionID" />
+          </Key>
+          <Property Name="FunctionID" Type="Int32" Nullable="false" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="FunctionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FunctionUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FunctionType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SYS_Function1" Relationship="Self.FK_SYS_FUNC_REFERENCE_SYS_FUNC" FromRole="SYS_Function" ToRole="SYS_Function1" />
+          <NavigationProperty Name="SYS_Function2" Relationship="Self.FK_SYS_FUNC_REFERENCE_SYS_FUNC" FromRole="SYS_Function1" ToRole="SYS_Function" />
+          <NavigationProperty Name="SYS_Right" Relationship="Self.FK_SYS_RIGH_REFERENCE_SYS_FUNC" FromRole="SYS_Function" ToRole="SYS_Right" />
+        </EntityType>
+        <EntityType Name="SYS_Log">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_Right">
+          <Key>
+            <PropertyRef Name="RightID" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="FunctionID" />
+          </Key>
+          <Property Name="RightID" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="FunctionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SYS_Function" Relationship="Self.FK_SYS_RIGH_REFERENCE_SYS_FUNC" FromRole="SYS_Right" ToRole="SYS_Function" />
+          <NavigationProperty Name="SYS_Role" Relationship="Self.FK_SYS_RIGH_REFERENCE_SYS_ROLE" FromRole="SYS_Right" ToRole="SYS_Role" />
+        </EntityType>
+        <EntityType Name="SYS_Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleSign" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SYS_Right" Relationship="Self.FK_SYS_RIGH_REFERENCE_SYS_ROLE" FromRole="SYS_Role" ToRole="SYS_Right" />
+          <NavigationProperty Name="WX_App" Relationship="Self.FK_SYS_ROLE_REFERENCE_WX_APP" FromRole="SYS_Role" ToRole="WX_App" />
+          <NavigationProperty Name="SYS_User" Relationship="Self.FK_SYS_USER_REFERENCE_SYS_ROLE" FromRole="SYS_Role" ToRole="SYS_User" />
+        </EntityType>
+        <EntityType Name="SYS_Setting">
+          <Key>
+            <PropertyRef Name="SettingId" />
+          </Key>
+          <Property Name="SettingId" Type="Int32" Nullable="false" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SettingKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SettingValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WX_App" Relationship="Self.FK_SYS_SETT_REFERENCE_WX_APP" FromRole="SYS_Setting" ToRole="WX_App" />
+        </EntityType>
+        <EntityType Name="SYS_User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="LoginId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Telphone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="WXId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserState" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SYS_Department" Relationship="Self.FK_SYS_DEPA_REFERENCE_SYS_USER" FromRole="SYS_User" ToRole="SYS_Department" />
+          <NavigationProperty Name="SYS_Role" Relationship="Self.FK_SYS_USER_REFERENCE_SYS_ROLE" FromRole="SYS_User" ToRole="SYS_Role" />
+          <NavigationProperty Name="WX_App" Relationship="Self.FK_SYS_USER_REFERENCE_WX_APP" FromRole="SYS_User" ToRole="WX_App" />
+          <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_USER_REFERENCE_SYS_USER" FromRole="SYS_User" ToRole="WX_User" />
+        </EntityType>
+        <EntityType Name="WX_App">
+          <Key>
+            <PropertyRef Name="AppId" />
+          </Key>
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AppName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppSecret" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WXId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AppType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="AppState" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SYS_Department" Relationship="Self.FK_SYS_DEPA_REFERENCE_WX_APP" FromRole="WX_App" ToRole="SYS_Department" />
+          <NavigationProperty Name="SYS_Role" Relationship="Self.FK_SYS_ROLE_REFERENCE_WX_APP" FromRole="WX_App" ToRole="SYS_Role" />
+          <NavigationProperty Name="SYS_Setting" Relationship="Self.FK_SYS_SETT_REFERENCE_WX_APP" FromRole="WX_App" ToRole="SYS_Setting" />
+          <NavigationProperty Name="SYS_User" Relationship="Self.FK_SYS_USER_REFERENCE_WX_APP" FromRole="WX_App" ToRole="SYS_User" />
+          <NavigationProperty Name="WX_Media" Relationship="Self.FK_WX_MEDIA_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_Media" />
+          <NavigationProperty Name="WX_Menu" Relationship="Self.FK_WX_MENU_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_Menu" />
+          <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_USER_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_User" />
+          <NavigationProperty Name="WX_UserGroup" Relationship="Self.FK_WX_USERG_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_UserGroup" />
+          <NavigationProperty Name="WX_UserTag" Relationship="Self.FK_WX_USERT_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_UserTag" />
+        </EntityType>
+        <EntityType Name="WX_Media">
+          <Key>
+            <PropertyRef Name="MyMediaId" />
+          </Key>
+          <Property Name="MyMediaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MediaId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MediaName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MediaType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MediaContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MediaState" Type="Int32" />
+          <Property Name="UploadTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_MEDIA_REFERENCE_WX_APP" FromRole="WX_Media" ToRole="WX_App" />
+        </EntityType>
+        <EntityType Name="WX_Menu">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentMenuId" Type="Int32" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MenuType" Type="Int32" />
+          <Property Name="MenuKey" Type="Int32" />
+          <Property Name="MenuUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MenuVisable" Type="Int32" />
+          <Property Name="MenuSort" Type="Int32" />
+          <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_MENU_REFERENCE_WX_APP" FromRole="WX_Menu" ToRole="WX_App" />
+          <NavigationProperty Name="WX_Menu1" Relationship="Self.FK_WX_MENU_REFERENCE_WX_MENU" FromRole="WX_Menu" ToRole="WX_Menu1" />
+          <NavigationProperty Name="WX_Menu2" Relationship="Self.FK_WX_MENU_REFERENCE_WX_MENU" FromRole="WX_Menu1" ToRole="WX_Menu" />
+        </EntityType>
+        <EntityType Name="WX_Message">
+          <Key>
+            <PropertyRef Name="Msg_Id" />
+          </Key>
+          <Property Name="Msg_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="XmlContent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ToUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FromUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Event" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MediaId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MsgType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WX_Queue">
+          <Key>
+            <PropertyRef Name="MsgId" />
+          </Key>
+          <Property Name="MsgId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OpenID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MsgType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="XmlContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MsgState" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_QUEUE_REFERENCE_WX_USER" FromRole="WX_Queue" ToRole="WX_User" />
+        </EntityType>
+        <EntityType Name="WX_User">
+          <Key>
+            <PropertyRef Name="OpenID" />
+          </Key>
+          <Property Name="OpenID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TageId" Type="Int32" />
+          <Property Name="GrooupId" Type="Int32" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="UserNick" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HeadImageUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserSex" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="Language" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubscribeTime" Type="DateTime" Precision="3" />
+          <Property Name="UnSubscribeTime" Type="DateTime" Precision="3" />
+          <Property Name="Telphone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Emial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SYS_User" Relationship="Self.FK_WX_USER_REFERENCE_SYS_USER" FromRole="WX_User" ToRole="SYS_User" />
+          <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_USER_REFERENCE_WX_APP" FromRole="WX_User" ToRole="WX_App" />
+          <NavigationProperty Name="WX_Queue" Relationship="Self.FK_WX_QUEUE_REFERENCE_WX_USER" FromRole="WX_User" ToRole="WX_Queue" />
+          <NavigationProperty Name="WX_UserGroup" Relationship="Self.FK_WX_USER_REFERENCE_WX_USERG" FromRole="WX_User" ToRole="WX_UserGroup" />
+          <NavigationProperty Name="WX_UserTag" Relationship="Self.FK_WX_USER_REFERENCE_WX_USERT" FromRole="WX_User" ToRole="WX_UserTag" />
+        </EntityType>
+        <EntityType Name="WX_UserGroup">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GroupSort" Type="Int32" />
+          <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_USERG_REFERENCE_WX_APP" FromRole="WX_UserGroup" ToRole="WX_App" />
+          <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_USER_REFERENCE_WX_USERG" FromRole="WX_UserGroup" ToRole="WX_User" />
+        </EntityType>
+        <EntityType Name="WX_UserTag">
+          <Key>
+            <PropertyRef Name="TageId" />
+          </Key>
+          <Property Name="TageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TagName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserCount" Type="Int32" />
+          <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_USERT_REFERENCE_WX_APP" FromRole="WX_UserTag" ToRole="WX_App" />
+          <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_USER_REFERENCE_WX_USERT" FromRole="WX_UserTag" ToRole="WX_User" />
+        </EntityType>
+        <Association Name="FK_SYS_DEPA_REFERENCE_SYS_DEPA">
+          <End Role="SYS_Department" Type="Self.SYS_Department" Multiplicity="0..1" />
+          <End Role="SYS_Department1" Type="Self.SYS_Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="SYS_Department1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_DEPA_REFERENCE_SYS_USER">
+          <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="0..1" />
+          <End Role="SYS_Department" Type="Self.SYS_Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="SYS_Department">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_DEPA_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="SYS_Department" Type="Self.SYS_Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="SYS_Department">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_FUNC_REFERENCE_SYS_FUNC">
+          <End Role="SYS_Function" Type="Self.SYS_Function" Multiplicity="0..1" />
+          <End Role="SYS_Function1" Type="Self.SYS_Function" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_Function">
+              <PropertyRef Name="FunctionID" />
+            </Principal>
+            <Dependent Role="SYS_Function1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_RIGH_REFERENCE_SYS_FUNC">
+          <End Role="SYS_Function" Type="Self.SYS_Function" Multiplicity="1" />
+          <End Role="SYS_Right" Type="Self.SYS_Right" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_Function">
+              <PropertyRef Name="FunctionID" />
+            </Principal>
+            <Dependent Role="SYS_Right">
+              <PropertyRef Name="FunctionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_RIGH_REFERENCE_SYS_ROLE">
+          <End Role="SYS_Role" Type="Self.SYS_Role" Multiplicity="1" />
+          <End Role="SYS_Right" Type="Self.SYS_Right" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="SYS_Right">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_ROLE_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="SYS_Role" Type="Self.SYS_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="SYS_Role">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_USER_REFERENCE_SYS_ROLE">
+          <End Role="SYS_Role" Type="Self.SYS_Role" Multiplicity="0..1" />
+          <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="SYS_User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_SETT_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="SYS_Setting" Type="Self.SYS_Setting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="SYS_Setting">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_USER_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="SYS_User">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USER_REFERENCE_SYS_USER">
+          <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="0..1" />
+          <End Role="WX_User" Type="Self.WX_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="WX_User">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_MEDIA_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_Media" Type="Self.WX_Media" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_Media">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_MENU_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_Menu" Type="Self.WX_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_Menu">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USER_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_User" Type="Self.WX_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_User">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USERG_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_UserGroup" Type="Self.WX_UserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_UserGroup">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USERT_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_UserTag" Type="Self.WX_UserTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_UserTag">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_MENU_REFERENCE_WX_MENU">
+          <End Role="WX_Menu" Type="Self.WX_Menu" Multiplicity="0..1" />
+          <End Role="WX_Menu1" Type="Self.WX_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_Menu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="WX_Menu1">
+              <PropertyRef Name="ParentMenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_QUEUE_REFERENCE_WX_USER">
+          <End Role="WX_User" Type="Self.WX_User" Multiplicity="0..1" />
+          <End Role="WX_Queue" Type="Self.WX_Queue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_User">
+              <PropertyRef Name="OpenID" />
+            </Principal>
+            <Dependent Role="WX_Queue">
+              <PropertyRef Name="OpenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USER_REFERENCE_WX_USERG">
+          <End Role="WX_UserGroup" Type="Self.WX_UserGroup" Multiplicity="0..1" />
+          <End Role="WX_User" Type="Self.WX_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_UserGroup">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="WX_User">
+              <PropertyRef Name="GrooupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USER_REFERENCE_WX_USERT">
+          <End Role="WX_UserTag" Type="Self.WX_UserTag" Multiplicity="0..1" />
+          <End Role="WX_User" Type="Self.WX_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_UserTag">
+              <PropertyRef Name="TageId" />
+            </Principal>
+            <Dependent Role="WX_User">
+              <PropertyRef Name="TageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WXDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SYS_Department" EntityType="Self.SYS_Department" />
+          <EntitySet Name="SYS_Function" EntityType="Self.SYS_Function" />
+          <EntitySet Name="SYS_Log" EntityType="Self.SYS_Log" />
+          <EntitySet Name="SYS_Right" EntityType="Self.SYS_Right" />
+          <EntitySet Name="SYS_Role" EntityType="Self.SYS_Role" />
+          <EntitySet Name="SYS_Setting" EntityType="Self.SYS_Setting" />
+          <EntitySet Name="SYS_User" EntityType="Self.SYS_User" />
+          <EntitySet Name="WX_App" EntityType="Self.WX_App" />
+          <EntitySet Name="WX_Media" EntityType="Self.WX_Media" />
+          <EntitySet Name="WX_Menu" EntityType="Self.WX_Menu" />
+          <EntitySet Name="WX_Message" EntityType="Self.WX_Message" />
+          <EntitySet Name="WX_Queue" EntityType="Self.WX_Queue" />
+          <EntitySet Name="WX_User" EntityType="Self.WX_User" />
+          <EntitySet Name="WX_UserGroup" EntityType="Self.WX_UserGroup" />
+          <EntitySet Name="WX_UserTag" EntityType="Self.WX_UserTag" />
+          <AssociationSet Name="FK_SYS_DEPA_REFERENCE_SYS_DEPA" Association="Self.FK_SYS_DEPA_REFERENCE_SYS_DEPA">
+            <End Role="SYS_Department" EntitySet="SYS_Department" />
+            <End Role="SYS_Department1" EntitySet="SYS_Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_DEPA_REFERENCE_SYS_USER" Association="Self.FK_SYS_DEPA_REFERENCE_SYS_USER">
+            <End Role="SYS_User" EntitySet="SYS_User" />
+            <End Role="SYS_Department" EntitySet="SYS_Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_DEPA_REFERENCE_WX_APP" Association="Self.FK_SYS_DEPA_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="SYS_Department" EntitySet="SYS_Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_FUNC_REFERENCE_SYS_FUNC" Association="Self.FK_SYS_FUNC_REFERENCE_SYS_FUNC">
+            <End Role="SYS_Function" EntitySet="SYS_Function" />
+            <End Role="SYS_Function1" EntitySet="SYS_Function" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_RIGH_REFERENCE_SYS_FUNC" Association="Self.FK_SYS_RIGH_REFERENCE_SYS_FUNC">
+            <End Role="SYS_Function" EntitySet="SYS_Function" />
+            <End Role="SYS_Right" EntitySet="SYS_Right" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_RIGH_REFERENCE_SYS_ROLE" Association="Self.FK_SYS_RIGH_REFERENCE_SYS_ROLE">
+            <End Role="SYS_Role" EntitySet="SYS_Role" />
+            <End Role="SYS_Right" EntitySet="SYS_Right" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_ROLE_REFERENCE_WX_APP" Association="Self.FK_SYS_ROLE_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="SYS_Role" EntitySet="SYS_Role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_USER_REFERENCE_SYS_ROLE" Association="Self.FK_SYS_USER_REFERENCE_SYS_ROLE">
+            <End Role="SYS_Role" EntitySet="SYS_Role" />
+            <End Role="SYS_User" EntitySet="SYS_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_SETT_REFERENCE_WX_APP" Association="Self.FK_SYS_SETT_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="SYS_Setting" EntitySet="SYS_Setting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_USER_REFERENCE_WX_APP" Association="Self.FK_SYS_USER_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="SYS_User" EntitySet="SYS_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USER_REFERENCE_SYS_USER" Association="Self.FK_WX_USER_REFERENCE_SYS_USER">
+            <End Role="SYS_User" EntitySet="SYS_User" />
+            <End Role="WX_User" EntitySet="WX_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_MEDIA_REFERENCE_WX_APP" Association="Self.FK_WX_MEDIA_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_Media" EntitySet="WX_Media" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_MENU_REFERENCE_WX_APP" Association="Self.FK_WX_MENU_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_Menu" EntitySet="WX_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USER_REFERENCE_WX_APP" Association="Self.FK_WX_USER_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_User" EntitySet="WX_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USERG_REFERENCE_WX_APP" Association="Self.FK_WX_USERG_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_UserGroup" EntitySet="WX_UserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USERT_REFERENCE_WX_APP" Association="Self.FK_WX_USERT_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_UserTag" EntitySet="WX_UserTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_MENU_REFERENCE_WX_MENU" Association="Self.FK_WX_MENU_REFERENCE_WX_MENU">
+            <End Role="WX_Menu" EntitySet="WX_Menu" />
+            <End Role="WX_Menu1" EntitySet="WX_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_QUEUE_REFERENCE_WX_USER" Association="Self.FK_WX_QUEUE_REFERENCE_WX_USER">
+            <End Role="WX_User" EntitySet="WX_User" />
+            <End Role="WX_Queue" EntitySet="WX_Queue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USER_REFERENCE_WX_USERG" Association="Self.FK_WX_USER_REFERENCE_WX_USERG">
+            <End Role="WX_UserGroup" EntitySet="WX_UserGroup" />
+            <End Role="WX_User" EntitySet="WX_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USER_REFERENCE_WX_USERT" Association="Self.FK_WX_USER_REFERENCE_WX_USERT">
+            <End Role="WX_UserTag" EntitySet="WX_UserTag" />
+            <End Role="WX_User" EntitySet="WX_User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WXDataModelStoreContainer" CdmEntityContainer="WXDataEntities">
+          <EntitySetMapping Name="SYS_Department">
+            <EntityTypeMapping TypeName="WXDataModel.SYS_Department">
+              <MappingFragment StoreEntitySet="SYS_Department">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Function">
+            <EntityTypeMapping TypeName="WXDataModel.SYS_Function">
+              <MappingFragment StoreEntitySet="SYS_Function">
+                <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
+                <ScalarProperty Name="FunctionUrl" ColumnName="FunctionUrl" />
+                <ScalarProperty Name="FunctionType" ColumnName="FunctionType" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Log">
+            <EntityTypeMapping TypeName="WXDataModel.SYS_Log">
+              <MappingFragment StoreEntitySet="SYS_Log">
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Right">
+            <EntityTypeMapping TypeName="WXDataModel.SYS_Right">
+              <MappingFragment StoreEntitySet="SYS_Right">
+                <ScalarProperty Name="RightID" ColumnName="RightID" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Role">
+            <EntityTypeMapping TypeName="WXDataModel.SYS_Role">
+              <MappingFragment StoreEntitySet="SYS_Role">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="RoleSign" ColumnName="RoleSign" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Setting">
+            <EntityTypeMapping TypeName="WXDataModel.SYS_Setting">
+              <MappingFragment StoreEntitySet="SYS_Setting">
+                <ScalarProperty Name="SettingId" ColumnName="SettingId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="SettingKey" ColumnName="SettingKey" />
+                <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_User">
+            <EntityTypeMapping TypeName="WXDataModel.SYS_User">
+              <MappingFragment StoreEntitySet="SYS_User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Telphone" ColumnName="Telphone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WXId" ColumnName="WXId" />
+                <ScalarProperty Name="UserState" ColumnName="UserState" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_App">
+            <EntityTypeMapping TypeName="WXDataModel.WX_App">
+              <MappingFragment StoreEntitySet="WX_App">
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="AppName" ColumnName="AppName" />
+                <ScalarProperty Name="AppSecret" ColumnName="AppSecret" />
+                <ScalarProperty Name="WXId" ColumnName="WXId" />
+                <ScalarProperty Name="AppType" ColumnName="AppType" />
+                <ScalarProperty Name="AppState" ColumnName="AppState" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_Media">
+            <EntityTypeMapping TypeName="WXDataModel.WX_Media">
+              <MappingFragment StoreEntitySet="WX_Media">
+                <ScalarProperty Name="MyMediaId" ColumnName="MyMediaId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="MediaId" ColumnName="MediaId" />
+                <ScalarProperty Name="MediaName" ColumnName="MediaName" />
+                <ScalarProperty Name="MediaType" ColumnName="MediaType" />
+                <ScalarProperty Name="MediaContent" ColumnName="MediaContent" />
+                <ScalarProperty Name="MediaState" ColumnName="MediaState" />
+                <ScalarProperty Name="UploadTime" ColumnName="UploadTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_Menu">
+            <EntityTypeMapping TypeName="WXDataModel.WX_Menu">
+              <MappingFragment StoreEntitySet="WX_Menu">
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="ParentMenuId" ColumnName="ParentMenuId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="MenuType" ColumnName="MenuType" />
+                <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
+                <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
+                <ScalarProperty Name="MenuVisable" ColumnName="MenuVisable" />
+                <ScalarProperty Name="MenuSort" ColumnName="MenuSort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_Message">
+            <EntityTypeMapping TypeName="WXDataModel.WX_Message">
+              <MappingFragment StoreEntitySet="WX_Message">
+                <ScalarProperty Name="Msg_Id" ColumnName="Msg_Id" />
+                <ScalarProperty Name="XmlContent" ColumnName="XmlContent" />
+                <ScalarProperty Name="ToUserName" ColumnName="ToUserName" />
+                <ScalarProperty Name="FromUserName" ColumnName="FromUserName" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Event" ColumnName="Event" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="MediaId" ColumnName="MediaId" />
+                <ScalarProperty Name="MsgType" ColumnName="MsgType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_Queue">
+            <EntityTypeMapping TypeName="WXDataModel.WX_Queue">
+              <MappingFragment StoreEntitySet="WX_Queue">
+                <ScalarProperty Name="MsgId" ColumnName="MsgId" />
+                <ScalarProperty Name="OpenID" ColumnName="OpenID" />
+                <ScalarProperty Name="MsgType" ColumnName="MsgType" />
+                <ScalarProperty Name="XmlContent" ColumnName="XmlContent" />
+                <ScalarProperty Name="MsgState" ColumnName="MsgState" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_User">
+            <EntityTypeMapping TypeName="WXDataModel.WX_User">
+              <MappingFragment StoreEntitySet="WX_User">
+                <ScalarProperty Name="OpenID" ColumnName="OpenID" />
+                <ScalarProperty Name="TageId" ColumnName="TageId" />
+                <ScalarProperty Name="GrooupId" ColumnName="GrooupId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserNick" ColumnName="UserNick" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="HeadImageUrl" ColumnName="HeadImageUrl" />
+                <ScalarProperty Name="UserSex" ColumnName="UserSex" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="SubscribeTime" ColumnName="SubscribeTime" />
+                <ScalarProperty Name="UnSubscribeTime" ColumnName="UnSubscribeTime" />
+                <ScalarProperty Name="Telphone" ColumnName="Telphone" />
+                <ScalarProperty Name="Emial" ColumnName="Emial" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_UserGroup">
+            <EntityTypeMapping TypeName="WXDataModel.WX_UserGroup">
+              <MappingFragment StoreEntitySet="WX_UserGroup">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="GroupSort" ColumnName="GroupSort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_UserTag">
+            <EntityTypeMapping TypeName="WXDataModel.WX_UserTag">
+              <MappingFragment StoreEntitySet="WX_UserTag">
+                <ScalarProperty Name="TageId" ColumnName="TageId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+                <ScalarProperty Name="UserCount" ColumnName="UserCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

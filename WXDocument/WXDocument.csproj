@@ -53,6 +53,9 @@
     <Content Include="1数据库\初始化数据.sql" />
     <Content Include="1数据库\建库建表建约束.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="1数据库\微信.pdm" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

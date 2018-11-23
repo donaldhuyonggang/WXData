@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="82ed0a555dde4632a5d59e7ffad02c83" Name="Diagram1">
+        <EntityTypeShape EntityType="WXDataModel.SYS_Department" Width="1.5" PointX="6" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.SYS_Function" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.SYS_Log" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.SYS_Right" Width="1.5" PointX="5.25" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.SYS_Role" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.SYS_Setting" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.SYS_User" Width="1.5" PointX="8.25" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_App" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_Media" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_Menu" Width="1.5" PointX="3" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_Message" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_Queue" Width="1.5" PointX="12.75" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_User" Width="1.5" PointX="10.5" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_UserGroup" Width="1.5" PointX="3" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_UserTag" Width="1.5" PointX="3" PointY="26.25" IsExpanded="true" />
+        <AssociationConnector Association="WXDataModel.FK_SYS_DEPA_REFERENCE_SYS_DEPA" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_SYS_DEPA_REFERENCE_SYS_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_SYS_DEPA_REFERENCE_WX_APP" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_SYS_FUNC_REFERENCE_SYS_FUNC" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_SYS_RIGH_REFERENCE_SYS_FUNC" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_SYS_RIGH_REFERENCE_SYS_ROLE" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_SYS_ROLE_REFERENCE_WX_APP" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_SYS_USER_REFERENCE_SYS_ROLE" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_SYS_SETT_REFERENCE_WX_APP" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_SYS_USER_REFERENCE_WX_APP" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_WX_USER_REFERENCE_SYS_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_WX_MEDIA_REFERENCE_WX_APP" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_WX_MENU_REFERENCE_WX_APP" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_WX_USER_REFERENCE_WX_APP" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_WX_USERG_REFERENCE_WX_APP" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_WX_USERT_REFERENCE_WX_APP" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_WX_MENU_REFERENCE_WX_MENU" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_WX_QUEUE_REFERENCE_WX_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_WX_USER_REFERENCE_WX_USERG" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_WX_USER_REFERENCE_WX_USERT" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

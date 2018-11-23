@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2018-11-22 20:52:48                          */
+/* Created on:     2018-11-23 15:45:49                          */
 /*==============================================================*/
 
 create database WXData
@@ -258,7 +258,7 @@ go
 /* Table: SYS_Department                                        */
 /*==============================================================*/
 create table SYS_Department (
-   DepartmentId         int                  not null,
+   DepartmentId         int                  identity,
    DepartmentName       nvarchar(50)         null,
    ParentId             int                  null,
    AppId                varchar(50)          null,
@@ -285,7 +285,7 @@ go
 /* Table: SYS_Function                                          */
 /*==============================================================*/
 create table SYS_Function (
-   FunctionID           int                  not null,
+   FunctionID           int                  identity,
    ParentID             int                  null,
    FunctionName         nvarchar(50)         null,
    FunctionUrl          nvarchar(255)        null,
@@ -322,10 +322,9 @@ go
 /* Table: SYS_Right                                             */
 /*==============================================================*/
 create table SYS_Right (
-   RightID              int                  not null,
    RoleId               int                  not null,
    FunctionID           int                  not null,
-   constraint PK_SYS_RIGHT primary key (RightID, RoleId, FunctionID)
+   constraint PK_SYS_RIGHT primary key (RoleId, FunctionID)
 )
 go
 
