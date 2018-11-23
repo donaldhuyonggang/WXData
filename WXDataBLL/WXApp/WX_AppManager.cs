@@ -9,6 +9,6 @@ namespace WXDataBLL.WXApp
 {
     public class WX_AppManager : BaseBLL<WX_App>
     {
-        
+         
     }
 }
