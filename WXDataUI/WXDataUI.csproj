@@ -280,6 +280,20 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WXDataBLL\WXDataBLL.csproj">
+      <Project>{3f2d33ca-8feb-4f4d-baa7-ef915ec31938}</Project>
+      <Name>WXDataBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WXDataModel\WXDataModel.csproj">
+      <Project>{4925bb63-a6f9-4b87-ad78-f4959faf5324}</Project>
+      <Name>WXDataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WXService\WXService.csproj">
+      <Project>{830e0a30-8499-4158-b623-9ae3fe5cb6ec}</Project>
+      <Name>WXService</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
