@@ -40,8 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="BaseBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SYSUser\SYS_UserManager.cs" />
+    <Compile Include="WXApp\WX_AppManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WXDataDAL\WXDataDAL.csproj">
+      <Project>{483b16c5-d1c8-467b-94e1-b7c432b65d1c}</Project>
+      <Name>WXDataDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WXDataModel\WXDataModel.csproj">
+      <Project>{4925bb63-a6f9-4b87-ad78-f4959faf5324}</Project>
+      <Name>WXDataModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
