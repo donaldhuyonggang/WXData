@@ -8,7 +8,6 @@
     <link href="~/Content/easyui/bootstrap/tabs.css" rel="stylesheet" />
     <link href="~/Content/easyui/bootstrap/tree.css" rel="stylesheet" />
     <link href="~/Content/easyui/bootstrap/layout.css" rel="stylesheet" />
-
     <link href="~/Content/WXCustom/Index.css" rel="stylesheet" />
 
 } 
@@ -75,7 +74,14 @@
     <div class="padd" data-options="region:'west',iconCls:'icon-reload',title:'用户分类',split:true" style="width:250px;max-width:350px">
         <div id="ts" class="easyui-tabs">
             <div title="分组分类" style="padding:10px 20px;display:none;">
-                <ul id="tree" class="easyui-tree"></ul>
+                <ul id="tree" class="easyui-tree">
+                    <li>
+                        <span>File 2</span>
+                    </li>
+                    <li>
+                        <span>File 3</span>
+                    </li>  
+                </ul>
             </div>
             <div title="标签分类" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
                 tab2
@@ -99,7 +105,6 @@
     <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
     <script>
 
-
         $(function () {
             $('#tt').tabs({
                 fit: true,
@@ -108,11 +113,11 @@
             });
 
             $('#tree').tree({
-                url: "/Home/GetUser",
+                //url: "/Home/GetUser",
                 onDblClick: function (node) {
                     $('#routine').tabs('add', {
                         title: '个人信息',
-                        href: '/home/GetUserInfo?openid=' + node.id,
+                        href: '/WXCustom/Home/userinfo',
                         closable: true,
                         fit: true,
                     });
@@ -133,13 +138,10 @@
                         "</div>" +
                     "</div>",
                         closable: true,
-                    }),
-                    Add(node.text); //添加聊天内容
+                    })
+                    //Add(node.text); //添加聊天内容
                 },
             });
-
-
-
 
             //发送按钮点击
             $(document).on("click", ".btn_send", function () {
@@ -180,7 +182,6 @@
                     $("#" + node + "").html(jsonStr);
                 });
             }
-
             ////左侧用户分组选项卡
             //$('#ts').tabs({
             //    fit: true
