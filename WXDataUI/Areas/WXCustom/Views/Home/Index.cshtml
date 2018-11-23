@@ -3,15 +3,14 @@
     ViewBag.Title = "Index";
 }
 @section styles{
- 
+
     <link href="~/Content/easyui/bootstrap/panel.css" rel="stylesheet" />
     <link href="~/Content/easyui/bootstrap/tabs.css" rel="stylesheet" />
     <link href="~/Content/easyui/bootstrap/tree.css" rel="stylesheet" />
     <link href="~/Content/easyui/bootstrap/layout.css" rel="stylesheet" />
-
     <link href="~/Content/WXCustom/Index.css" rel="stylesheet" />
 
-} 
+}
 
 <div id="cc" class="easyui-layout" style="width:100%;height:100%;">
     @*右侧常规操作（常用语）用户聊天记录，用户个人信息*@
@@ -75,7 +74,14 @@
     <div class="padd" data-options="region:'west',iconCls:'icon-reload',title:'用户分类',split:true" style="width:250px;max-width:350px">
         <div id="ts" class="easyui-tabs">
             <div title="分组分类" style="padding:10px 20px;display:none;">
-                <ul id="tree" class="easyui-tree"></ul>
+                <ul id="tree" class="easyui-tree">
+                    <li>
+                        <span>File 2</span>
+                    </li>
+                    <li>
+                        <span>File 3</span>
+                    </li>
+                </ul>
             </div>
             <div title="标签分类" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
                 tab2
@@ -99,7 +105,6 @@
     <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
     <script>
 
-
         $(function () {
             $('#tt').tabs({
                 fit: true,
@@ -108,43 +113,24 @@
             });
 
             $('#tree').tree({
-                url: "/Home/GetUser",
+                //url: "/Home/GetUser",
                 onDblClick: function (node) {
                     $('#routine').tabs('add', {
                         title: '个人信息',
-                        href: '/home/GetUserInfo?openid=' + node.id,
+                        href: '/WXCustom/Home/userinfo',
                         closable: true,
                         fit: true,
                     });
                     $('#tt').tabs('add', {
                         title: node.text,
-                        content: "<div class=\"talk-body Roll\" id=\"" + node.text + "\">" +
-                        //动态加载聊天内容
-                    "</div>" +
-                    "<div class=\"talk-bottom\">" +
-                        "<div class=\"emotion col-xs-11 text-right\">" +
-                           "<a href=\"#\" class=\"glyphicon glyphicon-time\"></a>" +
-                        "</div>" +
-                        "<div class=\"inputtext col-xs-12\">" +
-                            "<textarea rows=\"4\" id=\"note\"></textarea>" +
-                        "</div>" +
-                        "<div class=\"button col-xs-12 text-right\" style=\"margin-top:5px;\">" +
-                            "<a id=\"\"   class=\"btn btn-default btn_send\"> 发送 </a>" +
-                        "</div>" +
-                    "</div>",
+                        href: '',
                         closable: true,
-                    }),
-                    Add(node.text); //添加聊天内容
+                    });
+                    //Add(node.text); //添加聊天内容
                 },
             });
 
 
-
-
-            //发送按钮点击
-            $(document).on("click", ".btn_send", function () {
-
-            });
 
 
 
@@ -180,7 +166,6 @@
                     $("#" + node + "").html(jsonStr);
                 });
             }
-
             ////左侧用户分组选项卡
             //$('#ts').tabs({
             //    fit: true
