@@ -222,6 +222,8 @@
     <Content Include="Areas\Common\Views\web.config" />
     <Content Include="Areas\Base\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Base\Views\Home\SYS_User.cshtml" />
+    <Content Include="Areas\Base\Views\Home\Modal\Sys_UserUpdate.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

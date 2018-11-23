@@ -13,5 +13,32 @@ namespace WXDataUI.Areas.Base.Controllers
         {
             return View();
         }
+
+        public ActionResult ToSysUser()
+        {
+            return View("SYS_User");
+        }
+
+        [HttpGet]
+        public ActionResult InsertSysUser()
+        {
+            return PartialView("Modal/Sys_UserUpdate");
+        }
+
+        //public ActionResult GetUsers()
+        //{
+        //    var list = SYS_UserManager.QueryAll();
+        //    var json = list.Select(u => new
+        //    {
+        //        u.UserId,
+        //        u.LoginId,
+        //        u.UserName,
+        //        u.UserState,
+        //        u.Telphone,
+        //        u.Email,
+        //        RoleName = u.SYS_Role.RoleName
+        //    });
+        //    return Json(json, JsonRequestBehavior.AllowGet);
+        //}
     }
 }
