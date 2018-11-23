@@ -22,6 +22,9 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         }
 
 
+        public ActionResult TakeToUser() {
+            return View();
+        }
 
     }
 }
