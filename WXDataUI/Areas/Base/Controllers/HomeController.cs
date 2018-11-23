@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WXDataBLL.SYSUser;
+using WXDataModel;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
@@ -10,6 +12,11 @@ namespace WXDataUI.Areas.Base.Controllers
     {
         // GET: Base/Home
         public ActionResult Index()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Login()
         {
             return View();
         }
@@ -22,9 +29,22 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpGet]
         public ActionResult InsertSysUser()
         {
-            return PartialView("Modal/Sys_UserUpdate");
+            return PartialView("Sys_UserUpdate");
         }
 
+
+        [HttpPost]
+        public ActionResult Login(SYS_User info)
+        {
+            SYS_User user = new SYS_UserManager().Login(info);
+            if (user!=null)
+            {
+                Session.Add("User",user);
+                Session.Add("UserName", user.UserName);
+                return Redirect("/Base/Home/Index");
+            }
+            return Content("false");
+        }
         //public ActionResult GetUsers()
         //{
         //    var list = SYS_UserManager.QueryAll();
