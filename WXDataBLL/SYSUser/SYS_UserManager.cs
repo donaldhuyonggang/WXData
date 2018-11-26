@@ -13,7 +13,7 @@ namespace WXDataBLL.SYSUser
         public SYS_User Login(SYS_User info)
         {
             return  new BaseDAL<SYS_User>()
-                .Where(x => x.LoginId == info.LoginId && x.Password == x.Password).FirstOrDefault();
+                .Where(x => x.LoginId == info.LoginId && x.Password == info.Password).FirstOrDefault();
 
         }
     }

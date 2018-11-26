@@ -226,10 +226,10 @@
     <Content Include="Areas\Base\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\UserInfo.cshtml" />
-    <Content Include="Areas\WXCustom\Views\Home\TakeToUser.cshtml" />
     <Content Include="Areas\Base\Views\Home\Sys_UserUpdate.cshtml" />
     <Content Include="Areas\Base\Views\Home\SYS_User.cshtml" />
     <Content Include="Areas\Base\Views\Home\Login.cshtml" />
+    <Content Include="Areas\WXCustom\Views\Home\TaleToUser.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -244,7 +244,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

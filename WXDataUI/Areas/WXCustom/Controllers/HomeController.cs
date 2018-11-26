@@ -12,28 +12,40 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         // GET: WXCustom/Home
         public ActionResult Index()
         {
-            return View();
+            if (Session["User"] == null)
+            {
+                return Redirect("/base/home/login");
+            }
+            else
+            {
+                return View();
+            }
         }
+
 
         /// <summary>
         /// 加载树形菜单
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetUser() {
-            var list = new WXDataBLL.WXCustom.WX_QueueManager().Where(s => s.WX_User.SYS_User.UserId==1 || s.MsgType=="1").ToList();
+        public ActionResult GetUser()
+        {
+            SYS_User user = Session["User"] as SYS_User;
+            var list = new WXDataBLL.WXCustom.WX_QueueManager().Where(s => s.WX_User.SYS_User.UserId == user.UserId || s.MsgType == "1").ToList();
             var Data = list.Select(s => new
-            {   
-                id=s.OpenID,
-                text=s.WX_User.UserNick
+            {
+                id = s.OpenID,
+                text = s.WX_User.UserNick
             });
-            return Json(Data,JsonRequestBehavior.AllowGet);
+            return Json(Data, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
         /// 用户个人信息
         /// </summary>
         /// <returns></returns>
-        public ActionResult UserInfo() {
+        public ActionResult UserInfo(string id)
+        {
+            ViewBag.user = new WXDataBLL.WXCustom.WX_UserManager().GetByPK(id);
             return PartialView();
         }
 
@@ -42,10 +54,38 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult TaleToUser(string id) {
-           List<WX_Message> list=new WXDataBLL.WXCustom.WX_MessageManager().Where(s => ( s.ToUserName == id || s.FromUserName == id) &&( s.ToUserName.Equals("admin") || s.FromUserName.Equals("admin")));
-           ViewBag.Talk = list;
-           return PartialView();
+        public ActionResult TaleToUser(string id)
+        {
+            ViewBag.OpenId = id;
+            SYS_User user = Session["User"] as SYS_User;
+            ViewBag.Talk = new WXDataBLL.WXCustom.WX_QueueManager().Where(s => s.MsgState == 1);
+             //new WXDataBLL.WXCustom.WX_MessageManager().Where(s => s.ToUserName == id || s.FromUserName == id && (s.ToUserName.Equals(user.UserName) || s.FromUserName.Equals(user.UserName)));
+            return PartialView();
+        }
+
+        /// <summary>
+        /// 删除已读临时信息并添加至消息记录
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DeleteMessage() {
+            List<WX_Queue> list= new WXDataBLL.WXCustom.WX_QueueManager().Where(s => s.MsgState == 2);
+            var isTrue = false; //是否删除
+            if (list != null)
+            {
+                WX_Message mess = new WX_Message();
+                SYS_User user = Session["User"] as SYS_User;
+                foreach (WX_Queue item in list)
+                {
+                    mess.Msg_Id = item.MsgId;
+                    mess.XmlContent = item.XmlContent;
+                    mess.ToUserName = user.UserName;
+                    mess.FromUserName = item.OpenID;
+                    mess.CreateTime = item.CreateTime;
+                    new WXDataBLL.WXCustom.WX_MessageManager().Add(mess);
+                    isTrue = new WXDataBLL.WXCustom.WX_QueueManager().Delete(item);
+                }
+            }
+            return Json(isTrue,JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -54,12 +94,10 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// <param name="msg"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult TaleToUser(WX_Message msg) {
+        public ActionResult TaleToUser(WX_Message msg)
+        {
             bool IsTrue = new WXDataBLL.WXCustom.WX_MessageManager().Add(msg);
-            return Json(IsTrue,JsonRequestBehavior.AllowGet);
+            return Json(IsTrue, JsonRequestBehavior.AllowGet);
         }
-
-
-
     }
 }

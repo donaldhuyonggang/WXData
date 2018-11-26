@@ -115,65 +115,26 @@
                 url: "/WXCustom/Home/GetUser",
                 onDblClick: function (node) {
                     $('#routine').tabs('add', {
+                        id:node.id,
                         title: '个人信息',
-                        href: '/WXCustom/Home/userinfo',
+                        href: '/WXCustom/Home/userinfo/'+node.id,
                         closable: true,
                         fit: true,
                     });
                     $('#tt').tabs('add', {
-                        title: node.text,
+                        title:node.text,
                         href: '/WXCustom/home/TaleToUser/'+node.id,
                         closable: true,
                     });
-                    //Add(node.text); //添加聊天内容
                 },
             });
 
-
-
-
-
-            //动态添加聊天内容
-            function Add(node) {
-                $.post("/Home/GetMessage/ads123", "", function (json) {
-                    var jsonStr = "<div class=\"talk-media\">" +
-                                "<div class=\"time\">" +
-                                //时间
-                        "</div>" +
-                        "</div>";
-                    $.each(json, function (i, obj) {
-                        if (obj.FromUserName == "admin") {
-                            var ad = "<div class=\"talk-media\">" +
-                                    "<img src=\"/Images/a6062fea7d34eb9a0ab531faba1ee3054d3ee6a9864c-eqrZQF_fw658.jpg\" class=\"user-head-r\" alt=\"头像\">" +
-                                    "<div class=\"user-note-r bg-color\">" +
-                                    "<div class=\"arrowr\"></div>" +
-                                    obj.Content +
-                                "</div>" +
-                            "</div>";
-                            jsonStr += ad;
-                        } else {
-                            var fr = "<div class=\"talk-media\">" +
-                            "<img src=\"/Images/a6062fea7d34eb9a0ab531faba1ee3054d3ee6a9864c-eqrZQF_fw658.jpg\" class=\"user-head-l\" alt=\"头像\">" +
-                               "<div class=\"user-note-l bg-color-f5\">" +
-                                   "<div class=\"arrowl\"></div>" +
-                                   obj.Content +
-                            "</div>" +
-                          "</div>";
-                            jsonStr += fr
-                        }
-                    });
-                    $("#" + node + "").html(jsonStr);
-                });
-            }
-            ////左侧用户分组选项卡
-            //$('#ts').tabs({
-            //    fit: true
-            //});
 
             ////右侧常规操作选项卡
             $('#routine').tabs({
                 fit: true
             });
+
         });//加载事件
     </script>
 }
