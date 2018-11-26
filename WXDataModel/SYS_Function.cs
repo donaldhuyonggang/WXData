@@ -17,18 +17,19 @@ namespace WXDataModel
         public SYS_Function()
         {
             this.SYS_Function1 = new HashSet<SYS_Function>();
-            this.SYS_Right = new HashSet<SYS_Right>();
+            this.SYS_Role = new HashSet<SYS_Role>();
         }
     
         public int FunctionID { get; set; }
         public Nullable<int> ParentID { get; set; }
         public string FunctionName { get; set; }
+        public string ImageUrl { get; set; }
         public string FunctionUrl { get; set; }
         public string FunctionType { get; set; }
         public string Remark { get; set; }
     
         public virtual ICollection<SYS_Function> SYS_Function1 { get; set; }
         public virtual SYS_Function SYS_Function2 { get; set; }
-        public virtual ICollection<SYS_Right> SYS_Right { get; set; }
+        public virtual ICollection<SYS_Role> SYS_Role { get; set; }
     }
 }

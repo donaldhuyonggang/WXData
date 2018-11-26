@@ -16,6 +16,7 @@ namespace WXDataModel
     {
         public WX_User()
         {
+            this.WX_CustomMsg = new HashSet<WX_CustomMsg>();
             this.WX_Queue = new HashSet<WX_Queue>();
         }
     
@@ -42,6 +43,7 @@ namespace WXDataModel
     
         public virtual SYS_User SYS_User { get; set; }
         public virtual WX_App WX_App { get; set; }
+        public virtual ICollection<WX_CustomMsg> WX_CustomMsg { get; set; }
         public virtual ICollection<WX_Queue> WX_Queue { get; set; }
         public virtual WX_UserGroup WX_UserGroup { get; set; }
         public virtual WX_UserTag WX_UserTag { get; set; }

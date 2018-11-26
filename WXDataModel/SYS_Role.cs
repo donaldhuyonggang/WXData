@@ -16,8 +16,8 @@ namespace WXDataModel
     {
         public SYS_Role()
         {
-            this.SYS_Right = new HashSet<SYS_Right>();
             this.SYS_User = new HashSet<SYS_User>();
+            this.SYS_Function = new HashSet<SYS_Function>();
         }
     
         public int RoleId { get; set; }
@@ -25,8 +25,8 @@ namespace WXDataModel
         public string RoleSign { get; set; }
         public string RoleName { get; set; }
     
-        public virtual ICollection<SYS_Right> SYS_Right { get; set; }
         public virtual WX_App WX_App { get; set; }
         public virtual ICollection<SYS_User> SYS_User { get; set; }
+        public virtual ICollection<SYS_Function> SYS_Function { get; set; }
     }
 }
