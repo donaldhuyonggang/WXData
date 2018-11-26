@@ -139,6 +139,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dashboard.css" />
     <Content Include="Content\easyui\bootstrap\images\accordion_arrows.png" />
     <Content Include="Content\easyui\bootstrap\images\blank.gif" />
     <Content Include="Content\easyui\bootstrap\images\calendar_arrows.png" />
@@ -199,6 +200,8 @@
     <Content Include="Content\easyui\icons\tip.png" />
     <Content Include="Content\easyui\icons\undo.png" />
     <Content Include="Content\easyui\mobile.css" />
+    <Content Include="Content\Images\aiwrap.png" />
+    <Content Include="Content\Images\web_login_bg.jpg" />
     <Content Include="Content\login.css" />
     <Content Include="Content\WXCustom\Index.css" />
     <Content Include="favicon.ico" />
@@ -223,7 +226,10 @@
     <Content Include="Areas\Base\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\UserInfo.cshtml" />
-    <Content Include="Areas\WXCustom\Views\Home\TaleToUser.cshtml" />
+    <Content Include="Areas\WXCustom\Views\Home\TakeToUser.cshtml" />
+    <Content Include="Areas\Base\Views\Home\Sys_UserUpdate.cshtml" />
+    <Content Include="Areas\Base\Views\Home\SYS_User.cshtml" />
+    <Content Include="Areas\Base\Views\Home\Login.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -252,7 +258,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Base\Models\" />
+    <Folder Include="Areas\Base\Views\Home\Modal\" />
     <Folder Include="Areas\Base\Views\Shared\" />
     <Folder Include="Areas\Common\Controllers\" />
     <Folder Include="Areas\Common\Models\" />
@@ -260,7 +266,7 @@
     <Folder Include="Areas\WXApp\Controllers\" />
     <Folder Include="Areas\WXApp\Models\" />
     <Folder Include="Areas\WXApp\Views\Shared\" />
-    <Folder Include="Areas\WXCustom\Views\Models\" />
+    <Folder Include="Areas\WXCustom\Models\" />
     <Folder Include="Areas\WXCustom\Views\Shared\" />
     <Folder Include="Areas\WXMedia\Controllers\" />
     <Folder Include="Areas\WXMedia\Models\" />

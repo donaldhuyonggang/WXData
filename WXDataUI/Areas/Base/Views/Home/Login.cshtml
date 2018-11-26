@@ -1,0 +1,81 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>登录</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/login.css" rel="stylesheet" />
+    <style>
+        .header, .footer {
+            height: 15%;
+            text-align: center;
+        }
+
+        .content {
+            position: relative;
+            height: 70%;
+        }
+
+        #Login_Form {
+            width: 400px;
+            position: absolute;
+            right: 15%;
+            top: 10%;
+        }
+
+        .tab-content {
+            border: 1px solid #ddd;
+            border-top: none;
+        }
+
+        .tab-pane {
+            padding: 0 15px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        头部
+    </div>
+    <div class="content">
+        <div>
+            <div id="Login_Form">
+
+               
+
+                <div class="login">
+                    <div class="message">管理登录</div>
+                    <div id="darkbannerwrap"></div>
+
+                    <form method="post" action="/Base/Home/Login">
+                        <input name="action" value="login" type="hidden">
+                        <input name="LoginId" placeholder="用户名" required="" type="text">
+                        <hr class="hr15">
+                        <input name="Password" placeholder="密码" required="" type="password">
+                        <hr class="hr15">
+                        <input value="登录" style="width: 100%;" type="submit">
+                        <hr class="hr20">
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        尾部
+    </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

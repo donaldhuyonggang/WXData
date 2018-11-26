@@ -12,7 +12,7 @@ namespace WXDataUI.Controllers
         public ActionResult Login()
         {
             // return View();
-            return Redirect("/Base/Home/Index");
+            return Redirect("/Base/Home/Login");
         }
     }
 }
