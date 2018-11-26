@@ -111,9 +111,8 @@
                 closable: true,
                 plain: true
             });
-
             $('#tree').tree({
-                //url: "/Home/GetUser",
+                url: "/WXCustom/Home/GetUser",
                 onDblClick: function (node) {
                     $('#routine').tabs('add', {
                         title: '个人信息',
@@ -123,7 +122,7 @@
                     });
                     $('#tt').tabs('add', {
                         title: node.text,
-                        href: '',
+                        href: '/WXCustom/home/TaleToUser/'+node.id,
                         closable: true,
                     });
                     //Add(node.text); //添加聊天内容
