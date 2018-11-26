@@ -28,14 +28,13 @@ namespace WXDataModel
         public DbSet<SYS_Department> SYS_Department { get; set; }
         public DbSet<SYS_Function> SYS_Function { get; set; }
         public DbSet<SYS_Log> SYS_Log { get; set; }
-        public DbSet<SYS_Right> SYS_Right { get; set; }
         public DbSet<SYS_Role> SYS_Role { get; set; }
         public DbSet<SYS_Setting> SYS_Setting { get; set; }
         public DbSet<SYS_User> SYS_User { get; set; }
         public DbSet<WX_App> WX_App { get; set; }
+        public DbSet<WX_CustomMsg> WX_CustomMsg { get; set; }
         public DbSet<WX_Media> WX_Media { get; set; }
         public DbSet<WX_Menu> WX_Menu { get; set; }
-        public DbSet<WX_Message> WX_Message { get; set; }
         public DbSet<WX_Queue> WX_Queue { get; set; }
         public DbSet<WX_User> WX_User { get; set; }
         public DbSet<WX_UserGroup> WX_UserGroup { get; set; }

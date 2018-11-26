@@ -20,8 +20,10 @@ namespace WXDataModel
             this.SYS_Role = new HashSet<SYS_Role>();
             this.SYS_Setting = new HashSet<SYS_Setting>();
             this.SYS_User = new HashSet<SYS_User>();
+            this.WX_CustomMsg = new HashSet<WX_CustomMsg>();
             this.WX_Media = new HashSet<WX_Media>();
             this.WX_Menu = new HashSet<WX_Menu>();
+            this.WX_Queue = new HashSet<WX_Queue>();
             this.WX_User = new HashSet<WX_User>();
             this.WX_UserGroup = new HashSet<WX_UserGroup>();
             this.WX_UserTag = new HashSet<WX_UserTag>();
@@ -40,8 +42,10 @@ namespace WXDataModel
         public virtual ICollection<SYS_Role> SYS_Role { get; set; }
         public virtual ICollection<SYS_Setting> SYS_Setting { get; set; }
         public virtual ICollection<SYS_User> SYS_User { get; set; }
+        public virtual ICollection<WX_CustomMsg> WX_CustomMsg { get; set; }
         public virtual ICollection<WX_Media> WX_Media { get; set; }
         public virtual ICollection<WX_Menu> WX_Menu { get; set; }
+        public virtual ICollection<WX_Queue> WX_Queue { get; set; }
         public virtual ICollection<WX_User> WX_User { get; set; }
         public virtual ICollection<WX_UserGroup> WX_UserGroup { get; set; }
         public virtual ICollection<WX_UserTag> WX_UserTag { get; set; }
