@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
@@ -67,7 +67,7 @@
                                 <li class="active"><a href="/home/index" id="toIndex">Index <span class="sr-only">(current)</span></a></li>
                                 <li><a href="#" id="toTest">Test</a></li>
                                 <li><a href="#">功能名</a></li>
-                                <li><a href="#">功能名</a></li>
+                                <li><a href="/Base/Home/ToSysUser">系统用户管理</a></li>
                             </ul>
                         </div>
                     </div>
@@ -117,8 +117,14 @@
         </div>
     </div>
 
+    <div class="modal fade" id="EditSysUser">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-        
     @RenderSection("scripts", required: false)
 </body>
 </html>
