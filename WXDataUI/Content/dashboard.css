@@ -160,3 +160,18 @@ body {
         .mains {
             padding: 20px 15px;
         }
+
+.form-group .control-label{
+    line-height:34px;
+    text-align:right;
+}
+
+.modal .form-group{
+    margin-bottom:5px;
+}
+
+.form-group:after{
+    content:'';
+    display:block;
+    clear:both;
+}

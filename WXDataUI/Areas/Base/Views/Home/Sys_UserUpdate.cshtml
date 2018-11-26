@@ -1,15 +1,150 @@
-﻿<div class="modal-dialog">
-    <div class="modal-content">
+﻿<form action="/" method="post">
+    <div class="modal-dialog  modal-lg" style="width:800px">
+        <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">修改信息</h4>
             </div>
             <div class="modal-body">
-                
+                <div class="form-group">
+                    <label for="inputLoginName" class="col-sm-2 control-label">用户名/登录名</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputLoginName" placeholder="">
+                    </div>
+                    <label for="inputRealName" class="col-sm-2 control-label">真实姓名</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputRealName" placeholder="">
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group">
+                    <label for="select1" class="col-sm-2 control-label">所属公司</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="select1">
+                            <option value="1">总公司</option>
+                        </select>
+                    </div>
+                    <label for="select2" class="col-sm-2 control-label">默认部门</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="select2">
+                            <option value="1">总经办</option>
+                        </select>
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">所属经理</label>
+                    <div class="col-sm-4">
+                        <select class="form-control">
+                            <option value="1">无</option>
+                        </select>
+                    </div>
+                    <label for="inputDutyTitle" class="col-sm-2 control-label">职务头衔</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputDutyTitle" placeholder="">
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group">
+                    <label for="inputUserId" class="col-sm-2 control-label">用户编码</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputUserId" placeholder="">
+                    </div>
+                    <label for="inputSortId" class="col-sm-2 control-label">排序码</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputSortId" placeholder="">
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group">
+                    <label for="inputNickName" class="col-sm-2 control-label">用户昵称</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputNickName" placeholder="">
+                    </div>
+                    <label for="inputQQId" class="col-sm-2 control-label">QQ号码</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputQQId" placeholder="">
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group">
+                    <label for="inputEmail" class="col-sm-2 control-label">邮件地址</label>
+                    <div class="col-sm-4">
+                        <input type="email" class="form-control" id="inputEmail" placeholder="">
+                    </div>
+                    <label for="inputPhone" class="col-sm-2 control-label">移动电话</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputPhone" placeholder="">
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group">
+                    <label for="inputIdentityId" class="col-sm-2 control-label">身份证号码</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputIdentityId" placeholder="">
+                    </div>
+                    <label class="col-sm-2 control-label">性别</label>
+                    <div class="col-sm-4">
+                        <div class="col-sm-6" style="height:34px;line-height:34px;">
+                            <span style="margin-right:20px;">男</span><input type="radio" name="Sex" value="男" checked>
+                        </div>
+                        <div class="col-sm-6" style="height:34px;line-height:34px;">
+                            <span style="margin-right:20px;">女</span><input type="radio" name="Sex" value="女">
+                        </div>
+                            
+                            
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group">
+                    <label for="inputBornDate" class="col-sm-2 control-label">出生日期</label>
+                    <div class="col-sm-4">
+                        <input type="date" class="form-control" id="inputBornDate" placeholder="">
+                    </div>
+                    <label for="inputPhone2" class="col-sm-2 control-label">办公电话</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputPhone2" placeholder="">
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group">
+                    <label for="inputPhone3" class="col-sm-2 control-label">家庭电话</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputPhone3" placeholder="">
+                    </div>
+                    <label for="inputAddress" class="col-sm-2 control-label">家庭住址</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputAddress" placeholder="">
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group">
+                    <label for="inputAddress2" class="col-sm-2 control-label">办公地址</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="">
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group">
+                    <label for="inputSign" class="col-sm-2 control-label">个性签名</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="inputSign">
+
+                        </textarea>
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group">
+                    <label for="inputRemark" class="col-sm-2 control-label">备注</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="inputRemark"></textarea>
+                    </div>
+                </div><!--form-group-->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary">保存</button>
             </div>
-    </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>

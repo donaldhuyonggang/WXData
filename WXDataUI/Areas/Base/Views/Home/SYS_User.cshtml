@@ -180,10 +180,8 @@
                     <div class="fromcontent">
                         <table class="table table-bordered table-hover userList">
                             <thead>
-                                <tr>
-                                    <th>
-                                        <input type="checkbox" name="name" />
-                                    </th>
+                                <tr class="text-center">
+                                    <th><input type="checkbox" name="name" /></th>
                                     <th>ID</th>
                                     @*<th>用户编码</th>*@
                                     <th>用户名/登陆名</th>
@@ -200,29 +198,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @*<tr class="text-center">
-                                        <td>
-                                            <input type="checkbox" name="name" value="" />
-                                        </td>
-                                        <td>1</td>
-                                        <td>10010</td>
-                                        <td>yt</td>
-                                        <td>管理员</td>
-                                        <td>正常</td>
-                                        <td>正常</td>
-                                        <td>1854646465</td>
-                                        <td>w3c.com</td>
-                                        <td>男</td>
-                                        <td> <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-qrcode icolor" ></span></a></td>
-                                        <td> <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-wrench icolor"></span></a> </td>
-                                        <td>
-                                            <ul class="list-inline marg operation">
-                                                <li class="Find btn btn-success" data-toggle="tooltip" data-placement="right" title="查看"><a href="#" class="glyphicon glyphicon-search"></a></li>
-                                                <li class="Upda btn btn-info" data-toggle="tooltip" data-placement="right" title="修改"><a href="#" class="glyphicon glyphicon-pencil"></a></li>
-                                                <li class="Dele btn btn-danger" data-toggle="tooltip" data-placement="right" title="删除"><a href="#" class="glyphicon glyphicon-remove"></a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>*@
+
                             </tbody>
                         </table>
                     </div>
@@ -255,42 +231,42 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
 
-        ////拉取用户信息填充表格
-        //$.post("/Home/GetUsers", "", function (json) {
-        //    var tr = "";
-        //    $.each(json, function (i, obj) {
-        //        tr += "<tr class=\"text-center\">" +
-        //                   "<td>" +
-        //                   "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
-        //                   "</td>" +
-        //                   "<td>" + obj.UserId + "</td>" +
-        //                   "<td>" + obj.LoginId + "</td>" +
-        //                   "<td>" + obj.UserName + "</td>" +
-        //                   "<td>" + obj.RoleName + "</td>" +
-        //                   "<td>" + obj.UserState + "</td>" +
-        //                   "<td>" + obj.Telphone + "</td>" +
-        //                   "<td>" + obj.Email + "</td>" +
-        //                   "<td> <a href=\"#\" class=\"btn btn-info\">" +
-        //                   "    <span class=\"glyphicon glyphicon-qrcode icolor\"></span></a></td>" +
-        //                   "<td> <a href=\"#\" class=\"btn btn-info\">" +
-        //                   "   <span class=\"glyphicon glyphicon-wrench icolor\"></span></a> </td>" +
-        //                   "<td>" +
-        //                       "<ul class=\"list-inline marg operation\">" +
-        //                           "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
-        //                           "   <a href=\"#\" class=\"glyphicon glyphicon-search\"></a></li>" +
-        //                           "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改\">" +
-        //                           "   <a href=\"/Home/ToUpdateSysUser/" + obj.UserId + "\" data-toggle=\"modal\" data-target=\"#UpdateSysUser\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
-        //                           "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
-        //                           "   <a href=\"#\" class=\"glyphicon glyphicon-remove\"></a></li>" +
-        //                       "</ul>" +
-        //                   "</td>" +
-        //               "</tr>";
+        //拉取用户信息填充表格
+        $.post("/Base/Home/GetUsers", "", function (json) {
+            var tr = "";
+            $.each(json, function (i, obj) {
+                tr += "<tr class=\"text-center\">" +
+                           "<td>" +
+                           "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
+                           "</td>" +
+                           "<td>" + obj.UserId + "</td>" +
+                           "<td>" + obj.LoginId + "</td>" +
+                           "<td>" + obj.UserName + "</td>" +
+                           "<td>" + obj.RoleName + "</td>" +
+                           "<td>" + obj.UserState + "</td>" +
+                           "<td>" + obj.Telphone + "</td>" +
+                           "<td>" + obj.Email + "</td>" +
+                           "<td> <a href=\"#\" class=\"btn btn-info\">" +
+                           "    <span class=\"glyphicon glyphicon-qrcode icolor\"></span></a></td>" +
+                           "<td> <a href=\"#\" class=\"btn btn-info\">" +
+                           "   <span class=\"glyphicon glyphicon-wrench icolor\"></span></a> </td>" +
+                           "<td>" +
+                               "<ul class=\"list-inline marg operation\">" +
+                                   "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
+                                   "   <a href=\"#\" class=\"glyphicon glyphicon-search\"></a></li>" +
+                                   "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改\">" +
+                                   "   <a href=\"/Home/ToUpdateSysUser/" + obj.UserId + "\" data-toggle=\"modal\" data-target=\"#UpdateSysUser\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
+                                   "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
+                                   "   <a href=\"#\" class=\"glyphicon glyphicon-remove\"></a></li>" +
+                               "</ul>" +
+                           "</td>" +
+                       "</tr>";
 
-        //    });
-        //    $(".userList tbody").html(tr);
-        //    console.info(tr);
-        //});
-        ////拉取用户信息填充表格end
+            });
+            $(".userList tbody").html(tr);
+            console.info(tr);
+        });
+        //拉取用户信息填充表格end
     })
 
 

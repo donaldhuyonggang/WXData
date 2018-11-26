@@ -1,0 +1,70 @@
+﻿@using WXDataModel
+
+<form action="/Base/Home/AddApp" method="post">
+    <div class="modal-dialog"  style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">新增公众号</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="AppId" class="col-sm-2 control-label">公众号ID</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="AppId" id="AppId" placeholder="公众号ID">
+                    </div>
+                    <label for="AppSecret" class="col-sm-2 control-label">公众号密码</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="AppSecret" id="AppSecret" placeholder="公众号密码">
+                    </div>
+                </div><!--form-group end-->
+
+                <div class="form-group">
+                    <label for="inputAppName" class="col-sm-2 control-label">公众号名称</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="AppName" id="AppName" placeholder="公众号名称">
+                    </div>
+
+                    <label for="WXId" class="col-sm-2 control-label">微信ID</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="WXId" id="WXId" placeholder="微信ID">
+                    </div>
+                </div><!--form-group end-->
+
+                <div class="form-group">
+                    <label for="AppType" class="col-sm-2 control-label">公众号类型</label>
+                    <div class="col-sm-4">
+                        <select  class="form-control" name="AppType" id="AppType">
+                            <option value="订阅号">订阅号</option>
+                            <option value="公众号">公众号</option>
+                            <option value="企业号">企业号</option>
+                            <option value="小程序">小程序</option>
+                        </select>
+                    </div>
+
+                    <label for="CompanyName" class="col-sm-2 control-label">公司名称</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="CompanyName" id="CompanyName" placeholder="公司名称">
+                    </div>
+                </div><!--form-group end-->
+
+                <div class="form-group">
+                    <label for="Remark" class="col-sm-2 control-label">备注</label>
+                    <div class="col-sm-10">
+                        <textarea type="text" name="Remark" class="form-control" id="Remark" placeholder="备注">
+
+                        </textarea>
+                    </div>
+                </div><!--form-group end-->
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <input type="submit" class="btn btn-primary" value="保存">
+            </div>
+
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+</form>
