@@ -137,7 +137,7 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult DeleteApp(string id)
         {
             WX_App app = new BaseBLL<WX_App>().GetByPK(id);
-            app.AppState = "已注销";
+            app.AppState = "无效";
             return Json(new BaseBLL<WX_App>().Update(app), JsonRequestBehavior.AllowGet);
         }
 
