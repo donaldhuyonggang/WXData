@@ -44,7 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SYSUser\SYS_UserManager.cs" />
     <Compile Include="WXApp\WX_AppManager.cs" />
+    <Compile Include="WXCustom\WX_CustomMsgManger.cs" />
     <Compile Include="WXCustom\WX_QueueManager.cs" />
+    <Compile Include="WXCustom\WX_UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WXDataDAL\WXDataDAL.csproj">

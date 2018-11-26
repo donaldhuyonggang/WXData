@@ -12,16 +12,21 @@ namespace WXDataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class WX_Message
+    public partial class WX_CustomMsg
     {
-        public string Msg_Id { get; set; }
-        public string XmlContent { get; set; }
-        public string ToUserName { get; set; }
-        public string FromUserName { get; set; }
+        public string MsgId { get; set; }
+        public string OpenID { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public string AppId { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public string Event { get; set; }
         public string Content { get; set; }
+        public string MsgSource { get; set; }
         public string MediaId { get; set; }
         public string MsgType { get; set; }
+        public string XmlContent { get; set; }
+    
+        public virtual SYS_User SYS_User { get; set; }
+        public virtual WX_App WX_App { get; set; }
+        public virtual WX_User WX_User { get; set; }
     }
 }

@@ -58,9 +58,6 @@
     <Compile Include="SYS_Log.cs">
       <DependentUpon>WXData.tt</DependentUpon>
     </Compile>
-    <Compile Include="SYS_Right.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
-    </Compile>
     <Compile Include="SYS_Role.cs">
       <DependentUpon>WXData.tt</DependentUpon>
     </Compile>
@@ -88,13 +85,13 @@
     <Compile Include="WX_App.cs">
       <DependentUpon>WXData.tt</DependentUpon>
     </Compile>
+    <Compile Include="WX_CustomMsg.cs">
+      <DependentUpon>WXData.tt</DependentUpon>
+    </Compile>
     <Compile Include="WX_Media.cs">
       <DependentUpon>WXData.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_Menu.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WX_Message.cs">
       <DependentUpon>WXData.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_Queue.cs">
@@ -109,6 +106,12 @@
     <Compile Include="WX_UserTag.cs">
       <DependentUpon>WXData.tt</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="WXData.edmx">
@@ -134,12 +137,6 @@
       <DependentUpon>WXData.edmx</DependentUpon>
       <LastGenOutput>WXData.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

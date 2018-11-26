@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2018-11-23 15:45:49                          */
+/* Created on:     2018-11-26 15:18:34                          */
 /*==============================================================*/
 
 create database WXData
@@ -81,6 +81,27 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_CustomMsg') and o.name = 'FK_WX_CUSTO_REFERENCE_WX_USER')
+alter table WX_CustomMsg
+   drop constraint FK_WX_CUSTO_REFERENCE_WX_USER
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_CustomMsg') and o.name = 'FK_WX_CUSTO_REFERENCE_SYS_USER')
+alter table WX_CustomMsg
+   drop constraint FK_WX_CUSTO_REFERENCE_SYS_USER
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_CustomMsg') and o.name = 'FK_WX_CUSTO_REFERENCE_WX_APP')
+alter table WX_CustomMsg
+   drop constraint FK_WX_CUSTO_REFERENCE_WX_APP
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('WX_Media') and o.name = 'FK_WX_MEDIA_REFERENCE_WX_APP')
 alter table WX_Media
    drop constraint FK_WX_MEDIA_REFERENCE_WX_APP
@@ -105,6 +126,13 @@ if exists (select 1
    where r.fkeyid = object_id('WX_Queue') and o.name = 'FK_WX_QUEUE_REFERENCE_WX_USER')
 alter table WX_Queue
    drop constraint FK_WX_QUEUE_REFERENCE_WX_USER
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_Queue') and o.name = 'FK_WX_QUEUE_REFERENCE_WX_APP')
+alter table WX_Queue
+   drop constraint FK_WX_QUEUE_REFERENCE_WX_APP
 go
 
 if exists (select 1
@@ -207,6 +235,13 @@ go
 
 if exists (select 1
             from  sysobjects
+           where  id = object_id('WX_CustomMsg')
+            and   type = 'U')
+   drop table WX_CustomMsg
+go
+
+if exists (select 1
+            from  sysobjects
            where  id = object_id('WX_Media')
             and   type = 'U')
    drop table WX_Media
@@ -217,13 +252,6 @@ if exists (select 1
            where  id = object_id('WX_Menu')
             and   type = 'U')
    drop table WX_Menu
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('WX_Message')
-            and   type = 'U')
-   drop table WX_Message
 go
 
 if exists (select 1
@@ -270,6 +298,34 @@ go
 declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
+   '部门',
+   'user', @CurrentUser, 'table', 'SYS_Department'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '部门编号',
+   'user', @CurrentUser, 'table', 'SYS_Department', 'column', 'DepartmentId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '部门名称',
+   'user', @CurrentUser, 'table', 'SYS_Department', 'column', 'DepartmentName'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '父部门',
+   'user', @CurrentUser, 'table', 'SYS_Department', 'column', 'ParentId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
    '公众号ID',
    'user', @CurrentUser, 'table', 'SYS_Department', 'column', 'AppId'
 go
@@ -288,11 +344,68 @@ create table SYS_Function (
    FunctionID           int                  identity,
    ParentID             int                  null,
    FunctionName         nvarchar(50)         null,
+   ImageUrl             nvarchar(255)        null,
    FunctionUrl          nvarchar(255)        null,
    FunctionType         nvarchar(50)         null,
    Remark               nvarchar(255)        null,
    constraint PK_SYS_FUNCTION primary key (FunctionID)
 )
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '功能表',
+   'user', @CurrentUser, 'table', 'SYS_Function'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '功能ID',
+   'user', @CurrentUser, 'table', 'SYS_Function', 'column', 'FunctionID'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '父功能ID',
+   'user', @CurrentUser, 'table', 'SYS_Function', 'column', 'ParentID'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '功能名称',
+   'user', @CurrentUser, 'table', 'SYS_Function', 'column', 'FunctionName'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '图片URL',
+   'user', @CurrentUser, 'table', 'SYS_Function', 'column', 'ImageUrl'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'URL',
+   'user', @CurrentUser, 'table', 'SYS_Function', 'column', 'FunctionUrl'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '功能类型(系统，模块，页面，按钮)',
+   'user', @CurrentUser, 'table', 'SYS_Function', 'column', 'FunctionType'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '备注',
+   'user', @CurrentUser, 'table', 'SYS_Function', 'column', 'Remark'
 go
 
 /*==============================================================*/
@@ -331,8 +444,22 @@ go
 declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
+   '权限表',
+   'user', @CurrentUser, 'table', 'SYS_Right'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
    '角色编号',
    'user', @CurrentUser, 'table', 'SYS_Right', 'column', 'RoleId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '功能ID',
+   'user', @CurrentUser, 'table', 'SYS_Right', 'column', 'FunctionID'
 go
 
 /*==============================================================*/
@@ -443,6 +570,7 @@ create table SYS_User (
    Email                nvarchar(20)         null,
    WXId                 varchar(50)          null,
    UserState            nvarchar(10)         null,
+   HeadImageUrl         VARCHAR(max)         null,
    constraint PK_SYS_USER primary key (UserId)
 )
 go
@@ -524,6 +652,13 @@ execute sp_addextendedproperty 'MS_Description',
    'user', @CurrentUser, 'table', 'SYS_User', 'column', 'UserState'
 go
 
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '用户头像',
+   'user', @CurrentUser, 'table', 'SYS_User', 'column', 'HeadImageUrl'
+go
+
 /*==============================================================*/
 /* Table: WX_App                                                */
 /*==============================================================*/
@@ -592,8 +727,110 @@ go
 declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
+   '公司名称',
+   'user', @CurrentUser, 'table', 'WX_App', 'column', 'CompanyName'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
    '备注',
    'user', @CurrentUser, 'table', 'WX_App', 'column', 'Remark'
+go
+
+/*==============================================================*/
+/* Table: WX_CustomMsg                                          */
+/*==============================================================*/
+create table WX_CustomMsg (
+   MsgId                varchar(50)          not null,
+   OpenID               VARCHAR(50)          null,
+   UserId               int                  null,
+   AppId                varchar(50)          null,
+   CreateTime           datetime             null,
+   Content              nvarchar(max)        null,
+   MsgSource            nvarchar(5)          null,
+   MediaId              varchar(50)          null,
+   MsgType              varchar(20)          null,
+   XmlContent           nvarchar(max)        null,
+   constraint PK_WX_CUSTOMMSG primary key (MsgId)
+)
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '客服信息表',
+   'user', @CurrentUser, 'table', 'WX_CustomMsg'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '消息ID',
+   'user', @CurrentUser, 'table', 'WX_CustomMsg', 'column', 'MsgId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '用户标识',
+   'user', @CurrentUser, 'table', 'WX_CustomMsg', 'column', 'OpenID'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '系统用户编号',
+   'user', @CurrentUser, 'table', 'WX_CustomMsg', 'column', 'UserId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '公众号ID',
+   'user', @CurrentUser, 'table', 'WX_CustomMsg', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '发送时间',
+   'user', @CurrentUser, 'table', 'WX_CustomMsg', 'column', 'CreateTime'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '发送内容',
+   'user', @CurrentUser, 'table', 'WX_CustomMsg', 'column', 'Content'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '消息类型(客服，粉丝)',
+   'user', @CurrentUser, 'table', 'WX_CustomMsg', 'column', 'MsgSource'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '媒体ID',
+   'user', @CurrentUser, 'table', 'WX_CustomMsg', 'column', 'MediaId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '消息类型',
+   'user', @CurrentUser, 'table', 'WX_CustomMsg', 'column', 'MsgType'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '消息内容',
+   'user', @CurrentUser, 'table', 'WX_CustomMsg', 'column', 'XmlContent'
 go
 
 /*==============================================================*/
@@ -763,98 +1000,12 @@ execute sp_addextendedproperty 'MS_Description',
 go
 
 /*==============================================================*/
-/* Table: WX_Message                                            */
-/*==============================================================*/
-create table WX_Message (
-   Msg_Id               varchar(50)          not null,
-   XmlContent           nvarchar(50)         null,
-   ToUserName           varchar(50)          null,
-   FromUserName         varchar(50)          null,
-   CreateTime           datetime             null,
-   Event                varchar(20)          null,
-   Content              nvarchar(255)        null,
-   MediaId              varchar(50)          null,
-   MsgType              varchar(20)          null,
-   constraint PK_WX_MESSAGE primary key (Msg_Id)
-)
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '微信消息',
-   'user', @CurrentUser, 'table', 'WX_Message'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '消息ID',
-   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'Msg_Id'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '消息内容',
-   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'XmlContent'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '接收者',
-   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'ToUserName'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '发送者',
-   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'FromUserName'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '发送时间',
-   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'CreateTime'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '事件类型',
-   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'Event'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '发送内容',
-   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'Content'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '媒体ID',
-   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'MediaId'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '消息类型',
-   'user', @CurrentUser, 'table', 'WX_Message', 'column', 'MsgType'
-go
-
-/*==============================================================*/
 /* Table: WX_Queue                                              */
 /*==============================================================*/
 create table WX_Queue (
    MsgId                varchar(50)          not null,
    OpenID               varchar(50)          null,
+   AppId                varchar(50)          null,
    MsgType              varchar(20)          null,
    XmlContent           nvarchar(max)        null,
    MsgState             int                  null,
@@ -882,6 +1033,13 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '用户标识',
    'user', @CurrentUser, 'table', 'WX_Queue', 'column', 'OpenID'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '公众号ID',
+   'user', @CurrentUser, 'table', 'WX_Queue', 'column', 'AppId'
 go
 
 declare @CurrentUser sysname
@@ -923,7 +1081,7 @@ create table WX_User (
    UserId               int                  null,
    UserNick             VARCHAR(50)          null,
    UserName             VARCHAR(50)          null,
-   HeadImageUrl         VARCHAR(200)         null,
+   HeadImageUrl         VARCHAR(max)         null,
    UserSex              nchar(1)             null,
    Language             nVARCHAR(50)         null,
    City                 nVARCHAR(50)         null,
@@ -1231,6 +1389,21 @@ alter table SYS_User
       references WX_App (AppId)
 go
 
+alter table WX_CustomMsg
+   add constraint FK_WX_CUSTO_REFERENCE_WX_USER foreign key (OpenID)
+      references WX_User (OpenID)
+go
+
+alter table WX_CustomMsg
+   add constraint FK_WX_CUSTO_REFERENCE_SYS_USER foreign key (UserId)
+      references SYS_User (UserId)
+go
+
+alter table WX_CustomMsg
+   add constraint FK_WX_CUSTO_REFERENCE_WX_APP foreign key (AppId)
+      references WX_App (AppId)
+go
+
 alter table WX_Media
    add constraint FK_WX_MEDIA_REFERENCE_WX_APP foreign key (AppId)
       references WX_App (AppId)
@@ -1249,6 +1422,11 @@ go
 alter table WX_Queue
    add constraint FK_WX_QUEUE_REFERENCE_WX_USER foreign key (OpenID)
       references WX_User (OpenID)
+go
+
+alter table WX_Queue
+   add constraint FK_WX_QUEUE_REFERENCE_WX_APP foreign key (AppId)
+      references WX_App (AppId)
 go
 
 alter table WX_User

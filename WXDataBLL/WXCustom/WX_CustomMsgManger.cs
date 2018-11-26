@@ -7,11 +7,8 @@ using WXDataModel;
 
 namespace WXDataBLL.WXCustom
 {
-    /// <summary>
-    /// 消息队列业务逻辑类。
-    /// </summary>
-    public class WX_QueueManager:BaseBLL<WX_Queue>
+    public class WX_CustomMsgManger:BaseBLL<WXDataModel.WX_CustomMsg>
     {
-
+        
     }
 }

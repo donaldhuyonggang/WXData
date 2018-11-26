@@ -226,13 +226,10 @@
     <Content Include="Areas\Base\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\UserInfo.cshtml" />
-    <Content Include="Areas\WXCustom\Views\Home\TakeToUser.cshtml" />
-    <Content Include="Areas\Base\Views\Home\SYS_UserUpdate.cshtml" />
+    <Content Include="Areas\Base\Views\Home\Sys_UserUpdate.cshtml" />
     <Content Include="Areas\Base\Views\Home\SYS_User.cshtml" />
     <Content Include="Areas\Base\Views\Home\Login.cshtml" />
-    <Content Include="Areas\Base\Views\Home\ChangeApp.cshtml" />
-    <Content Include="Areas\Base\Views\Home\AddApp.cshtml" />
-    <Content Include="Areas\Base\Views\Home\UpdateApp.cshtml" />
+    <Content Include="Areas\WXCustom\Views\Home\TaleToUser.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -247,7 +244,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -261,6 +260,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Base\Views\Home\Modal\" />
     <Folder Include="Areas\Base\Views\Shared\" />
     <Folder Include="Areas\Common\Controllers\" />
     <Folder Include="Areas\Common\Models\" />
@@ -295,10 +295,6 @@
       <Project>{3f2d33ca-8feb-4f4d-baa7-ef915ec31938}</Project>
       <Name>WXDataBLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WXDataDAL\WXDataDAL.csproj">
-      <Project>{483B16C5-D1C8-467B-94E1-B7C432B65D1C}</Project>
-      <Name>WXDataDAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WXDataModel\WXDataModel.csproj">
       <Project>{4925bb63-a6f9-4b87-ad78-f4959faf5324}</Project>
       <Name>WXDataModel</Name>
@@ -326,7 +322,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63139</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:6313/</IISUrl>
+          <IISUrl>http://localhost:63139/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

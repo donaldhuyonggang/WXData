@@ -1,0 +1,74 @@
+﻿@using WXDataModel
+
+
+<div class="talk-body Roll" id="">
+    @foreach (WXDataModel.WX_Queue item in ViewBag.Talk)
+    {
+        @*if ()
+            {
+            <div class="talk-media">
+                <div class="time">
+                    @*//时间
+                </div>
+            </div>
+            }*@
+
+        @*右侧*@
+        @*SYS_User user = Session["User"] as SYS_User;
+        if (item.FromUserName == user.UserName)
+        {
+        <div class="talk-media">
+            <img src="" class="user-head-r" alt="">
+            <div class="user-note-r bg-color">
+                <div class="arrowr"></div>
+                @*聊天内容
+                @item.XmlContent
+            </div>
+        </div>
+    }*@
+    @*左侧*@
+        <div class="talk-media">
+            <img src="" class="user-head-l" alt="">
+            <div class="user-note-l bg-color-f5">
+                <div class="arrowl"></div>
+                @*内容*@
+                @item.XmlContent
+            </div>
+        </div>
+    }
+</div>
+
+<div class="talk-bottom">
+    <div class="emotion col-xs-11 text-right">
+        <a href="#" class="glyphicon glyphicon-time"></a>
+    </div>
+    <div class="inputtext col-xs-12">
+        <textarea rows="4" id="note"></textarea>
+    </div>
+    <div class="button col-xs-12 text-right" style="margin-top:5px;">
+        <a id="" class="btn btn-default btn_send"> 发送 </a>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        //setInterval(function () {
+
+        //}, 1000);
+
+        //发送按钮点击
+        $(document).on("click", ".btn_send", function () {
+            var info = {
+                Msg_Id:'@Guid.NewGuid()',
+                XmlContent:$("#note").val(),
+                CreateTime: '@DateTime.Now',
+                ToUserName: '@ViewBag.OpenId'
+            }//josn
+            $.post("/WXCustom/home/TaleToUser/", info, function (data) {
+                if (data) {
+
+                }
+            })
+        });
+    })//窗体加载
+</script>
