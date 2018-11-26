@@ -58,7 +58,13 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         {
             ViewBag.OpenId = id;
             SYS_User user = Session["User"] as SYS_User;
-            ViewBag.Talk = new WXDataBLL.WXCustom.WX_QueueManager().Where(s => s.MsgState == 1);
+            List<WX_Queue> list= new WXDataBLL.WXCustom.WX_QueueManager().Where(s => s.MsgState == 1&&s.OpenID.Equals(id));
+            ViewBag.Talk = list;
+            foreach (WX_Queue item in list)
+            {
+                item.MsgState = 2;
+                new WXDataBLL.WXCustom.WX_QueueManager().Update(item);
+            }
              //new WXDataBLL.WXCustom.WX_MessageManager().Where(s => s.ToUserName == id || s.FromUserName == id && (s.ToUserName.Equals(user.UserName) || s.FromUserName.Equals(user.UserName)));
             return PartialView();
         }
@@ -72,16 +78,19 @@ namespace WXDataUI.Areas.WXCustom.Controllers
             var isTrue = false; //是否删除
             if (list != null)
             {
-                WX_Message mess = new WX_Message();
+                WX_CustomMsg mess = new WX_CustomMsg();
                 SYS_User user = Session["User"] as SYS_User;
                 foreach (WX_Queue item in list)
                 {
-                    mess.Msg_Id = item.MsgId;
+                    mess.MsgId = item.MsgId;
                     mess.XmlContent = item.XmlContent;
-                    mess.ToUserName = user.UserName;
-                    mess.FromUserName = item.OpenID;
+                    mess.Content = item.XmlContent;
+                    mess.UserId = user.UserId;
                     mess.CreateTime = item.CreateTime;
-                    new WXDataBLL.WXCustom.WX_MessageManager().Add(mess);
+                    mess.MsgSource = "用户";
+                    mess.AppId = item.AppId;
+                    mess.MsgType = item.MsgType;
+                    new WXDataBLL.WXCustom.WX_CustomMsgManger().Add(mess);
                     isTrue = new WXDataBLL.WXCustom.WX_QueueManager().Delete(item);
                 }
             }
@@ -94,9 +103,9 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// <param name="msg"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult TaleToUser(WX_Message msg)
+        public ActionResult TaleToUser(WX_CustomMsg msg)
         {
-            bool IsTrue = new WXDataBLL.WXCustom.WX_MessageManager().Add(msg);
+            bool IsTrue = new WXDataBLL.WXCustom.WX_CustomMsgManger().Add(msg);
             return Json(IsTrue, JsonRequestBehavior.AllowGet);
         }
     }
