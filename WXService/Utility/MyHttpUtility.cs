@@ -32,13 +32,33 @@ namespace WXService.Utility
             return reqStr;
         }
 
+        /// <summary>
+        /// 发送Get请求
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static string SendGet(string url)
         {
-            return "";
+            using (WebClient client = new WebClient())
+            {
+                client.Encoding = Encoding.UTF8;
+                return client.DownloadString(url);
+            }
         }
+
+        /// <summary>
+        /// 发生Post请求
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static string SendPost(string url,string data)
         {
-            return "";
+            using (WebClient client = new WebClient())
+            {
+                client.Encoding = Encoding.UTF8;
+                return client.UploadString(url, data);
+            }
         }
         public static string SendFile(string url,byte[] file)
         {

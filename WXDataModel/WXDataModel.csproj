@@ -88,6 +88,9 @@
     <Compile Include="WX_CustomMsg.cs">
       <DependentUpon>WXData.tt</DependentUpon>
     </Compile>
+    <Compile Include="WX_EventQueue.cs">
+      <DependentUpon>WXData.tt</DependentUpon>
+    </Compile>
     <Compile Include="WX_Media.cs">
       <DependentUpon>WXData.tt</DependentUpon>
     </Compile>

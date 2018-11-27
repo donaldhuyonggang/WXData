@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WXDataUI.App_Start;
 
 namespace WXDataUI
 {
@@ -16,6 +17,9 @@ namespace WXDataUI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //启动一个服务。
+            new AutoService().Start();
         }
     }
 }

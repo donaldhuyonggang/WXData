@@ -39,5 +39,6 @@ namespace WXDataModel
         public DbSet<WX_User> WX_User { get; set; }
         public DbSet<WX_UserGroup> WX_UserGroup { get; set; }
         public DbSet<WX_UserTag> WX_UserTag { get; set; }
+        public DbSet<WX_EventQueue> WX_EventQueue { get; set; }
     }
 }

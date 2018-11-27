@@ -47,6 +47,7 @@
     <Compile Include="WXCustom\WX_CustomMsgManger.cs" />
     <Compile Include="WXCustom\WX_QueueManager.cs" />
     <Compile Include="WXCustom\WX_UserManager.cs" />
+    <Compile Include="WXEvent\WX_EvenQueueManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WXDataDAL\WXDataDAL.csproj">
