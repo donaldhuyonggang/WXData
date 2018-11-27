@@ -28,7 +28,7 @@ namespace WXDataUI.App_Start
          
             while (true)
             {
-                var list = eventQueueBLL.Where(x => x.MsgState == 0);
+                var list = eventQueueBLL.Where(x => x.MsgState ==1);
 
                 foreach (var item in list)
                 {

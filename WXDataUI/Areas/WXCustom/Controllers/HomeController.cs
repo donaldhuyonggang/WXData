@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WXDataModel;
+using WXService.Service;
 using WXService.Utility;
 
 namespace WXDataUI.Areas.WXCustom.Controllers
@@ -30,7 +31,7 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         public ActionResult GetUser()
         {
             SYS_User user = Session["User"] as SYS_User;
-            var list = new WXDataBLL.WXCustom.WX_UserManager().Where(s => s.UserId == user.UserId).ToList();
+            var list = new WXDataBLL.WXCustom.WX_UserManager().Where(s => s.UserId == user.UserId || s.UserId.Equals("")).ToList();
             var Data = list.Select(s => new
             {
                 id = s.OpenID,
@@ -45,9 +46,19 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// <returns></returns>
         public ActionResult UserInfo(string id)
         {
-            ViewBag.user = new WXDataBLL.WXCustom.WX_UserManager().GetByPK(id);
+            //通过主键获取
+            SYS_User user = Session["User"] as SYS_User;
+            WX_User Wuser = new WXDataBLL.WXCustom.WX_UserManager().GetByPK(id);
+            Wuser.UserId = user.UserId;
             return PartialView();
         }
+
+        //public ActionResult UpuserID(string id)
+        //{
+        //    //修改
+        //    var isTrue = new WXDataBLL.WXCustom.WX_UserManager().Update();
+        //    ViewBag.user = Wuser;
+        //}
 
         /// <summary>
         /// 查看当前用户聊天
@@ -106,12 +117,17 @@ namespace WXDataUI.Areas.WXCustom.Controllers
             msg.MsgId = Guid.NewGuid().ToString();
             msg.CreateTime = DateTime.Now;
             msg.MsgSource = "客服";
+
+            //发送到微信
+            CustomService customSvr = new CustomService(user.AppId, user.WX_App.AppSecret);
+            customSvr.SendText(msg.OpenID, msg.Content);
+
             bool IsTrue = new WXDataBLL.WXCustom.WX_CustomMsgManger().Add(msg);
             return Json(IsTrue, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
-        /// 显示所有未读信息
+        /// 接收粉丝发送的信息
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -119,7 +135,6 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         {
             List<WX_CustomMsg> Que = FansMsg(id);
             return Json(Que, JsonRequestBehavior.AllowGet);
-
         }
     }
 }

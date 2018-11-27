@@ -59,7 +59,7 @@
             "<img src=\"\" class=\"user-head-l\" alt=\"\">" +
             "<div class=\"user-note-l bg-color-f5\">" +
                 "<div class=\"arrowl\"></div>" +
-                    data[i].Content+
+                    data[i].Content +
             "</div>" +
         "</div>");
                 }
@@ -70,10 +70,11 @@
         $(document).on("click", ".btn_send", function () {
             var CText = $("#note").val();
             if (CText == "") {
-               
+
             } else {
                 var info = {
-                    Content: $("#note").val()
+                    Content: $("#note").val(),
+                    OpenID: '@ViewBag.OpenId'
                 }//josn
                 $.post("/WXCustom/home/TaleToUser", info, function (data) {
                     if (data) {

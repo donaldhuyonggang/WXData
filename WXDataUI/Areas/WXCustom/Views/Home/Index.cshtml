@@ -120,19 +120,28 @@
                         title: '个人信息',
                         href: '/WXCustom/Home/userinfo/' + node.id,
                         closable: true,
-                        fit: true,
+                        fit: true
                     });
                     $('#tt').tabs('add', {
                         title: node.text,
                         href: '/WXCustom/home/TaleToUser/' + node.id,
                         closable: true,
                     });
+                    //UpUserState(node);
                 },
             });
-            ////右侧常规操作选项卡
+             @*右侧常规操作选项卡*@
             $('#routine').tabs({
                 fit: true
             });
+
+
+            @*分配用户给客服*@
+            //function UpUserState() {
+            //    $.post("", "", function (data) {
+                    
+            //    });
+            //}
 
         });//加载事件
     </script>
