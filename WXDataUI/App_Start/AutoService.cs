@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WXDataBLL.WXApp;
+using WXDataBLL.WXCustom;
 using WXDataBLL.WXEvent;
 using WXDataModel;
 using WXService.Service;
@@ -16,6 +18,7 @@ namespace WXDataUI.App_Start
     {
         WX_EventQueueManager eventQueueBLL = new WX_EventQueueManager();
         WX_AppManager appBLL = new WX_AppManager();
+        WX_UserManager userBLL = new WX_UserManager();
 
         public void Start()
         {
@@ -28,7 +31,7 @@ namespace WXDataUI.App_Start
          
             while (true)
             {
-                var list = eventQueueBLL.Where(x => x.MsgState == 0);
+                var list = eventQueueBLL.Where(x => x.MsgState == 1);
 
                 foreach (var item in list)
                 {
@@ -52,6 +55,30 @@ namespace WXDataUI.App_Start
                 customSvr.SendText(info.OpenID, "欢迎您关注公众号");
                 info.MsgState = 2;
                 eventQueueBLL.Update(info);//把事件改为已处理
+
+
+                UserService userSvr = new UserService(app.AppId, app.AppSecret);
+
+                string json = userSvr.Info(info.OpenID);
+                JObject jo = JObject.Parse(json);
+
+                WX_User modal = new WX_User()
+                {
+                    AppId = info.AppId,
+                    OpenID = jo["openid"].ToString(),
+                    UserNick = jo["nickname"].ToString(),
+                    UserSex = jo["sex"].ToString() == "1" ? "男" : "女",
+                    City = jo["city"].ToString(),
+                    Country = jo["country"].ToString(),
+                    Province = jo["province"].ToString(),
+                    Language = jo["language"].ToString(),
+                    HeadImageUrl = jo["headimgurl"].ToString(),
+                    SubscribeTime = DateTime.Now,
+                    Remark= jo["remark"].ToString(),
+                };
+
+                userBLL.Add(modal);
+
             }
         }
 

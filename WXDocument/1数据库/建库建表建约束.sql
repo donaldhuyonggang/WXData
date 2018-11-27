@@ -1,13 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2018-11-27 11:14:19                          */
+/* Created on:     2018-11-27 14:07:25                          */
 /*==============================================================*/
 
-create database WXData
-go 
-
-use WXData
-go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -847,6 +842,7 @@ go
 create table WX_EventQueue (
    EventId              int                  identity,
    OpenID               VARCHAR(50)          not null,
+   AppId                varchar(50)          null,
    CreateTime           datetime             null,
    MsgType              varchar(50)          null,
    Event                varchar(50)          null,
@@ -861,6 +857,13 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '用户标识',
    'user', @CurrentUser, 'table', 'WX_EventQueue', 'column', 'OpenID'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '公众号ID',
+   'user', @CurrentUser, 'table', 'WX_EventQueue', 'column', 'AppId'
 go
 
 declare @CurrentUser sysname
