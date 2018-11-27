@@ -42,6 +42,7 @@
         <AssociationConnector Association="WXDataModel.FK_WX_USER_REFERENCE_WX_USERG" ManuallyRouted="false" />
         <AssociationConnector Association="WXDataModel.FK_WX_USER_REFERENCE_WX_USERT" ManuallyRouted="false" />
         <AssociationConnector Association="WXDataModel.SYS_Right" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="WXDataModel.WX_EventQueue" Width="1.5" PointX="0.75" PointY="2.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

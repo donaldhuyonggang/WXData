@@ -1,13 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2018-11-26 15:18:34                          */
+/* Created on:     2018-11-27 14:07:25                          */
 /*==============================================================*/
 
-create database WXData
-go 
-
-use WXData
-go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -238,6 +233,13 @@ if exists (select 1
            where  id = object_id('WX_CustomMsg')
             and   type = 'U')
    drop table WX_CustomMsg
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('WX_EventQueue')
+            and   type = 'U')
+   drop table WX_EventQueue
 go
 
 if exists (select 1
@@ -571,6 +573,7 @@ create table SYS_User (
    WXId                 varchar(50)          null,
    UserState            nvarchar(10)         null,
    HeadImageUrl         VARCHAR(max)         null,
+   UserSex              nchar(1)             null,
    constraint PK_SYS_USER primary key (UserId)
 )
 go
@@ -831,6 +834,50 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '消息内容',
    'user', @CurrentUser, 'table', 'WX_CustomMsg', 'column', 'XmlContent'
+go
+
+/*==============================================================*/
+/* Table: WX_EventQueue                                         */
+/*==============================================================*/
+create table WX_EventQueue (
+   EventId              int                  identity,
+   OpenID               VARCHAR(50)          not null,
+   AppId                varchar(50)          null,
+   CreateTime           datetime             null,
+   MsgType              varchar(50)          null,
+   Event                varchar(50)          null,
+   XmlContent           nvarchar(max)        null,
+   MsgState             int                  null,
+   constraint PK_WX_EVENTQUEUE primary key (EventId)
+)
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '用户标识',
+   'user', @CurrentUser, 'table', 'WX_EventQueue', 'column', 'OpenID'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '公众号ID',
+   'user', @CurrentUser, 'table', 'WX_EventQueue', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '消息内容',
+   'user', @CurrentUser, 'table', 'WX_EventQueue', 'column', 'XmlContent'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '消息状态',
+   'user', @CurrentUser, 'table', 'WX_EventQueue', 'column', 'MsgState'
 go
 
 /*==============================================================*/

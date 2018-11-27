@@ -103,6 +103,19 @@
           <Property Name="MsgType" Type="varchar" MaxLength="20" />
           <Property Name="XmlContent" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="WX_EventQueue">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OpenID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="MsgType" Type="varchar" MaxLength="50" />
+          <Property Name="Event" Type="varchar" MaxLength="50" />
+          <Property Name="XmlContent" Type="nvarchar(max)" />
+          <Property Name="MsgState" Type="int" />
+        </EntityType>
         <EntityType Name="WX_Media">
           <Key>
             <PropertyRef Name="MyMediaId" />
@@ -483,6 +496,7 @@
           <EntitySet Name="SYS_User" EntityType="Self.SYS_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_App" EntityType="Self.WX_App" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_CustomMsg" EntityType="Self.WX_CustomMsg" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_EventQueue" EntityType="Self.WX_EventQueue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Media" EntityType="Self.WX_Media" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Menu" EntityType="Self.WX_Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Queue" EntityType="Self.WX_Queue" Schema="dbo" store:Type="Tables" />
@@ -1183,7 +1197,21 @@
             <End Role="SYS_Function" EntitySet="SYS_Function" />
             <End Role="SYS_Role" EntitySet="SYS_Role" />
           </AssociationSet>
+          <EntitySet Name="WX_EventQueue" EntityType="WXDataModel.WX_EventQueue" />
         </EntityContainer>
+        <EntityType Name="WX_EventQueue">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OpenID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="MsgType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Event" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="XmlContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MsgState" Type="Int32" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1384,6 +1412,20 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="WX_EventQueue">
+            <EntityTypeMapping TypeName="WXDataModel.WX_EventQueue">
+              <MappingFragment StoreEntitySet="WX_EventQueue">
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="MsgState" ColumnName="MsgState" />
+                <ScalarProperty Name="XmlContent" ColumnName="XmlContent" />
+                <ScalarProperty Name="Event" ColumnName="Event" />
+                <ScalarProperty Name="MsgType" ColumnName="MsgType" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="OpenID" ColumnName="OpenID" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
