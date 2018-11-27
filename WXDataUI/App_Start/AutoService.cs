@@ -41,7 +41,7 @@ namespace WXDataUI.App_Start
                             Subscribe(item);
                             break;
                         case "unsubscribe":
-                            UnSubscribe(item);
+                           // UnSubscribe(item);
                             break;
                     }
                     

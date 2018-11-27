@@ -237,6 +237,7 @@
     <Content Include="Areas\Base\Views\Home\UpdateApp.cshtml" />
     <Content Include="Areas\Base\Views\Home\AddSYS_User.cshtml" />
     <Content Include="Areas\WXUser\Views\Home\Index.cshtml" />
+    <Content Include="Areas\WXUser\Views\Home\AllotUser.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

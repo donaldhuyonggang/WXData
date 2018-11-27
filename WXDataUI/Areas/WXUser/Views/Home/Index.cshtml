@@ -154,7 +154,7 @@
                             <ul class="list-inline marg">
                                 <li>
                                     <i class="glyphicon glyphicon-plus"></i>
-                                    <a href="/Base/Home/AddSysUser" data-toggle="modal" data-target="#EditSysUser">新增</a>
+                                    <a href="#">新增</a>
                                 </li>
                                 <li><i class="glyphicon glyphicon-pencil"></i><a href="#">修改</a></li>
                                 <li><i class="glyphicon glyphicon-list"></i><a href="#">查看</a></li>
@@ -194,7 +194,7 @@
                                     <th>所在省份</th>
                                     <th>所在国家</th>
                                     <th>关注时间</th>
-                                    <th>关注方式</th>
+                                    <th>所属客服</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -234,6 +234,10 @@
         $.post("/WXUser/Home/GetUsers", "", function (json) {
             var tr = "";
             $.each(json, function (i, obj) {
+                var temp = "";
+                if (obj.SYS_UserName == "暂无所属客服") {
+                    temp = "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"分配客服\">" + "   <a href=\"/WXUser/Home/AllotUser/" + obj.OpenID + "\" class=\"glyphicon glyphicon-user\" data-toggle='modal' data-target='#AllotUser'></a></li>";
+                }
                 tr += "<tr class=\"text-center\">" +
                            "<td>" +
                            "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
@@ -241,24 +245,21 @@
                            "<td>" + obj.FollowStatus + "</td>" +
                            "<td>" + obj.OpenID + "</td>" +
                            "<td>" + obj.UserNick + "</td>" +
-                           "<td><img src=" + obj.HeadImageUrl + " alt=" + obj.UserNick + " /></td>" +
+                           "<td><img style='width:40px' src=" + obj.HeadImageUrl + " alt=" + obj.UserNick + " /></td>" +
                            "<td>" + obj.UserSex + "</td>" +
                            "<td>" + obj.City + "</td>" +
                            "<td>" + obj.Province + "</td>" +
                            "<td>" + obj.Country + "</td>" +
                            "<td>" + obj.SubscribeTime + "</td>" +
                            "<td>" + obj.SYS_UserName + "</td>" +
-                           "<td> <a href=\"#\" class=\"btn btn-info\">" +
-                           "    <span class=\"glyphicon glyphicon-qrcode icolor\"></span></a></td>" +
-                           "<td> <a href=\"#\" class=\"btn btn-info\">" +
-                           "   <span class=\"glyphicon glyphicon-wrench icolor\"></span></a> </td>" +
                            "<td>" +
                                "<ul class=\"list-inline marg operation\">" +
                                    "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
                                    "   <a href=\"#\" class=\"glyphicon glyphicon-search\"></a></li>" +
                                    
                                    "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
-                                   "   <a href=\"#\" class=\"glyphicon glyphicon-remove\"></a></li>" +
+                                   "   <a href=\"#\" class=\"glyphicon glyphicon-remove\"></a></li>" + temp +
+                                   
                                "</ul>" +
                            "</td>" +
                        "</tr>";

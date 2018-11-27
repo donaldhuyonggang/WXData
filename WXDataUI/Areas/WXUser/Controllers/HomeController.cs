@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WXDataBLL;
+using WXDataBLL.WXCustom;
 using WXDataModel;
 
 namespace WXDataUI.Areas.WXUser.Controllers
@@ -15,6 +16,28 @@ namespace WXDataUI.Areas.WXUser.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public ActionResult AllotUser(string id)
+        {
+            ViewBag.SYSUserList = (Session["SYSUSER"] as SYS_User).WX_App.SYS_User.ToList();
+
+            ViewBag.OpenId = id;
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult AllotUser(string OpenId,int UserId)
+        {
+            BaseBLL<WX_User> bll = new BaseBLL<WX_User>();
+            WX_User user = bll.GetByPK(OpenId);
+            user.UserId = UserId;
+            if (new WX_UserManager().Update(user))
+            {
+                return Redirect("/WXUser/Home/Index");
+            }
+            return Content("false");
+        }
+
 
         public ActionResult GetUsers(int type = 1)
         {
@@ -36,8 +59,8 @@ namespace WXDataUI.Areas.WXUser.Controllers
                 u.City,
                 u.Province,
                 u.Country,
-                u.SubscribeTime,
-                SYS_UserName = (u.UserId==null?"暂无所属客服":u.SYS_User.UserName)
+                SubscribeTime = u.SubscribeTime.ToString(),
+                SYS_UserName = (u.UserId==null?"暂无所属客服":u.SYS_User.UserName),
             });
             return Json(json, JsonRequestBehavior.AllowGet);
 
