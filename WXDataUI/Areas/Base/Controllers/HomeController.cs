@@ -22,15 +22,29 @@ namespace WXDataUI.Areas.Base.Controllers
             return View();
         }
 
-        public ActionResult ToSysUser()
+        public ActionResult SysUser()
         {
             return View("SYS_User");
         }
 
         [HttpGet]
-        public ActionResult InsertSysUser()
+        public ActionResult AddSysUser()
         {
-            return PartialView("SYS_UserUpdate");
+            ViewBag.RoleList = new BaseBLL<SYS_Role>().GetAll();
+            ViewBag.AppList = new BaseBLL<WX_App>().GetAll();
+            return PartialView("AddSYS_User");
+        }
+
+        [HttpPost]
+        public ActionResult AddSysUser(SYS_User user)
+        {
+            user.UserState = "正常";
+            if(new BaseBLL<SYS_User>().Add(user))
+            {
+                return Redirect("/Base/Home/SysUser");
+            }
+            return Content("false");
+            
         }
 
 
@@ -41,10 +55,7 @@ namespace WXDataUI.Areas.Base.Controllers
             if (user!=null)
             {
                 WX_App app = new BaseBLL<WX_App>().GetAll().First();
-                Session.Add("User",user);
-                Session.Add("UserName", user.UserName);
-                Session.Add("App", app);
-                Session.Add("AppName", app.AppName);
+                Session.Add("SYSUSER",user);
                 return Redirect("/Base/Home/Index");
             }
             return Content("false");
@@ -73,7 +84,7 @@ namespace WXDataUI.Areas.Base.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeApp(int appId)
+        public ActionResult ChangeApp(string appId)
         {
             WX_App app = new BaseBLL<WX_App>().GetByPK(appId);
             Session["App"] = app;
@@ -136,6 +147,8 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpPost]
         public ActionResult DeleteApp(string id)
         {
+
+            
             WX_App app = new BaseBLL<WX_App>().GetByPK(id);
             app.AppState = "无效";
             return Json(new BaseBLL<WX_App>().Update(app), JsonRequestBehavior.AllowGet);

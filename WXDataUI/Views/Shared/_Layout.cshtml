@@ -14,7 +14,9 @@
 
     @RenderSection("styles", required: false)
 </head>
-
+@{
+    SYS_User user = Session["SYSUSER"] as SYS_User;
+}
 <body>
     @*导航条*@
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -36,7 +38,7 @@
                     <li></li>    
                     <li>
                         <a href="/Base/Home/ChangeApp" data-toggle="modal" data-backdrop="false"
-                           data-target="#ChangeApp">公众号:@Session["AppName"]</a>
+                           data-target="#ChangeApp">公众号:@user.WX_App.AppName</a>
                     </li>
                     @*<li>
                         <a href="/Home/MenuEdit/0" data-toggle="modal" data-backdrop="false"
@@ -68,8 +70,8 @@
                             <ul class="nav nav-sidebar navbox">
                                 <li class="active"><a href="/base/home/index" id="toIndex">Index <span class="sr-only">(current)</span></a></li>
                                 <li><a href="#" id="toTest">Test</a></li>
-                                <li><a href="#">功能名</a></li>
-                                <li><a href="/Base/Home/ToSysUser">系统用户管理</a></li>
+                                <li><a href="/WXUser/Home/Index">订阅用户管理</a></li>
+                                <li><a href="/Base/Home/SysUser">系统用户管理</a></li>
                             </ul>
                         </div>
                     </div>

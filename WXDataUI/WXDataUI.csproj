@@ -128,6 +128,7 @@
     <Compile Include="Areas\WXCustom\WXCustomAreaRegistration.cs" />
     <Compile Include="Areas\WXMedia\WXMediaAreaRegistration.cs" />
     <Compile Include="Areas\WXMenu\WXMenuAreaRegistration.cs" />
+    <Compile Include="Areas\WXUser\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXUser\WXUserAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -226,10 +227,15 @@
     <Content Include="Areas\Base\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\UserInfo.cshtml" />
-    <Content Include="Areas\Base\Views\Home\Sys_UserUpdate.cshtml" />
+    <Content Include="Areas\Base\Views\Home\UpdateSYS_User.cshtml" />
     <Content Include="Areas\Base\Views\Home\SYS_User.cshtml" />
     <Content Include="Areas\Base\Views\Home\Login.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\TaleToUser.cshtml" />
+    <Content Include="Areas\Base\Views\Home\AddApp.cshtml" />
+    <Content Include="Areas\Base\Views\Home\ChangeApp.cshtml" />
+    <Content Include="Areas\Base\Views\Home\UpdateApp.cshtml" />
+    <Content Include="Areas\Base\Views\Home\AddSYS_User.cshtml" />
+    <Content Include="Areas\WXUser\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -276,7 +282,6 @@
     <Folder Include="Areas\WXMenu\Controllers\" />
     <Folder Include="Areas\WXMenu\Models\" />
     <Folder Include="Areas\WXMenu\Views\Shared\" />
-    <Folder Include="Areas\WXUser\Controllers\" />
     <Folder Include="Areas\WXUser\Models\" />
     <Folder Include="Areas\WXUser\Views\Shared\" />
     <Folder Include="Models\" />

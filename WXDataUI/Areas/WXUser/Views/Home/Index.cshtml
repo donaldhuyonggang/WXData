@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "SYS_User";
+    ViewBag.Title = "管理订阅用户";
 }
 @section styles{
 
@@ -152,8 +152,10 @@
                         <h5 class="navbar-text navbar-left">数据列表<a href="#" class="navbar-link"></a></h5>
                         <div class="navbar-text navbar-right ">
                             <ul class="list-inline marg">
-                                <li><i class="glyphicon glyphicon-plus"></i>
-                                <a href="/Base/Home/AddSysUser" data-toggle="modal" data-target="#EditSysUser">新增</a></li>
+                                <li>
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <a href="/Base/Home/AddSysUser" data-toggle="modal" data-target="#EditSysUser">新增</a>
+                                </li>
                                 <li><i class="glyphicon glyphicon-pencil"></i><a href="#">修改</a></li>
                                 <li><i class="glyphicon glyphicon-list"></i><a href="#">查看</a></li>
                                 <li><i class="glyphicon glyphicon-minus"></i><a href="#">删除</a></li>
@@ -175,6 +177,7 @@
                             </li>
                             <li>共有记录：<span>50</span>条</li>
                             <li>总页数：<span>10</span>页</li>
+                            <li>显示未分配的用户<input type="checkbox" id="showMode"/></li>
                         </ul>
                     </div>
                     <div class="fromcontent">
@@ -182,24 +185,19 @@
                             <thead>
                                 <tr class="text-center">
                                     <th><input type="checkbox" name="name" /></th>
-                                    <th>ID</th>
-                                    @*<th>用户编码</th>*@
-                                    <th>用户名/登陆名</th>
-                                    <th>真实姓名</th>
-                                    <th>用户等级</th>
-                                    <th>用户状态</th>
-                                    @*<th>是否删除</th>*@
-                                    <th>移动电话</th>
-                                    <th>邮件地址</th>
-                                    @*<th>性别</th>*@
-                                    <th>二维码</th>
-                                    <th>重置密码</th>
+                                    <th>关注</th>
+                                    <th>用户标识</th>
+                                    <th>昵称</th>     
+                                    <th>性别</th>
+                                    <th>所在城市</th>
+                                    <th>所在省份</th>
+                                    <th>所在国家</th>
+                                    <th>关注时间</th>
+                                    <th>关注方式</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody>
-
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                     <div>
@@ -227,49 +225,49 @@
     </div>
 </div>
 @section scripts{
-<script>
+    <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
 
-        //拉取用户信息填充表格
-        $.post("/Base/Home/GetUsers", "", function (json) {
-            var tr = "";
-            $.each(json, function (i, obj) {
-                tr += "<tr class=\"text-center\">" +
-                           "<td>" +
-                           "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
-                           "</td>" +
-                           "<td>" + obj.UserId + "</td>" +
-                           "<td>" + obj.LoginId + "</td>" +
-                           "<td>" + obj.UserName + "</td>" +
-                           "<td>" + obj.RoleName + "</td>" +
-                           "<td>" + obj.UserState + "</td>" +
-                           "<td>" + obj.Telphone + "</td>" +
-                           "<td>" + obj.Email + "</td>" +
-                           "<td> <a href=\"#\" class=\"btn btn-info\">" +
-                           "    <span class=\"glyphicon glyphicon-qrcode icolor\"></span></a></td>" +
-                           "<td> <a href=\"#\" class=\"btn btn-info\">" +
-                           "   <span class=\"glyphicon glyphicon-wrench icolor\"></span></a> </td>" +
-                           "<td>" +
-                               "<ul class=\"list-inline marg operation\">" +
-                                   "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
-                                   "   <a href=\"#\" class=\"glyphicon glyphicon-search\"></a></li>" +
-                                   "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改\">" +
-                                   "   <a href=\"/Home/ToUpdateSysUser/" + obj.UserId + "\" data-toggle=\"modal\" data-target=\"#UpdateSysUser\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
-                                   "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
-                                   "   <a href=\"#\" class=\"glyphicon glyphicon-remove\"></a></li>" +
-                               "</ul>" +
-                           "</td>" +
-                       "</tr>";
+        ////拉取用户信息填充表格
+        //$.post("/Base/Home/GetUsers", "", function (json) {
+        //    var tr = "";
+        //    $.each(json, function (i, obj) {
+        //        tr += "<tr class=\"text-center\">" +
+        //                   "<td>" +
+        //                   "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
+        //                   "</td>" +
+        //                   "<td>" + obj.UserId + "</td>" +
+        //                   "<td>" + obj.LoginId + "</td>" +
+        //                   "<td>" + obj.UserName + "</td>" +
+        //                   "<td>" + obj.RoleName + "</td>" +
+        //                   "<td>" + obj.UserState + "</td>" +
+        //                   "<td>" + obj.Telphone + "</td>" +
+        //                   "<td>" + obj.Email + "</td>" +
+        //                   "<td> <a href=\"#\" class=\"btn btn-info\">" +
+        //                   "    <span class=\"glyphicon glyphicon-qrcode icolor\"></span></a></td>" +
+        //                   "<td> <a href=\"#\" class=\"btn btn-info\">" +
+        //                   "   <span class=\"glyphicon glyphicon-wrench icolor\"></span></a> </td>" +
+        //                   "<td>" +
+        //                       "<ul class=\"list-inline marg operation\">" +
+        //                           "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
+        //                           "   <a href=\"#\" class=\"glyphicon glyphicon-search\"></a></li>" +
+        //                           "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改\">" +
+        //                           "   <a href=\"/Home/ToUpdateSysUser/" + obj.UserId + "\" data-toggle=\"modal\" data-target=\"#UpdateSysUser\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
+        //                           "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
+        //                           "   <a href=\"#\" class=\"glyphicon glyphicon-remove\"></a></li>" +
+        //                       "</ul>" +
+        //                   "</td>" +
+        //               "</tr>";
 
-            });
-            $(".userList tbody").html(tr);
-            console.info(tr);
-        });
-        //拉取用户信息填充表格end
+        //    });
+        //    $(".userList tbody").html(tr);
+        //    console.info(tr);
+        //});
+        ////拉取用户信息填充表格end
     })
 
 
-</script>
+    </script>
 
 }
