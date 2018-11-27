@@ -40,12 +40,27 @@ namespace WXDataUI.App_Start
                         case "subscribe":
                             Subscribe(item);
                             break;
+                        case "unsubscribe":
+                            UnSubscribe(item);
+                            break;
                     }
                     
                 }
             }
         }
 
+
+        public void UnSubscribe(WX_EventQueue info)
+        {
+            WX_User modal = new WX_User()
+            {
+                AppId = info.AppId,
+                UnSubscribeTime = DateTime.Now,
+                UserState= "退订",
+            };
+
+            userBLL.Update(modal);
+        }
 
         public void Subscribe(WX_EventQueue info)
         {
@@ -74,10 +89,18 @@ namespace WXDataUI.App_Start
                     Language = jo["language"].ToString(),
                     HeadImageUrl = jo["headimgurl"].ToString(),
                     SubscribeTime = DateTime.Now,
-                    Remark= jo["remark"].ToString(),
+                    UserState = "正常",
+                    Remark = jo["remark"].ToString(),
                 };
-
-                userBLL.Add(modal);
+                if(userBLL.GetByPK(modal.OpenID) ==null)
+                {
+                    userBLL.Add(modal);
+                }
+                else
+                {
+                    userBLL.Update(modal);
+                }
+               
 
             }
         }

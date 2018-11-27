@@ -40,6 +40,8 @@ namespace WXDataModel
         public string Address { get; set; }
         public string ZipCode { get; set; }
         public string Remark { get; set; }
+        public string UserState { get; set; }
+        public Nullable<System.DateTime> LastDateTime { get; set; }
     
         public virtual SYS_User SYS_User { get; set; }
         public virtual WX_App WX_App { get; set; }

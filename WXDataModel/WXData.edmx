@@ -74,6 +74,7 @@
           <Property Name="WXId" Type="varchar" MaxLength="50" />
           <Property Name="UserState" Type="nvarchar" MaxLength="10" />
           <Property Name="HeadImageUrl" Type="varchar(max)" />
+          <Property Name="UserSex" Type="nchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="WX_App">
           <Key>
@@ -179,6 +180,8 @@
           <Property Name="Address" Type="varchar" MaxLength="255" />
           <Property Name="ZipCode" Type="char" MaxLength="6" />
           <Property Name="Remark" Type="varchar" MaxLength="255" />
+          <Property Name="UserState" Type="nvarchar" MaxLength="5" />
+          <Property Name="LastDateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="WX_UserGroup">
           <Key>
@@ -681,6 +684,7 @@
           <NavigationProperty Name="WX_App" Relationship="Self.FK_SYS_USER_REFERENCE_WX_APP" FromRole="SYS_User" ToRole="WX_App" />
           <NavigationProperty Name="WX_CustomMsg" Relationship="Self.FK_WX_CUSTO_REFERENCE_SYS_USER" FromRole="SYS_User" ToRole="WX_CustomMsg" />
           <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_USER_REFERENCE_SYS_USER" FromRole="SYS_User" ToRole="WX_User" />
+          <Property Name="UserSex" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="WX_App">
           <Key>
@@ -799,6 +803,8 @@
           <NavigationProperty Name="WX_Queue" Relationship="Self.FK_WX_QUEUE_REFERENCE_WX_USER" FromRole="WX_User" ToRole="WX_Queue" />
           <NavigationProperty Name="WX_UserGroup" Relationship="Self.FK_WX_USER_REFERENCE_WX_USERG" FromRole="WX_User" ToRole="WX_UserGroup" />
           <NavigationProperty Name="WX_UserTag" Relationship="Self.FK_WX_USER_REFERENCE_WX_USERT" FromRole="WX_User" ToRole="WX_UserTag" />
+          <Property Name="UserState" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="LastDateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="WX_UserGroup">
           <Key>
@@ -1272,6 +1278,7 @@
           <EntitySetMapping Name="SYS_User">
             <EntityTypeMapping TypeName="WXDataModel.SYS_User">
               <MappingFragment StoreEntitySet="SYS_User">
+                <ScalarProperty Name="UserSex" ColumnName="UserSex" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="AppId" ColumnName="AppId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -1361,6 +1368,8 @@
           <EntitySetMapping Name="WX_User">
             <EntityTypeMapping TypeName="WXDataModel.WX_User">
               <MappingFragment StoreEntitySet="WX_User">
+                <ScalarProperty Name="LastDateTime" ColumnName="LastDateTime" />
+                <ScalarProperty Name="UserState" ColumnName="UserState" />
                 <ScalarProperty Name="OpenID" ColumnName="OpenID" />
                 <ScalarProperty Name="TageId" ColumnName="TageId" />
                 <ScalarProperty Name="GrooupId" ColumnName="GrooupId" />
