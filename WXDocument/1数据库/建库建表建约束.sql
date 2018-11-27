@@ -1,8 +1,13 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2018-11-27 14:07:25                          */
+/* Created on:     2018-11-27 15:24:54                          */
 /*==============================================================*/
 
+create database WXData
+go 
+
+use WXData
+go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -1141,6 +1146,8 @@ create table WX_User (
    Address              VARCHAR(255)         null,
    ZipCode              char(6)              null,
    Remark               VARCHAR(255)         null,
+   UserState            nvarchar(5)          null,
+   LastDateTime         datetime             null,
    constraint PK_WX_USER primary key (OpenID)
 )
 go

@@ -32,6 +32,7 @@ namespace WXDataModel
         public string WXId { get; set; }
         public string UserState { get; set; }
         public string HeadImageUrl { get; set; }
+        public string UserSex { get; set; }
     
         public virtual ICollection<SYS_Department> SYS_Department { get; set; }
         public virtual SYS_Role SYS_Role { get; set; }
