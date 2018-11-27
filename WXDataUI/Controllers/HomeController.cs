@@ -44,7 +44,7 @@ namespace WXDataUI.Controllers
                 else { //消息
                     WX_Queue info = new WX_Queue()
                     {
-                        MsgState = 0,
+                        MsgState = 1,
                         MsgId = XmlUtility.GetSingleNodeInnerText(xml, "/xml/MsgId"),
                         CreateTime = DateTimeUtility.Parse(createTime),
                         XmlContent = xml,
