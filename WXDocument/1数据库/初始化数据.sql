@@ -7,6 +7,8 @@ insert into SYS_Role(RoleSign,RoleName)values('APP_CUSTOM','平台客服')
 
 --Start新增公众号
 insert into WX_App(AppId,AppName,AppSecret,WXId,AppType,AppState,Remark)values('wxb51501fa9702675f','E妹时尚女装','a56e69ded9b5eab3579ce771f2f9a668','gh_f98920d67737','服务号','正常','')
+insert into WX_App(AppId,AppName,AppSecret,WXId,AppType,AppState,Remark)values('wx5e6fd9f5a08db03a','李添乐测试','8f3079b54c134f3e67a88778b4a24f27','gh_ac32a7de334e','服务号','正常','')
+
 --End新增公众号
 
 

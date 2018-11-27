@@ -28,7 +28,8 @@ namespace WXDataUI.Controllers
 
                 WX_Queue info = new WX_Queue()
                 {
-                    MsgState = 0,
+                    AppId= id,
+                    MsgState = 1,
                     MsgId = XmlUtility.GetSingleNodeInnerText(xml, "/xml/MsgId"),
                     CreateTime = DateTimeUtility.Parse(createTime),
                     XmlContent = xml,
