@@ -22,3 +22,8 @@ insert into SYS_User(AppId,RoleId,LoginId,Password,UserName,Telphone,Email,WXId,
 
 --End新增用户
 
+--Start新增用户组别
+insert into WX_UserGroup(AppId,UserId,GroupName,GroupSort)values(null,null,'新用户',1)
+insert into WX_UserGroup(AppId,UserId,GroupName,GroupSort)values(null,null,'成交用户',2)
+insert into WX_UserGroup(AppId,UserId,GroupName,GroupSort)values(null,null,'星级用户',3)
+--End新增用户组别

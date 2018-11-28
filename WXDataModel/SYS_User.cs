@@ -18,7 +18,9 @@ namespace WXDataModel
         {
             this.SYS_Department = new HashSet<SYS_Department>();
             this.WX_CustomMsg = new HashSet<WX_CustomMsg>();
+            this.WX_QR = new HashSet<WX_QR>();
             this.WX_User = new HashSet<WX_User>();
+            this.WX_UserGroup = new HashSet<WX_UserGroup>();
         }
     
         public int UserId { get; set; }
@@ -38,6 +40,8 @@ namespace WXDataModel
         public virtual SYS_Role SYS_Role { get; set; }
         public virtual WX_App WX_App { get; set; }
         public virtual ICollection<WX_CustomMsg> WX_CustomMsg { get; set; }
+        public virtual ICollection<WX_QR> WX_QR { get; set; }
         public virtual ICollection<WX_User> WX_User { get; set; }
+        public virtual ICollection<WX_UserGroup> WX_UserGroup { get; set; }
     }
 }
