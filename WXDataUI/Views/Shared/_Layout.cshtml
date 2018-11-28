@@ -61,17 +61,17 @@
                             <a role="button" data-toggle="collapse" data-parent="#accordion"
                                href="#collapseOne" aria-expanded="true"
                                aria-controls="collapseOne">
-                                Collapsible Group Item #1
+                                系统管理
                             </a>
                         </h4>
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                         <div class="panel-body">
                             <ul class="nav nav-sidebar navbox">
-                                <li class="active"><a href="/base/home/index" id="toIndex">首页<span class="sr-only">(current)</span></a></li>
-                                <li><a href="/WXCustom/Home/Index">客服聊天</a></li>
+                                <li class="active"><a href="/base/app/index" id="toIndex">公众号管理<span class="sr-only">(current)</span></a></li>
                                 <li><a href="/WXUser/Home/Index">订阅用户管理</a></li>
                                 <li><a href="/Base/SYSUser/index">系统用户管理</a></li>
+                                <li><a href="/Base/Role/Index">系统角色管理</a></li>
                             </ul>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                         <div class="panel-body">
                             <ul class="nav nav-sidebar navbox">
-                                <li><a href="#">功能名</a></li>
+                                <li><a href="/WXCustom/Home/Index">客服聊天</a></li>
                                 <li><a href="#">功能名</a></li>
                                 <li><a href="#">功能名</a></li>
                                 <li><a href="#">功能名</a></li>
@@ -160,6 +160,26 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     @*分配客服模态框end*@
+
+    @*修改角色权限模态框*@
+    <div class="modal fade" id="EditFunction">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    @*修改角色权限模态框end*@
+
+    @*编辑角色模态框*@
+    <div class="modal fade" id="EditRole">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    @*编辑角色模态框end*@
     <script>
         $(function () {
             //设置模态框属性

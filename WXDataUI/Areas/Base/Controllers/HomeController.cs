@@ -14,7 +14,7 @@ namespace WXDataUI.Areas.Base.Controllers
         // GET: Base/Home
         public ActionResult Index()
         {
-            return View();
+            return Redirect("/Base/APP/Index");
         }
         [HttpGet]
         public ActionResult Login()
