@@ -34,9 +34,17 @@ namespace WXDataUI.Areas.Base.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetAppList()
+        public ActionResult GetAppList(string type = "1")
         {
-            List<WX_App> list = new BaseBLL<WX_App>().GetAll();
+
+            List<WX_App> list = null;
+            if (type.Equals("1"))
+            {
+                list = new BaseBLL<WX_App>().GetAll();
+            }else
+            {
+                list = new BaseBLL<WX_App>().Where(a => a.AppType.Equals(type));
+            }
             var json = list.Select(s => new
             {
                 s.AppType,

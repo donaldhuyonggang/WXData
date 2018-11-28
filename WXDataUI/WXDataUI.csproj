@@ -124,6 +124,7 @@
     <Compile Include="Areas\Base\BaseAreaRegistration.cs" />
     <Compile Include="Areas\Base\Controllers\APPController.cs" />
     <Compile Include="Areas\Base\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Base\Controllers\RoleController.cs" />
     <Compile Include="Areas\Base\Controllers\SYSUserController.cs" />
     <Compile Include="Areas\Base\Controllers\WXUserController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
@@ -228,7 +229,7 @@
     <Content Include="Areas\WXMedia\Views\web.config" />
     <Content Include="Areas\WXMedia\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Common\Views\web.config" />
-    <Content Include="Areas\Base\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Base\Views\APP\Index.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\UserInfo.cshtml" />
     <Content Include="Areas\Base\Views\SYSUser\UpdateSYS_User.cshtml" />
@@ -242,6 +243,10 @@
     <Content Include="Areas\WXUser\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXUser\Views\Home\AllotUser.cshtml" />
     <Content Include="Areas\Base\Views\SYSUser\index.cshtml" />
+    <Content Include="Areas\Base\Views\Role\index.cshtml" />
+    <Content Include="Areas\Base\Views\Role\EditRight.cshtml" />
+    <Content Include="Areas\Base\Views\Role\AddRole.cshtml" />
+    <Content Include="Areas\Base\Views\Role\UpdateRole.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -272,7 +277,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Base\Views\Home\Modal\" />
     <Folder Include="Areas\Base\Views\Shared\" />
     <Folder Include="Areas\Base\Views\WXUser\" />
     <Folder Include="Areas\Common\Controllers\" />

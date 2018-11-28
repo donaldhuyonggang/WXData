@@ -1,4 +1,5 @@
 ﻿
+
 @{
     ViewBag.Title = "Index";
 }
@@ -82,7 +83,7 @@
     <div class="col-xs-2 padd usetlef">
         <nav class="navbar marg  navbar-default navbar-static-top">
             <div class="col-xs-12">
-                <h5 class="navbar-text navbar-left">公众号分类<a href="#" class="navbar-link"></a></h5>
+                <h5 class="navbar-text navbar-left">角色分类<a href="#" class="navbar-link"></a></h5>
             </div>
         </nav>
         <div>
@@ -112,7 +113,7 @@
                     <div class="panel-body">
                         <div class="col-xs-11">
                             <div class="form-inline topfind">
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <label for="InputAppName">公众号名称:</label>
                                     <input type="text" class="form-control" id="InputAppName" placeholder="公众号名称">
                                 </div>
@@ -123,9 +124,9 @@
                                 <div class="form-group">
                                     <label for="InputRemark">备注信息:</label>
                                     <input type="text" class="form-control" id="InputRemark" placeholder="备注信息">
-                                </div>
+                                </div>*@
                             </div>
-                            
+
                         </div>
                         <div class="col-xs-1">
                             <div>
@@ -146,7 +147,7 @@
                             <ul class="list-inline marg">
                                 <li>
                                     <i class="glyphicon glyphicon-plus"></i>
-                                    <a href="/Base/APP/AddApp" data-toggle="modal" data-target="#EditApp">新增</a>
+                                    <a href="/Base/Role/AddRole" data-toggle="modal" data-target="#EditRole">新增</a>
                                 </li>
                                 <li><i class="glyphicon glyphicon-pencil"></i><a href="#">修改</a></li>
                                 <li><i class="glyphicon glyphicon-list"></i><a href="#">查看</a></li>
@@ -172,17 +173,14 @@
                         </ul>
                     </div>
                     <div class="fromcontent">
-                        <table class="table table-bordered table-hover appList">
+                        <table class="table table-bordered table-hover RoleList">
                             <thead>
                                 <tr class="text-center">
                                     <th><input type="checkbox" name="name" /></th>
-                                    <th>账号类型</th>
-                                    <th>公众号名称</th>
-                                    <th>公众号ID</th>
-                                    <th>微信号</th>
-                                    <th>公司名称</th>
-                                    <th>公众号状态</th>
-                                    <th>备注信息</th>
+                                    <th>角色编号</th>
+                                    <th>角色标识</th>
+                                    <th>角色名称</th>
+                                    <th>所属公众号</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -220,51 +218,36 @@
             $('[data-toggle="tooltip"]').tooltip();
 
             //拉取公众号信息填充表格
-            $.post("/Base/APP/GetAppList", "", function (json) {
+            $.post("/Base/Role/GetRole", "", function (json) {
                 var tr = "";
                 $.each(json, function (i, obj) {
                     tr += "<tr class=\"text-center\">" +
                                "<td>" +
                                "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
                                "</td>" +
-                               "<td>" + obj.AppType + "</td>" +
-                               "<td>" + obj.AppName + "</td>" +
-                               "<td>" + obj.AppId + "</td>" +
-                               "<td>" + obj.WXId + "</td>" +
-                               "<td>" + obj.CompanyName + "</td>" +
-                               "<td>" + obj.AppState + "</td>" +
-                               "<td>" + obj.Remark + "</td>" +
+                               "<td>" + obj.RoleId + "</td>" +
+                               "<td>" + obj.RoleSign + "</td>" +
+                               "<td>" + obj.RoleName + "</td>" +
+                               "<td>" + obj.Type + "</td>" +
                                "<td>" +
                                    "<ul class=\"list-inline marg operation\">" +
-                                       //"<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
-                                       //"   <a href=\"#\" class=\"glyphicon glyphicon-search\"></a></li>" +
-                                       "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改\">" +
-                                       "   <a href=\"/Base/APP/UpdateApp/" + obj.AppId + "\" data-toggle=\"modal\" data-target=\"#EditApp\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
+                                       "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改信息\">" +
+                                       "   <a href=\"/Base/Role/UpdateRole/"+ obj.RoleId +"\" data-toggle='modal' data-target='#EditRole' class=\"glyphicon glyphicon-search\"></a></li>" +
+                                       "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"权限分配\">" +
+                                       "   <a href=\"/Base/Role/EditRight\" data-toggle='modal' data-target='#EditFunction' class=\"glyphicon glyphicon-pencil\"></a></li>" +
                                        "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
-                                       "   <a href=\"#\" class=\"glyphicon glyphicon-remove deleteApp\" AppId=" + obj.AppId + "></a></li>" +
+                                       "   <a href=\"#\" class=\"glyphicon glyphicon-remove deleteApp\"></a></li>" +
                                    "</ul>" +
                                "</td>" +
                            "</tr>";
 
                 });
-                $(".appList tbody").html(tr);
+                $(".RoleList tbody").html(tr);
                 console.info(tr);
             });
             //拉取公众号信息填充表格end
 
-            //删除方法
-            $(document).on("click", ".deleteApp", function () {
-                var appId = $(this).attr("AppId");
-                if (confirm("确定要删除吗?")) {
-                    $.post("/Base/APP/DeleteApp/"+appId, "", function (result) {
-                        if (result) {
-                            location.reload();
-                        }
-                    });
-                }
-            });
-            
-            //删除end
+           
         });
 
 
