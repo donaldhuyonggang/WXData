@@ -1,5 +1,5 @@
 ﻿@using WXDataModel
-<form action="/Base/Home/ChangeApp" method="post">
+<form action="/Base/APP/ChangeApp" method="post">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-xs-5">当前微信账号:</div>
                     <div class="col-xs-7">
-
+                        
                         <select class="mySelect form-control" name="AppId">
                             @*<option value="BlackBerry">BlackBerry</option>*@
                             @foreach (var app in (List<WX_App>)ViewBag.AppList)

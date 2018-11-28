@@ -153,7 +153,7 @@
                         <div class="navbar-text navbar-right ">
                             <ul class="list-inline marg">
                                 <li><i class="glyphicon glyphicon-plus"></i>
-                                <a href="/Base/Home/AddSysUser" data-toggle="modal" data-target="#EditSysUser">新增</a></li>
+                                <a href="/Base/SYSUser/AddSysUser" data-toggle="modal" data-target="#EditSysUser">新增</a></li>
                                 <li><i class="glyphicon glyphicon-pencil"></i><a href="#">修改</a></li>
                                 <li><i class="glyphicon glyphicon-list"></i><a href="#">查看</a></li>
                                 <li><i class="glyphicon glyphicon-minus"></i><a href="#">删除</a></li>
@@ -232,7 +232,7 @@
         $('[data-toggle="tooltip"]').tooltip();
 
         //拉取用户信息填充表格
-        $.post("/Base/Home/GetUsers", "", function (json) {
+        $.post("/Base/SYSUser/GetUsers", "", function (json) {
             var tr = "";
             $.each(json, function (i, obj) {
                 tr += "<tr class=\"text-center\">" +
@@ -255,7 +255,7 @@
                                    "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
                                    "   <a href=\"#\" class=\"glyphicon glyphicon-search\"></a></li>" +
                                    "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改\">" +
-                                   "   <a href=\"/Home/ToUpdateSysUser/" + obj.UserId + "\" data-toggle=\"modal\" data-target=\"#UpdateSysUser\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
+                                   "   <a href=\"/SYSUser/ToUpdateSysUser/" + obj.UserId + "\" data-toggle=\"modal\" data-target=\"#UpdateSysUser\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
                                    "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
                                    "   <a href=\"#\" class=\"glyphicon glyphicon-remove\"></a></li>" +
                                "</ul>" +

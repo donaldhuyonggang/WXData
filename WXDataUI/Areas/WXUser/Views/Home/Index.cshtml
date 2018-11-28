@@ -159,7 +159,7 @@
                                 <li><i class="glyphicon glyphicon-pencil"></i><a href="#">修改</a></li>
                                 <li><i class="glyphicon glyphicon-list"></i><a href="#">查看</a></li>
                                 <li><i class="glyphicon glyphicon-minus"></i><a href="#">删除</a></li>
-                                <li><i class="glyphicon glyphicon-refresh"></i><a href="#">刷新</a></li>
+                                <li><i class="glyphicon glyphicon-refresh"></i><a href="#" id="Refresh">刷新</a></li>
                             </ul>
                         </div>
                     </div>
@@ -177,7 +177,7 @@
                             </li>
                             <li>共有记录：<span>50</span>条</li>
                             <li>总页数：<span>10</span>页</li>
-                            <li>显示未分配的用户<input type="checkbox" id="showMode"/></li>
+                            <li>只显示未分配的用户<input type="checkbox" id="showMode"/></li>
                         </ul>
                     </div>
                     <div class="fromcontent">
@@ -230,8 +230,26 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
 
+        
+        LoadUser();
+
+        $("#Refresh").click(function () {
+            LoadUser();
+        });
+
+        $("#showMode").change(function () {
+            LoadUser();
+        });
+    })
+
+
+    function LoadUser() {
         //拉取用户信息填充表格
-        $.post("/WXUser/Home/GetUsers", "", function (json) {
+        var type = 1;
+        if ($("#showMode").prop("checked")) {
+            type = 2;
+        }
+        $.post("/WXUser/Home/GetUsers", "type="+type, function (json) {
             var tr = "";
             $.each(json, function (i, obj) {
                 var temp = "";
@@ -256,22 +274,19 @@
                                "<ul class=\"list-inline marg operation\">" +
                                    "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
                                    "   <a href=\"#\" class=\"glyphicon glyphicon-search\"></a></li>" +
-                                   
+
                                    "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
                                    "   <a href=\"#\" class=\"glyphicon glyphicon-remove\"></a></li>" + temp +
-                                   
+
                                "</ul>" +
                            "</td>" +
                        "</tr>";
 
             });
             $(".userList tbody").html(tr);
-            console.info(tr);
         });
         //拉取用户信息填充表格end
-    })
-
-
+    }
     </script>
 
 }

@@ -1,8 +1,6 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "系统用户管理";
 }
-
 @section styles{
 
     <style>
@@ -64,7 +62,7 @@
             color: white;
         }
 
-        .appcontent {
+        .usercontent {
             display: flex;
         }
 
@@ -75,14 +73,11 @@
     </style>
 }
 
-
-
-
-<div class="appcontent">
+<div class="usercontent">
     <div class="col-xs-2 padd usetlef">
         <nav class="navbar marg  navbar-default navbar-static-top">
             <div class="col-xs-12">
-                <h5 class="navbar-text navbar-left">公众号分类<a href="#" class="navbar-link"></a></h5>
+                <h5 class="navbar-text navbar-left">用户分类<a href="#" class="navbar-link"></a></h5>
             </div>
         </nav>
         <div>
@@ -113,19 +108,32 @@
                         <div class="col-xs-11">
                             <div class="form-inline topfind">
                                 <div class="form-group">
-                                    <label for="InputAppName">公众号名称:</label>
-                                    <input type="text" class="form-control" id="InputAppName" placeholder="公众号名称">
+                                    <label for="">用户编码:</label>
+                                    <input type="text" class="form-control" id="" placeholder="用户编码">
                                 </div>
                                 <div class="form-group">
-                                    <label for="InputAppId">微信号:</label>
-                                    <input type="text" class="form-control" id="InputAppId" placeholder="微信号">
+                                    <label for="">&emsp;用户名:</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="用户名">
                                 </div>
                                 <div class="form-group">
-                                    <label for="InputRemark">备注信息:</label>
-                                    <input type="text" class="form-control" id="InputRemark" placeholder="备注信息">
+                                    <label for="">真实姓名:</label>
+                                    <input type="text" class="form-control" id="Email1" placeholder="真实姓名">
                                 </div>
                             </div>
-                            
+                            <div class="form-inline topfind">
+                                <div class="form-group">
+                                    <label for="">移动电话:</label>
+                                    <input type="text" class="form-control" id="" placeholder="移动电话">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">邮件地址:</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="邮件地址">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">&nbsp;&nbsp;QQ号码:</label>
+                                    <input type="text" class="form-control" id="Email1" placeholder="QQ号码">
+                                </div>
+                            </div>
                         </div>
                         <div class="col-xs-1">
                             <div>
@@ -146,7 +154,7 @@
                             <ul class="list-inline marg">
                                 <li>
                                     <i class="glyphicon glyphicon-plus"></i>
-                                    <a href="/Base/APP/AddApp" data-toggle="modal" data-target="#EditApp">新增</a>
+                                    <a href="/Base/SYSUser/AddSysUser" data-toggle="modal" data-target="#EditSysUser">新增</a>
                                 </li>
                                 <li><i class="glyphicon glyphicon-pencil"></i><a href="#">修改</a></li>
                                 <li><i class="glyphicon glyphicon-list"></i><a href="#">查看</a></li>
@@ -172,17 +180,22 @@
                         </ul>
                     </div>
                     <div class="fromcontent">
-                        <table class="table table-bordered table-hover appList">
+                        <table class="table table-bordered table-hover userList">
                             <thead>
                                 <tr class="text-center">
                                     <th><input type="checkbox" name="name" /></th>
-                                    <th>账号类型</th>
-                                    <th>公众号名称</th>
-                                    <th>公众号ID</th>
-                                    <th>微信号</th>
-                                    <th>公司名称</th>
-                                    <th>公众号状态</th>
-                                    <th>备注信息</th>
+                                    <th>ID</th>
+                                    @*<th>用户编码</th>*@
+                                    <th>用户名/登陆名</th>
+                                    <th>真实姓名</th>
+                                    <th>用户等级</th>
+                                    <th>用户状态</th>
+                                    @*<th>是否删除</th>*@
+                                    <th>移动电话</th>
+                                    <th>邮件地址</th>
+                                    @*<th>性别</th>*@
+                                    <th>二维码</th>
+                                    <th>重置密码</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -213,59 +226,48 @@
         </div>
     </div>
 </div>
-
 @section scripts{
     <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
 
-            //拉取公众号信息填充表格
-            $.post("/Base/APP/GetAppList", "", function (json) {
-                var tr = "";
-                $.each(json, function (i, obj) {
-                    tr += "<tr class=\"text-center\">" +
-                               "<td>" +
-                               "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
-                               "</td>" +
-                               "<td>" + obj.AppType + "</td>" +
-                               "<td>" + obj.AppName + "</td>" +
-                               "<td>" + obj.AppId + "</td>" +
-                               "<td>" + obj.WXId + "</td>" +
-                               "<td>" + obj.CompanyName + "</td>" +
-                               "<td>" + obj.AppState + "</td>" +
-                               "<td>" + obj.Remark + "</td>" +
-                               "<td>" +
-                                   "<ul class=\"list-inline marg operation\">" +
-                                       //"<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
-                                       //"   <a href=\"#\" class=\"glyphicon glyphicon-search\"></a></li>" +
-                                       "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改\">" +
-                                       "   <a href=\"/Base/APP/UpdateApp/" + obj.AppId + "\" data-toggle=\"modal\" data-target=\"#EditApp\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
-                                       "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
-                                       "   <a href=\"#\" class=\"glyphicon glyphicon-remove deleteApp\" AppId=" + obj.AppId + "></a></li>" +
-                                   "</ul>" +
-                               "</td>" +
-                           "</tr>";
+        //拉取用户信息填充表格
+        $.post("/Base/SYSUser/GetUsers", "", function (json) {
+            var tr = "";
+            $.each(json, function (i, obj) {
+                tr += "<tr class=\"text-center\">" +
+                           "<td>" +
+                           "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
+                           "</td>" +
+                           "<td>" + obj.UserId + "</td>" +
+                           "<td>" + obj.LoginId + "</td>" +
+                           "<td>" + obj.UserName + "</td>" +
+                           "<td>" + obj.RoleName + "</td>" +
+                           "<td>" + obj.UserState + "</td>" +
+                           "<td>" + obj.Telphone + "</td>" +
+                           "<td>" + obj.Email + "</td>" +
+                           "<td> <a href=\"#\" class=\"btn btn-info\">" +
+                           "    <span class=\"glyphicon glyphicon-qrcode icolor\"></span></a></td>" +
+                           "<td> <a href=\"#\" class=\"btn btn-info\">" +
+                           "   <span class=\"glyphicon glyphicon-wrench icolor\"></span></a> </td>" +
+                           "<td>" +
+                               "<ul class=\"list-inline marg operation\">" +
+                                   "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
+                                   "   <a href=\"#\" class=\"glyphicon glyphicon-search\"></a></li>" +
+                                   "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改\">" +
+                                   "   <a href=\"/SYSUser/ToUpdateSysUser/" + obj.UserId + "\" data-toggle=\"modal\" data-target=\"#UpdateSysUser\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
+                                   "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
+                                   "   <a href=\"#\" class=\"glyphicon glyphicon-remove\"></a></li>" +
+                               "</ul>" +
+                           "</td>" +
+                       "</tr>";
 
-                });
-                $(".appList tbody").html(tr);
-                console.info(tr);
             });
-            //拉取公众号信息填充表格end
-
-            //删除方法
-            $(document).on("click", ".deleteApp", function () {
-                var appId = $(this).attr("AppId");
-                if (confirm("确定要删除吗?")) {
-                    $.post("/Base/APP/DeleteApp/"+appId, "", function (result) {
-                        if (result) {
-                            location.reload();
-                        }
-                    });
-                }
-            });
-            
-            //删除end
+            $(".userList tbody").html(tr);
+            console.info(tr);
         });
+        //拉取用户信息填充表格end
+    })
 
 
     </script>
