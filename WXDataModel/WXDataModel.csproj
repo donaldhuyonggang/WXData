@@ -97,6 +97,9 @@
     <Compile Include="WX_Menu.cs">
       <DependentUpon>WXData.tt</DependentUpon>
     </Compile>
+    <Compile Include="WX_QR.cs">
+      <DependentUpon>WXData.tt</DependentUpon>
+    </Compile>
     <Compile Include="WX_Queue.cs">
       <DependentUpon>WXData.tt</DependentUpon>
     </Compile>

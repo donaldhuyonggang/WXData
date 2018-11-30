@@ -46,3 +46,8 @@ insert into SYS_Right(RoleId,FunctionID) values(1,7)
 insert into SYS_Right(RoleId,FunctionID) values(1,8)
 insert into SYS_Right(RoleId,FunctionID) values(1,9)
 --新增权限end
+--Start新增用户组别
+insert into WX_UserGroup(AppId,UserId,GroupName,GroupSort)values(null,null,'新用户',1)
+insert into WX_UserGroup(AppId,UserId,GroupName,GroupSort)values(null,null,'成交用户',2)
+insert into WX_UserGroup(AppId,UserId,GroupName,GroupSort)values(null,null,'星级用户',3)
+--End新增用户组别

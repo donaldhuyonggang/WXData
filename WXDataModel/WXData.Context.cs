@@ -36,6 +36,7 @@ namespace WXDataModel
         public DbSet<WX_EventQueue> WX_EventQueue { get; set; }
         public DbSet<WX_Media> WX_Media { get; set; }
         public DbSet<WX_Menu> WX_Menu { get; set; }
+        public DbSet<WX_QR> WX_QR { get; set; }
         public DbSet<WX_Queue> WX_Queue { get; set; }
         public DbSet<WX_User> WX_User { get; set; }
         public DbSet<WX_UserGroup> WX_UserGroup { get; set; }

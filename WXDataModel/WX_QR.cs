@@ -12,21 +12,22 @@ namespace WXDataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class WX_UserGroup
+    public partial class WX_QR
     {
-        public WX_UserGroup()
-        {
-            this.WX_User = new HashSet<WX_User>();
-        }
-    
-        public int GroupId { get; set; }
-        public string AppId { get; set; }
+        public int QRId { get; set; }
         public Nullable<int> UserId { get; set; }
-        public string GroupName { get; set; }
-        public Nullable<int> GroupSort { get; set; }
+        public string AppId { get; set; }
+        public string QRName { get; set; }
+        public string QR_Scene { get; set; }
+        public string QR_Scene_String { get; set; }
+        public string QRType { get; set; }
+        public Nullable<int> Expire_Seconds { get; set; }
+        public string Ticket { get; set; }
+        public string QR_URL { get; set; }
+        public string Image_URL { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
     
         public virtual SYS_User SYS_User { get; set; }
         public virtual WX_App WX_App { get; set; }
-        public virtual ICollection<WX_User> WX_User { get; set; }
     }
 }

@@ -91,6 +91,7 @@ namespace WXDataUI.App_Start
                     SubscribeTime = DateTime.Now,
                     UserState = "正常",
                     Remark = jo["remark"].ToString(),
+                    GrooupId=1,//新用户
                 };
                 if(userBLL.GetByPK(modal.OpenID) ==null)
                 {
