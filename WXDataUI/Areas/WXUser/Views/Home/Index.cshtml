@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "SYS_User";
+    ViewBag.Title = "管理订阅用户";
 }
 @section styles{
 
@@ -109,29 +109,21 @@
                             <div class="form-inline topfind">
                                 <div class="form-group">
                                     <label for="">用户编码:</label>
-                                    <input type="text" class="form-control" id="" placeholder="用户编码">
+                                    <input type="text" class="form-control" name="OpenID" id="OpenID" placeholder="用户编码">
                                 </div>
                                 <div class="form-group">
-                                    <label for="">&emsp;用户名:</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="用户名">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">真实姓名:</label>
-                                    <input type="text" class="form-control" id="Email1" placeholder="真实姓名">
+                                    <label for="">用户名:</label>
+                                    <input type="text" class="form-control" name="UserNick" id="UserNick" placeholder="用户名">
                                 </div>
                             </div>
                             <div class="form-inline topfind">
                                 <div class="form-group">
                                     <label for="">移动电话:</label>
-                                    <input type="text" class="form-control" id="" placeholder="移动电话">
+                                    <input type="text" class="form-control" name="Telphone" id="Telphone" placeholder="移动电话">
                                 </div>
                                 <div class="form-group">
                                     <label for="">邮件地址:</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="邮件地址">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">&nbsp;&nbsp;QQ号码:</label>
-                                    <input type="text" class="form-control" id="Email1" placeholder="QQ号码">
+                                    <input type="text" class="form-control" name="Emial" id="Emial" placeholder="邮件地址">
                                 </div>
                             </div>
                         </div>
@@ -152,12 +144,14 @@
                         <h5 class="navbar-text navbar-left">数据列表<a href="#" class="navbar-link"></a></h5>
                         <div class="navbar-text navbar-right ">
                             <ul class="list-inline marg">
-                                <li><i class="glyphicon glyphicon-plus"></i>
-                                <a href="/Base/Home/InsertSysUser" data-toggle="modal" data-target="#EditSysUser">新增</a></li>
+                                <li>
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <a href="#">新增</a>
+                                </li>
                                 <li><i class="glyphicon glyphicon-pencil"></i><a href="#">修改</a></li>
                                 <li><i class="glyphicon glyphicon-list"></i><a href="#">查看</a></li>
                                 <li><i class="glyphicon glyphicon-minus"></i><a href="#">删除</a></li>
-                                <li><i class="glyphicon glyphicon-refresh"></i><a href="#">刷新</a></li>
+                                <li><i class="glyphicon glyphicon-refresh"></i><a href="#" id="Refresh">刷新</a></li>
                             </ul>
                         </div>
                     </div>
@@ -175,55 +169,28 @@
                             </li>
                             <li>共有记录：<span>50</span>条</li>
                             <li>总页数：<span>10</span>页</li>
+                            <li>只显示未分配的用户<input type="checkbox" id="showMode"/></li>
                         </ul>
                     </div>
                     <div class="fromcontent">
                         <table class="table table-bordered table-hover userList">
                             <thead>
-                                <tr>
-                                    <th>
-                                        <input type="checkbox" name="name" />
-                                    </th>
-                                    <th>ID</th>
-                                    @*<th>用户编码</th>*@
-                                    <th>用户名/登陆名</th>
-                                    <th>真实姓名</th>
-                                    <th>用户等级</th>
-                                    <th>用户状态</th>
-                                    @*<th>是否删除</th>*@
-                                    <th>移动电话</th>
-                                    <th>邮件地址</th>
-                                    @*<th>性别</th>*@
-                                    <th>二维码</th>
-                                    <th>重置密码</th>
+                                <tr class="text-center">
+                                    <th><input type="checkbox" name="name" /></th>
+                                    <th>关注</th>
+                                    <th>用户标识</th>
+                                    <th>昵称</th>     
+                                    <th>头像</th>
+                                    <th>性别</th>
+                                    <th>所在城市</th>
+                                    <th>所在省份</th>
+                                    <th>所在国家</th>
+                                    <th>关注时间</th>
+                                    <th>所属客服</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @*<tr class="text-center">
-                                        <td>
-                                            <input type="checkbox" name="name" value="" />
-                                        </td>
-                                        <td>1</td>
-                                        <td>10010</td>
-                                        <td>yt</td>
-                                        <td>管理员</td>
-                                        <td>正常</td>
-                                        <td>正常</td>
-                                        <td>1854646465</td>
-                                        <td>w3c.com</td>
-                                        <td>男</td>
-                                        <td> <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-qrcode icolor" ></span></a></td>
-                                        <td> <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-wrench icolor"></span></a> </td>
-                                        <td>
-                                            <ul class="list-inline marg operation">
-                                                <li class="Find btn btn-success" data-toggle="tooltip" data-placement="right" title="查看"><a href="#" class="glyphicon glyphicon-search"></a></li>
-                                                <li class="Upda btn btn-info" data-toggle="tooltip" data-placement="right" title="修改"><a href="#" class="glyphicon glyphicon-pencil"></a></li>
-                                                <li class="Dele btn btn-danger" data-toggle="tooltip" data-placement="right" title="删除"><a href="#" class="glyphicon glyphicon-remove"></a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>*@
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                     <div>
@@ -251,49 +218,68 @@
     </div>
 </div>
 @section scripts{
-<script>
+    <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
 
-        ////拉取用户信息填充表格
-        //$.post("/Home/GetUsers", "", function (json) {
-        //    var tr = "";
-        //    $.each(json, function (i, obj) {
-        //        tr += "<tr class=\"text-center\">" +
-        //                   "<td>" +
-        //                   "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
-        //                   "</td>" +
-        //                   "<td>" + obj.UserId + "</td>" +
-        //                   "<td>" + obj.LoginId + "</td>" +
-        //                   "<td>" + obj.UserName + "</td>" +
-        //                   "<td>" + obj.RoleName + "</td>" +
-        //                   "<td>" + obj.UserState + "</td>" +
-        //                   "<td>" + obj.Telphone + "</td>" +
-        //                   "<td>" + obj.Email + "</td>" +
-        //                   "<td> <a href=\"#\" class=\"btn btn-info\">" +
-        //                   "    <span class=\"glyphicon glyphicon-qrcode icolor\"></span></a></td>" +
-        //                   "<td> <a href=\"#\" class=\"btn btn-info\">" +
-        //                   "   <span class=\"glyphicon glyphicon-wrench icolor\"></span></a> </td>" +
-        //                   "<td>" +
-        //                       "<ul class=\"list-inline marg operation\">" +
-        //                           "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
-        //                           "   <a href=\"#\" class=\"glyphicon glyphicon-search\"></a></li>" +
-        //                           "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改\">" +
-        //                           "   <a href=\"/Home/ToUpdateSysUser/" + obj.UserId + "\" data-toggle=\"modal\" data-target=\"#UpdateSysUser\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
-        //                           "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
-        //                           "   <a href=\"#\" class=\"glyphicon glyphicon-remove\"></a></li>" +
-        //                       "</ul>" +
-        //                   "</td>" +
-        //               "</tr>";
+        
+        LoadUser();
 
-        //    });
-        //    $(".userList tbody").html(tr);
-        //    console.info(tr);
-        //});
-        ////拉取用户信息填充表格end
+        $("#Refresh").click(function () {
+            LoadUser();
+        });
+
+        $("#showMode").change(function () {
+            LoadUser();
+        });
     })
 
 
-</script>
+    function LoadUser() {
+        //拉取用户信息填充表格
+        var type = 1;
+        if ($("#showMode").prop("checked")) {
+            type = 2;
+        }
+        $.post("/WXUser/Home/GetUsers", "type="+type, function (json) {
+            var tr = "";
+            $.each(json, function (i, obj) {
+                var temp = "";
+                if (obj.SYS_UserName == "暂无所属客服") {
+                    temp = "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"分配客服\">" + "   <a href=\"/WXUser/Home/AllotUser/" + obj.OpenID + "\" class=\"glyphicon glyphicon-user\" data-toggle='modal' data-target='#AllotUser'></a></li>";
+                }
+                tr += "<tr class=\"text-center\">" +
+                           "<td>" +
+                           "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
+                           "</td>" +
+                           "<td>" + obj.FollowStatus + "</td>" +
+                           "<td>" + obj.OpenID + "</td>" +
+                           "<td>" + obj.UserNick + "</td>" +
+                           "<td><img style='width:40px' src=" + obj.HeadImageUrl + " alt=" + obj.UserNick + " /></td>" +
+                           "<td>" + obj.UserSex + "</td>" +
+                           "<td>" + obj.City + "</td>" +
+                           "<td>" + obj.Province + "</td>" +
+                           "<td>" + obj.Country + "</td>" +
+                           "<td>" + obj.SubscribeTime + "</td>" +
+                           "<td>" + obj.SYS_UserName + "</td>" +
+                           "<td>" +
+                               "<ul class=\"list-inline marg operation\">" +
+                                   "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
+                                   "   <a href=\"/WXUser/Home/UserInfo/" + obj.OpenID + "\" data-toggle='modal' data-target='#EditWXUser' class=\"glyphicon glyphicon-search\"></a></li>" +
+
+                                   "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改分组\">" +
+                                   "   <a href=\"/WXUser/Home/ChangeGroup/" + obj.OpenID + "\" data-toggle='modal' data-target='#EditWXUser' class=\"glyphicon glyphicon-folder-open\"></a></li>" +
+                                   temp +
+
+                               "</ul>" +
+                           "</td>" +
+                       "</tr>";
+
+            });
+            $(".userList tbody").html(tr);
+        });
+        //拉取用户信息填充表格end
+    }
+    </script>
 
 }

@@ -14,7 +14,7 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         // GET: WXCustom/Home
         public ActionResult Index()
         {
-            if (Session["User"] == null)
+            if (Session["SYSUSER"] == null)
             {
                 return Redirect("/base/home/login");
             }

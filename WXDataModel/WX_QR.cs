@@ -12,15 +12,22 @@ namespace WXDataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class WX_EventQueue
+    public partial class WX_QR
     {
-        public int EventId { get; set; }
-        public string OpenID { get; set; }
+        public int QRId { get; set; }
+        public Nullable<int> UserId { get; set; }
         public string AppId { get; set; }
+        public string QRName { get; set; }
+        public string QR_Scene { get; set; }
+        public string QR_Scene_String { get; set; }
+        public string QRType { get; set; }
+        public Nullable<int> Expire_Seconds { get; set; }
+        public string Ticket { get; set; }
+        public string QR_URL { get; set; }
+        public string Image_URL { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public string MsgType { get; set; }
-        public string Event { get; set; }
-        public string XmlContent { get; set; }
-        public Nullable<int> MsgState { get; set; }
+    
+        public virtual SYS_User SYS_User { get; set; }
+        public virtual WX_App WX_App { get; set; }
     }
 }

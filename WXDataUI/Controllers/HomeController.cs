@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,6 +8,7 @@ using System.Web.Mvc;
 using WXDataBLL.WXCustom;
 using WXDataBLL.WXEvent;
 using WXDataModel;
+using WXService.Service;
 using WXService.Utility;
 
 namespace WXDataUI.Controllers
@@ -59,6 +62,18 @@ namespace WXDataUI.Controllers
                 return Content("success");
             }
 
+        }
+
+        public ActionResult QR()
+        {
+            QRService qrSvr = new QRService("wxb51501fa9702675f", "a56e69ded9b5eab3579ce771f2f9a668");
+            string json=qrSvr.Create(2592000, "QR_SCENE", 1, "");
+
+            JObject jo = (JObject)JsonConvert.DeserializeObject(json);
+            string ticket = jo["ticket"].ToString();
+            string url=qrSvr.ShowQR(ticket);
+
+            return Redirect(url);
         }
     }
 }

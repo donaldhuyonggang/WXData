@@ -1,8 +1,14 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2018-11-27 14:07:25                          */
+/* Created on:     2018-11-30 09:25:03                          */
 /*==============================================================*/
 
+
+create database WXData
+go 
+
+use WXData
+go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -118,6 +124,20 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_QR') and o.name = 'FK_WX_QR_REFERENCE_SYS_USER')
+alter table WX_QR
+   drop constraint FK_WX_QR_REFERENCE_SYS_USER
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_QR') and o.name = 'FK_WX_QR_REFERENCE_WX_APP')
+alter table WX_QR
+   drop constraint FK_WX_QR_REFERENCE_WX_APP
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('WX_Queue') and o.name = 'FK_WX_QUEUE_REFERENCE_WX_USER')
 alter table WX_Queue
    drop constraint FK_WX_QUEUE_REFERENCE_WX_USER
@@ -153,13 +173,6 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('WX_User') and o.name = 'FK_WX_USER_REFERENCE_WX_USERT')
-alter table WX_User
-   drop constraint FK_WX_USER_REFERENCE_WX_USERT
-go
-
-if exists (select 1
-   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('WX_UserGroup') and o.name = 'FK_WX_USERG_REFERENCE_WX_APP')
 alter table WX_UserGroup
    drop constraint FK_WX_USERG_REFERENCE_WX_APP
@@ -167,9 +180,30 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_UserGroup') and o.name = 'FK_WX_USERG_REFERENCE_SYS_USER')
+alter table WX_UserGroup
+   drop constraint FK_WX_USERG_REFERENCE_SYS_USER
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
    where r.fkeyid = object_id('WX_UserTag') and o.name = 'FK_WX_USERT_REFERENCE_WX_APP')
 alter table WX_UserTag
    drop constraint FK_WX_USERT_REFERENCE_WX_APP
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_UserTagRelation') and o.name = 'FK_WX_USERT_REFERENCE_WX_USERT')
+alter table WX_UserTagRelation
+   drop constraint FK_WX_USERT_REFERENCE_WX_USERT
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_UserTagRelation') and o.name = 'FK_WX_USERT_REFERENCE_WX_USER')
+alter table WX_UserTagRelation
+   drop constraint FK_WX_USERT_REFERENCE_WX_USER
 go
 
 if exists (select 1
@@ -258,6 +292,13 @@ go
 
 if exists (select 1
             from  sysobjects
+           where  id = object_id('WX_QR')
+            and   type = 'U')
+   drop table WX_QR
+go
+
+if exists (select 1
+            from  sysobjects
            where  id = object_id('WX_Queue')
             and   type = 'U')
    drop table WX_Queue
@@ -282,6 +323,13 @@ if exists (select 1
            where  id = object_id('WX_UserTag')
             and   type = 'U')
    drop table WX_UserTag
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('WX_UserTagRelation')
+            and   type = 'U')
+   drop table WX_UserTagRelation
 go
 
 /*==============================================================*/
@@ -660,6 +708,13 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '用户头像',
    'user', @CurrentUser, 'table', 'SYS_User', 'column', 'HeadImageUrl'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '男，女',
+   'user', @CurrentUser, 'table', 'SYS_User', 'column', 'UserSex'
 go
 
 /*==============================================================*/
@@ -1047,6 +1102,47 @@ execute sp_addextendedproperty 'MS_Description',
 go
 
 /*==============================================================*/
+/* Table: WX_QR                                                 */
+/*==============================================================*/
+create table WX_QR (
+   QRId                 int                  identity,
+   UserId               int                  null,
+   AppId                varchar(50)          null,
+   QRName               nvarchar(50)         null,
+   QR_Scene             VARCHAR(50)          null,
+   QR_Scene_String      VARCHAR(50)          null,
+   QRType               VARCHAR(50)          null,
+   Expire_Seconds       INT                  null,
+   Ticket               VARCHAR(255)         null,
+   QR_URL               VARCHAR(255)         null,
+   Image_URL            VARCHAR(255)         null,
+   CreateTime           datetime             null,
+   constraint PK_WX_QR primary key (QRId)
+)
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '系统用户编号',
+   'user', @CurrentUser, 'table', 'WX_QR', 'column', 'UserId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '公众号ID',
+   'user', @CurrentUser, 'table', 'WX_QR', 'column', 'AppId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'QR_SCENE为临时的整型参数值，QR_STR_SCENE为临时的字符串参数值，QR_LIMIT_SCENE为永久的整型参数值，QR_LIMIT_STR_SCENE为永久的字符串参数值',
+   'user', @CurrentUser, 'table', 'WX_QR', 'column', 'QRType'
+go
+
+/*==============================================================*/
 /* Table: WX_Queue                                              */
 /*==============================================================*/
 create table WX_Queue (
@@ -1122,7 +1218,6 @@ go
 /*==============================================================*/
 create table WX_User (
    OpenID               VARCHAR(50)          not null,
-   TageId               int                  null,
    GrooupId             int                  null,
    AppId                varchar(50)          null,
    UserId               int                  null,
@@ -1141,6 +1236,11 @@ create table WX_User (
    Address              VARCHAR(255)         null,
    ZipCode              char(6)              null,
    Remark               VARCHAR(255)         null,
+   UserState            nvarchar(5)          null,
+   LastDateTime         datetime             null,
+   Subscribe_Scene      VARCHAR(50)          null,
+   QR_Scene             VARCHAR(50)          null,
+   QR_Scene_String      VARCHAR(50)          null,
    constraint PK_WX_USER primary key (OpenID)
 )
 go
@@ -1157,13 +1257,6 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '用户标识',
    'user', @CurrentUser, 'table', 'WX_User', 'column', 'OpenID'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '用户标签ID',
-   'user', @CurrentUser, 'table', 'WX_User', 'column', 'TageId'
 go
 
 declare @CurrentUser sysname
@@ -1292,12 +1385,20 @@ execute sp_addextendedproperty 'MS_Description',
    'user', @CurrentUser, 'table', 'WX_User', 'column', 'Remark'
 go
 
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   'ADD_SCENE_SEARCH 公众号搜索，ADD_SCENE_ACCOUNT_MIGRATION 公众号迁移，ADD_SCENE_PROFILE_CARD 名片分享，ADD_SCENE_QR_CODE 扫描二维码，ADD_SCENEPROFILE LINK 图文页内名称点击，ADD_SCENE_PROFILE_ITEM 图文页右上角菜单，ADD_SCENE_PAID 支付后关注，ADD_SCENE_OTHERS 其他',
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'Subscribe_Scene'
+go
+
 /*==============================================================*/
 /* Table: WX_UserGroup                                          */
 /*==============================================================*/
 create table WX_UserGroup (
-   GroupId              int                  not null,
+   GroupId              int                  identity,
    AppId                varchar(50)          null,
+   UserId               int                  null,
    GroupName            nvarchar(50)         null,
    GroupSort            int                  null,
    constraint PK_WX_USERGROUP primary key (GroupId)
@@ -1328,6 +1429,13 @@ go
 declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
+   '系统用户编号',
+   'user', @CurrentUser, 'table', 'WX_UserGroup', 'column', 'UserId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
    '用户组名称',
    'user', @CurrentUser, 'table', 'WX_UserGroup', 'column', 'GroupName'
 go
@@ -1343,7 +1451,7 @@ go
 /* Table: WX_UserTag                                            */
 /*==============================================================*/
 create table WX_UserTag (
-   TageId               int                  identity,
+   TageId               int                  not null,
    AppId                varchar(50)          null,
    TagName              nvarchar(50)         null,
    UserCount            int                  null,
@@ -1361,7 +1469,7 @@ go
 declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
-   '用户标签ID',
+   '用户标签ID 有微信分配，不能够自增长',
    'user', @CurrentUser, 'table', 'WX_UserTag', 'column', 'TageId'
 go
 
@@ -1384,6 +1492,30 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '用户数',
    'user', @CurrentUser, 'table', 'WX_UserTag', 'column', 'UserCount'
+go
+
+/*==============================================================*/
+/* Table: WX_UserTagRelation                                    */
+/*==============================================================*/
+create table WX_UserTagRelation (
+   TageId               int                  not null,
+   OpenID               VARCHAR(50)          not null,
+   constraint PK_WX_USERTAGRELATION primary key (TageId, OpenID)
+)
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '用户标签ID',
+   'user', @CurrentUser, 'table', 'WX_UserTagRelation', 'column', 'TageId'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '用户标识',
+   'user', @CurrentUser, 'table', 'WX_UserTagRelation', 'column', 'OpenID'
 go
 
 alter table SYS_Department
@@ -1466,6 +1598,16 @@ alter table WX_Menu
       references WX_Menu (MenuId)
 go
 
+alter table WX_QR
+   add constraint FK_WX_QR_REFERENCE_SYS_USER foreign key (UserId)
+      references SYS_User (UserId)
+go
+
+alter table WX_QR
+   add constraint FK_WX_QR_REFERENCE_WX_APP foreign key (AppId)
+      references WX_App (AppId)
+go
+
 alter table WX_Queue
    add constraint FK_WX_QUEUE_REFERENCE_WX_USER foreign key (OpenID)
       references WX_User (OpenID)
@@ -1491,18 +1633,28 @@ alter table WX_User
       references WX_UserGroup (GroupId)
 go
 
-alter table WX_User
-   add constraint FK_WX_USER_REFERENCE_WX_USERT foreign key (TageId)
-      references WX_UserTag (TageId)
-go
-
 alter table WX_UserGroup
    add constraint FK_WX_USERG_REFERENCE_WX_APP foreign key (AppId)
       references WX_App (AppId)
 go
 
+alter table WX_UserGroup
+   add constraint FK_WX_USERG_REFERENCE_SYS_USER foreign key (UserId)
+      references SYS_User (UserId)
+go
+
 alter table WX_UserTag
    add constraint FK_WX_USERT_REFERENCE_WX_APP foreign key (AppId)
       references WX_App (AppId)
+go
+
+alter table WX_UserTagRelation
+   add constraint FK_WX_USERT_REFERENCE_WX_USERT foreign key (TageId)
+      references WX_UserTag (TageId)
+go
+
+alter table WX_UserTagRelation
+   add constraint FK_WX_USERT_REFERENCE_WX_USER foreign key (OpenID)
+      references WX_User (OpenID)
 go
 

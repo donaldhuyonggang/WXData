@@ -1,0 +1,86 @@
+﻿@using WXDataModel;
+@{
+    WX_User User = ViewBag.User as WX_User;
+}
+
+<div class="modal-dialog" style="width:800px;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">订阅用户详情</h4>
+        </div>
+        <div class="modal-body clear">
+                <div class="clear">
+                    <div class="col-sm-6" style="padding:0;">
+                        <div class="form-group">
+                            <label for="UserNick" class="col-sm-4 control-label">用户昵称</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="UserNick" id="UserNick" value="@User.UserNick">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="OpenID" class="col-sm-4 control-label" style="">用户标识</label>
+                            <div class="col-sm-8">
+                                <input type="text" style="font-size:12px;" class="form-control" name="OpenID" id="OpenID" value="@User.OpenID">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6" style="padding:0;">
+                        <div class="form-group">
+                            <label for="UserNick" class="col-sm-4 control-label">头像</label>
+                            <div class="col-sm-8">
+                                <img src="@User.HeadImageUrl" alt="@User.UserNick" style="width:82.56px;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <label for="UserSex" class="col-sm-2 control-label" style="">性别</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="UserSex" id="UserSex" value="@User.UserSex">
+                        </div>
+                        <label for="Language" class="col-sm-2 control-label" style="">语言</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="Language" id="Language" value="@User.Language">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="City" class="col-sm-2 control-label" style="">所在城市</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="City" id="City" value="@User.City">
+                        </div>
+                        <label for="Province" class="col-sm-2 control-label" style="">所在省份</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="Province" id="Province" value="@User.Province">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Country" class="col-sm-2 control-label" style="">所在国家</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="Country" id="Country" value="@User.Country">
+                        </div>
+                        <label for="SubscribeTime" class="col-sm-2 control-label" style="">关注时间</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="SubscribeTime" id="SubscribeTime" value="@User.SubscribeTime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="UnSubscribeTime" class="col-sm-2 control-label" style="">退订时间</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="UnSubscribeTime" id="UnSubscribeTime" value="@User.UnSubscribeTime">
+                        </div>
+                        <label for="GroupName" class="col-sm-2 control-label" style="">用户分组</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="GroupName" id="GroupName" value="@User.WX_UserGroup.GroupName">
+                        </div>
+                    </div>
+
+                </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

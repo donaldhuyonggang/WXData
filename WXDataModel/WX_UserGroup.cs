@@ -21,9 +21,11 @@ namespace WXDataModel
     
         public int GroupId { get; set; }
         public string AppId { get; set; }
+        public Nullable<int> UserId { get; set; }
         public string GroupName { get; set; }
         public Nullable<int> GroupSort { get; set; }
     
+        public virtual SYS_User SYS_User { get; set; }
         public virtual WX_App WX_App { get; set; }
         public virtual ICollection<WX_User> WX_User { get; set; }
     }

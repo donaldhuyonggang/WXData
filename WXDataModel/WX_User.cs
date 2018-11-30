@@ -18,10 +18,10 @@ namespace WXDataModel
         {
             this.WX_CustomMsg = new HashSet<WX_CustomMsg>();
             this.WX_Queue = new HashSet<WX_Queue>();
+            this.WX_UserTag = new HashSet<WX_UserTag>();
         }
     
         public string OpenID { get; set; }
-        public Nullable<int> TageId { get; set; }
         public Nullable<int> GrooupId { get; set; }
         public string AppId { get; set; }
         public Nullable<int> UserId { get; set; }
@@ -40,12 +40,17 @@ namespace WXDataModel
         public string Address { get; set; }
         public string ZipCode { get; set; }
         public string Remark { get; set; }
+        public string UserState { get; set; }
+        public Nullable<System.DateTime> LastDateTime { get; set; }
+        public string Subscribe_Scene { get; set; }
+        public string QR_Scene { get; set; }
+        public string QR_Scene_String { get; set; }
     
         public virtual SYS_User SYS_User { get; set; }
         public virtual WX_App WX_App { get; set; }
         public virtual ICollection<WX_CustomMsg> WX_CustomMsg { get; set; }
         public virtual ICollection<WX_Queue> WX_Queue { get; set; }
         public virtual WX_UserGroup WX_UserGroup { get; set; }
-        public virtual WX_UserTag WX_UserTag { get; set; }
+        public virtual ICollection<WX_UserTag> WX_UserTag { get; set; }
     }
 }

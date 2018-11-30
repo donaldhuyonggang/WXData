@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="WXDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="WXDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="SYS_Department">
           <Key>
             <PropertyRef Name="DepartmentId" />
@@ -74,6 +74,7 @@
           <Property Name="WXId" Type="varchar" MaxLength="50" />
           <Property Name="UserState" Type="nvarchar" MaxLength="10" />
           <Property Name="HeadImageUrl" Type="varchar(max)" />
+          <Property Name="UserSex" Type="nchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="WX_App">
           <Key>
@@ -143,6 +144,23 @@
           <Property Name="MenuVisable" Type="int" />
           <Property Name="MenuSort" Type="int" />
         </EntityType>
+        <EntityType Name="WX_QR">
+          <Key>
+            <PropertyRef Name="QRId" />
+          </Key>
+          <Property Name="QRId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="QRName" Type="nvarchar" MaxLength="50" />
+          <Property Name="QR_Scene" Type="varchar" MaxLength="50" />
+          <Property Name="QR_Scene_String" Type="varchar" MaxLength="50" />
+          <Property Name="QRType" Type="varchar" MaxLength="50" />
+          <Property Name="Expire_Seconds" Type="int" />
+          <Property Name="Ticket" Type="varchar" MaxLength="255" />
+          <Property Name="QR_URL" Type="varchar" MaxLength="255" />
+          <Property Name="Image_URL" Type="varchar" MaxLength="255" />
+          <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="WX_Queue">
           <Key>
             <PropertyRef Name="MsgId" />
@@ -160,7 +178,6 @@
             <PropertyRef Name="OpenID" />
           </Key>
           <Property Name="OpenID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="TageId" Type="int" />
           <Property Name="GrooupId" Type="int" />
           <Property Name="AppId" Type="varchar" MaxLength="50" />
           <Property Name="UserId" Type="int" />
@@ -179,13 +196,19 @@
           <Property Name="Address" Type="varchar" MaxLength="255" />
           <Property Name="ZipCode" Type="char" MaxLength="6" />
           <Property Name="Remark" Type="varchar" MaxLength="255" />
+          <Property Name="UserState" Type="nvarchar" MaxLength="5" />
+          <Property Name="LastDateTime" Type="datetime" />
+          <Property Name="Subscribe_Scene" Type="varchar" MaxLength="50" />
+          <Property Name="QR_Scene" Type="varchar" MaxLength="50" />
+          <Property Name="QR_Scene_String" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="WX_UserGroup">
           <Key>
             <PropertyRef Name="GroupId" />
           </Key>
-          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="GroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="UserId" Type="int" />
           <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
           <Property Name="GroupSort" Type="int" />
         </EntityType>
@@ -193,10 +216,18 @@
           <Key>
             <PropertyRef Name="TageId" />
           </Key>
-          <Property Name="TageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TageId" Type="int" Nullable="false" />
           <Property Name="AppId" Type="varchar" MaxLength="50" />
           <Property Name="TagName" Type="nvarchar" MaxLength="50" />
           <Property Name="UserCount" Type="int" />
+        </EntityType>
+        <EntityType Name="WX_UserTagRelation">
+          <Key>
+            <PropertyRef Name="TageId" />
+            <PropertyRef Name="OpenID" />
+          </Key>
+          <Property Name="TageId" Type="int" Nullable="false" />
+          <Property Name="OpenID" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_SYS_DEPA_REFERENCE_SYS_DEPA">
           <End Role="SYS_Department" Type="Self.SYS_Department" Multiplicity="0..1" />
@@ -390,6 +421,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WX_QR_REFERENCE_SYS_USER">
+          <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="0..1" />
+          <End Role="WX_QR" Type="Self.WX_QR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="WX_QR">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_QR_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_QR" Type="Self.WX_QR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_QR">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WX_QUEUE_REFERENCE_WX_APP">
           <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
           <End Role="WX_Queue" Type="Self.WX_Queue" Multiplicity="*" />
@@ -450,15 +505,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_WX_USER_REFERENCE_WX_USERT">
-          <End Role="WX_UserTag" Type="Self.WX_UserTag" Multiplicity="0..1" />
-          <End Role="WX_User" Type="Self.WX_User" Multiplicity="*" />
+        <Association Name="FK_WX_USERG_REFERENCE_SYS_USER">
+          <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="0..1" />
+          <End Role="WX_UserGroup" Type="Self.WX_UserGroup" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="WX_UserTag">
-              <PropertyRef Name="TageId" />
+            <Principal Role="SYS_User">
+              <PropertyRef Name="UserId" />
             </Principal>
-            <Dependent Role="WX_User">
-              <PropertyRef Name="TageId" />
+            <Dependent Role="WX_UserGroup">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -486,6 +541,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WX_USERT_REFERENCE_WX_USER">
+          <End Role="WX_User" Type="Self.WX_User" Multiplicity="1" />
+          <End Role="WX_UserTagRelation" Type="Self.WX_UserTagRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_User">
+              <PropertyRef Name="OpenID" />
+            </Principal>
+            <Dependent Role="WX_UserTagRelation">
+              <PropertyRef Name="OpenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USERT_REFERENCE_WX_USERT">
+          <End Role="WX_UserTag" Type="Self.WX_UserTag" Multiplicity="1" />
+          <End Role="WX_UserTagRelation" Type="Self.WX_UserTagRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_UserTag">
+              <PropertyRef Name="TageId" />
+            </Principal>
+            <Dependent Role="WX_UserTagRelation">
+              <PropertyRef Name="TageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="WXDataModelStoreContainer">
           <EntitySet Name="SYS_Department" EntityType="Self.SYS_Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_Function" EntityType="Self.SYS_Function" Schema="dbo" store:Type="Tables" />
@@ -499,10 +578,12 @@
           <EntitySet Name="WX_EventQueue" EntityType="Self.WX_EventQueue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Media" EntityType="Self.WX_Media" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Menu" EntityType="Self.WX_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_QR" EntityType="Self.WX_QR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Queue" EntityType="Self.WX_Queue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_User" EntityType="Self.WX_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_UserGroup" EntityType="Self.WX_UserGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_UserTag" EntityType="Self.WX_UserTag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_UserTagRelation" EntityType="Self.WX_UserTagRelation" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_SYS_DEPA_REFERENCE_SYS_DEPA" Association="Self.FK_SYS_DEPA_REFERENCE_SYS_DEPA">
             <End Role="SYS_Department" EntitySet="SYS_Department" />
             <End Role="SYS_Department1" EntitySet="SYS_Department" />
@@ -567,6 +648,14 @@
             <End Role="WX_Menu" EntitySet="WX_Menu" />
             <End Role="WX_Menu1" EntitySet="WX_Menu" />
           </AssociationSet>
+          <AssociationSet Name="FK_WX_QR_REFERENCE_SYS_USER" Association="Self.FK_WX_QR_REFERENCE_SYS_USER">
+            <End Role="SYS_User" EntitySet="SYS_User" />
+            <End Role="WX_QR" EntitySet="WX_QR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_QR_REFERENCE_WX_APP" Association="Self.FK_WX_QR_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_QR" EntitySet="WX_QR" />
+          </AssociationSet>
           <AssociationSet Name="FK_WX_QUEUE_REFERENCE_WX_APP" Association="Self.FK_WX_QUEUE_REFERENCE_WX_APP">
             <End Role="WX_App" EntitySet="WX_App" />
             <End Role="WX_Queue" EntitySet="WX_Queue" />
@@ -587,9 +676,9 @@
             <End Role="WX_UserGroup" EntitySet="WX_UserGroup" />
             <End Role="WX_User" EntitySet="WX_User" />
           </AssociationSet>
-          <AssociationSet Name="FK_WX_USER_REFERENCE_WX_USERT" Association="Self.FK_WX_USER_REFERENCE_WX_USERT">
-            <End Role="WX_UserTag" EntitySet="WX_UserTag" />
-            <End Role="WX_User" EntitySet="WX_User" />
+          <AssociationSet Name="FK_WX_USERG_REFERENCE_SYS_USER" Association="Self.FK_WX_USERG_REFERENCE_SYS_USER">
+            <End Role="SYS_User" EntitySet="SYS_User" />
+            <End Role="WX_UserGroup" EntitySet="WX_UserGroup" />
           </AssociationSet>
           <AssociationSet Name="FK_WX_USERG_REFERENCE_WX_APP" Association="Self.FK_WX_USERG_REFERENCE_WX_APP">
             <End Role="WX_App" EntitySet="WX_App" />
@@ -599,8 +688,17 @@
             <End Role="WX_App" EntitySet="WX_App" />
             <End Role="WX_UserTag" EntitySet="WX_UserTag" />
           </AssociationSet>
+          <AssociationSet Name="FK_WX_USERT_REFERENCE_WX_USER" Association="Self.FK_WX_USERT_REFERENCE_WX_USER">
+            <End Role="WX_User" EntitySet="WX_User" />
+            <End Role="WX_UserTagRelation" EntitySet="WX_UserTagRelation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USERT_REFERENCE_WX_USERT" Association="Self.FK_WX_USERT_REFERENCE_WX_USERT">
+            <End Role="WX_UserTag" EntitySet="WX_UserTag" />
+            <End Role="WX_UserTagRelation" EntitySet="WX_UserTagRelation" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WXDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -676,11 +774,14 @@
           <Property Name="WXId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserState" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="HeadImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UserSex" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="SYS_Department" Relationship="Self.FK_SYS_DEPA_REFERENCE_SYS_USER" FromRole="SYS_User" ToRole="SYS_Department" />
           <NavigationProperty Name="SYS_Role" Relationship="Self.FK_SYS_USER_REFERENCE_SYS_ROLE" FromRole="SYS_User" ToRole="SYS_Role" />
           <NavigationProperty Name="WX_App" Relationship="Self.FK_SYS_USER_REFERENCE_WX_APP" FromRole="SYS_User" ToRole="WX_App" />
           <NavigationProperty Name="WX_CustomMsg" Relationship="Self.FK_WX_CUSTO_REFERENCE_SYS_USER" FromRole="SYS_User" ToRole="WX_CustomMsg" />
+          <NavigationProperty Name="WX_QR" Relationship="Self.FK_WX_QR_REFERENCE_SYS_USER" FromRole="SYS_User" ToRole="WX_QR" />
           <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_USER_REFERENCE_SYS_USER" FromRole="SYS_User" ToRole="WX_User" />
+          <NavigationProperty Name="WX_UserGroup" Relationship="Self.FK_WX_USERG_REFERENCE_SYS_USER" FromRole="SYS_User" ToRole="WX_UserGroup" />
         </EntityType>
         <EntityType Name="WX_App">
           <Key>
@@ -701,6 +802,7 @@
           <NavigationProperty Name="WX_CustomMsg" Relationship="Self.FK_WX_CUSTO_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_CustomMsg" />
           <NavigationProperty Name="WX_Media" Relationship="Self.FK_WX_MEDIA_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_Media" />
           <NavigationProperty Name="WX_Menu" Relationship="Self.FK_WX_MENU_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_Menu" />
+          <NavigationProperty Name="WX_QR" Relationship="Self.FK_WX_QR_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_QR" />
           <NavigationProperty Name="WX_Queue" Relationship="Self.FK_WX_QUEUE_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_Queue" />
           <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_USER_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_User" />
           <NavigationProperty Name="WX_UserGroup" Relationship="Self.FK_WX_USERG_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_UserGroup" />
@@ -723,6 +825,19 @@
           <NavigationProperty Name="SYS_User" Relationship="Self.FK_WX_CUSTO_REFERENCE_SYS_USER" FromRole="WX_CustomMsg" ToRole="SYS_User" />
           <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_CUSTO_REFERENCE_WX_APP" FromRole="WX_CustomMsg" ToRole="WX_App" />
           <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_CUSTO_REFERENCE_WX_USER" FromRole="WX_CustomMsg" ToRole="WX_User" />
+        </EntityType>
+        <EntityType Name="WX_EventQueue">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OpenID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="MsgType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Event" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="XmlContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MsgState" Type="Int32" />
         </EntityType>
         <EntityType Name="WX_Media">
           <Key>
@@ -755,6 +870,25 @@
           <NavigationProperty Name="WX_Menu1" Relationship="Self.FK_WX_MENU_REFERENCE_WX_MENU" FromRole="WX_Menu" ToRole="WX_Menu1" />
           <NavigationProperty Name="WX_Menu2" Relationship="Self.FK_WX_MENU_REFERENCE_WX_MENU" FromRole="WX_Menu1" ToRole="WX_Menu" />
         </EntityType>
+        <EntityType Name="WX_QR">
+          <Key>
+            <PropertyRef Name="QRId" />
+          </Key>
+          <Property Name="QRId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="QRName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QR_Scene" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="QR_Scene_String" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="QRType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Expire_Seconds" Type="Int32" />
+          <Property Name="Ticket" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="QR_URL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Image_URL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SYS_User" Relationship="Self.FK_WX_QR_REFERENCE_SYS_USER" FromRole="WX_QR" ToRole="SYS_User" />
+          <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_QR_REFERENCE_WX_APP" FromRole="WX_QR" ToRole="WX_App" />
+        </EntityType>
         <EntityType Name="WX_Queue">
           <Key>
             <PropertyRef Name="MsgId" />
@@ -774,7 +908,6 @@
             <PropertyRef Name="OpenID" />
           </Key>
           <Property Name="OpenID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TageId" Type="Int32" />
           <Property Name="GrooupId" Type="Int32" />
           <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Int32" />
@@ -793,21 +926,28 @@
           <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ZipCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
           <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="UserState" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="LastDateTime" Type="DateTime" Precision="3" />
+          <Property Name="Subscribe_Scene" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="QR_Scene" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="QR_Scene_String" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SYS_User" Relationship="Self.FK_WX_USER_REFERENCE_SYS_USER" FromRole="WX_User" ToRole="SYS_User" />
           <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_USER_REFERENCE_WX_APP" FromRole="WX_User" ToRole="WX_App" />
           <NavigationProperty Name="WX_CustomMsg" Relationship="Self.FK_WX_CUSTO_REFERENCE_WX_USER" FromRole="WX_User" ToRole="WX_CustomMsg" />
           <NavigationProperty Name="WX_Queue" Relationship="Self.FK_WX_QUEUE_REFERENCE_WX_USER" FromRole="WX_User" ToRole="WX_Queue" />
           <NavigationProperty Name="WX_UserGroup" Relationship="Self.FK_WX_USER_REFERENCE_WX_USERG" FromRole="WX_User" ToRole="WX_UserGroup" />
-          <NavigationProperty Name="WX_UserTag" Relationship="Self.FK_WX_USER_REFERENCE_WX_USERT" FromRole="WX_User" ToRole="WX_UserTag" />
+          <NavigationProperty Name="WX_UserTag" Relationship="Self.WX_UserTagRelation" FromRole="WX_User" ToRole="WX_UserTag" />
         </EntityType>
         <EntityType Name="WX_UserGroup">
           <Key>
             <PropertyRef Name="GroupId" />
           </Key>
-          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
           <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GroupSort" Type="Int32" />
+          <NavigationProperty Name="SYS_User" Relationship="Self.FK_WX_USERG_REFERENCE_SYS_USER" FromRole="WX_UserGroup" ToRole="SYS_User" />
           <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_USERG_REFERENCE_WX_APP" FromRole="WX_UserGroup" ToRole="WX_App" />
           <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_USER_REFERENCE_WX_USERG" FromRole="WX_UserGroup" ToRole="WX_User" />
         </EntityType>
@@ -815,12 +955,12 @@
           <Key>
             <PropertyRef Name="TageId" />
           </Key>
-          <Property Name="TageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TageId" Type="Int32" Nullable="false" />
           <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TagName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserCount" Type="Int32" />
           <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_USERT_REFERENCE_WX_APP" FromRole="WX_UserTag" ToRole="WX_App" />
-          <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_USER_REFERENCE_WX_USERT" FromRole="WX_UserTag" ToRole="WX_User" />
+          <NavigationProperty Name="WX_User" Relationship="Self.WX_UserTagRelation" FromRole="WX_UserTag" ToRole="WX_User" />
         </EntityType>
         <Association Name="FK_SYS_DEPA_REFERENCE_SYS_DEPA">
           <End Role="SYS_Department" Type="Self.SYS_Department" Multiplicity="0..1" />
@@ -930,6 +1070,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WX_QR_REFERENCE_SYS_USER">
+          <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="0..1" />
+          <End Role="WX_QR" Type="Self.WX_QR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="WX_QR">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WX_USER_REFERENCE_SYS_USER">
           <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="0..1" />
           <End Role="WX_User" Type="Self.WX_User" Multiplicity="*" />
@@ -938,6 +1090,18 @@
               <PropertyRef Name="UserId" />
             </Principal>
             <Dependent Role="WX_User">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_USERG_REFERENCE_SYS_USER">
+          <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="0..1" />
+          <End Role="WX_UserGroup" Type="Self.WX_UserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="WX_UserGroup">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -974,6 +1138,18 @@
               <PropertyRef Name="AppId" />
             </Principal>
             <Dependent Role="WX_Menu">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WX_QR_REFERENCE_WX_APP">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_QR" Type="Self.WX_QR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_QR">
               <PropertyRef Name="AppId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1074,21 +1250,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_WX_USER_REFERENCE_WX_USERT">
-          <End Role="WX_UserTag" Type="Self.WX_UserTag" Multiplicity="0..1" />
-          <End Role="WX_User" Type="Self.WX_User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="WX_UserTag">
-              <PropertyRef Name="TageId" />
-            </Principal>
-            <Dependent Role="WX_User">
-              <PropertyRef Name="TageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="SYS_Right">
           <End Role="SYS_Function" Type="Self.SYS_Function" Multiplicity="*" />
           <End Role="SYS_Role" Type="Self.SYS_Role" Multiplicity="*" />
+        </Association>
+        <Association Name="WX_UserTagRelation">
+          <End Role="WX_User" Type="Self.WX_User" Multiplicity="*" />
+          <End Role="WX_UserTag" Type="Self.WX_UserTag" Multiplicity="*" />
         </Association>
         <EntityContainer Name="WXDataEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="SYS_Department" EntityType="Self.SYS_Department" />
@@ -1099,8 +1267,10 @@
           <EntitySet Name="SYS_User" EntityType="Self.SYS_User" />
           <EntitySet Name="WX_App" EntityType="Self.WX_App" />
           <EntitySet Name="WX_CustomMsg" EntityType="Self.WX_CustomMsg" />
+          <EntitySet Name="WX_EventQueue" EntityType="Self.WX_EventQueue" />
           <EntitySet Name="WX_Media" EntityType="Self.WX_Media" />
           <EntitySet Name="WX_Menu" EntityType="Self.WX_Menu" />
+          <EntitySet Name="WX_QR" EntityType="Self.WX_QR" />
           <EntitySet Name="WX_Queue" EntityType="Self.WX_Queue" />
           <EntitySet Name="WX_User" EntityType="Self.WX_User" />
           <EntitySet Name="WX_UserGroup" EntityType="Self.WX_UserGroup" />
@@ -1141,9 +1311,17 @@
             <End Role="SYS_User" EntitySet="SYS_User" />
             <End Role="WX_CustomMsg" EntitySet="WX_CustomMsg" />
           </AssociationSet>
+          <AssociationSet Name="FK_WX_QR_REFERENCE_SYS_USER" Association="Self.FK_WX_QR_REFERENCE_SYS_USER">
+            <End Role="SYS_User" EntitySet="SYS_User" />
+            <End Role="WX_QR" EntitySet="WX_QR" />
+          </AssociationSet>
           <AssociationSet Name="FK_WX_USER_REFERENCE_SYS_USER" Association="Self.FK_WX_USER_REFERENCE_SYS_USER">
             <End Role="SYS_User" EntitySet="SYS_User" />
             <End Role="WX_User" EntitySet="WX_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_USERG_REFERENCE_SYS_USER" Association="Self.FK_WX_USERG_REFERENCE_SYS_USER">
+            <End Role="SYS_User" EntitySet="SYS_User" />
+            <End Role="WX_UserGroup" EntitySet="WX_UserGroup" />
           </AssociationSet>
           <AssociationSet Name="FK_WX_CUSTO_REFERENCE_WX_APP" Association="Self.FK_WX_CUSTO_REFERENCE_WX_APP">
             <End Role="WX_App" EntitySet="WX_App" />
@@ -1156,6 +1334,10 @@
           <AssociationSet Name="FK_WX_MENU_REFERENCE_WX_APP" Association="Self.FK_WX_MENU_REFERENCE_WX_APP">
             <End Role="WX_App" EntitySet="WX_App" />
             <End Role="WX_Menu" EntitySet="WX_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_QR_REFERENCE_WX_APP" Association="Self.FK_WX_QR_REFERENCE_WX_APP">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_QR" EntitySet="WX_QR" />
           </AssociationSet>
           <AssociationSet Name="FK_WX_QUEUE_REFERENCE_WX_APP" Association="Self.FK_WX_QUEUE_REFERENCE_WX_APP">
             <End Role="WX_App" EntitySet="WX_App" />
@@ -1189,29 +1371,15 @@
             <End Role="WX_UserGroup" EntitySet="WX_UserGroup" />
             <End Role="WX_User" EntitySet="WX_User" />
           </AssociationSet>
-          <AssociationSet Name="FK_WX_USER_REFERENCE_WX_USERT" Association="Self.FK_WX_USER_REFERENCE_WX_USERT">
-            <End Role="WX_UserTag" EntitySet="WX_UserTag" />
-            <End Role="WX_User" EntitySet="WX_User" />
-          </AssociationSet>
           <AssociationSet Name="SYS_Right" Association="Self.SYS_Right">
             <End Role="SYS_Function" EntitySet="SYS_Function" />
             <End Role="SYS_Role" EntitySet="SYS_Role" />
           </AssociationSet>
-          <EntitySet Name="WX_EventQueue" EntityType="WXDataModel.WX_EventQueue" />
+          <AssociationSet Name="WX_UserTagRelation" Association="Self.WX_UserTagRelation">
+            <End Role="WX_User" EntitySet="WX_User" />
+            <End Role="WX_UserTag" EntitySet="WX_UserTag" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="WX_EventQueue">
-          <Key>
-            <PropertyRef Name="EventId" />
-          </Key>
-          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OpenID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="MsgType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Event" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="XmlContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MsgState" Type="Int32" />
-          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1283,6 +1451,7 @@
                 <ScalarProperty Name="WXId" ColumnName="WXId" />
                 <ScalarProperty Name="UserState" ColumnName="UserState" />
                 <ScalarProperty Name="HeadImageUrl" ColumnName="HeadImageUrl" />
+                <ScalarProperty Name="UserSex" ColumnName="UserSex" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1316,6 +1485,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="WX_EventQueue">
+            <EntityTypeMapping TypeName="WXDataModel.WX_EventQueue">
+              <MappingFragment StoreEntitySet="WX_EventQueue">
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="OpenID" ColumnName="OpenID" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="MsgType" ColumnName="MsgType" />
+                <ScalarProperty Name="Event" ColumnName="Event" />
+                <ScalarProperty Name="XmlContent" ColumnName="XmlContent" />
+                <ScalarProperty Name="MsgState" ColumnName="MsgState" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="WX_Media">
             <EntityTypeMapping TypeName="WXDataModel.WX_Media">
               <MappingFragment StoreEntitySet="WX_Media">
@@ -1345,6 +1528,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="WX_QR">
+            <EntityTypeMapping TypeName="WXDataModel.WX_QR">
+              <MappingFragment StoreEntitySet="WX_QR">
+                <ScalarProperty Name="QRId" ColumnName="QRId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="QRName" ColumnName="QRName" />
+                <ScalarProperty Name="QR_Scene" ColumnName="QR_Scene" />
+                <ScalarProperty Name="QR_Scene_String" ColumnName="QR_Scene_String" />
+                <ScalarProperty Name="QRType" ColumnName="QRType" />
+                <ScalarProperty Name="Expire_Seconds" ColumnName="Expire_Seconds" />
+                <ScalarProperty Name="Ticket" ColumnName="Ticket" />
+                <ScalarProperty Name="QR_URL" ColumnName="QR_URL" />
+                <ScalarProperty Name="Image_URL" ColumnName="Image_URL" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="WX_Queue">
             <EntityTypeMapping TypeName="WXDataModel.WX_Queue">
               <MappingFragment StoreEntitySet="WX_Queue">
@@ -1362,7 +1563,6 @@
             <EntityTypeMapping TypeName="WXDataModel.WX_User">
               <MappingFragment StoreEntitySet="WX_User">
                 <ScalarProperty Name="OpenID" ColumnName="OpenID" />
-                <ScalarProperty Name="TageId" ColumnName="TageId" />
                 <ScalarProperty Name="GrooupId" ColumnName="GrooupId" />
                 <ScalarProperty Name="AppId" ColumnName="AppId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1381,6 +1581,11 @@
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="UserState" ColumnName="UserState" />
+                <ScalarProperty Name="LastDateTime" ColumnName="LastDateTime" />
+                <ScalarProperty Name="Subscribe_Scene" ColumnName="Subscribe_Scene" />
+                <ScalarProperty Name="QR_Scene" ColumnName="QR_Scene" />
+                <ScalarProperty Name="QR_Scene_String" ColumnName="QR_Scene_String" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1389,6 +1594,7 @@
               <MappingFragment StoreEntitySet="WX_UserGroup">
                 <ScalarProperty Name="GroupId" ColumnName="GroupId" />
                 <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="GroupName" ColumnName="GroupName" />
                 <ScalarProperty Name="GroupSort" ColumnName="GroupSort" />
               </MappingFragment>
@@ -1412,20 +1618,14 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="WX_EventQueue">
-            <EntityTypeMapping TypeName="WXDataModel.WX_EventQueue">
-              <MappingFragment StoreEntitySet="WX_EventQueue">
-                <ScalarProperty Name="AppId" ColumnName="AppId" />
-                <ScalarProperty Name="MsgState" ColumnName="MsgState" />
-                <ScalarProperty Name="XmlContent" ColumnName="XmlContent" />
-                <ScalarProperty Name="Event" ColumnName="Event" />
-                <ScalarProperty Name="MsgType" ColumnName="MsgType" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="OpenID" ColumnName="OpenID" />
-                <ScalarProperty Name="EventId" ColumnName="EventId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <AssociationSetMapping Name="WX_UserTagRelation" TypeName="WXDataModel.WX_UserTagRelation" StoreEntitySet="WX_UserTagRelation">
+            <EndProperty Name="WX_User">
+              <ScalarProperty Name="OpenID" ColumnName="OpenID" />
+            </EndProperty>
+            <EndProperty Name="WX_UserTag">
+              <ScalarProperty Name="TageId" ColumnName="TageId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

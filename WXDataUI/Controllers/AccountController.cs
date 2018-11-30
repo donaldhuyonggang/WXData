@@ -13,6 +13,7 @@ namespace WXDataUI.Controllers
         {
             // return View();
             return Redirect("/Base/Home/Login");
+            //return Redirect("/Base/Home/Index");
         }
     }
 }
