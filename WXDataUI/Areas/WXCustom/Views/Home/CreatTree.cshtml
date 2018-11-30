@@ -1,0 +1,92 @@
+﻿@using WXDataModel
+
+<style>
+    .UserHead {
+        width: 25px;
+        height: 25px;
+        border-radius: 30px;
+    }
+
+    .badge {
+        background-color: red;
+    }
+</style>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    @foreach (WX_UserGroup item in ViewBag.treenode)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="@item.GroupId">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#@item.GroupName" aria-expanded="true" aria-controls="@item.GroupName">
+                        @item.GroupName
+                    </a>
+                </h4>
+            </div>
+            <div id="@item.GroupName" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="@item.GroupId">
+                <div class="list-group">
+                    @foreach (WX_User child in item.WX_User)
+                    {
+                        <a id="xxx" href="#" class="list-group-item  sendMessage" name="@child.OpenID" nick="@child.UserNick">
+                            <img src="@child.HeadImageUrl" class="UserHead" alt="" />
+                            <span class="UserNike">@child.UserNick</span>
+                            <span class="badge" name="@child.OpenID"></span>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $(function () {
+        //计时器时时获取
+        setInterval(function () {
+            var Message = $(".sendMessage");
+            $.get("/WXCustom/home/GetCountMessage", function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $.each(Message, function (s, obj) {
+                        var name = $(obj).attr('name');
+                        if (name == data[i].OpenId) {
+                            $(obj).find(".badge").html(data[i].Count);
+                        }
+                    });
+                }
+            })
+        }, 1000);
+
+
+        //双击用户进行聊天
+        $(document).on('dblclick', '.sendMessage', function () {
+            var nick = $(this).attr('nick'); //获取用户昵称
+            var node = $(this).attr('name'); //获取用户编号
+            var Node = $('#tt').tabs('getTab', nick);
+            if (Node == null) {
+                $('#tt').tabs('add', {
+                    title: nick,
+                    selected: true,
+                    closable: true,
+                    href: '/WXCustom/home/TaleToUser/' + node
+                });
+            } else {
+                $('#tt').tabs('select', nick);
+            }
+            $(this).find(".badge").html("");
+            //UpUserState(node);
+        });
+
+        @*分配用户给客服*@
+            function UpUserState(node) {
+                $.post("/WXCustom/home/UpuserID/" + node.id, function (data) {
+                    if (!data) {
+                        alert("失败");
+                    }
+                });
+            }
+
+    })//窗体加载
+</script>
+
+
+
+

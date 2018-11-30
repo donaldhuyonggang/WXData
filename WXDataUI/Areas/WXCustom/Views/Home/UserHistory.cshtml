@@ -1,0 +1,54 @@
+﻿@*<div class="paging">
+    <div id="pagingcontent" class="easyui-panel padd" style="height:85%"
+         data-options="href:'show_content.php?page=1'">
+        <div class="history-content">
+            <div class="history-daytime text-center">2018-01-14</div>
+            <div class="history-talk">
+                <div class="history-talk-title"><small class="talk-name">陈洁</small>(<smaill class="talk-id">3as4dasdwad</smaill>)<small class="history-talk-time">16:38:45</small></div>
+                <div class="history-talk-content">
+                    <span>陈洁陈洁陈洁陈洁</span>
+                </div>
+            </div>
+            <div class="history-talk">
+                <div class="history-talk-title"><small class="talk-name">陈洁</small>(<smaill class="talk-id">3as4dasdwad</smaill>)<small class="history-talk-time">16:38:45</small></div>
+                <div class="history-talk-content">
+                    <span>陈洁陈洁陈洁陈洁</span>
+                </div>
+            </div>
+            <div class="history-talk">
+                <div class="history-talk-title"><small class="talk-name">陈洁</small>(<smaill class="talk-id">3as4dasdwad</smaill>)<small class="history-talk-time">16:38:45</small></div>
+                <div class="history-talk-content">
+                    <span>陈洁陈洁陈洁陈洁</span>
+                </div>
+            </div>
+            <div class="history-talk">
+                <div class="history-talk-title"><small class="talk-name">陈洁</small>&nbsp;(<smaill class="talk-id">3as4dasdwad</smaill>)&nbsp;<small class="history-talk-time">16:38:45</small></div>
+                <div class="history-talk-content">
+                    <span>陈洁陈洁陈洁陈洁</span>
+                </div>
+            </div>
+            <div class="history-talk">
+                <div class="history-talk-title"><small class="talk-name">陈洁</small> &nbsp;(<smaill class="talk-id">3as4dasdwad</smaill>)&nbsp;<small class="history-talk-time">16:38:45</small></div>
+                <div class="history-talk-content">
+                    <span>陈洁陈洁陈洁陈洁</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="easyui-pagination marg"
+         data-options=@@"total: 200, pageSize 10,onSelectPage function(pageNumber, pageSize){ $('#content').panel('refresh', 'show_content.php?page=' +pageNumber);
+         }">
+
+    </div>
+</div>*@
+
+<div id="pp" style="background:#efefef;border:1px solid #ccc;"></div>
+<script>
+    $(function () {
+        $('#pp').pagination({
+            total: 2000,
+            pageSize: 10
+        });
+    })//加载事件
+</script>
+

@@ -231,6 +231,8 @@
     <Content Include="Areas\Base\Views\Home\SYS_User.cshtml" />
     <Content Include="Areas\Base\Views\Home\Login.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\TaleToUser.cshtml" />
+    <Content Include="Areas\WXCustom\Views\Home\UserHistory.cshtml" />
+    <Content Include="Areas\WXCustom\Views\Home\CreatTree.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -261,6 +263,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Base\Models\" />
     <Folder Include="Areas\Base\Views\Home\Modal\" />
     <Folder Include="Areas\Base\Views\Shared\" />
     <Folder Include="Areas\Common\Controllers\" />

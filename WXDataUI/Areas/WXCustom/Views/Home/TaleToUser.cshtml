@@ -1,84 +1,150 @@
 ﻿@using WXDataModel
 
+<div id="@ViewBag.OpenId" style="height:100%;width:100%;">
 
-<div class="talk-body Roll" id="">
-    @foreach (WXDataModel.WX_CustomMsg item in ViewBag.Talk)
-    {
-        @*if ()
-            {
+    <div class="talk-body Roll">
+        @foreach (WXDataModel.WX_CustomMsg item in ViewBag.Talk)
+        {
+
             <div class="talk-media">
-                <div class="time">
-                    @*//时间
+                <a href="javascript:void(0);" class="WXuserHead"><img src="@item.WX_User.HeadImageUrl" class="user-head-l" alt=""></a>
+                <div class="user-note-l bg-color-f5">
+                    <div class="arrowl"></div>
+                    @*内容*@
+                    @item.Content
                 </div>
             </div>
-            }*@
-
-        @*右侧*@
-        @*SYS_User user = Session["User"] as SYS_User;
-                if (item.FromUserName == user.UserName)
-                {
-                <div class="talk-media">
-                    <img src="" class="user-head-r" alt="">
-                    <div class="user-note-r bg-color">
-                        <div class="arrowr"></div>
-                        @*聊天内容
-                        @item.XmlContent
-                    </div>
-                </div>
-            }*@
-        @*左侧*@
-        <div class="talk-media">
-            <img src="" class="user-head-l" alt="">
-            <div class="user-note-l bg-color-f5">
-                <div class="arrowl"></div>
-                @*内容*@
-                @item.Content
+        }
+    </div>
+    <div class="talk-bottom">
+        <div class="row marg">
+            <div class="emotion col-xs-11 text-right">
+                <a href="javascript:void(0);" class="glyphicon glyphicon-time Historical"></a>
             </div>
         </div>
-    }
+        <div class="inputtext col-xs-12">
+            <textarea rows="4" id="note" class="note"></textarea>
+        </div>
+        <div class="button col-xs-12 text-right" style="margin-top:5px;">
+            <a id="" class="btn btn-default btn_send"> 发送 </a>
+        </div>
+    </div>
 </div>
 
-<div class="talk-bottom">
-    <div class="emotion col-xs-11 text-right">
-        <a href="#" class="glyphicon glyphicon-time"></a>
-    </div>
-    <div class="inputtext col-xs-12">
-        <textarea rows="4" id="note"></textarea>
-    </div>
-    <div class="button col-xs-12 text-right" style="margin-top:5px;">
-        <a id="" class="btn btn-default btn_send"> 发送 </a>
-    </div>
-</div>
+
+<style>
+    @@keyframes fade {
+    from {
+        opacity: 1.0;
+    }
+    50% {
+        opacity: 0.2;
+    }
+    to {
+        opacity: 1.0;
+    }
+}
+    .havemessage {
+        background-color:red;
+        animation: fade 600ms infinite;
+        -webkit-animation: fade 600ms infinite;
+    }
+</style>
 
 <script>
+    var myTime;
+
     $(function () {
-        setInterval(function () {
+
+        //tab被选中
+        //$("#tt").tabs({
+        //    onSelect: function (title, index) {
+        //        var tab = $('#tt').tabs('getTab', title);
+        //        return false;
+        //    }
+        //})
+
+        
+
+
+        //计时器循环调用
+        myTime = setInterval(function () {
             $.get("/WXCustom/home/GetFansMsg/@ViewBag.OpenId", function (data) {
                 for (var i = 0; i < data.length; i++) {
-                    $(".Roll").append("<div class=\"talk-media\">" +
-            "<img src=\"\" class=\"user-head-l\" alt=\"\">" +
-            "<div class=\"user-note-l bg-color-f5\">" +
-                "<div class=\"arrowl\"></div>" +
-                    data[i].Content +
-            "</div>" +
-        "</div>");
+                    if (i >= 0) {
+                        //判断是否有消息进入
+                        var tab = $('#tt').tabs('getTab', data[i].UserNick);
+                        $('#tt').tabs('update', {
+                            tab: tab,
+                            options: {
+                                iconCls: 'havemessage',
+                                href:''
+                            }
+                        });
+                    }
+                    $("#@ViewBag.OpenId .Roll").append("<div class=\"talk-media\">" +
+                "<a href=\"javascript:void(0);\" class=\"WXuserHead\"> <img src=\"" + data[i].HeadImageUrl + "\" class=\"user-head-l\" alt=\"\"> </a>" +
+                "<div class=\"user-note-l bg-color-f5\">" +
+                    "<div class=\"arrowl\"></div>" +
+                        data[i].Content +
+                "</div>" +
+            "</div>");
                 }
             });
         }, 1000);
 
+        //tab关闭事件,关闭计时器
+        $("#tt").tabs({
+            onClose: function () {
+                clearInterval(myTime);//停止计时
+            }
+        });
+
+        //双击头像显示用户个人信息
+        $(document).on("dblclick", "#@ViewBag.OpenId .WXuserHead", function () {
+            var Node = $('#routine').tabs('getTab', '个人信息');
+            alert(Node==null)
+            if (Node==null) {
+                $('#routine').tabs('add', {
+                    title: '个人信息',
+                    href: '/WXCustom/Home/userinfo/' + '@ViewBag.OpenId',
+                    closable: true,
+                    fit: true
+                });
+            } else {
+                Node.panel('open').panel('refresh', '/WXCustom/Home/userinfo/' + '@ViewBag.OpenId'); //刷新面板数据
+            }
+        });
+
+        //单机显示历史记录
+        $(document).on("click", "#@ViewBag.OpenId .Historical", function () {
+            var Node = $('#routine').tabs('getTab', '历史纪录');
+            if (Node==null) {
+                $('#routine').tabs('add', {
+                    title: '历史纪录',
+                    href: '/WXCustom/Home/UserHistory/' + '@ViewBag.OpenId',
+                    closable: true,
+                    fit: true
+                });
+            } else {
+                Node.panel('open').panel('refresh', '/WXCustom/Home/UserHistory/' + '@ViewBag.OpenId'); //刷新面板数据
+            }
+        });
+
+
         //发送按钮点击
-        $(document).on("click", ".btn_send", function () {
-            var CText = $("#note").val();
+        $(document).on("click", "#@ViewBag.OpenId .btn_send", function () {
+            var CText = $("#@ViewBag.OpenId .note").val();
             if (CText == "") {
 
             } else {
                 var info = {
-                    Content: $("#note").val(),
+                    Content: $("#@ViewBag.OpenId .note").val(),
                     OpenID: '@ViewBag.OpenId'
                 }//josn
                 $.post("/WXCustom/home/TaleToUser", info, function (data) {
                     if (data) {
-                        $(".Roll").append("<div class=\"talk-media\">" +
+                        $("#@ViewBag.OpenId .Roll").append("<div class=\"talk-media\">" +
                        "<img src=\"\" class=\"user-head-r\" alt=\"\">" +
                        "<div class=\"user-note-r bg-color\">" +
                        "<div class=\"arrowr\"></div>" +
@@ -88,7 +154,8 @@
                     }
                 });
             }
-            $("#note").val("");
+            $("#@ViewBag.OpenId .note").val("");
         });
+
     })//窗体加载
 </script>

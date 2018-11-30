@@ -3,12 +3,10 @@
     ViewBag.Title = "Index";
 }
 @section easyui{
-
     <link href="~/Content/easyui/bootstrap/panel.css" rel="stylesheet" />
     <link href="~/Content/easyui/bootstrap/tabs.css" rel="stylesheet" />
     <link href="~/Content/easyui/bootstrap/tree.css" rel="stylesheet" />
     <link href="~/Content/easyui/bootstrap/layout.css" rel="stylesheet" />
-
 }
 @section styles{
     <link href="~/Content/WXCustom/Index.css" rel="stylesheet" />
@@ -16,86 +14,30 @@
 
 <div id="cc" class="easyui-layout" style="width:100%;height:100%;">
     @*右侧常规操作（常用语）用户聊天记录，用户个人信息*@
-    <div class="padd" data-options="region:'east',title:'用户信息',split:true" style="width:350px;height:100%;max-width:400px;">
+    <div class="padd" data-options="region:'east',title:'常规操作',split:true" style="width:350px;height:100%;max-width:400px;">
         <div id="routine" class="easyui-tabs">
-            <div title="快捷语句" style="padding:20px;display:none;">
+            <div title="快捷语句" style="padding:20px;display:none;height:100%;">
 
             </div>
-            <div title="聊天记录" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
-                <div class="paging">
-                    <div id="pagingcontent" class="easyui-panel padd" style="height:85%"
-                         data-options="href:'show_content.php?page=1'">
-                        <div class="history-content">
-                            <div class="history-daytime text-center">2018-01-14</div>
-                            <div class="history-talk">
-                                <div class="history-talk-title"><small class="talk-name">陈洁</small>(<smaill class="talk-id">3as4dasdwad</smaill>)<small class="history-talk-time">16:38:45</small></div>
-                                <div class="history-talk-content">
-                                    <span>陈洁陈洁陈洁陈洁</span>
-                                </div>
-                            </div>
-                            <div class="history-talk">
-                                <div class="history-talk-title"><small class="talk-name">陈洁</small>(<smaill class="talk-id">3as4dasdwad</smaill>)<small class="history-talk-time">16:38:45</small></div>
-                                <div class="history-talk-content">
-                                    <span>陈洁陈洁陈洁陈洁</span>
-                                </div>
-                            </div>
-                            <div class="history-talk">
-                                <div class="history-talk-title"><small class="talk-name">陈洁</small>(<smaill class="talk-id">3as4dasdwad</smaill>)<small class="history-talk-time">16:38:45</small></div>
-                                <div class="history-talk-content">
-                                    <span>陈洁陈洁陈洁陈洁</span>
-                                </div>
-                            </div>
-                            <div class="history-talk">
-                                <div class="history-talk-title"><small class="talk-name">陈洁</small>&nbsp;(<smaill class="talk-id">3as4dasdwad</smaill>)&nbsp;<small class="history-talk-time">16:38:45</small></div>
-                                <div class="history-talk-content">
-                                    <span>陈洁陈洁陈洁陈洁</span>
-                                </div>
-                            </div>
-                            <div class="history-talk">
-                                <div class="history-talk-title"><small class="talk-name">陈洁</small> &nbsp;(<smaill class="talk-id">3as4dasdwad</smaill>)&nbsp;<small class="history-talk-time">16:38:45</small></div>
-                                <div class="history-talk-content">
-                                    <span>陈洁陈洁陈洁陈洁</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @*<div class="easyui-pagination marg"
-                             data-options=@@"total: 200, pageSize: 10,onSelectPage: function(pageNumber, pageSize){ $('#content').panel('refresh', 'show_content.php?page='+pageNumber);
-                                }">
-
-                        </div>*@
-                </div>
-            </div>
-            @*<div title="个人信息" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:none;">
-
-                </div>*@
         </div>
     </div>
 
     @*左侧用户分组*@
     <div class="padd" data-options="region:'west',iconCls:'icon-reload',title:'用户分类',split:true" style="width:250px;max-width:350px">
         <div id="ts" class="easyui-tabs">
-            <div title="分组分类" style="padding:10px 20px;display:none;">
-                <ul id="tree" class="easyui-tree">
-                    <li>
-                        <span>File 2</span>
-                    </li>
-                    <li>
-                        <span>File 3</span>
-                    </li>
-                </ul>
-            </div>
-            <div title="标签分类" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
+            @*<div title="组别" style="padding:10px 20px;display:none;">
+                    <ul id="tree" class="easyui-tree"></ul>
+
+                </div>*@
+            <div title="标签" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
                 tab2
-            </div>
-            <div title="地区分类" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:none;">
-                tab3
             </div>
         </div>
     </div>
 
     @*中间用户聊天*@
     <div class="padd" data-options="region:'center',title:'用户聊天'" style="background:#eee;">
+
         <div id="tt" class="easyui-tabs">
             @*这个是tab栏*@
         </div>
@@ -105,43 +47,51 @@
     <script src="~/Scripts/jquery.easyui.min.js"></script>
     <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
     <script>
-
         $(function () {
             $('#tt').tabs({
                 fit: true,
                 closable: true,
                 plain: true
             });
-            $('#tree').tree({
-                url: "/WXCustom/Home/GetUser",
-                onDblClick: function (node) {
-                    $('#routine').tabs('add', {
-                        id: node.id,
-                        title: '个人信息',
-                        href: '/WXCustom/Home/userinfo/' + node.id,
-                        closable: true,
-                        fit: true
-                    });
-                    $('#tt').tabs('add', {
-                        title: node.text,
-                        href: '/WXCustom/home/TaleToUser/' + node.id,
-                        closable: true,
-                    });
-                    //UpUserState(node);
-                },
+            $('#ts').tabs({
+                fit: true,
+                closable: true,
+                plain: true
             });
-             @*右侧常规操作选项卡*@
             $('#routine').tabs({
-                fit: true
+                fit: true,
+                plain: true
             });
 
 
-            @*分配用户给客服*@
-            //function UpUserState() {
-            //    $.post("", "", function (data) {
-                    
-            //    });
-            //}
+            //添加分组
+                $('#ts').tabs('add', {
+                    title: '组别',
+                    href: '/WXCustom/home/CreatTree'
+                });
+
+           
+
+            @*树形菜单动态加载*@
+            //$('#tree').tree({
+            //    url: "/WXCustom/Home/GetUser",
+            //    onDblClick: function (node) {
+            //        //alert(JSON.stringify(node));
+            //
+            //        if (Node == null) {
+            //            $('#tt').tabs('add', {
+            //                title: node.text,
+            //                href: '/WXCustom/home/TaleToUser/' + node.id,
+            //                closable: true
+            //            });
+            //        } else {
+            //            $('#tt').tabs('select', node.text);
+            //        }
+            //        //UpUserState(node);
+            //    },
+            //    fit: true
+            //});
+
 
         });//加载事件
     </script>

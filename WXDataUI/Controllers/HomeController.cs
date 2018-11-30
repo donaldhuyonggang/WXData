@@ -50,7 +50,7 @@ namespace WXDataUI.Controllers
                         XmlContent = xml,
                         OpenID = XmlUtility.GetSingleNodeInnerText(xml, "/xml/FromUserName"),
                         MsgType = msgType,
-                         AppId= id
+                        AppId= id
                     };
                     new WX_QueueManager().Add(info);
                 }

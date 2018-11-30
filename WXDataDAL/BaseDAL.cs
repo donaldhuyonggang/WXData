@@ -33,7 +33,7 @@ namespace WXDataDAL
         {
             using (WXDataEntities db = new WXDataEntities())
             {
-                db.Set<T>().Add(info);
+                info= db.Set<T>().Add(info);
                 return db.SaveChanges() > 0;
             }
         }
@@ -42,6 +42,7 @@ namespace WXDataDAL
         {
             using (WXDataEntities db = new WXDataEntities())
             {
+                db.Set<T>().Attach(info);
                 db.Entry<T>(info).State= EntityState.Modified ;//附加实体类
                 return db.SaveChanges() > 0;
             }
