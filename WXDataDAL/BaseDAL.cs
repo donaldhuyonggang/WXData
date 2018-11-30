@@ -41,8 +41,7 @@ namespace WXDataDAL
         public virtual bool Update(T info)
         {
             using (WXDataEntities db = new WXDataEntities())
-            {
-                db.Set<T>().Attach(info);
+            { 
                 db.Entry<T>(info).State= EntityState.Modified ;//附加实体类
                 return db.SaveChanges() > 0;
             }
