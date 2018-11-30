@@ -13,7 +13,16 @@ namespace WXDataBLL.SYSRole
         public dynamic GetFunction(int userId)
         {
             SYS_Role role = new SYS_RoleManager().GetByPK(new SYS_UserManager().GetByPK(userId).RoleId);
-            List<SYS_Function> funcList = role.SYS_Function.Where(f => f.ParentID == null).ToList();
+            List<SYS_Function> funcList = null;
+            if (role.RoleSign.Equals("SYS_ADMIN"))//如果是超级管理员
+            {
+                funcList = new SYS_FunctionManager().Where(f => f.ParentID == null);
+            }
+            else
+            {
+               funcList = role.SYS_Function.Where(f => f.ParentID == null).ToList();
+            }
+             
             List<object> json = new List<object>();
             foreach (var item in funcList)
             {

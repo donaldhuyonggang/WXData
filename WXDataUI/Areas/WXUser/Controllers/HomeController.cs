@@ -7,6 +7,7 @@ using WXDataBLL;
 using WXDataBLL.WXCustom;
 using WXDataBLL.WXUser;
 using WXDataModel;
+using WXService.Utility;
 
 namespace WXDataUI.Areas.WXUser.Controllers
 {
@@ -32,9 +33,10 @@ namespace WXDataUI.Areas.WXUser.Controllers
             BaseBLL<WX_User> bll = new WX_UserManager();
             WX_User user = bll.GetByPK(OpenId);
             WX_User user1 = new WX_User();
-            
-            user.UserId = UserId;
-            if (new WX_UserManager().Update(user))
+            EntityUntility.CopyProperty(user, user1);
+
+            user1.UserId = UserId;
+            if (new WX_UserManager().Update(user1))
             {
                 return Redirect("/WXUser/Home/Index");
             }

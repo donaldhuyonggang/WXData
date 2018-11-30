@@ -25,29 +25,32 @@ insert into SYS_User(AppId,RoleId,LoginId,Password,UserName,Telphone,Email,WXId,
 
 --新增功能
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'系统管理',null,null,'系统',null)
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'素材管理',null,null,'系统',null)
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'客服管理',null,null,'系统',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'客服经理',null,null,'系统',null)
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'群发',null,null,'系统',null)
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'微信菜单',null,null,'系统',null)
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'设置',null,null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'客服功能',null,null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'菜单管理',null,null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'素材管理',null,null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'系统设置',null,null,'系统',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (1,'公众号管理',null,'/Base/App/Index','模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (1,'系统用户管理',null,'/Base/SYSUser/Index','模块',null)
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (1,'订阅用户管理',null,'/WXUser/Home/Index','模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (1,'角色管理',null,'/Base/Role/Index','模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (2,'客服管理',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (2,'标签管理',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (2,'组别管理',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (2,'粉丝管理',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (2,'常用语管理',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的用户',null,'/wxcustom/home/index','模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的分组',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的二维码',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的常用语',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的素材',null,null,'模块',null)
+
+
+
 
 --新增功能end
 
 --新增权限
-insert into SYS_Right(RoleId,FunctionID) values(1,1)
-insert into SYS_Right(RoleId,FunctionID) values(1,2)
-insert into SYS_Right(RoleId,FunctionID) values(1,3)
-insert into SYS_Right(RoleId,FunctionID) values(1,4)
-insert into SYS_Right(RoleId,FunctionID) values(1,5)
-insert into SYS_Right(RoleId,FunctionID) values(1,6)
-insert into SYS_Right(RoleId,FunctionID) values(1,7)
-insert into SYS_Right(RoleId,FunctionID) values(1,8)
-insert into SYS_Right(RoleId,FunctionID) values(1,9)
-insert into SYS_Right(RoleId,FunctionID) values(1,10)
+
 --新增权限end
 
 --Start新增用户组别

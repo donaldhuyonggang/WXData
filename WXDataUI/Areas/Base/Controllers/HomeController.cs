@@ -18,11 +18,7 @@ namespace WXDataUI.Areas.Base.Controllers
             return Redirect("/Base/APP/Index");
         }
 
-        public ActionResult Content()
-        {
-            var FuncList = new SYS_FunctionManager().GetFunction((Session["SYSUSER"] as SYS_User).UserId);
-            return Json(FuncList,JsonRequestBehavior.AllowGet);
-        }
+        
         [HttpGet]
         public ActionResult Login()
         {
@@ -45,6 +41,7 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult GetFunction()
         {
             var json = new SYS_FunctionManager().GetFunction((Session["SYSUSER"] as SYS_User).UserId);
+
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
