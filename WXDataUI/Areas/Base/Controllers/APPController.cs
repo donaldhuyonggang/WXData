@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WXDataBLL;
+using WXDataBLL.SYSRole;
+using WXDataBLL.WXApp;
 using WXDataModel;
 
 namespace WXDataUI.Areas.Base.Controllers
@@ -20,14 +22,14 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpGet]
         public ActionResult ChangeApp()
         {
-            ViewBag.AppList = new BaseBLL<WX_App>().GetAll();
+            ViewBag.AppList = new WX_AppManager().GetAll();
             return PartialView();
         }
 
         [HttpPost]
         public ActionResult ChangeApp(string appId)
         {
-            WX_App app = new BaseBLL<WX_App>().GetByPK(appId);
+            WX_App app = new WX_AppManager().GetByPK(appId);
             Session["App"] = app;
             Session["AppName"] = app.AppName;
             return Redirect("/Base/Home/Index");
@@ -40,10 +42,10 @@ namespace WXDataUI.Areas.Base.Controllers
             List<WX_App> list = null;
             if (type.Equals("1"))
             {
-                list = new BaseBLL<WX_App>().GetAll();
+                list = new WX_AppManager().GetAll();
             }else
             {
-                list = new BaseBLL<WX_App>().Where(a => a.AppType.Equals(type));
+                list = new WX_AppManager().Where(a => a.AppType.Equals(type));
             }
             var json = list.Select(s => new
             {
@@ -69,7 +71,7 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult AddApp(WX_App app)
         {
             app.AppState = "正常";
-            if (new BaseBLL<WX_App>().Add(app))
+            if (new WX_AppManager().Add(app))
             {
                 return Redirect("/Base/Home/Index");
             }
@@ -79,14 +81,14 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpGet]
         public ActionResult UpdateApp(string id)
         {
-            ViewBag.App = new BaseBLL<WX_App>().GetByPK(id);
+            ViewBag.App = new WX_AppManager().GetByPK(id);
             return PartialView();
         }
 
         [HttpPost]
         public ActionResult UpdateApp(WX_App app)
         {
-            if (new BaseBLL<WX_App>().Update(app))
+            if (new WX_AppManager().Update(app))
             {
                 return Redirect("/Base/Home/Index");
             }
@@ -98,10 +100,11 @@ namespace WXDataUI.Areas.Base.Controllers
         {
 
 
-            WX_App app = new BaseBLL<WX_App>().GetByPK(id);
+            WX_App app = new WX_AppManager().GetByPK(id);
             app.AppState = "无效";
-            return Json(new BaseBLL<WX_App>().Update(app), JsonRequestBehavior.AllowGet);
+            return Json(new WX_AppManager().Update(app), JsonRequestBehavior.AllowGet);
         }
 
+       
     }
 }

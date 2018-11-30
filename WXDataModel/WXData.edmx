@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="WXDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="WXDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="SYS_Department">
           <Key>
             <PropertyRef Name="DepartmentId" />
@@ -603,7 +603,8 @@
             <End Role="WX_UserTag" EntitySet="WX_UserTag" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WXDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -679,12 +680,12 @@
           <Property Name="WXId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserState" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="HeadImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UserSex" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="SYS_Department" Relationship="Self.FK_SYS_DEPA_REFERENCE_SYS_USER" FromRole="SYS_User" ToRole="SYS_Department" />
           <NavigationProperty Name="SYS_Role" Relationship="Self.FK_SYS_USER_REFERENCE_SYS_ROLE" FromRole="SYS_User" ToRole="SYS_Role" />
           <NavigationProperty Name="WX_App" Relationship="Self.FK_SYS_USER_REFERENCE_WX_APP" FromRole="SYS_User" ToRole="WX_App" />
           <NavigationProperty Name="WX_CustomMsg" Relationship="Self.FK_WX_CUSTO_REFERENCE_SYS_USER" FromRole="SYS_User" ToRole="WX_CustomMsg" />
           <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_USER_REFERENCE_SYS_USER" FromRole="SYS_User" ToRole="WX_User" />
-          <Property Name="UserSex" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="WX_App">
           <Key>
@@ -727,6 +728,19 @@
           <NavigationProperty Name="SYS_User" Relationship="Self.FK_WX_CUSTO_REFERENCE_SYS_USER" FromRole="WX_CustomMsg" ToRole="SYS_User" />
           <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_CUSTO_REFERENCE_WX_APP" FromRole="WX_CustomMsg" ToRole="WX_App" />
           <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_CUSTO_REFERENCE_WX_USER" FromRole="WX_CustomMsg" ToRole="WX_User" />
+        </EntityType>
+        <EntityType Name="WX_EventQueue">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OpenID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="MsgType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Event" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="XmlContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MsgState" Type="Int32" />
         </EntityType>
         <EntityType Name="WX_Media">
           <Key>
@@ -797,14 +811,14 @@
           <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ZipCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
           <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="UserState" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="LastDateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="SYS_User" Relationship="Self.FK_WX_USER_REFERENCE_SYS_USER" FromRole="WX_User" ToRole="SYS_User" />
           <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_USER_REFERENCE_WX_APP" FromRole="WX_User" ToRole="WX_App" />
           <NavigationProperty Name="WX_CustomMsg" Relationship="Self.FK_WX_CUSTO_REFERENCE_WX_USER" FromRole="WX_User" ToRole="WX_CustomMsg" />
           <NavigationProperty Name="WX_Queue" Relationship="Self.FK_WX_QUEUE_REFERENCE_WX_USER" FromRole="WX_User" ToRole="WX_Queue" />
           <NavigationProperty Name="WX_UserGroup" Relationship="Self.FK_WX_USER_REFERENCE_WX_USERG" FromRole="WX_User" ToRole="WX_UserGroup" />
           <NavigationProperty Name="WX_UserTag" Relationship="Self.FK_WX_USER_REFERENCE_WX_USERT" FromRole="WX_User" ToRole="WX_UserTag" />
-          <Property Name="UserState" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="LastDateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="WX_UserGroup">
           <Key>
@@ -1105,6 +1119,7 @@
           <EntitySet Name="SYS_User" EntityType="Self.SYS_User" />
           <EntitySet Name="WX_App" EntityType="Self.WX_App" />
           <EntitySet Name="WX_CustomMsg" EntityType="Self.WX_CustomMsg" />
+          <EntitySet Name="WX_EventQueue" EntityType="Self.WX_EventQueue" />
           <EntitySet Name="WX_Media" EntityType="Self.WX_Media" />
           <EntitySet Name="WX_Menu" EntityType="Self.WX_Menu" />
           <EntitySet Name="WX_Queue" EntityType="Self.WX_Queue" />
@@ -1203,21 +1218,7 @@
             <End Role="SYS_Function" EntitySet="SYS_Function" />
             <End Role="SYS_Role" EntitySet="SYS_Role" />
           </AssociationSet>
-          <EntitySet Name="WX_EventQueue" EntityType="WXDataModel.WX_EventQueue" />
         </EntityContainer>
-        <EntityType Name="WX_EventQueue">
-          <Key>
-            <PropertyRef Name="EventId" />
-          </Key>
-          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OpenID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="MsgType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Event" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="XmlContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MsgState" Type="Int32" />
-          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1278,7 +1279,6 @@
           <EntitySetMapping Name="SYS_User">
             <EntityTypeMapping TypeName="WXDataModel.SYS_User">
               <MappingFragment StoreEntitySet="SYS_User">
-                <ScalarProperty Name="UserSex" ColumnName="UserSex" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="AppId" ColumnName="AppId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -1290,6 +1290,7 @@
                 <ScalarProperty Name="WXId" ColumnName="WXId" />
                 <ScalarProperty Name="UserState" ColumnName="UserState" />
                 <ScalarProperty Name="HeadImageUrl" ColumnName="HeadImageUrl" />
+                <ScalarProperty Name="UserSex" ColumnName="UserSex" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1320,6 +1321,20 @@
                 <ScalarProperty Name="MediaId" ColumnName="MediaId" />
                 <ScalarProperty Name="MsgType" ColumnName="MsgType" />
                 <ScalarProperty Name="XmlContent" ColumnName="XmlContent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_EventQueue">
+            <EntityTypeMapping TypeName="WXDataModel.WX_EventQueue">
+              <MappingFragment StoreEntitySet="WX_EventQueue">
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="OpenID" ColumnName="OpenID" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="MsgType" ColumnName="MsgType" />
+                <ScalarProperty Name="Event" ColumnName="Event" />
+                <ScalarProperty Name="XmlContent" ColumnName="XmlContent" />
+                <ScalarProperty Name="MsgState" ColumnName="MsgState" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1368,8 +1383,6 @@
           <EntitySetMapping Name="WX_User">
             <EntityTypeMapping TypeName="WXDataModel.WX_User">
               <MappingFragment StoreEntitySet="WX_User">
-                <ScalarProperty Name="LastDateTime" ColumnName="LastDateTime" />
-                <ScalarProperty Name="UserState" ColumnName="UserState" />
                 <ScalarProperty Name="OpenID" ColumnName="OpenID" />
                 <ScalarProperty Name="TageId" ColumnName="TageId" />
                 <ScalarProperty Name="GrooupId" ColumnName="GrooupId" />
@@ -1390,6 +1403,8 @@
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="UserState" ColumnName="UserState" />
+                <ScalarProperty Name="LastDateTime" ColumnName="LastDateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1421,20 +1436,6 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="WX_EventQueue">
-            <EntityTypeMapping TypeName="WXDataModel.WX_EventQueue">
-              <MappingFragment StoreEntitySet="WX_EventQueue">
-                <ScalarProperty Name="AppId" ColumnName="AppId" />
-                <ScalarProperty Name="MsgState" ColumnName="MsgState" />
-                <ScalarProperty Name="XmlContent" ColumnName="XmlContent" />
-                <ScalarProperty Name="Event" ColumnName="Event" />
-                <ScalarProperty Name="MsgType" ColumnName="MsgType" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="OpenID" ColumnName="OpenID" />
-                <ScalarProperty Name="EventId" ColumnName="EventId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

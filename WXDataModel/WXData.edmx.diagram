@@ -4,21 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="31574db1d04244b6a6f2ecd8e4e1c18e" Name="Diagram1">
-        <EntityTypeShape EntityType="WXDataModel.SYS_Department" Width="1.5" PointX="6" PointY="15.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="WXDataModel.SYS_Function" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+      <Diagram DiagramId="8da53a6d30ce4f10bc3bf22238db3cda" Name="Diagram1">
+        <EntityTypeShape EntityType="WXDataModel.SYS_Department" Width="1.5" PointX="6" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.SYS_Function" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
         <EntityTypeShape EntityType="WXDataModel.SYS_Log" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WXDataModel.SYS_Role" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WXDataModel.SYS_Setting" Width="1.5" PointX="3" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WXDataModel.SYS_User" Width="1.5" PointX="8.25" PointY="13.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WXDataModel.WX_App" Width="1.5" PointX="0.75" PointY="14.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WXDataModel.WX_CustomMsg" Width="1.5" PointX="10.5" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WXDataModel.WX_Media" Width="1.5" PointX="3" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="WXDataModel.WX_Menu" Width="1.5" PointX="3" PointY="21.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WXDataModel.WX_Queue" Width="1.5" PointX="12.75" PointY="18.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WXDataModel.WX_User" Width="1.5" PointX="10.5" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="WXDataModel.WX_UserGroup" Width="1.5" PointX="3" PointY="25.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WXDataModel.WX_UserTag" Width="1.5" PointX="3" PointY="28.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.SYS_Role" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.SYS_Setting" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.SYS_User" Width="1.5" PointX="8.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_App" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_CustomMsg" Width="1.5" PointX="10.5" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_EventQueue" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_Media" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_Menu" Width="1.5" PointX="3" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_Queue" Width="1.5" PointX="12.75" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_User" Width="1.5" PointX="10.5" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_UserGroup" Width="1.5" PointX="3" PointY="26" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.WX_UserTag" Width="1.5" PointX="3" PointY="28.875" IsExpanded="true" />
         <AssociationConnector Association="WXDataModel.FK_SYS_DEPA_REFERENCE_SYS_DEPA" ManuallyRouted="false" />
         <AssociationConnector Association="WXDataModel.FK_SYS_DEPA_REFERENCE_SYS_USER" ManuallyRouted="false" />
         <AssociationConnector Association="WXDataModel.FK_SYS_DEPA_REFERENCE_WX_APP" ManuallyRouted="false" />
@@ -42,7 +43,6 @@
         <AssociationConnector Association="WXDataModel.FK_WX_USER_REFERENCE_WX_USERG" ManuallyRouted="false" />
         <AssociationConnector Association="WXDataModel.FK_WX_USER_REFERENCE_WX_USERT" ManuallyRouted="false" />
         <AssociationConnector Association="WXDataModel.SYS_Right" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="WXDataModel.WX_EventQueue" Width="1.5" PointX="0.75" PointY="2.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

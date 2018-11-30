@@ -16,11 +16,11 @@ namespace WXDataModel
     {
         public int EventId { get; set; }
         public string OpenID { get; set; }
+        public string AppId { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public string MsgType { get; set; }
         public string Event { get; set; }
         public string XmlContent { get; set; }
         public Nullable<int> MsgState { get; set; }
-        public string AppId { get; set; }
     }
 }

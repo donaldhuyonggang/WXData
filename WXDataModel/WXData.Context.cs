@@ -33,12 +33,12 @@ namespace WXDataModel
         public DbSet<SYS_User> SYS_User { get; set; }
         public DbSet<WX_App> WX_App { get; set; }
         public DbSet<WX_CustomMsg> WX_CustomMsg { get; set; }
+        public DbSet<WX_EventQueue> WX_EventQueue { get; set; }
         public DbSet<WX_Media> WX_Media { get; set; }
         public DbSet<WX_Menu> WX_Menu { get; set; }
         public DbSet<WX_Queue> WX_Queue { get; set; }
         public DbSet<WX_User> WX_User { get; set; }
         public DbSet<WX_UserGroup> WX_UserGroup { get; set; }
         public DbSet<WX_UserTag> WX_UserTag { get; set; }
-        public DbSet<WX_EventQueue> WX_EventQueue { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
         [HttpPost]
         public ActionResult AllotUser(string OpenId,int UserId)
         {
-            BaseBLL<WX_User> bll = new BaseBLL<WX_User>();
+            BaseBLL<WX_User> bll = new WX_UserManager();
             WX_User user = bll.GetByPK(OpenId);
             user.UserId = UserId;
             if (new WX_UserManager().Update(user))
@@ -45,10 +45,10 @@ namespace WXDataUI.Areas.WXUser.Controllers
             List<WX_User> list;  
             if (type != 1)
             {
-                list = new BaseBLL<WX_User>().Where(u => u.AppId == app.AppId && u.UserId == null);
+                list = new WX_UserManager().Where(u => u.AppId == app.AppId && u.UserId == null);
             }else
             {
-                list = new BaseBLL<WX_User>().Where(u => u.AppId == app.AppId);
+                list = new WX_UserManager().Where(u => u.AppId == app.AppId);
             }
             var json = list.Select(u => new {
                 FollowStatus = (u.UnSubscribeTime == null?"已关注":"已退订"),

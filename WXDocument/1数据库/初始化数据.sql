@@ -22,3 +22,27 @@ insert into SYS_User(AppId,RoleId,LoginId,Password,UserName,Telphone,Email,WXId,
 
 --End新增用户
 
+
+--新增功能
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'系统管理',null,null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'素材管理',null,null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'客服管理',null,null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'客服经理',null,null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'群发',null,null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'微信菜单',null,null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'设置',null,null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (1,'公众号管理',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (1,'系统用户管理',null,null,'模块',null)
+--新增功能end
+
+--新增权限
+insert into SYS_Right(RoleId,FunctionID) values(1,1)
+insert into SYS_Right(RoleId,FunctionID) values(1,2)
+insert into SYS_Right(RoleId,FunctionID) values(1,3)
+insert into SYS_Right(RoleId,FunctionID) values(1,4)
+insert into SYS_Right(RoleId,FunctionID) values(1,5)
+insert into SYS_Right(RoleId,FunctionID) values(1,6)
+insert into SYS_Right(RoleId,FunctionID) values(1,7)
+insert into SYS_Right(RoleId,FunctionID) values(1,8)
+insert into SYS_Right(RoleId,FunctionID) values(1,9)
+--新增权限end

@@ -55,65 +55,7 @@
     <div class="content">
         <div class="col-sm-3 col-md-2 sidebar" style="padding: 0;">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingOne">
-                        <h4 class="panel-title">
-                            <a role="button" data-toggle="collapse" data-parent="#accordion"
-                               href="#collapseOne" aria-expanded="true"
-                               aria-controls="collapseOne">
-                                系统管理
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            <ul class="nav nav-sidebar navbox">
-                                <li class="active"><a href="/base/app/index" id="toIndex">公众号管理<span class="sr-only">(current)</span></a></li>
-                                <li><a href="/WXUser/Home/Index">订阅用户管理</a></li>
-                                <li><a href="/Base/SYSUser/index">系统用户管理</a></li>
-                                <li><a href="/Base/Role/Index">系统角色管理</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingTwo">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse"
-                               data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
-                               aria-controls="collapseTwo">
-                                Collapsible Group Item #2
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                        <div class="panel-body">
-                            <ul class="nav nav-sidebar navbox">
-                                <li><a href="/WXCustom/Home/Index">客服聊天</a></li>
-                                <li><a href="#">功能名</a></li>
-                                <li><a href="#">功能名</a></li>
-                                <li><a href="#">功能名</a></li>
-                                <li><a href="#">功能名</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingThree">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse"
-                               data-parent="#accordion" href="#collapseThree" aria-expanded="false"
-                               aria-controls="collapseThree">
-                                Collapsible Group Item #3
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                        <div class="panel-body">
-                            3
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 mains">
@@ -187,6 +129,37 @@
                 $(this).removeData();
             });
             //设置模态框属性end
+
+            //初始化菜单
+            $.post("/Base/Home/GetFunction", "", function (json) {
+                var panel = "";
+                $.each(json, function (i, obj) {
+                    var child = "";
+                    $.each(obj.children, function (j, c) {
+                        child += "<li><a href=\"" + c.FunctionUrl + "\">" + c.FunctionName + "</a></li>";
+                    });
+                    var temp = "";
+                    if (i == 0) {
+                        temp = "in";
+                    } else {
+                        temp = "collapse";
+                    }
+                    panel += "<div class=\"panel panel-default\">"+
+                                    "<div class=\"panel-heading\" role=\"tab\" id=\"" + obj.FunctionID + "\">" +
+                                        "<h4 class=\"panel-title\"><a role=\"button\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + obj.FunctionID + "\" aria-expanded=\"true\" aria-controls=\"collapse" + obj.FunctionID + "\">" + obj.FunctionName + "</a></h4>" +
+                                    "</div>"+
+                                    "<div id=\"collapse" + obj.FunctionID + "\" class=\"panel-collapse " + temp + " \" role=\"tabpanel\" aria-labelledby=\"" + obj.FunctionID + "\">" +
+                                        "<div class=\"panel-body\">"+
+                                            "<ul class=\"nav nav-sidebar navbox\">" +
+                                                child+
+                                            "</ul>"+
+                                        "</div>"+
+                                    "</div>"+
+                                "</div>";
+
+                });
+                $("#accordion").html(panel);
+            });//post
         });
     </script>
     @RenderSection("scripts", required: false)

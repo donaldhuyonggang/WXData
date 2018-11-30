@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WXDataBLL;
+using WXDataBLL.SYSRole;
 using WXDataModel;
 
 namespace WXDataUI.Areas.Base.Controllers
@@ -19,7 +20,7 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult GetRole()
         {
             SYS_User user = (Session["SYSUSER"] as SYS_User);
-            var list = new BaseBLL<SYS_Role>().Where(s => (s.AppId == user.WX_App.AppId) || (string.IsNullOrEmpty(s.AppId)));
+            var list = new SYS_RoleManager().Where(s => (s.AppId == user.WX_App.AppId) || (string.IsNullOrEmpty(s.AppId)));
             var json = list.Select(s => new {
                 s.RoleId,
                 s.RoleSign,
@@ -45,7 +46,7 @@ namespace WXDataUI.Areas.Base.Controllers
             {
                 role.AppId = null;
             }
-            if(new BaseBLL<SYS_Role>().Add(role))
+            if(new SYS_RoleManager().Add(role))
             {
                 return Redirect("/Base/Role/Index");
             }
@@ -55,7 +56,7 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpGet]
         public ActionResult UpdateRole(int id)
         {
-            ViewBag.role = new BaseBLL<SYS_Role>().GetByPK(id);
+            ViewBag.role = new SYS_RoleManager().GetByPK(id);
             return PartialView();
         }
 
@@ -66,7 +67,7 @@ namespace WXDataUI.Areas.Base.Controllers
             {
                 role.AppId = null;
             }
-            if (new BaseBLL<SYS_Role>().Update(role))
+            if (new SYS_RoleManager().Update(role))
             {
                 return Redirect("/Base/Role/Index");
             }
@@ -77,9 +78,51 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpGet]
         public ActionResult EditRight()
         {
-            ViewBag.FuncList = new BaseBLL<SYS_Function>().GetAll();
+            List<SYS_Function> FuncList =  new SYS_FunctionManager().Where(x=>x.ParentID==null);
 
-            return PartialView();
+            List<object> json = new List<object>();
+            foreach (var item in FuncList)
+            {
+                var info = new
+                {
+                    id = item.FunctionID,
+                    text = item.FunctionName,
+                    children = new List<object>()
+                };
+                //var list = new SYS_FunctionManager().Where(x => x.ParentID == item.FunctionID);
+                DG(item.FunctionID, info);
+
+                json.Add(info);
+            }
+          
+
+            return Json(json,JsonRequestBehavior.AllowGet);
         }
+
+
+
+        private void DG(int functionId, dynamic info)
+        {
+
+            var list = new SYS_FunctionManager().Where(x => x.ParentID == functionId);
+
+            foreach (var item in list)
+            {
+                var sub = new
+                {
+                    id = item.FunctionID,
+                    text = item.FunctionName,
+                    children = new List<object>()
+                };
+              
+                DG(item.FunctionID, sub);
+
+                info.children.Add(sub);
+
+            }
+
+        }
+
+
     }
 }

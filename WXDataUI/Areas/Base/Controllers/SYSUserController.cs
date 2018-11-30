@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WXDataBLL;
+using WXDataBLL.SYSRole;
+using WXDataBLL.SYSUser;
 using WXDataModel;
 
 namespace WXDataUI.Areas.Base.Controllers
@@ -19,8 +21,8 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpGet]
         public ActionResult AddSysUser()
         {
-            ViewBag.RoleList = new BaseBLL<SYS_Role>().GetAll();
-            ViewBag.AppList = new BaseBLL<WX_App>().GetAll();
+            ViewBag.RoleList = new SYS_RoleManager().GetAll();
+            ViewBag.AppList = new SYS_RoleManager().GetAll();
             return PartialView("AddSYS_User");
         }
 
@@ -28,7 +30,7 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult AddSysUser(SYS_User user)
         {
             user.UserState = "正常";
-            if (new BaseBLL<SYS_User>().Add(user))
+            if (new SYS_UserManager().Add(user))
             {
                 return Redirect("/Base/Home/SysUser");
             }
@@ -38,7 +40,7 @@ namespace WXDataUI.Areas.Base.Controllers
 
         public ActionResult GetUsers()
         {
-            var list = new BaseBLL<SYS_User>().GetAll();
+            var list = new SYS_UserManager().GetAll();
             var json = list.Select(u => new
             {
                 u.UserId,
