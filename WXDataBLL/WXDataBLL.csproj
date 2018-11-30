@@ -54,6 +54,7 @@
     <Compile Include="WXCustom\WX_QueueManager.cs" />
     <Compile Include="WXCustom\WX_UserManager.cs" />
     <Compile Include="WXEvent\WX_EvenQueueManager.cs" />
+    <Compile Include="WXUser\WX_UserGroupManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WXDataDAL\WXDataDAL.csproj">
@@ -65,9 +66,7 @@
       <Name>WXDataModel</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WXUser\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

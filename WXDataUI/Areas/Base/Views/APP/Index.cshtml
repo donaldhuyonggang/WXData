@@ -72,6 +72,19 @@
             border: 1px solid #ccc;
             width: 18%;
         }
+        #QueryByType,#QueryByType ul{
+            padding:0;
+            text-align:center;
+        }
+        #QueryByType a{
+            display:inline-block;
+            width:100%;
+            padding:5px 15px;
+        }
+        #QueryByType a:hover{
+            text-decoration: none;
+            background-color: #eee;
+        }
     </style>
 }
 
@@ -85,28 +98,18 @@
                 <h5 class="navbar-text navbar-left">公众号分类<a href="#" class="navbar-link"></a></h5>
             </div>
         </nav>
-        <div>
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="home">
-                    <ul style="list-style:none;" id="QueryByType">
-                        <li>
-                            <span><a href="#" AppType="1">全部</a></span>   
-                            <ul style="list-style:none;">
-                                <li><a href="#" AppType="订阅号">订阅号</a></li>
-                                <li><a href="#" AppType="服务号">服务号</a></li>
-                                <li><a href="#" AppType="企业号">企业号</a></li>
-                                <li><a href="#" AppType="小程序">小程序</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <ul style="list-style:none;" id="QueryByType">
+            <li>
+                <span><a href="#" AppType="1">全部</a></span>
+                <ul style="list-style:none;">
+                    <li><a href="#" AppType="订阅号">订阅号</a></li>
+                    <li><a href="#" AppType="服务号">服务号</a></li>
+                    <li><a href="#" AppType="企业号">企业号</a></li>
+                    <li><a href="#" AppType="小程序">小程序</a></li>
+                </ul>
+            </li>
+        </ul>
+
     </div>
     <div class="col-xs-10 padd">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">

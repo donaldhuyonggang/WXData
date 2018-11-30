@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WXDataBLL;
 using WXDataBLL.WXCustom;
+using WXDataBLL.WXUser;
 using WXDataModel;
 
 namespace WXDataUI.Areas.WXUser.Controllers
@@ -30,6 +31,8 @@ namespace WXDataUI.Areas.WXUser.Controllers
         {
             BaseBLL<WX_User> bll = new WX_UserManager();
             WX_User user = bll.GetByPK(OpenId);
+            WX_User user1 = new WX_User();
+            
             user.UserId = UserId;
             if (new WX_UserManager().Update(user))
             {
@@ -64,6 +67,41 @@ namespace WXDataUI.Areas.WXUser.Controllers
             });
             return Json(json, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public ActionResult UserInfo(string id)
+        {
+            ViewBag.User = new WX_UserManager().GetByPK(id);
+            return PartialView();
+        }
+
+        [HttpGet]
+        public ActionResult ChangeGroup(string id)
+        {
+            ViewBag.GroupList = new WX_UserGroupManager().GetAll();
+            ViewBag.User = new WX_UserManager().GetByPK(id);
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult ChangeGroup(string OpenId,int GroupId)
+        {
+            WX_UserManager bll = new WX_UserManager();
+            WX_User user = bll.GetByPK(OpenId);
+            user.GrooupId = GroupId;
+            if (bll.Update(user))
+            {
+                return Redirect("/WXUser/Home/Index");
+            }
+            return Content("false");
+        }
+        private void GetByWX()
+        {
+            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
+            if (app != null)
+            {
+
+            }
         }
     }
 }

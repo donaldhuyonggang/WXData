@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using WXDataBLL;
 using WXDataBLL.SYSRole;
 using WXDataBLL.SYSUser;
+using WXDataBLL.WXApp;
 using WXDataModel;
 
 namespace WXDataUI.Areas.Base.Controllers
@@ -22,8 +23,8 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult AddSysUser()
         {
             ViewBag.RoleList = new SYS_RoleManager().GetAll();
-            ViewBag.AppList = new SYS_RoleManager().GetAll();
-            return PartialView("AddSYS_User");
+            ViewBag.AppList = new WX_AppManager().GetAll();
+            return PartialView();
         }
 
         [HttpPost]
@@ -32,7 +33,27 @@ namespace WXDataUI.Areas.Base.Controllers
             user.UserState = "正常";
             if (new SYS_UserManager().Add(user))
             {
-                return Redirect("/Base/Home/SysUser");
+                return Redirect("/Base/SYSUser/Index");
+            }
+            return Content("false");
+
+        }
+
+        [HttpGet]
+        public ActionResult UpdateSysUser(int id)
+        {
+            ViewBag.SYSUser = new SYS_UserManager().GetByPK(id);
+            ViewBag.RoleList = new SYS_RoleManager().GetAll();
+            ViewBag.AppList = new WX_AppManager().GetAll();
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult UpdateSysUser(SYS_User user)
+        {
+            if (new SYS_UserManager().Update(user))
+            {
+                return Redirect("/Base/SYSUser/Index");
             }
             return Content("false");
 

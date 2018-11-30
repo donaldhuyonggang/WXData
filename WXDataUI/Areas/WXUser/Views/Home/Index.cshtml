@@ -109,29 +109,21 @@
                             <div class="form-inline topfind">
                                 <div class="form-group">
                                     <label for="">用户编码:</label>
-                                    <input type="text" class="form-control" id="" placeholder="用户编码">
+                                    <input type="text" class="form-control" name="OpenID" id="OpenID" placeholder="用户编码">
                                 </div>
                                 <div class="form-group">
-                                    <label for="">&emsp;用户名:</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="用户名">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">真实姓名:</label>
-                                    <input type="text" class="form-control" id="Email1" placeholder="真实姓名">
+                                    <label for="">用户名:</label>
+                                    <input type="text" class="form-control" name="UserNick" id="UserNick" placeholder="用户名">
                                 </div>
                             </div>
                             <div class="form-inline topfind">
                                 <div class="form-group">
                                     <label for="">移动电话:</label>
-                                    <input type="text" class="form-control" id="" placeholder="移动电话">
+                                    <input type="text" class="form-control" name="Telphone" id="Telphone" placeholder="移动电话">
                                 </div>
                                 <div class="form-group">
                                     <label for="">邮件地址:</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="邮件地址">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">&nbsp;&nbsp;QQ号码:</label>
-                                    <input type="text" class="form-control" id="Email1" placeholder="QQ号码">
+                                    <input type="text" class="form-control" name="Emial" id="Emial" placeholder="邮件地址">
                                 </div>
                             </div>
                         </div>
@@ -273,10 +265,11 @@
                            "<td>" +
                                "<ul class=\"list-inline marg operation\">" +
                                    "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
-                                   "   <a href=\"#\" class=\"glyphicon glyphicon-search\"></a></li>" +
+                                   "   <a href=\"/WXUser/Home/UserInfo/" + obj.OpenID + "\" data-toggle='modal' data-target='#EditWXUser' class=\"glyphicon glyphicon-search\"></a></li>" +
 
-                                   "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
-                                   "   <a href=\"#\" class=\"glyphicon glyphicon-remove\"></a></li>" + temp +
+                                   "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改分组\">" +
+                                   "   <a href=\"/WXUser/Home/ChangeGroup/" + obj.OpenID + "\" data-toggle='modal' data-target='#EditWXUser' class=\"glyphicon glyphicon-folder-open\"></a></li>" +
+                                   temp +
 
                                "</ul>" +
                            "</td>" +
