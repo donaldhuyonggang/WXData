@@ -7,6 +7,7 @@ using WXDataBLL.SYSUser;
 using WXDataBLL.WXApp;
 using WXDataBLL.WXCustom;
 using WXDataBLL.WXEvent;
+using WXDataBLL.WXUser;
 using WXDataModel;
 using WXService.Service;
 using WXService.Utility;

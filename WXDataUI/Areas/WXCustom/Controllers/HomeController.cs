@@ -31,7 +31,7 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         public ActionResult CreatTree()
         {
             SYS_User SYSUSER = Session["User"] as SYS_User;
-            ViewBag.treenode= new WXDataBLL.WXCustom.WX_UserGroupManager().GetAll().ToList();
+            ViewBag.treenode= new WXDataBLL.WXUser.WX_UserGroupManager().GetAll().ToList();
             return PartialView();
         }
 
@@ -64,7 +64,7 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// <returns></returns>
         public ActionResult UserInfo(string id)
         {
-            ViewBag.user = new WXDataBLL.WXCustom.WX_UserManager().GetByPK(id);
+            ViewBag.user = new WXDataBLL.WXUser.WX_UserManager().GetByPK(id);
             return PartialView();
         }
 
@@ -114,13 +114,13 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         public ActionResult UpuserID(string id)
         {
             SYS_User SYSUSER = Session["User"] as SYS_User;
-            WX_User WXUSER= new WXDataBLL.WXCustom.WX_UserManager().GetByPK(id);
+            WX_User WXUSER= new WXDataBLL.WXUser.WX_UserManager().GetByPK(id);
             var isTrue = false;
             if (WXUSER.UserId==null)
             {
                 WXUSER.UserId = SYSUSER.UserId;
                 //修改
-                isTrue = new WXDataBLL.WXCustom.WX_UserManager().Update(WXUSER);
+                isTrue = new WXDataBLL.WXUser.WX_UserManager().Update(WXUSER);
             }
             return Json(isTrue, JsonRequestBehavior.AllowGet);
         }
