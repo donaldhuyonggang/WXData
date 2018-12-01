@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using WXDataModel;
 
-namespace WXDataBLL.WXApp
+namespace WXDataBLL.Base
 {
     public class WX_AppManager : BaseBLL<WX_App>
     {

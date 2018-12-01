@@ -72,19 +72,7 @@
             border: 1px solid #ccc;
             width: 18%;
         }
-        #QueryByType,#QueryByType ul{
-            padding:0;
-            text-align:center;
-        }
-        #QueryByType a{
-            display:inline-block;
-            width:100%;
-            padding:5px 15px;
-        }
-        #QueryByType a:hover{
-            text-decoration: none;
-            background-color: #eee;
-        }
+        
     </style>
 }
 
@@ -98,9 +86,9 @@
                 <h5 class="navbar-text navbar-left">公众号分类<a href="#" class="navbar-link"></a></h5>
             </div>
         </nav>
-        <ul style="list-style:none;" id="QueryByType">
+        <ul style="list-style:none;" class="ul-full" id="QueryByType">
             <li>
-                <span><a href="#" AppType="1">全部</a></span>
+                <span><a href="#" AppType="All">全部</a></span>
                 <ul style="list-style:none;">
                     <li><a href="#" AppType="订阅号">订阅号</a></li>
                     <li><a href="#" AppType="服务号">服务号</a></li>
@@ -111,6 +99,7 @@
         </ul>
 
     </div>
+   
     <div class="col-xs-10 padd">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
@@ -124,25 +113,26 @@
                 <div id="collapseRight" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="rightheadingone">
                     <div class="panel-body">
                         <div class="col-xs-11">
+                            <input type="hidden" name="Type" id="Type" value="All" />
                             <div class="form-inline topfind">
                                 <div class="form-group">
-                                    <label for="InputAppName">公众号名称:</label>
-                                    <input type="text" class="form-control" id="InputAppName" placeholder="公众号名称">
+                                    <label for="AppName">公众号名称:</label>
+                                    <input type="text" class="form-control" id="AppName" name="AppName" placeholder="公众号名称">
                                 </div>
                                 <div class="form-group">
-                                    <label for="InputAppId">微信号:</label>
-                                    <input type="text" class="form-control" id="InputAppId" placeholder="微信号">
+                                    <label for="WXId">微信号:</label>
+                                    <input type="text" class="form-control" id="WXId" name="WXId" placeholder="微信号">
                                 </div>
                                 <div class="form-group">
-                                    <label for="InputRemark">备注信息:</label>
-                                    <input type="text" class="form-control" id="InputRemark" placeholder="备注信息">
+                                    <label for="CompanyName">公司名称:</label>
+                                    <input type="text" class="form-control" id="CompanyName" name="CompanyName" placeholder="公司名称">
                                 </div>
                             </div>
                             
                         </div>
                         <div class="col-xs-1">
                             <div>
-                                <a href="#" class="btn btn-default">查询</a>
+                                <a href="#" class="btn btn-default" id="Search">查询</a>
                             </div>
                         </div>
 
@@ -232,7 +222,7 @@
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
 
-            GetApp(1)
+            GetApp();
 
             //删除方法
             $(document).on("click", ".deleteApp", function () {
@@ -248,18 +238,22 @@
             
             //删除end
 
-
+            $("#Search").click(function () {
+                GetApp();
+            });
             //根据类型选择公众号
             $("#QueryByType li a").click(function () {
                 var type = $(this).attr("AppType");
-                GetApp(type);
+                $("#Type").val(type);
+                GetApp();
             });
             //根据类型选择公众号
         });
         //拉取公众号信息填充表格
-        function GetApp(type) {
-            
-            $.post("/Base/APP/GetAppList", "type="+type, function (json) {
+        function GetApp() {
+            var type = $("#Type").val();
+            var key = "{'AppName':'" + $("#AppName").val() + "','WXId':'" + $("#WXId").val() + "','CompanyName':'" + $("#CompanyName").val() + "'}";
+            $.post("/Base/APP/GetAppList", "type="+type+"&key="+key, function (json) {
                 var tr = "";
                 $.each(json, function (i, obj) {
                     tr += "<tr class=\"text-center\">" +

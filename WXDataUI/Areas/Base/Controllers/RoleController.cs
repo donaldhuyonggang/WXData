@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WXDataBLL;
-using WXDataBLL.SYSRole;
+using WXDataBLL.Base;
 using WXDataModel;
 
 namespace WXDataUI.Areas.Base.Controllers
@@ -19,15 +20,17 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpPost]
         public ActionResult GetRole()
         {
+
             SYS_User user = (Session["SYSUSER"] as SYS_User);
             var list = new SYS_RoleManager().Where(s => (s.AppId == user.WX_App.AppId) || (string.IsNullOrEmpty(s.AppId)));
-            var json = list.Select(s => new {
+            var json = list.Select(s => new
+            {
                 s.RoleId,
                 s.RoleSign,
                 s.RoleName,
-                Type = (s.AppId == null?"公共":s.WX_App.AppName)
+                Type = (s.AppId == null ? "公共" : s.WX_App.AppName)
             });
-            return Json(json,JsonRequestBehavior.AllowGet);
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -46,7 +49,7 @@ namespace WXDataUI.Areas.Base.Controllers
             {
                 role.AppId = null;
             }
-            if(new SYS_RoleManager().Add(role))
+            if (new SYS_RoleManager().Add(role))
             {
                 return Redirect("/Base/Role/Index");
             }
@@ -73,13 +76,35 @@ namespace WXDataUI.Areas.Base.Controllers
             }
             return Content("false");
         }
-
-
         [HttpGet]
-        public ActionResult EditRight()
+        public ActionResult EditRight(int roleId)
         {
-            List<SYS_Function> FuncList =  new SYS_FunctionManager().Where(x=>x.ParentID==null);
+            ViewBag.roleId = roleId;
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult EditRight(int roleId,string json)
+        {
+            List<int> list = new List<int>();
+            var c = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(json);
+            foreach (var item in c)
+            {
+                int id = item.id;
+                list.Add(id);
+            }
+            
+            //JObject jo = JObject.Parse(json);
+            return Content(new SYS_RoleManager().EditRight(roleId,list).ToString());
+        }
 
+        /// <summary>
+        /// 获取树形菜单json
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetFunction(int roleId)
+        {
+            List<SYS_Function> FuncList = new SYS_FunctionManager().Where(x => x.ParentID == null);
             List<object> json = new List<object>();
             foreach (var item in FuncList)
             {
@@ -87,42 +112,106 @@ namespace WXDataUI.Areas.Base.Controllers
                 {
                     id = item.FunctionID,
                     text = item.FunctionName,
-                    children = new List<object>()
+                    selectable = false, //标记节点是否可以选择。false表示节点应该作为扩展标题，不会触发选择事件。  string
+                    //icon = "glyphicon glyphicon-play-circle", //节点上显示的图标，支持bootstrap的图标  string
+                    //selectedIcon = "glyphicon glyphicon-ok "//节点被选中时显示的图标       string
+                    //nodes = new List<object>()
                 };
+
+
+
                 //var list = new SYS_FunctionManager().Where(x => x.ParentID == item.FunctionID);
-                DG(item.FunctionID, info);
 
-                json.Add(info);
+                json.Add(DG(item.FunctionID, info, roleId));
             }
-          
 
-            return Json(json,JsonRequestBehavior.AllowGet);
+
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
 
 
 
-        private void DG(int functionId, dynamic info)
+        private dynamic DG(int functionId, dynamic info, int roleId)
         {
-
-            var list = new SYS_FunctionManager().Where(x => x.ParentID == functionId);
-
-            foreach (var item in list)
+            SYS_FunctionManager bll = new SYS_FunctionManager();
+            var list = bll.Where(x => x.ParentID == functionId);
+            if (list.Count > 0)
             {
-                var sub = new
+
+                dynamic newInfo = null;
+                if (bll.GetByPK(functionId).ParentID == null)
                 {
-                    id = item.FunctionID,
-                    text = item.FunctionName,
-                    children = new List<object>()
-                };
-              
-                DG(item.FunctionID, sub);
+                    newInfo = new
+                    {
+                        id = functionId,
+                        info.text,
+                        selectable = false, //标记节点是否可以选择。false表示节点应该作为扩展标题，不会触发选择事件。  string
+                        nodes = new List<object>(),
+                        state = GetState(roleId, functionId)
+                    };
+                }
+                else
+                {
+                    newInfo = new
+                    {
+                        id = functionId,
+                        info.text,
+                        nodes = new List<object>(),
+                        state = GetState(roleId, functionId)
+                    };
+                }
+                foreach (var item in list)
+                {
+                    var sub = new
+                    {
+                        id = item.FunctionID,
+                        text = item.FunctionName,
+                        icon = "glyphicon glyphicon-unchecked", //节点上显示的图标，支持bootstrap的图标  string
+                        selectedIcon = "glyphicon glyphicon-check ",//节点被选中时显示的图标       string
+                        state = GetState(roleId, item.FunctionID)
+                        //nodes = new List<object>()
+                    };
 
-                info.children.Add(sub);
+                    newInfo.nodes.Add(DG(item.FunctionID, sub, roleId));
 
+                }
+
+                return newInfo;
             }
+            return info;
 
         }
 
+
+        private dynamic GetState(int roleId, int funcId)
+        {
+            SYS_Role role = new SYS_RoleManager().GetByPK(roleId);
+            if (role.RoleSign.Equals("SYS_ADMIN") && new SYS_FunctionManager().GetByPK(funcId).ParentID != null)
+            {
+                return new
+                { //描述节点的初始状态    Object
+                  /*disabled: true,*/ //是否禁用节点
+                    expanded = false, //是否展开节点
+                    selected = true //是否选中节点
+                };
+            }
+            if (role.SYS_Function.Where(s => s.FunctionID == funcId).ToList().Count>0)
+            {
+                return new
+                { //描述节点的初始状态    Object
+                  /*disabled: true,*/ //是否禁用节点
+                    expanded = false, //是否展开节点
+                    selected = true //是否选中节点
+                };
+            }
+            return new
+            { //描述节点的初始状态    Object
+              /*disabled: true,*/ //是否禁用节点
+                expanded = false, //是否展开节点
+                selected = false //是否选中节点
+            };
+
+        }
 
     }
 }
