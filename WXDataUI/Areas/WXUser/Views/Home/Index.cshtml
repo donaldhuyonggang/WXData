@@ -74,26 +74,7 @@
 }
 
 <div class="usercontent">
-    <div class="col-xs-2 padd usetlef">
-        <nav class="navbar marg  navbar-default navbar-static-top">
-            <div class="col-xs-12">
-                <h5 class="navbar-text navbar-left">用户分类<a href="#" class="navbar-link"></a></h5>
-            </div>
-        </nav>
-        <div>
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="home">...</div>
-                <div role="tabpanel" class="tab-pane" id="profile">...</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-10 padd">
+    <div class="col-xs-12 padd">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="rightheadingone">
@@ -267,8 +248,10 @@
                                    "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
                                    "   <a href=\"/WXUser/Home/UserInfo/" + obj.OpenID + "\" data-toggle='modal' data-target='#EditWXUser' class=\"glyphicon glyphicon-search\"></a></li>" +
 
-                                   "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改分组\">" +
-                                   "   <a href=\"/WXUser/Home/ChangeGroup/" + obj.OpenID + "\" data-toggle='modal' data-target='#EditWXUser' class=\"glyphicon glyphicon-folder-open\"></a></li>" +
+                                   //"<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改分组\">" +
+                                   //"   <a href=\"/WXUser/Home/ChangeGroup/" + obj.OpenID + "\" data-toggle='modal' data-target='#EditWXUser' class=\"glyphicon glyphicon-folder-open\"></a></li>" +
+
+
                                    temp +
 
                                "</ul>" +

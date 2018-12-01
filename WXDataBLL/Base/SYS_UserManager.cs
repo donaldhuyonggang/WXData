@@ -6,7 +6,7 @@ using System.Text;
 using WXDataDAL;
 using WXDataModel;
 
-namespace WXDataBLL.SYSUser
+namespace WXDataBLL.Base
 {
     public class SYS_UserManager : BaseBLL<SYS_User>
     {

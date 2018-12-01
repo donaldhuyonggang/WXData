@@ -4,8 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WXDataBLL;
-using WXDataBLL.SYSRole;
-using WXDataBLL.SYSUser;
+using WXDataBLL.Base;
 using WXDataModel;
 
 namespace WXDataUI.Areas.Base.Controllers
@@ -24,7 +23,6 @@ namespace WXDataUI.Areas.Base.Controllers
         {
             return View();
         }
-        
 
         [HttpPost]
         public ActionResult Login(SYS_User info)
@@ -36,6 +34,13 @@ namespace WXDataUI.Areas.Base.Controllers
                 return Redirect("/Base/Home/Index");
             }
             return Content("false");
+        }
+
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return Redirect("/Base/Home/Login");
         }
 
         public ActionResult GetFunction()

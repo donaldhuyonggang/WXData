@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WXDataBLL.SYSUser;
 using WXDataModel;
 
-namespace WXDataBLL.SYSRole
+namespace WXDataBLL.Base
 {
     public class SYS_FunctionManager:BaseBLL<SYS_Function>
     {
