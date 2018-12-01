@@ -1,4 +1,8 @@
-﻿@using WXDataModel
+﻿@{
+    int userId = (Session["SYSUSER"] as SYS_User).UserId;
+}
+
+@using WXDataModel
 
 <style>
     .UserHead {
@@ -24,9 +28,9 @@
             </div>
             <div id="@item.GroupName" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="@item.GroupId">
                 <div class="list-group">
-                    @foreach (WX_User child in item.WX_User)
+                    @foreach (WX_User child in item.WX_User.Where(x => x.UserId == null || x.UserId == userId).ToList())
                     {
-                        <a id="xxx" href="#" class="list-group-item  sendMessage" name="@child.OpenID" nick="@child.UserNick">
+                        <a id="" href="#" class="list-group-item  sendMessage" name="@child.OpenID" nick="@child.UserNick">
                             <img src="@child.HeadImageUrl" class="UserHead" alt="" />
                             <span class="UserNike">@child.UserNick</span>
                             <span class="badge" name="@child.OpenID"></span>
@@ -42,17 +46,35 @@
     $(function () {
         //计时器时时获取
         setInterval(function () {
-            var Message = $(".sendMessage");
+
             $.get("/WXCustom/home/GetCountMessage", function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    $.each(Message, function (s, obj) {
-                        var name = $(obj).attr('name');
-                        if (name == data[i].OpenId) {
-                            $(obj).find(".badge").html(data[i].Count);
+                $(".badge").html("");
+                var list = data.CountList;
+                for (var i = 0; i < list.length; i++) {
+                    $("[name='" + list[i].OpenID + "']").find(".badge").html(list[i].Count);
+                }
+                //新用户跟新
+                var news = data.NewList;
+                var newsUser = $("#新用户>.list-group .sendMessage");
+                var IsNob = 0;
+                for (var i = 0; i < news.length; i++) {//循环数据库
+                    $.each(newsUser, function (s, obj) {//循环页面的，判断是否有重复
+                        var userOpenid = $(obj).attr('name');
+                        if (news[i].OpenID == userOpenid) {
+                            IsNob = 1;
                         }
                     });
+                    //无重复，则附加
+                    if (IsNob == 0) {
+                        var $a = $("<a id=\"\" href=\"#\" class=\"list-group-item  sendMessage\" name=\"" + news[i].OpenID + "\" nick=\"" + news[i].UserNick + "\">" +
+                       "<img src=\"" + news[i].HeadImageUrl + "\" class=\"UserHead\" alt=\"\" />" +
+                       "<span class=\"UserNike\">" + news[i].UserNick + "</span>" +
+                       "<span class=\"badge\" name=\"" + news[i].OpenID + "\"></span>" +
+                  "</a>");
+                        $("#新用户>.list-group").append($a);
+                    }
                 }
-            })
+            });
         }, 1000);
 
 
@@ -76,13 +98,13 @@
         });
 
         @*分配用户给客服*@
-            function UpUserState(node) {
-                $.post("/WXCustom/home/UpuserID/" + node.id, function (data) {
-                    if (!data) {
-                        alert("失败");
-                    }
-                });
-            }
+        function UpUserState(node) {
+            $.post("/WXCustom/home/UpuserID/" + node.id, function (data) {
+                if (!data) {
+                    alert("失败");
+                }
+            });
+        }
 
     })//窗体加载
 </script>
