@@ -1,6 +1,9 @@
 ﻿use WXData
 go
 
+
+//=================
+
 --Start新增用户角色
 insert into SYS_Role(RoleSign,RoleName)values('SYS_ADMIN','超级管理员')
 insert into SYS_Role(RoleSign,RoleName)values('APP_ADMIN','平台管理员')
