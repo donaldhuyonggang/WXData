@@ -28,16 +28,34 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// 加载树形菜单
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetUser()
+        public ActionResult CreatTree()
         {
-            SYS_User user = Session["User"] as SYS_User;
-            var list = new WXDataBLL.WXCustom.WX_UserManager().Where(s => s.UserId == user.UserId || s.UserId.Equals("")).ToList();
-            var Data = list.Select(s => new
+            SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
+            ViewBag.treenode= new WXDataBLL.WXUser.WX_UserGroupManager().Where(x=> ( x.AppId==null) || (x.AppId==SYSUSER.AppId && x.UserId==null) || (x.UserId== SYSUSER.UserId)).ToList();
+            return PartialView();
+        }
+
+        /// <summary>
+        /// 获取未读信息条数
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetCountMessage() {
+            SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
+            if (SYSUSER!=null)
             {
-                id = s.OpenID,
-                text = s.UserNick
-            });
-            return Json(Data, JsonRequestBehavior.AllowGet);
+                var list = new WXDataBLL.WXCustom.WX_QueueManager().Where(s => s.AppId == SYSUSER.AppId).ToList();
+                var data = list.GroupBy(s => s.OpenID).Select(s => new
+                {
+                    Count = s.Count(),
+                    OpenId = s.Key
+                });
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Redirect("/base/home/login");
+            }
+            
         }
 
         /// <summary>
@@ -46,19 +64,66 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// <returns></returns>
         public ActionResult UserInfo(string id)
         {
-            //通过主键获取
-            SYS_User user = Session["User"] as SYS_User;
-            WX_User Wuser = new WXDataBLL.WXCustom.WX_UserManager().GetByPK(id);
-            Wuser.UserId = user.UserId;
+            ViewBag.user = new WXDataBLL.WXUser.WX_UserManager().GetByPK(id);
             return PartialView();
         }
 
-        //public ActionResult UpuserID(string id)
-        //{
-        //    //修改
-        //    var isTrue = new WXDataBLL.WXCustom.WX_UserManager().Update();
-        //    ViewBag.user = Wuser;
-        //}
+        /// <summary>
+        /// 跳转到历史记录页面
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult UserHistory() {
+            return PartialView();
+        }
+
+        /// <summary>
+        /// 查看用户历史记录
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="page"></param>
+        /// <param name="rows"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UserHistory(string id, int page = 3, int rows = 1) {
+            SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
+            var list = new WXDataBLL.WXCustom.WX_CustomMsgManger().Where(s => s.AppId == SYSUSER.AppId && s.UserId == SYSUSER.UserId && s.OpenID == id).OrderBy(x=>x.CreateTime).ToList();
+            var Data = list.Skip((page - 1) * rows).Take(rows).Select(s => new
+            {
+                s.AppId,
+                s.CreateTime,
+                s.Content,
+                s.WX_User.UserNick,
+                s.SYS_User.UserName
+            });
+            var pageData = new
+            {
+                total = list.Count,
+                rows = Data
+            };
+            return Json(pageData, JsonRequestBehavior.AllowGet);
+        }
+
+
+        /// <summary>
+        /// 分配用户给客服，随抢
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult UpuserID(string id)
+        {
+            SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
+            WX_User WXUSER= new WXDataBLL.WXUser.WX_UserManager().GetByPK(id);
+            var isTrue = false;
+            if (WXUSER.UserId==null)
+            {
+                WXUSER.UserId = SYSUSER.UserId;
+                //修改
+                isTrue = new WXDataBLL.WXUser.WX_UserManager().Update(WXUSER);
+            }
+            return Json(isTrue, JsonRequestBehavior.AllowGet);
+        }
 
         /// <summary>
         /// 查看当前用户聊天
@@ -79,27 +144,26 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// <returns></returns>
         private List<WX_CustomMsg> FansMsg(string id)
         {
-            SYS_User user = Session["User"] as SYS_User;
+            SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
             List<WX_Queue> list = new WXDataBLL.WXCustom.WX_QueueManager().Where(s => s.MsgState == 1 && s.OpenID.Equals(id));
             List<WX_CustomMsg> msg = new List<WX_CustomMsg>();
-            if (list != null)
+            foreach (WX_Queue item in list)
             {
-                foreach (WX_Queue item in list)
-                {
-                    WX_CustomMsg CM = new WX_CustomMsg();
-                    CM.MsgId = item.MsgId;
-                    CM.OpenID = item.OpenID;
-                    CM.UserId = user.UserId;
-                    CM.AppId = user.AppId;
-                    CM.CreateTime = item.CreateTime;
-                    CM.Content = XmlUtility.GetSingleNodeInnerText(item.XmlContent, "/xml/Content");
-                    CM.MsgSource = "粉丝";
-                    CM.MsgType = item.MsgType;
-                    CM.XmlContent = item.XmlContent;
-                    new WXDataBLL.WXCustom.WX_CustomMsgManger().Add(CM); //添加到数据库
-                    msg.Add(CM);//添加到集合
-                    new WXDataBLL.WXCustom.WX_QueueManager().Delete(item.MsgId);//删除
-                }
+                WX_CustomMsg CM = new WX_CustomMsg();
+                CM.MsgId = item.MsgId;
+                CM.OpenID = item.OpenID;
+                CM.UserId = SYSUSER.UserId;
+                CM.AppId = SYSUSER.AppId;
+                CM.CreateTime = item.CreateTime;
+                CM.Content = XmlUtility.GetSingleNodeInnerText(item.XmlContent, "/xml/Content");
+                CM.MsgSource = "粉丝";
+                CM.MsgType = item.MsgType;
+                CM.XmlContent = item.XmlContent;
+
+                new WXDataBLL.WXCustom.WX_QueueManager().Delete(item.MsgId);//删除
+                new WXDataBLL.WXCustom.WX_CustomMsgManger().Add(CM); //添加到数据库
+                var info = new WXDataBLL.WXCustom.WX_CustomMsgManger().GetByPK(CM.MsgId);
+                msg.Add(info);//添加到集合
             }
             return msg;
         }
@@ -112,14 +176,15 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         [HttpPost]
         public ActionResult TaleToUser(WX_CustomMsg msg)
         {
-            SYS_User user = Session["User"] as SYS_User;
-            msg.UserId = user.UserId;
+            SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
+            msg.UserId = SYSUSER.UserId;
             msg.MsgId = Guid.NewGuid().ToString();
             msg.CreateTime = DateTime.Now;
             msg.MsgSource = "客服";
+            msg.AppId = SYSUSER.AppId;
 
             //发送到微信
-            CustomService customSvr = new CustomService(user.AppId, user.WX_App.AppSecret);
+            CustomService customSvr = new CustomService(SYSUSER.AppId, SYSUSER.WX_App.AppSecret);
             customSvr.SendText(msg.OpenID, msg.Content);
 
             bool IsTrue = new WXDataBLL.WXCustom.WX_CustomMsgManger().Add(msg);
@@ -134,7 +199,15 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         public ActionResult GetFansMsg(string id)
         {
             List<WX_CustomMsg> Que = FansMsg(id);
-            return Json(Que, JsonRequestBehavior.AllowGet);
+
+            var Que1 = Que.Select(x => new
+            {
+                x.AppId,
+                x.Content,
+                x.WX_User.HeadImageUrl,
+                x.WX_User.UserNick
+            });
+            return Json(Que1, JsonRequestBehavior.AllowGet);
         }
     }
 }

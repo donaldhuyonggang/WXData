@@ -6,6 +6,7 @@ using System.Web;
 using WXDataBLL.Base;
 using WXDataBLL.WXCustom;
 using WXDataBLL.WXEvent;
+using WXDataBLL.WXUser;
 using WXDataModel;
 using WXService.Service;
 using WXService.Utility;
