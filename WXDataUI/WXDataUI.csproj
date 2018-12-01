@@ -248,6 +248,8 @@
     <Content Include="Areas\Base\Views\Role\UpdateRole.cshtml" />
     <Content Include="Areas\WXUser\Views\Home\UserInfo.cshtml" />
     <Content Include="Areas\WXUser\Views\Home\ChangeGroup.cshtml" />
+    <Content Include="Areas\WXCustom\Views\Home\CreatTree.cshtml" />
+    <Content Include="Areas\WXCustom\Views\Home\UserHistory.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

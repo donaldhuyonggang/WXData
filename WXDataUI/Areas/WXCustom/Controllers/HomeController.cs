@@ -30,8 +30,8 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// <returns></returns>
         public ActionResult CreatTree()
         {
-            SYS_User SYSUSER = Session["User"] as SYS_User;
-            ViewBag.treenode= new WXDataBLL.WXUser.WX_UserGroupManager().GetAll().ToList();
+            SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
+            ViewBag.treenode= new WXDataBLL.WXUser.WX_UserGroupManager().Where(x=> ( x.AppId==null) || (x.AppId==SYSUSER.AppId && x.UserId==null) || (x.UserId== SYSUSER.UserId)).ToList();
             return PartialView();
         }
 
@@ -40,7 +40,7 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult GetCountMessage() {
-            SYS_User SYSUSER = Session["User"] as SYS_User;
+            SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
             if (SYSUSER!=null)
             {
                 var list = new WXDataBLL.WXCustom.WX_QueueManager().Where(s => s.AppId == SYSUSER.AppId).ToList();
@@ -87,7 +87,7 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// <returns></returns>
         [HttpPost]
         public ActionResult UserHistory(string id, int page = 3, int rows = 1) {
-            SYS_User SYSUSER = Session["User"] as SYS_User;
+            SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
             var list = new WXDataBLL.WXCustom.WX_CustomMsgManger().Where(s => s.AppId == SYSUSER.AppId && s.UserId == SYSUSER.UserId && s.OpenID == id).OrderBy(x=>x.CreateTime).ToList();
             var Data = list.Skip((page - 1) * rows).Take(rows).Select(s => new
             {
@@ -113,7 +113,7 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// <returns></returns>
         public ActionResult UpuserID(string id)
         {
-            SYS_User SYSUSER = Session["User"] as SYS_User;
+            SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
             WX_User WXUSER= new WXDataBLL.WXUser.WX_UserManager().GetByPK(id);
             var isTrue = false;
             if (WXUSER.UserId==null)
@@ -144,7 +144,7 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// <returns></returns>
         private List<WX_CustomMsg> FansMsg(string id)
         {
-            SYS_User SYSUSER = Session["User"] as SYS_User;
+            SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
             List<WX_Queue> list = new WXDataBLL.WXCustom.WX_QueueManager().Where(s => s.MsgState == 1 && s.OpenID.Equals(id));
             List<WX_CustomMsg> msg = new List<WX_CustomMsg>();
             foreach (WX_Queue item in list)
@@ -176,7 +176,7 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         [HttpPost]
         public ActionResult TaleToUser(WX_CustomMsg msg)
         {
-            SYS_User SYSUSER = Session["User"] as SYS_User;
+            SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
             msg.UserId = SYSUSER.UserId;
             msg.MsgId = Guid.NewGuid().ToString();
             msg.CreateTime = DateTime.Now;
