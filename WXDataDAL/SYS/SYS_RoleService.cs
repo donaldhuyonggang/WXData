@@ -13,7 +13,7 @@ namespace WXDataDAL.SYS
         {
             using (WXDataEntities db = new WXDataEntities())
             {
-                db.Database.ExecuteSqlCommand("delete function where roleId="+info.RoleId);
+                db.Database.ExecuteSqlCommand("delete SYS_Right where RoleId="+info.RoleId);
 
                 var info1 = db.SYS_Role.Find(info.RoleId);
                 info1.RoleId = info.RoleId;

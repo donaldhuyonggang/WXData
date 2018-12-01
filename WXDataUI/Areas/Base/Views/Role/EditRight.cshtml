@@ -42,12 +42,17 @@
             });
             console.info(node);
             $.post("/Base/Role/EditRight", "roleId=" + $("#RoleId").val()+ "&json="+JSON.stringify(json), function (result) {
-
+                if (result) {
+                    $("#EditRight").hide();
+                } else {
+                    alert('修改失败');
+                }
             });
         });
     })
     function getTree() {
         $.post("/Base/Role/GetFunction", "RoleId=" + $("#RoleId").val(), function (result) {
+            console.info(result);
             $('#tree').treeview({
                 data: result,
                 multiSelect: true, //是否可以同时选择多个节点      Boolean

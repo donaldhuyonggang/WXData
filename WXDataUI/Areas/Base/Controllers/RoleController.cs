@@ -94,7 +94,7 @@ namespace WXDataUI.Areas.Base.Controllers
             }
             
             //JObject jo = JObject.Parse(json);
-            return Content(new SYS_RoleManager().EditRight(roleId,list).ToString());
+            return Json(new SYS_RoleManager().EditRight(new SYS_RoleManager().GetByPK(roleId), list),JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace WXDataUI.Areas.Base.Controllers
 
                 //var list = new SYS_FunctionManager().Where(x => x.ParentID == item.FunctionID);
 
-                json.Add(DG(item.FunctionID, info, roleId));
+                json.Add(DG(item.FunctionID, info, new SYS_RoleManager().GetByPK(roleId)));
             }
 
 
@@ -131,7 +131,7 @@ namespace WXDataUI.Areas.Base.Controllers
 
 
 
-        private dynamic DG(int functionId, dynamic info, int roleId)
+        private dynamic DG(int functionId, dynamic info, SYS_Role role)
         {
             SYS_FunctionManager bll = new SYS_FunctionManager();
             var list = bll.Where(x => x.ParentID == functionId);
@@ -147,7 +147,7 @@ namespace WXDataUI.Areas.Base.Controllers
                         info.text,
                         selectable = false, //标记节点是否可以选择。false表示节点应该作为扩展标题，不会触发选择事件。  string
                         nodes = new List<object>(),
-                        state = GetState(roleId, functionId)
+                        state = GetState(role, functionId)
                     };
                 }
                 else
@@ -157,7 +157,7 @@ namespace WXDataUI.Areas.Base.Controllers
                         id = functionId,
                         info.text,
                         nodes = new List<object>(),
-                        state = GetState(roleId, functionId)
+                        state = GetState(role, functionId)
                     };
                 }
                 foreach (var item in list)
@@ -168,11 +168,11 @@ namespace WXDataUI.Areas.Base.Controllers
                         text = item.FunctionName,
                         icon = "glyphicon glyphicon-unchecked", //节点上显示的图标，支持bootstrap的图标  string
                         selectedIcon = "glyphicon glyphicon-check ",//节点被选中时显示的图标       string
-                        state = GetState(roleId, item.FunctionID)
+                        state = GetState(role, item.FunctionID)
                         //nodes = new List<object>()
                     };
 
-                    newInfo.nodes.Add(DG(item.FunctionID, sub, roleId));
+                    newInfo.nodes.Add(DG(item.FunctionID, sub, role));
 
                 }
 
@@ -183,9 +183,8 @@ namespace WXDataUI.Areas.Base.Controllers
         }
 
 
-        private dynamic GetState(int roleId, int funcId)
+        private dynamic GetState(SYS_Role role, int funcId)
         {
-            SYS_Role role = new SYS_RoleManager().GetByPK(roleId);
             if (role.RoleSign.Equals("SYS_ADMIN") && new SYS_FunctionManager().GetByPK(funcId).ParentID != null)
             {
                 return new
