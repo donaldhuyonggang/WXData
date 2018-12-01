@@ -25,19 +25,14 @@
     @*左侧用户分组*@
     <div class="padd" data-options="region:'west',iconCls:'icon-reload',title:'用户分类',split:true" style="width:250px;max-width:350px">
         <div id="ts" class="easyui-tabs">
-            @*<div title="组别" style="padding:10px 20px;display:none;">
-                    <ul id="tree" class="easyui-tree"></ul>
-
-                </div>*@
-            <div title="标签" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
+            @*<div title="标签" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
                 tab2
-            </div>
+            </div>*@
         </div>
     </div>
 
     @*中间用户聊天*@
     <div class="padd" data-options="region:'center',title:'用户聊天'" style="background:#eee;">
-
         <div id="tt" class="easyui-tabs">
             @*这个是tab栏*@
         </div>
@@ -63,35 +58,11 @@
                 plain: true
             });
 
-
             //添加分组
                 $('#ts').tabs('add', {
                     title: '组别',
                     href: '/WXCustom/home/CreatTree'
                 });
-
-           
-
-            @*树形菜单动态加载*@
-            //$('#tree').tree({
-            //    url: "/WXCustom/Home/GetUser",
-            //    onDblClick: function (node) {
-            //        //alert(JSON.stringify(node));
-            //
-            //        if (Node == null) {
-            //            $('#tt').tabs('add', {
-            //                title: node.text,
-            //                href: '/WXCustom/home/TaleToUser/' + node.id,
-            //                closable: true
-            //            });
-            //        } else {
-            //            $('#tt').tabs('select', node.text);
-            //        }
-            //        //UpUserState(node);
-            //    },
-            //    fit: true
-            //});
-
 
         });//加载事件
     </script>

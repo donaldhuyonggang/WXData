@@ -64,9 +64,7 @@
         //    }
         //})
 
-        
-
-
+       
         //计时器循环调用
         myTime = setInterval(function () {
             $.get("/WXCustom/home/GetFansMsg/@ViewBag.OpenId", function (data) {
@@ -89,6 +87,8 @@
                         data[i].Content +
                 "</div>" +
             "</div>");
+
+                    $(".Roll").scrollTop($(".Roll")[0].scrollHeight);//滚动条滚至最下
                 }
             });
         }, 1000);
@@ -131,12 +131,10 @@
             }
         });
 
-
         //发送按钮点击
         $(document).on("click", "#@ViewBag.OpenId .btn_send", function () {
             var CText = $("#@ViewBag.OpenId .note").val();
             if (CText == "") {
-
             } else {
                 var info = {
                     Content: $("#@ViewBag.OpenId .note").val(),
@@ -155,7 +153,7 @@
                 });
             }
             $("#@ViewBag.OpenId .note").val("");
+            $(".Roll").scrollTop($(".Roll")[0].scrollHeight);//滚动条滚至最下
         });
-
     })//窗体加载
 </script>

@@ -44,12 +44,22 @@ namespace WXDataUI.Areas.WXCustom.Controllers
             if (SYSUSER!=null)
             {
                 var list = new WXDataBLL.WXCustom.WX_QueueManager().Where(s => s.AppId == SYSUSER.AppId).ToList();
+                var list1 = new WXDataBLL.WXUser.WX_UserManager().Where(s=>s.GrooupId==1).Where(x=> (x.AppId==SYSUSER.AppId && x.UserId==SYSUSER.UserId) || x.UserId==null).Select(x=>new { x.UserId,x.HeadImageUrl,x.OpenID,x.UserNick}).ToList();
+
                 var data = list.GroupBy(s => s.OpenID).Select(s => new
                 {
                     Count = s.Count(),
-                    OpenId = s.Key
-                });
-                return Json(data, JsonRequestBehavior.AllowGet);
+                    OpenID = s.Key
+                }).ToList();
+
+                var info = new
+                {
+                    CountList = data,
+                    NewList = list1
+
+                };
+
+                return Json(info, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -74,7 +84,8 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult UserHistory() {
+        public ActionResult UserHistory(string id) {
+            ViewBag.Openid = id;
             return PartialView();
         }
 
@@ -94,8 +105,7 @@ namespace WXDataUI.Areas.WXCustom.Controllers
                 s.AppId,
                 s.CreateTime,
                 s.Content,
-                s.WX_User.UserNick,
-                s.SYS_User.UserName
+                s.WX_User.UserNick
             });
             var pageData = new
             {
