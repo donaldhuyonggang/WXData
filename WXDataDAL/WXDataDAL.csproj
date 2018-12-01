@@ -46,7 +46,8 @@
   <ItemGroup>
     <Compile Include="BaseDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SYSUser\WX_UserService.cs" />
+    <Compile Include="SYS\SYS_RoleService.cs" />
+    <Compile Include="WX\WX_UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WXDataModel\WXDataModel.csproj">

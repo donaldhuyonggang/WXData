@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using WXDataModel;
 
-namespace WXDataDAL.SYSUser
+namespace WXDataDAL.WX
 {
     public class WX_UserService: BaseDAL<WX_User>
     {
