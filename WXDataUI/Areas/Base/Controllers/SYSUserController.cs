@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WXDataBLL;
-using WXDataBLL.SYSRole;
-using WXDataBLL.SYSUser;
-using WXDataBLL.WXApp;
+using WXDataBLL.Base;
 using WXDataModel;
 
 namespace WXDataUI.Areas.Base.Controllers
@@ -16,13 +15,14 @@ namespace WXDataUI.Areas.Base.Controllers
         // GET: Base/SYSUser
         public ActionResult Index()
         {
+            ViewBag.RoleList = new SYS_RoleManager().Where(r => (r.AppId == (Session["SYSUSER"] as SYS_User).WX_App.AppId) || (r.AppId == null));
             return View();
         }
 
         [HttpGet]
         public ActionResult AddSysUser()
         {
-            ViewBag.RoleList = new SYS_RoleManager().GetAll();
+            ViewBag.RoleList = new SYS_RoleManager().Where(r => (r.AppId == (Session["SYSUSER"] as SYS_User).WX_App.AppId) || (r.AppId == null));
             ViewBag.AppList = new WX_AppManager().GetAll();
             return PartialView();
         }
@@ -39,11 +39,13 @@ namespace WXDataUI.Areas.Base.Controllers
 
         }
 
+
+
         [HttpGet]
         public ActionResult UpdateSysUser(int id)
         {
             ViewBag.SYSUser = new SYS_UserManager().GetByPK(id);
-            ViewBag.RoleList = new SYS_RoleManager().GetAll();
+            ViewBag.RoleList = new SYS_RoleManager().Where(r => (r.AppId == (Session["SYSUSER"] as SYS_User).WX_App.AppId) || (r.AppId == null));
             ViewBag.AppList = new WX_AppManager().GetAll();
             return PartialView();
         }
@@ -59,9 +61,32 @@ namespace WXDataUI.Areas.Base.Controllers
 
         }
 
-        public ActionResult GetUsers()
+        public ActionResult GetUsers(string sign = null, string key = null)
         {
-            var list = new SYS_UserManager().GetAll();
+            List<SYS_User> list = null;
+            if (string.IsNullOrEmpty(sign))
+            {
+                list = new SYS_UserManager().GetAll();
+            }
+            else
+            {
+                list = new SYS_UserManager().Where(u => u.SYS_Role.RoleSign.Equals(sign));
+            }
+            if(key != null)
+            {
+                JObject jo = JObject.Parse(key);
+                if (!string.IsNullOrEmpty(jo["Name"].ToString()))
+                {
+                    string name = jo["Name"].ToString();
+                    list = list.Where(u => u.LoginId.Contains(name) || u.UserName.Contains(name)).ToList();
+                }
+                if (!string.IsNullOrEmpty(jo["Email"].ToString()))
+                {
+                    string email = jo["Email"].ToString();
+                    list = list.Where(u => u.Email != null && u.Email.Contains(email)).ToList();
+                }
+            }
+
             var json = list.Select(u => new
             {
                 u.UserId,

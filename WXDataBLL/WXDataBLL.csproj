@@ -46,10 +46,10 @@
   <ItemGroup>
     <Compile Include="BaseBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SYSRole\SYS_FunctionManager.cs" />
-    <Compile Include="SYSUser\SYS_UserManager.cs" />
-    <Compile Include="SYSRole\SYS_RoleManager.cs" />
-    <Compile Include="WXApp\WX_AppManager.cs" />
+    <Compile Include="Base\SYS_FunctionManager.cs" />
+    <Compile Include="Base\SYS_UserManager.cs" />
+    <Compile Include="Base\SYS_RoleManager.cs" />
+    <Compile Include="Base\WX_AppManager.cs" />
     <Compile Include="WXCustom\WX_CustomMsgManger.cs" />
     <Compile Include="WXCustom\WX_QueueManager.cs" />
     <Compile Include="WXUser\WX_UserManager.cs" />
@@ -64,6 +64,10 @@
     <ProjectReference Include="..\WXDataModel\WXDataModel.csproj">
       <Project>{4925bb63-a6f9-4b87-ad78-f4959faf5324}</Project>
       <Name>WXDataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WXService\WXService.csproj">
+      <Project>{830E0A30-8499-4158-B623-9AE3FE5CB6EC}</Project>
+      <Name>WXService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

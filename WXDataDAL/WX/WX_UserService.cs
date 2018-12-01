@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using WXDataModel;
 
-namespace WXDataBLL.WXApp
+namespace WXDataDAL.WX
 {
-    public class WX_AppManager : BaseBLL<WX_App>
+    public class WX_UserService: BaseDAL<WX_User>
     {
-         
     }
 }

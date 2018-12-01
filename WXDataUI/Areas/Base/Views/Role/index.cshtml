@@ -80,26 +80,7 @@
 
 
 <div class="appcontent">
-    <div class="col-xs-2 padd usetlef">
-        <nav class="navbar marg  navbar-default navbar-static-top">
-            <div class="col-xs-12">
-                <h5 class="navbar-text navbar-left">角色分类<a href="#" class="navbar-link"></a></h5>
-            </div>
-        </nav>
-        <div>
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="home">...</div>
-                <div role="tabpanel" class="tab-pane" id="profile">...</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-10 padd">
+    <div class="col-xs-12 padd">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="rightheadingone">
@@ -234,7 +215,7 @@
                                        "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改信息\">" +
                                        "   <a href=\"/Base/Role/UpdateRole/"+ obj.RoleId +"\" data-toggle='modal' data-target='#EditRole' class=\"glyphicon glyphicon-search\"></a></li>" +
                                        "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"权限分配\">" +
-                                       "   <a href=\"/Base/Role/EditRight\" data-toggle='modal' data-target='#EditFunction' class=\"glyphicon glyphicon-pencil\"></a></li>" +
+                                       "   <a href=\"/Base/Role/EditRight?roleId="+ obj.RoleId +"\" data-toggle='modal' data-target='#EditFunction' class=\"glyphicon glyphicon-pencil\"></a></li>" +
                                        "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
                                        "   <a href=\"#\" class=\"glyphicon glyphicon-remove deleteApp\"></a></li>" +
                                    "</ul>" +
@@ -243,7 +224,6 @@
 
                 });
                 $(".RoleList tbody").html(tr);
-                console.info(tr);
             });
             //拉取公众号信息填充表格end
 

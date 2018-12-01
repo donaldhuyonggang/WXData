@@ -35,10 +35,13 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">设置</a></li>
                     <li><a href="#">帮助</a></li>
-                    <li></li>    
                     <li>
-                        <a href="/Base/Home/ChangeApp" data-toggle="modal" data-backdrop="false"
-                           data-target="#ChangeApp">公众号:@user.WX_App.AppName</a>
+                        <a href="#" data-toggle="modal" data-backdrop="false"
+                           data-target="#Logout">当前管理员:@user.UserName</a>
+                    </li>    
+                    <li>
+                        <a href="#" data-toggle="modal" data-backdrop="false"
+                           data-target="#Logout">公众号:@user.WX_App.AppName</a>
                     </li>
                     @*<li>
                         <a href="/Home/MenuEdit/0" data-toggle="modal" data-backdrop="false"
@@ -72,11 +75,21 @@
     </div><!-- /.modal -->
 
 
-    @*修改当前微信账号模态框*@
-    <div class="modal fade" id="ChangeApp">
-        <div class="modal-dialog">
+    @*登出模态框*@
+    <div class="modal fade" id="Logout">
+        <div class="modal-dialog" style="width:300px;">
             <div class="modal-content">
-                
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p>确定登出吗?</p>
+                </div>
+                <div class="modal-footer" style="padding: 5px 10px 5px; margin:0;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+                    <a href="/Base/Home/Logout"  class="btn btn-primary">是</a>
+                </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

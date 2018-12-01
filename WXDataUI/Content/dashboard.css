@@ -180,3 +180,23 @@ body {
     display:block;
     clear:both;
 }
+
+.ul-full,.ul-full ul{
+            padding:0;
+            text-align:center;
+        }
+        .ul-full a{
+            display:inline-block;
+            width:100%;
+            padding:5px 15px;
+        }
+        .ul-full a:hover{
+            text-decoration: none;
+            background-color: #eee;
+        }
+.active{
+    background: #2a6496;
+}
+.active a{
+    color:white;
+}

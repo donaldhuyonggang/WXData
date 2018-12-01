@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WXDataBLL;
-using WXDataBLL.SYSRole;
-using WXDataBLL.WXApp;
+using WXDataBLL.Base;
 using WXDataModel;
 
 namespace WXDataUI.Areas.Base.Controllers
@@ -36,17 +36,37 @@ namespace WXDataUI.Areas.Base.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetAppList(string type = "1")
+        public ActionResult GetAppList(string type = "All", string key = null)
         {
 
             List<WX_App> list = null;
-            if (type.Equals("1"))
+            if (type.Equals("All"))
             {
                 list = new WX_AppManager().GetAll();
             }else
             {
                 list = new WX_AppManager().Where(a => a.AppType.Equals(type));
             }
+            if (!string.IsNullOrEmpty(key))
+            {
+                JObject jo = JObject.Parse(key);
+                if (!string.IsNullOrEmpty(jo["AppName"].ToString()))
+                {
+                    string AppName = jo["AppName"].ToString();
+                    list = list.Where(a => a.AppName.Contains(AppName)).ToList();
+                }
+                if (!string.IsNullOrEmpty(jo["WXId"].ToString()))
+                {
+                    string WXId = jo["WXId"].ToString();
+                    list = list.Where(a => a.WXId.Contains(WXId)).ToList();
+                }
+                if (!string.IsNullOrEmpty(jo["CompanyName"].ToString()))
+                {
+                    string CompanyName = jo["CompanyName"].ToString();
+                    list = list.Where(a => a.CompanyName != null && a.CompanyName.Contains(CompanyName)).ToList();
+                }
+            }
+
             var json = list.Select(s => new
             {
                 s.AppType,
