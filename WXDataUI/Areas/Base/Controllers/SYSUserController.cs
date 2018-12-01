@@ -100,6 +100,12 @@ namespace WXDataUI.Areas.Base.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
-
+         [HttpGet]
+        public ActionResult LookSysUser(int id) {
+           ViewBag.LookSysUser = new SYS_UserManager().GetByPK(id);
+            ViewBag.RoleList = new SYS_RoleManager().GetAll();
+            ViewBag.AppList = new WX_AppManager().GetAll();
+            return PartialView();
+        }
     }
 }
