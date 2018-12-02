@@ -1,0 +1,68 @@
+﻿@using WXDataModel
+@{
+    SYS_User sysUser = ViewBag.LookSysUser as SYS_User;
+}
+
+<div class="modal-dialog  modal-lg" style="width:800px">
+    <div class="modal-content">
+        <div class="modal-header">
+            查看用户信息
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label  class="col-sm-2 control-label">用户名/登录名:</label>
+                <div class="col-sm-4 xinxi">
+                    <label name="LoginId"  id="LoginId" class="x control-label">@sysUser.LoginId</label>
+                </div>
+                <label class="col-sm-2 control-label">真实姓名:</label>
+                <div class="col-sm-4 xinxi">
+                    <label  name="UserName"  id="UserName"  class="x control-label">@sysUser.UserName</label>
+                </div>
+            </div><!--form-group-->
+
+            <div class="form-group">
+                <label for="select1" class="col-sm-2 control-label">公众号:</label>
+                <div class="col-sm-4">
+                   <label class="x control-label">@sysUser.WX_App.AppName</label>
+                </div>
+                <label for="select2" class="col-sm-2 control-label">角色类型:</label>
+                <div class="col-sm-4">
+                    <label class="x control-label">@sysUser.SYS_Role.RoleName</label>
+                </div>
+            </div><!--form-group-->
+        
+        <div class="form-group">
+            <label for="Email" class="col-sm-2 control-label">邮件地址:</label>
+            <div class="col-sm-4">
+                <label  name="Email" class="control-label" id="Email">@sysUser.Email</label>
+            </div>
+            <label for="Telphone" class="col-sm-2 control-label">移动电话:</label>
+            <div class="col-sm-4">
+                <label  name="Telabele" class="control-label" id="Telphone">@sysUser.Telphone</label>
+        </div><!--form-group-->
+
+        <div class="form-group">
+            <label for="WXId" class="col-sm-2 control-label">微信号:</label>
+            <div class="col-sm-4">
+                <label  id="WXId" class="control-label" >@sysUser.WXId</label>
+             </div>
+            <label class="col-sm-2 control-label">性别:</label>
+            <div class="col-sm-4">
+               
+                    @if (sysUser.UserSex == null)
+                    {
+                        <label style="margin-right:20px;font-weight:bold;" class="control-label">男</label>
+                    }
+                    else
+                    {
+                        <label style="margin-right:20px;" class="control-label">@sysUser.UserSex ></label>
+                    }
+
+            </div>
+        </div><!--form-group-->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+
+    </div>
+</div>
