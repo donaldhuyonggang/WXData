@@ -52,6 +52,7 @@
     <Compile Include="Base\WX_AppManager.cs" />
     <Compile Include="WXCustom\WX_CustomMsgManger.cs" />
     <Compile Include="WXCustom\WX_QueueManager.cs" />
+    <Compile Include="WXQR\WX_QRManager.cs" />
     <Compile Include="WXUser\WX_UserManager.cs" />
     <Compile Include="WXEvent\WX_EvenQueueManager.cs" />
     <Compile Include="WXUser\WX_UserGroupManager.cs" />

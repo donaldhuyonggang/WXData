@@ -129,6 +129,7 @@
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\WXApp\WXAppAreaRegistration.cs" />
     <Compile Include="Areas\WXCustom\Controllers\HomeController.cs" />
+    <Compile Include="Areas\WXCustom\Controllers\QRController.cs" />
     <Compile Include="Areas\WXCustom\WXCustomAreaRegistration.cs" />
     <Compile Include="Areas\WXMedia\WXMediaAreaRegistration.cs" />
     <Compile Include="Areas\WXMenu\WXMenuAreaRegistration.cs" />
@@ -251,6 +252,7 @@
     <Content Include="Areas\WXUser\Views\Home\ChangeGroup.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\CreatTree.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\UserHistory.cshtml" />
+    <Content Include="Areas\WXCustom\Views\QR\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
