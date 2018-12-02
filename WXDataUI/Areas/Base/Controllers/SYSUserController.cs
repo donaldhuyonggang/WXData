@@ -31,6 +31,10 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult AddSysUser(SYS_User user)
         {
             user.UserState = "正常";
+            if (new SYS_UserManager().Where(u => u.LoginId.Equals(user.LoginId)).Count>0)
+            {
+                return Content("用户名已存在!");
+            }
             if (new SYS_UserManager().Add(user))
             {
                 return Redirect("/Base/SYSUser/Index");
