@@ -83,7 +83,7 @@ namespace WXDataUI.Areas.Base.Controllers
             return PartialView();
         }
         [HttpPost]
-        public ActionResult EditRight(int roleId,string json)
+        public ActionResult EditRight(int roleId, string json)
         {
             List<int> list = new List<int>();
             var c = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(json);
@@ -92,9 +92,9 @@ namespace WXDataUI.Areas.Base.Controllers
                 int id = item.id;
                 list.Add(id);
             }
-            
+
             //JObject jo = JObject.Parse(json);
-            return Json(new SYS_RoleManager().EditRight(new SYS_RoleManager().GetByPK(roleId), list),JsonRequestBehavior.AllowGet);
+            return Json(new SYS_RoleManager().EditRight(new SYS_RoleManager().GetByPK(roleId), list), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace WXDataUI.Areas.Base.Controllers
                 {
                     id = item.FunctionID,
                     text = item.FunctionName,
-                    selectable = false, //标记节点是否可以选择。false表示节点应该作为扩展标题，不会触发选择事件。  string
+                    selectable = true, //标记节点是否可以选择。false表示节点应该作为扩展标题，不会触发选择事件。  string
                     //icon = "glyphicon glyphicon-play-circle", //节点上显示的图标，支持bootstrap的图标  string
                     //selectedIcon = "glyphicon glyphicon-ok "//节点被选中时显示的图标       string
                     //nodes = new List<object>()
@@ -138,28 +138,14 @@ namespace WXDataUI.Areas.Base.Controllers
             if (list.Count > 0)
             {
 
-                dynamic newInfo = null;
-                if (bll.GetByPK(functionId).ParentID == null)
+                dynamic newInfo = new
                 {
-                    newInfo = new
-                    {
-                        id = functionId,
-                        info.text,
-                        selectable = false, //标记节点是否可以选择。false表示节点应该作为扩展标题，不会触发选择事件。  string
-                        nodes = new List<object>(),
-                        state = GetState(role, functionId)
-                    };
-                }
-                else
-                {
-                    newInfo = new
-                    {
-                        id = functionId,
-                        info.text,
-                        nodes = new List<object>(),
-                        state = GetState(role, functionId)
-                    };
-                }
+                    id = functionId,
+                    info.text,
+                    nodes = new List<object>(),
+                    state = GetState(role, functionId)
+                };
+
                 foreach (var item in list)
                 {
                     var sub = new
@@ -194,7 +180,7 @@ namespace WXDataUI.Areas.Base.Controllers
                     selected = true //是否选中节点
                 };
             }
-            if (role.SYS_Function.Where(s => s.FunctionID == funcId).ToList().Count>0)
+            if (role.SYS_Function.Where(s => s.FunctionID == funcId).ToList().Count > 0)
             {
                 return new
                 { //描述节点的初始状态    Object

@@ -43,23 +43,59 @@
             console.info(node);
             $.post("/Base/Role/EditRight", "roleId=" + $("#RoleId").val()+ "&json="+JSON.stringify(json), function (result) {
                 if (result) {
-                    $("#EditRight").hide();
+                    $("#EditFunction").modal('hide')
                 } else {
                     alert('修改失败');
                 }
             });
         });
+
     })
     function getTree() {
         $.post("/Base/Role/GetFunction", "RoleId=" + $("#RoleId").val(), function (result) {
-            console.info(result);
+            //console.info(result);
+
             $('#tree').treeview({
                 data: result,
                 multiSelect: true, //是否可以同时选择多个节点      Boolean
+                onNodeSelected: function (event, data) {
+                    if (data.hasOwnProperty("nodes")) {
+                        CheckNode(data.nodes);
+                    }
+                },
+                onNodeUnselected: function (event, data) {
+                    if (data.hasOwnProperty("nodes")) {
+                        UnCheckNode(data.nodes);
+                    }
+                }
             });
-
+            
         });
     }
+    function CheckNode(Node) {
+        $.each(Node, function (i, obj) {
+            var node = $('#tree').treeview('getNode', obj.nodeId);
+            console.info(node);
+            node.state.selected = true;
+            if (obj.hasOwnProperty("nodes")) {
+                CheckNode(obj.nodes);
+            }
+        });
+
+    }
+
+    function UnCheckNode(Node) {
+        $.each(Node, function (i, obj) {
+            var node = $('#tree').treeview('getNode', obj.nodeId);
+            console.info(node);
+            node.state.selected = false;
+            if (obj.hasOwnProperty("nodes")) {
+                UnCheckNode(obj.nodes);
+            }
+        });
+    }
+
+
     function getTree1() {
         //节点上的数据遵循如下的格式：
         var tree = [{
