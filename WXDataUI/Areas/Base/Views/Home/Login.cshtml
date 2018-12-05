@@ -11,23 +11,13 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/login.css" rel="stylesheet" />
     <style>
-        .header, .footer {
-            height: 15%;
+          .header, .footer {
+            padding:2% 0 1% 0;
             text-align: center;
+            height:12%;
         }
 
-        .content {
-            position: relative;
-            height: 70%;
-        }
-
-        #Login_Form {
-            width: 400px;
-            position: absolute;
-            right: 15%;
-            top: 10%;
-        }
-
+       
         .tab-content {
             border: 1px solid #ddd;
             border-top: none;
@@ -41,15 +31,116 @@
         .form-group {
             margin-top: 15px;
         }
+        hr {
+        border:2px solid #00df1d;
+        margin:0px;
+        }
+        .images_turen { 
+            background-image: url('/Content/Images/Denglu/downld.png');
+            display: inline-block;
+            width: 30px;
+            height: 20px;
+            background-size: 400%;
+            background-position: 6px 0px;
+            margin-right: 10px;
+        }
+      
+        .zhuce {
+            display:inline-block;
+            margin-top:15px;
+        }
+        a{
+            color:#808080;
+        }
+            a:hover {
+            color:red;
+            text-decoration:none;
+            }
+      
+        .zhfl_Login {
+            text-align:left;
+            margin-left:300px;
+            
+        }
+        .divy_log {
+            margin-left:300px;
+        }
+        .divy_log,.divr_log,.divs_log{
+            border:1px solid #ddd;
+            margin-right:10px;
+            width:300px;
+            padding:0px 30px;
+        }
+       
+        .login {
+            min-height: 300px;
+            max-width: 420px;
+            padding: 40px;
+            margin: 90px;
+            background-color: #ffffff;
+            margin-left: 900px;
+            box-sizing: border-box;
+        }
+        .content {
+            background:url('../../../../Content/Images/Denglu/download.png')no-repeat;
+            background-size: cover;  
+            
+        }
+        .div_wenzi {
+            color:#cdcdcd;
+            margin-top:10px;
+            margin-bottom:20px;
+        }
+        .foot {
+            margin-top:30px;
+        }
+        .yc {
+            
+        }
+        .xs {
+        display:none;
+       
+        }
+        .ckxq {
+            background-color:#44b549;
+            width:130px;
+            padding:8px;
+            border-radius:3px;
+            color:white;
+            margin-left:50px;
+            margin-top:100px;
+            margin-bottom:20px;
+        }
+        .lj a:hover{
+            color:#576b95;
+            text-decoration:underline;
+        }
+        .lj a {
+         color:#576b95;
+        }
+        .lj a{
+            margin-bottom:70px;
+            margin-right:10px;
+            margin-left:10px;
+          
+        }
+        .lj {
+              margin-top:50px;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        头部
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-5"><img src="~/Content/Images/Denglu/download.svg" /></div>
+            <div class="col-lg-4"><div class="zhuce"><i class="images_turen"></i><a href="#">立即注册</a></div></div>
+            <div class="col-lg-2"></div>
+        </div>
     </div>
-    <div class="content">
+    <div class="content row">
         <div>
-            <div id="Login_Form">
+            <div id="Login_Form" class="col-lg-12">
 
                
 
@@ -69,11 +160,20 @@
 
 
                 </div>
+
             </div>
         </div>
     </div>
-    <div class="footer">
-        尾部
+    <div class="row footer">
+        <div class="lj">
+            <a href="#">关于腾讯</a>|
+            <a href="#">服务协议</a>|
+            <a href="#">运营中心</a>|
+            <a href="#">辟谣中心</a>|
+            <a href="#">腾讯客服</a>|
+            <a href="#">联系邮箱</a>|
+            <a href="#">侵权投诉</a>
+        </div>
     </div>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
