@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using WXDataBLL;
 using WXDataBLL.Base;
 using WXDataModel;
+using WXService.Utility;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
@@ -91,11 +92,8 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult AddApp(WX_App app)
         {
             app.AppState = "正常";
-            if (new WX_AppManager().Add(app))
-            {
-                return Redirect("/Base/Home/Index");
-            }
-            return Content("false");
+            return Json(new WX_AppManager().Add(app), JsonRequestBehavior.AllowGet);
+
         }
 
         [HttpGet]
@@ -108,11 +106,7 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpPost]
         public ActionResult UpdateApp(WX_App app)
         {
-            if (new WX_AppManager().Update(app))
-            {
-                return Redirect("/Base/Home/Index");
-            }
-            return Content("false");
+            return Json(new WX_AppManager().Update(app),JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -120,9 +114,14 @@ namespace WXDataUI.Areas.Base.Controllers
         {
 
 
-            WX_App app = new WX_AppManager().GetByPK(id);
-            app.AppState = "无效";
-            return Json(new WX_AppManager().Update(app), JsonRequestBehavior.AllowGet);
+           
+            WX_AppManager bll = new WX_AppManager();
+            WX_App app = bll.GetByPK(id);
+            WX_App app1 = new WX_App();
+            EntityUntility.CopyProperty(app, app1);
+            app1.AppState = "无效"; 
+
+            return Json(new WX_AppManager().Update(app1), JsonRequestBehavior.AllowGet);
         }
 
        

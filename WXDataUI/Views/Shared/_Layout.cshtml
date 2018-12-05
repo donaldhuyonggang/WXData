@@ -37,7 +37,7 @@
                     <li><a href="#">帮助</a></li>
                     <li>
                         <a href="#" data-toggle="modal" data-backdrop="false"
-                           data-target="#Logout">当前管理员:@user.UserName</a>
+                           data-target="#Logout">当前用户:@user.UserName</a>
                     </li>    
                     <li>
                         <a href="#" data-toggle="modal" data-backdrop="false"
@@ -65,7 +65,7 @@
             @RenderBody()
         </div>
     </div>
-
+    @* 编辑系统用户 *@
     <div class="modal fade" id="EditSysUser">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -73,7 +73,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
+    @* 编辑系统用户end *@
 
     @*登出模态框*@
     <div class="modal fade" id="Logout">
@@ -93,7 +93,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    @*修改当前微信账号模态框end*@
+    @*登出end*@
 
     @*编辑公众号模态框*@
     <div class="modal fade" id="EditApp">
@@ -145,6 +145,7 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     @*编辑微信用户模态框end*@
+
     @*系统管理查看信息*@
     <div class="modal fade" id="LookSysUser">
         <div class="modal-dialog">

@@ -35,11 +35,7 @@ namespace WXDataUI.Areas.Base.Controllers
             {
                 return Content("用户名已存在!");
             }
-            if (new SYS_UserManager().Add(user))
-            {
-                return Redirect("/Base/SYSUser/Index");
-            }
-            return Content("false");
+            return Json(new SYS_UserManager().Add(user), JsonRequestBehavior.AllowGet);
 
         }
 
@@ -57,11 +53,7 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpPost]
         public ActionResult UpdateSysUser(SYS_User user)
         {
-            if (new SYS_UserManager().Update(user))
-            {
-                return Redirect("/Base/SYSUser/Index");
-            }
-            return Content("false");
+            return Json( new SYS_UserManager().Update(user),JsonRequestBehavior.AllowGet);
 
         }
 

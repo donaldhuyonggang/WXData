@@ -49,11 +49,7 @@ namespace WXDataUI.Areas.Base.Controllers
             {
                 role.AppId = null;
             }
-            if (new SYS_RoleManager().Add(role))
-            {
-                return Redirect("/Base/Role/Index");
-            }
-            return Content("false");
+            return Json(new SYS_RoleManager().Add(role),JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -70,11 +66,7 @@ namespace WXDataUI.Areas.Base.Controllers
             {
                 role.AppId = null;
             }
-            if (new SYS_RoleManager().Update(role))
-            {
-                return Redirect("/Base/Role/Index");
-            }
-            return Content("false");
+            return Json(new SYS_RoleManager().Update(role), JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult EditRight(int roleId)
