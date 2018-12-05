@@ -124,6 +124,7 @@
     <Compile Include="Areas\Base\BaseAreaRegistration.cs" />
     <Compile Include="Areas\Base\Controllers\APPController.cs" />
     <Compile Include="Areas\Base\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Base\Controllers\MediaController.cs" />
     <Compile Include="Areas\Base\Controllers\RoleController.cs" />
     <Compile Include="Areas\Base\Controllers\SYSUserController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
@@ -255,6 +256,7 @@
     <Content Include="Areas\WXCustom\Views\Home\CreatTree.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\UserHistory.cshtml" />
     <Content Include="Areas\Base\Views\SYSUser\LookSysUser.cshtml" />
+    <Content Include="Areas\Base\Views\Media\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

@@ -95,17 +95,17 @@
                         <div class="col-xs-11">
                             <div class="form-inline topfind">
                                 @*<div class="form-group">
-                                    <label for="InputAppName">公众号名称:</label>
-                                    <input type="text" class="form-control" id="InputAppName" placeholder="公众号名称">
-                                </div>
-                                <div class="form-group">
-                                    <label for="InputAppId">微信号:</label>
-                                    <input type="text" class="form-control" id="InputAppId" placeholder="微信号">
-                                </div>
-                                <div class="form-group">
-                                    <label for="InputRemark">备注信息:</label>
-                                    <input type="text" class="form-control" id="InputRemark" placeholder="备注信息">
-                                </div>*@
+                                        <label for="InputAppName">公众号名称:</label>
+                                        <input type="text" class="form-control" id="InputAppName" placeholder="公众号名称">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputAppId">微信号:</label>
+                                        <input type="text" class="form-control" id="InputAppId" placeholder="微信号">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputRemark">备注信息:</label>
+                                        <input type="text" class="form-control" id="InputRemark" placeholder="备注信息">
+                                    </div>*@
                             </div>
 
                         </div>
@@ -128,7 +128,7 @@
                             <ul class="list-inline marg">
                                 <li>
                                     <i class="glyphicon glyphicon-plus"></i>
-                                    <a href="/Base/Role/AddRole" data-toggle="modal" data-target="#EditRole">新增</a>
+                                    <a href="#" data-toggle="modal" data-target="#">新增</a>
                                 </li>
                                 <li><i class="glyphicon glyphicon-pencil"></i><a href="#">修改</a></li>
                                 <li><i class="glyphicon glyphicon-list"></i><a href="#">查看</a></li>
@@ -158,10 +158,13 @@
                             <thead>
                                 <tr class="text-center">
                                     <th><input type="checkbox" name="name" /></th>
-                                    <th>角色编号</th>
-                                    <th>角色标识</th>
-                                    <th>角色名称</th>
-                                    <th>所属公众号</th>
+                                    <th>编号</th>
+                                    <th>MediaID</th>
+                                    <th>媒体名称</th>
+                                    <th>媒体类型</th>
+                                    <th>内容</th>
+                                    <th>状态</th>
+                                    <th>上传时间</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -195,34 +198,12 @@
 
 @section scripts{
     <script>
-        //删除方法
-        $(document).on("click", ".deleteRole", function () {
-            var roleId = $(this).attr("roleId");
-            if (confirm("确定要删除吗?")) {
-                $.post("/Base/Role/DeleteRole/" + roleId, "", function (result) {
-                    var errorMsg = "删除失败!";
-                    if (result == 1) {
-                        GetRole();
-                    } else if (result == -1){
-                        errorMsg += "该角色下还有管理员!";
-                    } else if (result == -2) {
-                        errorMsg += "清除权限时错误!";
-                    }
-
-                    if (result != 1) {
-                        alert(errorMsg);
-                    }
-                });
-            }
-        });
-
-        //删除end
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
-            GetRole();
             
 
-           
+
+
         });
         function GetRole() {
             //拉取角色信息填充表格
@@ -244,7 +225,7 @@
                                        "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"权限分配\">" +
                                        "   <a href=\"/Base/Role/EditRight?roleId=" + obj.RoleId + "\" data-toggle='modal' data-target='#EditFunction' class=\"glyphicon glyphicon-pencil\"></a></li>" +
                                        "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
-                                       "   <a href=\"#\" class=\"glyphicon glyphicon-remove deleteRole\" roleId='"+obj.RoleId+"'></a></li>" +
+                                       "   <a href=\"#\" class=\"glyphicon glyphicon-remove deleteApp\"></a></li>" +
                                    "</ul>" +
                                "</td>" +
                            "</tr>";

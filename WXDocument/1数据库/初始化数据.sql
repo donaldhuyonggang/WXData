@@ -46,6 +46,7 @@ insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的二维码',null,null,'模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的常用语',null,null,'模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的素材',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (5,'公共素材管理',null,'/Base/Media/Index','模块',null)
 
 
 

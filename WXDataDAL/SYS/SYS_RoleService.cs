@@ -28,5 +28,14 @@ namespace WXDataDAL.SYS
             }
                 
         }
+
+        public bool ClearRight(int roleId)
+        {
+            using (WXDataEntities db = new WXDataEntities())
+            {
+                int i = db.Database.ExecuteSqlCommand("delete SYS_Right where RoleId=" + roleId);
+                return i > 0;
+            }
+        }
     }
 }

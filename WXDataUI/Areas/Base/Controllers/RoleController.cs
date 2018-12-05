@@ -68,6 +68,41 @@ namespace WXDataUI.Areas.Base.Controllers
             }
             return Json(new SYS_RoleManager().Update(role), JsonRequestBehavior.AllowGet);
         }
+
+        
+        [HttpPost]
+        public ActionResult DeleteRole(int id)
+        {
+            SYS_RoleManager rm = new SYS_RoleManager();
+            SYS_Role role = rm.GetByPK(id);
+            int result = 0;
+
+            if (role.SYS_User.Count > 0)
+            {
+                result = -1;//该角色下还有管理员
+            }else if (role.SYS_Function.Count > 0) {
+                if(!rm.ClearRight(role.RoleId))
+                {
+                    result = -2;    //清除权限时错误
+                }
+            }
+
+            if(result == 0){
+                if (rm.Delete(role.RoleId))
+                {
+                    result = 1;
+                }
+            }
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
+
+
+
         [HttpGet]
         public ActionResult EditRight(int roleId)
         {
