@@ -1,0 +1,67 @@
+﻿.marg {
+            margin: 0;
+        }
+
+        .pad {
+            padding: 0;
+        }
+
+        .datalist a {
+            font-size: 12px;
+            color: rgb(119,119,119);
+        }
+
+        .datalist {
+            font-size: 12px;
+            border: 1px solid #f5f5f5;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+
+        .datacontent .page-header {
+            margin: 20px 20px;
+        }
+
+        .operation .btn {
+            padding: 1px 5px;
+            margin: 2px;
+        }
+
+        .operation a {
+            color: white;
+        }
+
+        .fromcontent {
+            max-height: 380px;
+            overflow-y: scroll;
+        }
+
+            .fromcontent::-webkit-scrollbar {
+                width: 5px;
+            }
+
+            .fromcontent::-webkit-scrollbar-thumb {
+                background-color: #217fbd;
+                border-radius: 5px;
+            }
+
+        .topfind .form-group {
+            padding-right: 8px;
+        }
+
+        .topfind {
+            margin-top: 5px;
+        }
+
+        .icolor {
+            color: white;
+        }
+
+        .appcontent,.usercontent {
+            display: flex;
+        }
+
+        .usetlef {
+            border: 1px solid #ccc;
+            
+        }
+        

@@ -7,10 +7,12 @@ using System.Web.Mvc;
 using WXDataBLL;
 using WXDataBLL.Base;
 using WXDataModel;
+using WXDataUI.Models;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
     public class SYSUserController : Controller
+    //public class SYSUserController : Controller_EX
     {
         // GET: Base/SYSUser
         public ActionResult Index()

@@ -140,12 +140,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Controller_EX.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Common.css" />
     <Content Include="Content\Images\Denglu\downld.png" />
     <Content Include="Content\Images\Denglu\download.png" />
     <Content Include="Content\Images\Denglu\download.svg" />
+    <Content Include="Content\Media\fileinput.min.css" />
     <Content Include="Scripts\bootstrap-treeview.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -257,8 +260,10 @@
     <Content Include="Areas\WXCustom\Views\Home\UserHistory.cshtml" />
     <Content Include="Areas\Base\Views\SYSUser\LookSysUser.cshtml" />
     <Content Include="Areas\Base\Views\Media\Index.cshtml" />
+    <Content Include="Areas\Base\Views\Media\AddMedia.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
+    <Content Include="Scripts\fileinput.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -270,6 +275,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\fileinput_locale_zh.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -304,7 +310,6 @@
     <Folder Include="Areas\WXMenu\Views\Shared\" />
     <Folder Include="Areas\WXUser\Models\" />
     <Folder Include="Areas\WXUser\Views\Shared\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>

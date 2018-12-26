@@ -20,11 +20,6 @@ namespace WXDataModel
         {
         }
     
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            throw new UnintentionalCodeFirstException();
-        }
-    
         public DbSet<SYS_Department> SYS_Department { get; set; }
         public DbSet<SYS_Function> SYS_Function { get; set; }
         public DbSet<SYS_Log> SYS_Log { get; set; }

@@ -1,6 +1,8 @@
 ﻿@using WXDataModel
+@using WXDataModel.Extend
+
 <!DOCTYPE html>
-<html>
+<html  style="overflow-y: hidden">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
@@ -11,13 +13,15 @@
     <link href="~/Content/dashboard.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-
+    <style>
+    </style>
     @RenderSection("styles", required: false)
 </head>
 @{
     SYS_User user = Session["SYSUSER"] as SYS_User;
+    List<SYS_Function> funList = Session["USERRIGHT"] as List<SYS_Function>;
 }
-<body>
+<body  style="overflow-y: hidden">
     @*导航条*@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
@@ -57,8 +61,30 @@
 
     <div class="content">
         <div class="col-sm-3 col-md-2 sidebar" style="padding: 0;">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                
+            <div class="panel-group" id="funcList" role="tablist" aria-multiselectable="true">
+                @foreach (var i in funList)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="@i.FunctionID">
+                            <h4 class="panel-title">
+                                <a role="button" class="" data-toggle="collapse" data-parent="#funcList" href="#collapse-@i.FunctionID" aria-expanded="true" aria-controls="collapse-@i.FunctionID">@i.FunctionName</a>
+                            </h4>
+                        </div>
+                        <div id='collapse-@i.FunctionID' class="panel-collapse collapse " role="tabpanel" aria-labelledby="@i.FunctionID">
+                            <div class="panel-body">
+                                <ul class="nav nav-sidebar navbox">
+                                    @*<li><a href="/Base/App/Index">公众号管理</a></li>
+                                    <li><a href="/Base/SYSUser/Index">系统用户管理</a></li>
+                                    <li><a href="/Base/Role/Index">角色管理</a></li>*@
+                                    @foreach (var k in i.GetChildByRole(user.RoleId.Value))
+                                    {
+                                        <li><a href="@k.FunctionUrl">@k.FunctionName</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 mains">
@@ -155,6 +181,16 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     @*系统管理查看信息end*@
+    
+    @*新增素材*@
+    <div class="modal fade" id="AddMedia">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    @*新增素材end*@
     <script>
         $(function () {
             //设置模态框属性
@@ -163,6 +199,12 @@
             });
             //设置模态框属性end
 
+
+            //GetFunction();
+            
+        });
+
+        function GetFunction (){
             //初始化菜单
             $.post("/Base/Home/GetFunction", "", function (json) {
                 var panel = "";
@@ -193,7 +235,7 @@
                 });
                 $("#accordion").html(panel);
             });//post
-        });
+        }
     </script>
     @RenderSection("scripts", required: false)
 </body>
