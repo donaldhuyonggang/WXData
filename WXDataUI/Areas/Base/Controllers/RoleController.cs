@@ -123,9 +123,10 @@ namespace WXDataUI.Areas.Base.Controllers
                 int id = item.id;
                 list.Add(id);
             }
-
+            var result = new SYS_RoleManager().EditRight(new SYS_RoleManager().GetByPK(roleId), list);
+            Controller_EX.BindSession(Session);
             //JObject jo = JObject.Parse(json);
-            return Json(new SYS_RoleManager().EditRight(new SYS_RoleManager().GetByPK(roleId), list), JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

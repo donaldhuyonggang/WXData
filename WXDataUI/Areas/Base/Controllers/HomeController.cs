@@ -16,8 +16,7 @@ namespace WXDataUI.Areas.Base.Controllers
     {
         public HomeController()
         {
-            
-            
+
         }
         // GET: Base/Home
         public ActionResult Index()
@@ -40,8 +39,7 @@ namespace WXDataUI.Areas.Base.Controllers
             if (user!=null)
             {
                 Session["SYSUSER"] = user;
-                Session["USERRIGHT"] = user.SYS_Role.GetMainFunction();
-
+                Controller_EX.BindSession(Session);
                 return Redirect("/Base/Home/Index");
             }
             return Content("false");

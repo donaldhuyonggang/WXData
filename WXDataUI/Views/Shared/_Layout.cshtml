@@ -201,41 +201,54 @@
 
 
             //GetFunction();
+            Keep();
+
             
         });
-
-        function GetFunction (){
-            //初始化菜单
-            $.post("/Base/Home/GetFunction", "", function (json) {
-                var panel = "";
-                $.each(json, function (i, obj) {
-                    var child = "";
-                    $.each(obj.children, function (j, c) {
-                        child += "<li><a href=\"" + c.FunctionUrl + "\">" + c.FunctionName + "</a></li>";
-                    });
-                    var temp = "";
-                    if (i == 0) {
-                        temp = "in";
-                    } else {
-                        temp = "collapse";
-                    }
-                    panel += "<div class=\"panel panel-default\">"+
-                                    "<div class=\"panel-heading\" role=\"tab\" id=\"" + obj.FunctionID + "\">" +
-                                        "<h4 class=\"panel-title\"><a role=\"button\" class=\"\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + obj.FunctionID + "\" aria-expanded=\"true\" aria-controls=\"collapse" + obj.FunctionID + "\">" + obj.FunctionName + "</a></h4>" +
-                                    "</div>"+
-                                    "<div id=\"collapse" + obj.FunctionID + "\" class=\"panel-collapse " + temp + " \" role=\"tabpanel\" aria-labelledby=\"" + obj.FunctionID + "\">" +
-                                        "<div class=\"panel-body\">"+
-                                            "<ul class=\"nav nav-sidebar navbox\">" +
-                                                child+
-                                            "</ul>"+
-                                        "</div>"+
-                                    "</div>"+
-                                "</div>";
-
-                });
-                $("#accordion").html(panel);
-            });//post
+        //保持导航栏状态
+        function Keep(){
+            var url = location.href;
+            url = url.substring(url.indexOf('localhost:'));
+            url = url.substring(url.indexOf('/'));
+            var a = $("a[href='" + url + "']");
+            $(a).parents("li").addClass("active");
+            $(a).parents(".panel-collapse").removeClass("collapse").addClass("in");
         }
+        //保持导航栏状态end
+
+
+
+        //function GetFunction (){
+        //    //初始化菜单
+        //    $.post("/Base/Home/GetFunction", "", function (json) {
+        //        var panel = "";
+        //        $.each(json, function (i, obj) {
+        //            var child = "";
+        //            $.each(obj.children, function (j, c) {
+        //                child += "<li><a href=\"" + c.FunctionUrl + "\">" + c.FunctionName + "</a></li>";
+        //            });
+        //            var temp = "";
+        //            if (i == 0) {
+        //                temp = "in";
+        //            } else {
+        //                temp = "collapse";
+        //            }
+        //            panel += "<div class=\"panel panel-default\">"+
+        //                            "<div class=\"panel-heading\" role=\"tab\" id=\"" + obj.FunctionID + "\">" +
+        //                                "<h4 class=\"panel-title\"><a role=\"button\" class=\"\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + obj.FunctionID + "\" aria-expanded=\"true\" aria-controls=\"collapse" + obj.FunctionID + "\">" + obj.FunctionName + "</a></h4>" +
+        //                            "</div>"+
+        //                            "<div id=\"collapse" + obj.FunctionID + "\" class=\"panel-collapse " + temp + " \" role=\"tabpanel\" aria-labelledby=\"" + obj.FunctionID + "\">" +
+        //                                "<div class=\"panel-body\">"+
+        //                                    "<ul class=\"nav nav-sidebar navbox\">" +
+        //                                        child+
+        //                                    "</ul>"+
+        //                                "</div>"+
+        //                            "</div>"+
+        //                        "</div>";
+        //        });
+        //        $("#accordion").html(panel);
+        //    });//post
+        //}
     </script>
     @RenderSection("scripts", required: false)
 </body>
