@@ -12,7 +12,6 @@ using WXDataUI.Models;
 namespace WXDataUI.Areas.Base.Controllers
 {
     public class HomeController : Controller
-    //public class HomeController : Controller_EX
     {
         public HomeController()
         {
@@ -21,7 +20,7 @@ namespace WXDataUI.Areas.Base.Controllers
         // GET: Base/Home
         public ActionResult Index()
         {
-            return Redirect("/Base/APP/Index");
+            return View();
         }
 
         

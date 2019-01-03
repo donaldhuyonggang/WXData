@@ -11,8 +11,10 @@ using WXDataUI.Models;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
+    /// <summary>
+    /// 系统用户管理控制器
+    /// </summary>
     public class SYSUserController : Controller
-    //public class SYSUserController : Controller_EX
     {
         // GET: Base/SYSUser
         public ActionResult Index()

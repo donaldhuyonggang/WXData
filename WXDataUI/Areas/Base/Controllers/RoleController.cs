@@ -11,8 +11,10 @@ using WXDataUI.Models;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
+    /// <summary>
+    /// 角色控制器
+    /// </summary>
     public class RoleController : Controller
-    //public class RoleController : Controller_EX
     {
         // GET: Base/Role
         public ActionResult Index()

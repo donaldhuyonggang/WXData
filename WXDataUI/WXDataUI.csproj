@@ -140,6 +140,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PageList.cs" />
     <Compile Include="Models\Controller_EX.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -261,6 +262,7 @@
     <Content Include="Areas\Base\Views\SYSUser\LookSysUser.cshtml" />
     <Content Include="Areas\Base\Views\Media\Index.cshtml" />
     <Content Include="Areas\Base\Views\Media\AddMedia.cshtml" />
+    <Content Include="Areas\Base\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\fileinput.min.js" />
