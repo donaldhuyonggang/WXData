@@ -264,6 +264,7 @@
     <Content Include="Areas\Base\Views\Media\AddMedia.cshtml" />
     <Content Include="Areas\WXMenu\Views\Home\Add_zi.cshtml" />
     <Content Include="Areas\WXMenu\Views\Home\Index.cshtml" />
+    <Content Include="Areas\WXMenu\Views\Home\Add_yiji_pd.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\fileinput.min.js" />
