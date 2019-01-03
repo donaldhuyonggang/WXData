@@ -132,6 +132,7 @@
     <Compile Include="Areas\WXCustom\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXCustom\WXCustomAreaRegistration.cs" />
     <Compile Include="Areas\WXMedia\WXMediaAreaRegistration.cs" />
+    <Compile Include="Areas\WXMenu\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXMenu\WXMenuAreaRegistration.cs" />
     <Compile Include="Areas\WXUser\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXUser\WXUserAreaRegistration.cs" />
@@ -261,6 +262,8 @@
     <Content Include="Areas\Base\Views\SYSUser\LookSysUser.cshtml" />
     <Content Include="Areas\Base\Views\Media\Index.cshtml" />
     <Content Include="Areas\Base\Views\Media\AddMedia.cshtml" />
+    <Content Include="Areas\WXMenu\Views\Home\Add_zi.cshtml" />
+    <Content Include="Areas\WXMenu\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\fileinput.min.js" />
@@ -305,7 +308,6 @@
     <Folder Include="Areas\WXMedia\Controllers\" />
     <Folder Include="Areas\WXMedia\Models\" />
     <Folder Include="Areas\WXMedia\Views\Shared\" />
-    <Folder Include="Areas\WXMenu\Controllers\" />
     <Folder Include="Areas\WXMenu\Models\" />
     <Folder Include="Areas\WXMenu\Views\Shared\" />
     <Folder Include="Areas\WXUser\Models\" />

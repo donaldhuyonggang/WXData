@@ -1,0 +1,132 @@
+﻿@using WXDataModel
+@{ 
+    bool pd = ViewBag.pd;
+}
+    <div class="panel-group" role="tablist" aria-multiselectable="true">
+    @*<div class="modal-dialog  modal-lg" style="width:800px">*@
+        <div class="modal-content">
+            <div class="modal-header">
+                @if (pd)
+            {
+                    <h3>新增子级菜单</h3>
+                }
+                else
+                {
+                    <h3>提示</h3>
+                }
+            </div>
+            <div class="modal-body">
+                @if (!pd)
+            {
+                    <span>二级菜单不能超过5个！</span>
+                }
+                else
+                {
+                    <form action="" id="form" method="post">
+                        <div class="container-fluid">
+                            <!--第一行-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label style="float:right;">菜单名称：</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input style="height:28px;" type="text" id="MenuName" name="MenuName" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label style="float:right;">菜单类型：</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <select id="MenuType" name="MenuType" style="height:28px;width:170px;">
+                                                <option value="1">响应动作类型</option>
+                                                <option value="2">网页类型</option>
+                                                <option value="3">点击类型</option>
+                                                <option value="4">小程序类型</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--第二行-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label style="float:right;">菜单KEY：</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input style="height:28px;" type="text" id="MenuKey" name="MenuKey" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label style="float:right;">菜单URL：</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input style="height:28px;" type="text" id="MenuUrl" name="MenuUrl" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--第三行-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label style="float:right;">排序号：</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input style="height:28px;" type="text" id="MenuSort" name="MenuSort" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
+            <div class="modal-footer">
+                <span style="float:left;display:none;" id="Add_erji_anniu_tishi">提示：<span style="font-weight:bold;">待定</span></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                @if (pd)
+            {
+                    <button id="Add_erji_anniu" type="button" class="btn btn-primary">新增</button>
+                }
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#Add_erji_anniu").click(function () {
+                //非空验证
+                if ($("#MenuName").val() == "" && $("#MenuKey").val() == ""
+                    && $("#MenuUrl").val() == "" && $("#MenuSort").val() == "") {
+                    $("#Add_erji_anniu_tishi span").text("内容框不能为空！");
+                    $("#Add_erji_anniu_tishi").css("display", "inline-block");//弹出提示框
+                    return;
+                }
+                //判断名称的长度
+                if ($("#MenuName").val().length > 70) {
+                    $("#Add_erji_anniu_tishi span").text("二级菜单的名称不能超过70字节！");
+                    $("#Add_erji_anniu_tishi").css("display", "inline-block");//弹出提示框
+                    return;
+                }
+                //判断key长度
+                if ($("#MenuKey").val().length > 128) {
+                    $("#Add_erji_anniu_tishi span").text("菜单KEY长度不能超过128字节！");
+                    $("#Add_erji_anniu_tishi").css("display", "inline-block");//弹出提示框
+                    return;
+                }
+
+                //提交事件
+
+            });
+        });
+    </script>
