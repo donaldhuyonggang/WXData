@@ -7,10 +7,12 @@ using System.Web.Mvc;
 using WXDataBLL;
 using WXDataBLL.Base;
 using WXDataModel;
+using WXDataUI.Models;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
     public class RoleController : Controller
+    //public class RoleController : Controller_EX
     {
         // GET: Base/Role
         public ActionResult Index()
@@ -30,6 +32,8 @@ namespace WXDataUI.Areas.Base.Controllers
                 s.RoleName,
                 Type = (s.AppId == null ? "公共" : s.WX_App.AppName)
             });
+            
+            
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
@@ -119,9 +123,10 @@ namespace WXDataUI.Areas.Base.Controllers
                 int id = item.id;
                 list.Add(id);
             }
-
+            var result = new SYS_RoleManager().EditRight(new SYS_RoleManager().GetByPK(roleId), list);
+            Controller_EX.BindSession(Session);
             //JObject jo = JObject.Parse(json);
-            return Json(new SYS_RoleManager().EditRight(new SYS_RoleManager().GetByPK(roleId), list), JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

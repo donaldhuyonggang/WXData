@@ -6,11 +6,18 @@ using System.Web.Mvc;
 using WXDataBLL;
 using WXDataBLL.Base;
 using WXDataModel;
+using WXDataModel.Extend;
+using WXDataUI.Models;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
     public class HomeController : Controller
+    //public class HomeController : Controller_EX
     {
+        public HomeController()
+        {
+
+        }
         // GET: Base/Home
         public ActionResult Index()
         {
@@ -27,10 +34,12 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpPost]
         public ActionResult Login(SYS_User info)
         {
+            
             SYS_User user = new SYS_UserManager().Login(info);
             if (user!=null)
             {
-                Session.Add("SYSUSER",user);
+                Session["SYSUSER"] = user;
+                Controller_EX.BindSession(Session);
                 return Redirect("/Base/Home/Index");
             }
             return Content("false");
@@ -50,5 +59,6 @@ namespace WXDataUI.Areas.Base.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
+        
     }
 }

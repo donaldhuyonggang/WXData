@@ -7,11 +7,13 @@ using System.Web.Mvc;
 using WXDataBLL;
 using WXDataBLL.Base;
 using WXDataModel;
+using WXDataUI.Models;
 using WXService.Utility;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
     public class APPController : Controller
+    //public class APPController: Controller_EX
     {
         // GET: Base/APP
         public ActionResult Index()

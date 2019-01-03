@@ -1,79 +1,12 @@
 ﻿
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "公共素材管理";
 }
 
 @section styles{
 
-    <style>
-        .marg {
-            margin: 0;
-        }
-
-        .pad {
-            padding: 0;
-        }
-
-        .datalist a {
-            font-size: 12px;
-            color: rgb(119,119,119);
-        }
-
-        .datalist {
-            font-size: 12px;
-            border: 1px solid #f5f5f5;
-            box-shadow: 0 1px 1px rgba(0,0,0,.05);
-        }
-
-        .datacontent .page-header {
-            margin: 20px 20px;
-        }
-
-        .operation .btn {
-            padding: 1px 5px;
-            margin: 2px;
-        }
-
-        .operation a {
-            color: white;
-        }
-
-        .fromcontent {
-            max-height: 380px;
-            overflow-y: scroll;
-        }
-
-            .fromcontent::-webkit-scrollbar {
-                width: 5px;
-            }
-
-            .fromcontent::-webkit-scrollbar-thumb {
-                background-color: #217fbd;
-                border-radius: 5px;
-            }
-
-        .topfind .form-group {
-            padding-right: 8px;
-        }
-
-        .topfind {
-            margin-top: 5px;
-        }
-
-        .icolor {
-            color: white;
-        }
-
-        .appcontent {
-            display: flex;
-        }
-
-        .usetlef {
-            border: 1px solid #ccc;
-            width: 18%;
-        }
-    </style>
+    <link href="~/Content/Common.css" rel="stylesheet" />
 }
 
 
@@ -128,12 +61,10 @@
                             <ul class="list-inline marg">
                                 <li>
                                     <i class="glyphicon glyphicon-plus"></i>
-                                    <a href="#" data-toggle="modal" data-target="#">新增</a>
+                                    <a href="/Base/Media/AddMedia" data-toggle="modal" data-target="#AddMedia">新增</a>
                                 </li>
-                                <li><i class="glyphicon glyphicon-pencil"></i><a href="#">修改</a></li>
-                                <li><i class="glyphicon glyphicon-list"></i><a href="#">查看</a></li>
                                 <li><i class="glyphicon glyphicon-minus"></i><a href="#">删除</a></li>
-                                <li><i class="glyphicon glyphicon-refresh"></i><a href="#">刷新</a></li>
+                                <li><i class="glyphicon glyphicon-refresh"></i><a href="#">同步</a></li>
                             </ul>
                         </div>
                     </div>
@@ -205,27 +136,28 @@
 
 
         });
-        function GetRole() {
-            //拉取角色信息填充表格
-            $.post("/Base/Role/GetRole", "", function (json) {
-                var tr = "";
+        function GetMedia() {
+            //拉取媒体信息填充表格
+            $.post("/Base/Media/GetMedia", "", function (json) {
                 $.each(json, function (i, obj) {
                     tr += "<tr class=\"text-center\">" +
                                "<td>" +
                                "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
                                "</td>" +
-                               "<td>" + obj.RoleId + "</td>" +
-                               "<td>" + obj.RoleSign + "</td>" +
-                               "<td>" + obj.RoleName + "</td>" +
-                               "<td>" + obj.Type + "</td>" +
+                               "<td>" + obj.MyMediaId + "</td>" +
+                               "<td>" + obj.MediaId + "</td>" +
+                               "<td>" + obj.MediaName + "</td>" +
+                               "<td>" + obj.MediaType + "</td>" +
+                               "<td>" + obj.MediaContent + "</td>" +
+                               "<td>" + obj.MediaState + "</td>" +
+                               "<td>" + obj.UploadTime + "</td>" +
                                "<td>" +
                                    "<ul class=\"list-inline marg operation\">" +
-                                       "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改信息\">" +
-                                       "   <a href=\"/Base/Role/UpdateRole/" + obj.RoleId + "\" data-toggle='modal' data-target='#EditFunction' class=\"glyphicon glyphicon-search\"></a></li>" +
-                                       "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"权限分配\">" +
-                                       "   <a href=\"/Base/Role/EditRight?roleId=" + obj.RoleId + "\" data-toggle='modal' data-target='#EditFunction' class=\"glyphicon glyphicon-pencil\"></a></li>" +
+                                      
+                                       "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看详情\">" +
+                                       "   <a href=\"#\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
                                        "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
-                                       "   <a href=\"#\" class=\"glyphicon glyphicon-remove deleteApp\"></a></li>" +
+                                       "   <a href=\"#\" class=\"glyphicon glyphicon-remove deleteById\"></a></li>" +
                                    "</ul>" +
                                "</td>" +
                            "</tr>";

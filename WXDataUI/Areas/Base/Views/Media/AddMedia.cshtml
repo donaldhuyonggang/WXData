@@ -1,0 +1,31 @@
+﻿@using WXDataModel
+
+<link href="~/Content/Media/fileinput.min.css" rel="stylesheet" />
+<form action="/Base/Media/AddMedia" id="form" method="post">
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">新增素材</h4>
+            </div>
+            <div class="modal-body">
+
+                <input id="input-id" type="file" class="file" data-preview-file-type="text" accept="image/gif,image/jpeg,image/jpg,image/png">   
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+</form>
+
+<script src="~/Scripts/fileinput.min.js"></script>
+<script src="~/Scripts/fileinput_locale_zh.js"></script>
+
+<script>
+    $("#input-id").fileinput();
+</script>
