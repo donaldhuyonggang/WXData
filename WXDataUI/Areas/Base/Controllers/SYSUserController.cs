@@ -31,11 +31,11 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult AddSysUser(SYS_User user)
         {
             user.UserState = "正常";
-            if (new SYS_UserManager().Add(user))
+            if (new SYS_UserManager().Where(u => u.LoginId.Equals(user.LoginId)).Count>0)
             {
-                return Redirect("/Base/SYSUser/Index");
+                return Content("用户名已存在!");
             }
-            return Content("false");
+            return Json(new SYS_UserManager().Add(user), JsonRequestBehavior.AllowGet);
 
         }
 
@@ -53,11 +53,7 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpPost]
         public ActionResult UpdateSysUser(SYS_User user)
         {
-            if (new SYS_UserManager().Update(user))
-            {
-                return Redirect("/Base/SYSUser/Index");
-            }
-            return Content("false");
+            return Json( new SYS_UserManager().Update(user),JsonRequestBehavior.AllowGet);
 
         }
 
@@ -100,6 +96,12 @@ namespace WXDataUI.Areas.Base.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
-
+         [HttpGet]
+        public ActionResult LookSysUser(int id) {
+           ViewBag.LookSysUser = new SYS_UserManager().GetByPK(id);
+            ViewBag.RoleList = new SYS_RoleManager().GetAll();
+            ViewBag.AppList = new WX_AppManager().GetAll();
+            return PartialView();
+        }
     }
 }

@@ -31,5 +31,10 @@ namespace WXDataBLL.Base
 
             return new SYS_RoleService().Update(role);
         }
+
+        public bool ClearRight(int roleId)
+        {
+            return new SYS_RoleService().ClearRight(roleId);
+        }
     }
 }

@@ -18,11 +18,24 @@ namespace WXDataDAL.SYS
                 var info1 = db.SYS_Role.Find(info.RoleId);
                 info1.RoleId = info.RoleId;
                 info1.RoleName = info.RoleName;
-                info1.SYS_Function = info.SYS_Function;
+                foreach (var item in info.SYS_Function)
+                {
+                    info1.SYS_Function.Add( db.SYS_Function.Find(item.FunctionID));
+                }
+             
 
                 return db.SaveChanges() > 0;
             }
                 
+        }
+
+        public bool ClearRight(int roleId)
+        {
+            using (WXDataEntities db = new WXDataEntities())
+            {
+                int i = db.Database.ExecuteSqlCommand("delete SYS_Right where RoleId=" + roleId);
+                return i > 0;
+            }
         }
     }
 }

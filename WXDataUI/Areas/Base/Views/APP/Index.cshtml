@@ -230,8 +230,11 @@
                 if (confirm("确定要删除吗?")) {
                     $.post("/Base/APP/DeleteApp/"+appId, "", function (result) {
                         if (result) {
-                            location.reload();
+                            GetApp();
+                        } else {
+                            alert('删除失败');
                         }
+                        
                     });
                 }
             });

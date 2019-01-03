@@ -1,6 +1,9 @@
 ﻿use WXData
 go
 
+
+//=================
+
 --Start新增用户角色
 insert into SYS_Role(RoleSign,RoleName)values('SYS_ADMIN','超级管理员')
 insert into SYS_Role(RoleSign,RoleName)values('APP_ADMIN','平台管理员')
@@ -14,7 +17,7 @@ insert into WX_App(AppId,AppName,AppSecret,WXId,AppType,AppState,Remark)values('
 
 --End新增公众号
 
-
+ 
 --Start新增用户
 insert into SYS_User(AppId,RoleId,LoginId,Password,UserName,Telphone,Email,WXId,UserState)values('wxb51501fa9702675f',1,'Donald','Donald','Donald','18973305244',null,'gh_f98920d67737','正常')
 insert into SYS_User(AppId,RoleId,LoginId,Password,UserName,Telphone,Email,WXId,UserState)values('wx5e6fd9f5a08db03a',1,'Litle','Litle','Litle','18973305244',null,'gh_ac32a7de334e','正常')
@@ -43,6 +46,7 @@ insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的二维码',null,'/wxcustom/qr/index','模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的常用语',null,null,'模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的素材',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (5,'公共素材管理',null,'/Base/Media/Index','模块',null)
 
 
 

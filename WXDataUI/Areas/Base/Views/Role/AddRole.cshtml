@@ -2,7 +2,7 @@
 @{ 
     WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
 }
-<form action="/Base/Role/AddRole" method="post">
+<form action="/Base/Role/AddRole" method="post" id="form">
     <div class="modal-dialog  modal-lg" style="width:800px">
         <div class="modal-content">
             <div class="modal-header">
@@ -35,7 +35,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <input type="submit" class="btn btn-primary" value="保存">
+                <input type="button"  id="submit" class="btn btn-primary" value="保存">
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -44,3 +44,18 @@
 
     
 </form>
+<script>
+    $(function () {
+        $("#submit").click(function () {
+            $.post('/Base/Role/AddRole', $("form").serialize(), function (r) {
+                if (r) {
+                    $("#EditRole").modal('hide');
+                    GetRole();
+                } else {
+                    $("#EditRole").modal('hide');
+                    alert("操作失败!");
+                }
+            });
+        });
+    });
+</script>

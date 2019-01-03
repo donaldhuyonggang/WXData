@@ -30,17 +30,12 @@ namespace WXDataUI.Areas.WXUser.Controllers
         [HttpPost]
         public ActionResult AllotUser(string OpenId,int UserId)
         {
-            BaseBLL<WX_User> bll = new WX_UserManager();
+            WX_UserManager bll = new WX_UserManager();
             WX_User user = bll.GetByPK(OpenId);
             WX_User user1 = new WX_User();
             EntityUntility.CopyProperty(user, user1);
-
             user1.UserId = UserId;
-            if (new WX_UserManager().Update(user1))
-            {
-                return Redirect("/WXUser/Home/Index");
-            }
-            return Content("false");
+            return Json(new WX_UserManager().Update(user1),JsonRequestBehavior.AllowGet);
         }
 
 
