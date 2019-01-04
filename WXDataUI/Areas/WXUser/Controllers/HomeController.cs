@@ -7,6 +7,7 @@ using WXDataBLL;
 using WXDataBLL.WXCustom;
 using WXDataBLL.WXUser;
 using WXDataModel;
+using WXDataUI.Models;
 using WXService.Utility;
 
 namespace WXDataUI.Areas.WXUser.Controllers
@@ -86,11 +87,12 @@ namespace WXDataUI.Areas.WXUser.Controllers
             WX_UserManager bll = new WX_UserManager();
             WX_User user = bll.GetByPK(OpenId);
             user.GrooupId = GroupId;
-            if (bll.Update(user))
+            var result = new ReturnResult()
             {
-                return Redirect("/WXUser/Home/Index");
-            }
-            return Content("false");
+                ErrorMsg = "修改失败!",
+                Result = bll.Update(user)
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
         private void GetByWX()
         {

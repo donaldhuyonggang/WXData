@@ -12,8 +12,10 @@ using WXService.Utility;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
+    /// <summary>
+    /// 公众号控制器
+    /// </summary>
     public class APPController : Controller
-    //public class APPController: Controller_EX
     {
         // GET: Base/APP
         public ActionResult Index()

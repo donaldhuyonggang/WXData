@@ -1,0 +1,5 @@
+﻿@using WXDataModel
+@using WXDataModel.Extend
+
+
+<span>@DateTime.Now.GetTimeParagraph()</span><span>,@((Session["SYSUSER"] as SYS_User).UserName)</span>

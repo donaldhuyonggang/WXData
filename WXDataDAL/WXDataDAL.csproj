@@ -47,6 +47,7 @@
     <Compile Include="BaseDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SYS\SYS_RoleService.cs" />
+    <Compile Include="WXMenu\WXMenuService.cs" />
     <Compile Include="WX\WX_UserService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +56,7 @@
       <Name>WXDataModel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

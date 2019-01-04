@@ -9,8 +9,10 @@ using WXDataUI.Models;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
+    /// <summary>
+    /// 素材管理控制器
+    /// </summary>
     public class MediaController : Controller
-    //public class MediaController : Controller_EX
     {
         // GET: Base/Media
         public ActionResult Index()
