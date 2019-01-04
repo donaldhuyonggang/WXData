@@ -35,15 +35,20 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult AddSysUser(SYS_User user)
         {
             user.UserState = "正常";
+            var result = new ReturnResult() { ErrorMsg="添加失败!"};
             if (new SYS_UserManager().Where(u => u.LoginId.Equals(user.LoginId)).Count>0)
             {
-                return Content("用户名已存在!");
+                result.ErrorCode = "";
+                result.ErrorMsg = "用户名已存在!";
+                result.Result = false;
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-            return Json(new SYS_UserManager().Add(user), JsonRequestBehavior.AllowGet);
+            result.Result = new SYS_UserManager().Add(user);
+            
+            return Json(result, JsonRequestBehavior.AllowGet);
 
         }
-
-
+        
 
         [HttpGet]
         public ActionResult UpdateSysUser(int id)

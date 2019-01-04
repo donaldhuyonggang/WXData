@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extend\DateTime_EX.cs" />
     <Compile Include="Extend\SYS_Function_EX.cs" />
     <Compile Include="Extend\SYS_Role_EX.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

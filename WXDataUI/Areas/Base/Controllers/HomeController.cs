@@ -39,9 +39,9 @@ namespace WXDataUI.Areas.Base.Controllers
             {
                 Session["SYSUSER"] = user;
                 Controller_EX.BindSession(Session);
-                return Redirect("/Base/Home/Index");
+                return Json(true, JsonRequestBehavior.AllowGet);
             }
-            return Content("false");
+            return Json(false,JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

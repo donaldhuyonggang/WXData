@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="Helpers\PageList.cs" />
     <Compile Include="Models\Controller_EX.cs" />
+    <Compile Include="Models\ReturnResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
