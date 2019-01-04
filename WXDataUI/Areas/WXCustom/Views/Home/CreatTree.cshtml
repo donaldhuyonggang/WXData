@@ -26,7 +26,7 @@
                     </a>
                 </h4>
             </div>
-            <div id="@item.GroupName" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="@item.GroupId">
+            <div id="@item.GroupName" class="panel-collapse collapse in" role='tabpanel' aria-labelledby="@item.GroupId">
                 <div class="list-group">
                     @foreach (WX_User child in item.WX_User.Where(x => x.UserId == null || x.UserId == userId).ToList())
                     {
