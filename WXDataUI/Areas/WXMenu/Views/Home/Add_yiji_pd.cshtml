@@ -1,0 +1,75 @@
+﻿@using WXDataModel
+@{
+    bool pd = ViewBag.pd;
+}
+<div class="modal-dialog  modal-lg" style="width:800px">
+    <div class="modal-content">
+        <div class="modal-header">
+            @if (pd)
+            {
+                <h3>新增一级菜单</h3>
+            }
+            else
+            {
+                <h3>提示</h3>
+            }
+        </div>
+        <div class="modal-body">
+            @if (!pd)
+            {
+                <span>一级菜单不能超过3个！</span>
+            }
+            else
+            {
+                <form action="" id="form" method="post">
+                    <div class="container-fluid">
+                        <!--第一行-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="float:right;">菜单名称：</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input style="height:28px;" type="text" id="MenuName" name="MenuName" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--第二行-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label style="float:right;">菜单内容：</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <label id="xiaoxi" style="cursor: pointer;"><input class="ck" checked type="radio" /> 发送消息</label>
+                                        <label id="yemian" style="cursor: pointer;"><input class="ck" type="radio" />  跳转网页</label>
+                                        <label id="xiaocunxu" style="cursor: pointer;"><input class="ck" type="radio" /> 跳转小程序 </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            }
+        </div>
+        <div class="modal-footer">
+            <span style="float:left;display:none;" id="Add_erji_anniu_tishi">提示：<span style="font-weight:bold;">待定</span></span>
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            @if (pd)
+            {
+                <button id="Add_erji_anniu" type="button" class="btn btn-primary">新增</button>
+            }
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".ck").click(function () {
+            $(".ck").prop("checked", false);
+            $(this).prop("checked", true);
+        });;
+    });
+</script>

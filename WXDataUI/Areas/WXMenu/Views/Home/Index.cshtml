@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@using WXDataModel
+<a class="btn btn-default" href="/WXMenu/Home/Add_yiji_pd" role="button" data-toggle="modal" data-target="#LZ_Add_WX_Menu">新增一级菜单</a>
+<table id="shuju"class="table table-bordered">
+    <tr>
+        <td>菜单名称</td>
+        <td>菜单类型</td>
+        <td>菜单KEY</td>
+        <td>菜单URL</td>
+        <td>是否可见</td>
+        <td>排序号</td>
+        <td>操作</td>
+    </tr>
+    @* 一级菜单 *@
+        @foreach (WX_Menu item in ViewBag.yiji)
+        {
+            <tr class="danger">
+                <td>@item.MenuName</td>
+                <td>@item.MenuType</td>
+                <td>@item.MenuKey</td>
+                <td>@item.MenuUrl</td>
+                <td>@item.MenuVisable</td>
+                <td>@item.MenuSort</td>
+                <td><a href="/WXMenu/Home/Add_zi/@item.MenuId" data-toggle="modal" data-target="#LZ_Add_WX_Menu">新增子级菜单</a></td>
+            </tr>
+            foreach (WX_Menu item2 in ViewBag.erji)
+            {
+                if (item2.ParentMenuId == item.MenuId)
+                {
+                    <tr>
+                        <td>@item2.MenuName</td>
+                        <td>@item2.MenuType</td>
+                        <td>@item2.MenuKey</td>
+                        <td>@item2.MenuUrl</td>
+                        <td>@item2.MenuVisable</td>
+                        <td>@item2.MenuSort</td>
+                        <td><a href="#" class="del_ziji" data_id="@item2.MenuId">删除</a></td>
+                    </tr>
+                }
+            }
+        }
+</table>
+<script>
+    $(function () {
+        $("#chaxun").click(function () {
+            shua();
+        });
+        $(".del_ziji").click(function () {
+            var id = $(this).attr("data_id");//获取id
+            $.post("/WXMenu/Home/Delect_id/"+id, function (data) {
+                if (data) {
+                    shua();
+                }
+                else {
+                    alert("删除失败！");
+                }
+            });
+        });
+    });//加载方法
+
+    function shua() {//刷新当前选中的公众号的菜单
+        var id = $("#Select1").val();//获取当前选中的公众号id
+        $.post('/WXMenu/Home/Select_gzh_id/' + id, function (data) {
+            var text = "";
+            $.each(data, function (i, obj) {
+                if (obj.ParentMenuId == null) {
+                    text += "<tr class='danger'>" +
+                                "<td>" + obj.MenuName + "</td>" +
+                                "<td>" + obj.MenuType + "</td>" +
+                                "<td>" + obj.MenuKey + "</td>" +
+                                "<td>" + obj.MenuUrl + "</td>" +
+                                "<td>" + obj.MenuVisable + "</td>" +
+                                "<td>" + obj.MenuSort + "</td>" +
+                                "<td><a href='#'>新增子级菜单</a></td>" +
+                            "</tr>";
+                    $.each(data, function (j, ob2j) {
+                        if (obj.MenuId == ob2j.ParentMenuId) {
+                            text += "<tr>" +
+                                "<td>" + ob2j.MenuName + "</td>" +
+                                "<td>" + ob2j.MenuType + "</td>" +
+                                "<td>" + ob2j.MenuKey + "</td>" +
+                                "<td>" + ob2j.MenuUrl + "</td>" +
+                                "<td>" + ob2j.MenuVisable + "</td>" +
+                                "<td>" + ob2j.MenuSort + "</td>" +
+                                "<td><a href='#' class='del_ziji' data_id='"+ob2j.MenuId+"'>删除</a></td>" +
+                            "</tr>";
+                        }
+                    });
+                }
+            });
+            var zong = "<tr>" +
+                            "<td>菜单名称</td>" +
+                            "<td>菜单类型</td>" +
+                            "<td>菜单KEY</td>" +
+                            "<td>菜单URL</td>" +
+                            "<td>是否可见</td>" +
+                            "<td>排序号</td>" +
+                            "<td>操作</td>" +
+                        "</tr>";
+            zong += text;
+            $("#shuju").html(zong);
+        });
+    }
+</script>

@@ -67,11 +67,11 @@ namespace WXDataUI.Controllers
         public ActionResult QR()
         {
             QRService qrSvr = new QRService("wxb51501fa9702675f", "a56e69ded9b5eab3579ce771f2f9a668");
-            string json=qrSvr.Create(2592000, "QR_SCENE", 1, "");
+            string json = qrSvr.Create(2592000, "QR_SCENE", 1, "");
 
             JObject jo = (JObject)JsonConvert.DeserializeObject(json);
             string ticket = jo["ticket"].ToString();
-            string url=qrSvr.ShowQR(ticket);
+            string url = qrSvr.ShowQR(ticket);
 
             return Redirect(url);
         }
