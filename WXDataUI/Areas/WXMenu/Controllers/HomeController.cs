@@ -42,6 +42,10 @@ namespace WXDataUI.Areas.WXMenu.Controllers
         /// <returns></returns>
         public ActionResult Select_gzh_id()
         {
+            if (Session["SYSUSER"] == null)
+            {
+                return Redirect("/base/home/login");
+            }
             string id = (Session["SYSUSER"] as SYS_User).AppId;
             var list1 = new WXDataBLL.WXMenu.WXMenuManger().Where(g => g.AppId == id && g.MenuVisable == 0).ToList();
             var json = list1.Select(s => new
@@ -88,6 +92,10 @@ namespace WXDataUI.Areas.WXMenu.Controllers
         /// <returns></returns>
         public ActionResult Add_yiji_pd()
         {
+            if (Session["SYSUSER"] == null)
+            {
+                return Redirect("/base/home/login");
+            }
             bool pd = new WXDataBLL.WXMenu.WXMenuManger().Add_yiji_pd((Session["SYSUSER"] as SYS_User).AppId);
             return Json(pd, JsonRequestBehavior.AllowGet);
         }
