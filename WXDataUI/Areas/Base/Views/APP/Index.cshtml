@@ -161,10 +161,11 @@
                 var appId = $(this).attr("AppId");
                 if (confirm("确定要删除吗?")) {
                     $.post("/Base/APP/DeleteApp/"+appId, "", function (result) {
-                        if (result) {
+                        if (result.Result) {
+                            alert('修改状态成功!');
                             GetApp();
                         } else {
-                            alert('删除失败');
+                            alert(result.ErrorMsg);
                         }
                         
                     });

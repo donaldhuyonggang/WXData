@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using WXDataBLL;
 using WXDataBLL.Base;
 using WXDataModel;
+using WXDataUI.Filter;
 using WXDataUI.Models;
 using WXService.Utility;
 
@@ -15,8 +16,14 @@ namespace WXDataUI.Areas.Base.Controllers
     /// <summary>
     /// 公众号控制器
     /// </summary>
+    /// 
+    [RightFilter(Message ="公众号管理")]
     public class APPController : Controller
     {
+        public APPController()
+        {
+            
+        }
         // GET: Base/APP
         public ActionResult Index()
         {
@@ -122,7 +129,8 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpPost]
         public ActionResult UpdateApp(WX_App app)
         {
-            return Json(new WX_AppManager().Update(app),JsonRequestBehavior.AllowGet);
+            var result = new ReturnResult() { ErrorMsg="修改失败!",Result= new WX_AppManager().Update(app) };
+            return Json(result,JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -132,8 +140,9 @@ namespace WXDataUI.Areas.Base.Controllers
             WX_App app = bll.GetByPK(id);
             WX_App app1 = new WX_App();
             EntityUntility.CopyProperty(app, app1);
-            app1.AppState = "无效"; 
-            return Json(new WX_AppManager().Update(app1), JsonRequestBehavior.AllowGet);
+            app1.AppState = "无效";
+            var result = new ReturnResult() { ErrorMsg = "修改状态失败!", Result = new WX_AppManager().Update(app1) };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
         
         private bool CheckAppId(string appId)
