@@ -1,6 +1,7 @@
-﻿
+﻿@using WXDataModel
 @{
     ViewBag.Title = "Index";
+    List<WX_AppType> TypeList = ViewBag.TypeList as List<WX_AppType>;
 }
 
 @section styles{
@@ -19,12 +20,12 @@
         </nav>
         <ul style="list-style:none;" class="ul-full" id="QueryByType">
             <li>
-                <span><a href="#" AppType="All">全部</a></span>
+                <span><a href="#" AppType="0">全部</a></span>
                 <ul style="list-style:none;">
-                    <li><a href="#" AppType="订阅号">订阅号</a></li>
-                    <li><a href="#" AppType="服务号">服务号</a></li>
-                    <li><a href="#" AppType="企业号">企业号</a></li>
-                    <li><a href="#" AppType="小程序">小程序</a></li>
+                    @foreach (var i in TypeList)
+                    {
+                        <li><a href="#" AppType="@i.TypeId">@i.TypeName</a></li>
+                    }
                 </ul>
             </li>
         </ul>
@@ -187,7 +188,7 @@
         function GetApp() {
             var type = $("#Type").val();
             var key = "{'AppName':'" + $("#AppName").val() + "','WXId':'" + $("#WXId").val() + "','CompanyName':'" + $("#CompanyName").val() + "'}";
-            $.post("/Base/APP/GetAppList", "type="+type+"&key="+key, function (json) {
+            $.post("/Base/APP/GetAppList", "typeId="+type+"&key="+key, function (json) {
                 var tr = "";
                 $.each(json, function (i, obj) {
                     tr += "<tr class=\"text-center\">" +

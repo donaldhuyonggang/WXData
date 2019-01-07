@@ -58,7 +58,7 @@ namespace WXDataUI.Areas.Base.Controllers
                     AppName=x.WX_App.AppName,
                     AppSecret=x.WX_App.AppSecret,
                     WXId=x.WX_App.WXId,
-                    AppType=x.WX_App.AppType
+                    AppType=x.WX_App.WX_AppType.TypeName
                 })
                 .ToList();
             return Json(info,JsonRequestBehavior.AllowGet);

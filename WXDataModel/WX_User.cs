@@ -22,7 +22,7 @@ namespace WXDataModel
         }
     
         public string OpenID { get; set; }
-        public Nullable<int> GrooupId { get; set; }
+        public Nullable<int> GroupId { get; set; }
         public string AppId { get; set; }
         public Nullable<int> UserId { get; set; }
         public string UserNick { get; set; }

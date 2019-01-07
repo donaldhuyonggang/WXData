@@ -10,10 +10,17 @@ insert into SYS_Role(RoleSign,RoleName)values('APP_ADMIN','平台管理员')
 insert into SYS_Role(RoleSign,RoleName)values('APP_CUSTOM','平台客服')
 --End新增用户角色
 
+--Start新增公众号类型
+insert into WX_AppType(TypeName)values('订阅号')
+insert into WX_AppType(TypeName)values('公众号')
+insert into WX_AppType(TypeName)values('企业号')
+insert into WX_AppType(TypeName)values('小程序')
+--End新增公众号类型
+
 --Start新增公众号
-insert into WX_App(AppId,AppName,AppSecret,WXId,AppType,AppState,Remark)values('wxb51501fa9702675f','E妹时尚女装','a56e69ded9b5eab3579ce771f2f9a668','gh_f98920d67737','服务号','正常','')
-insert into WX_App(AppId,AppName,AppSecret,WXId,AppType,AppState,Remark)values('wx5e6fd9f5a08db03a','李添乐测试','8f3079b54c134f3e67a88778b4a24f27','gh_ac32a7de334e','服务号','正常','')
-insert into WX_App(AppId,AppName,AppSecret,WXId,AppType,AppState,Remark)values('wxabecfe243f78bfef','谢春永测试','7fa21940796bc96d45abe36a38e65204','gh_29758758c9d8','服务号','正常','')
+insert into WX_App(AppId,AppName,AppSecret,WXId,TypeId,AppState,Remark)values('wxb51501fa9702675f','E妹时尚女装','a56e69ded9b5eab3579ce771f2f9a668','gh_f98920d67737','1','正常','')
+insert into WX_App(AppId,AppName,AppSecret,WXId,TypeId,AppState,Remark)values('wx5e6fd9f5a08db03a','李添乐测试','8f3079b54c134f3e67a88778b4a24f27','gh_ac32a7de334e','1','正常','')
+insert into WX_App(AppId,AppName,AppSecret,WXId,TypeId,AppState,Remark)values('wxabecfe243f78bfef','谢春永测试','7fa21940796bc96d45abe36a38e65204','gh_29758758c9d8','1','正常','')
 
 --End新增公众号
 

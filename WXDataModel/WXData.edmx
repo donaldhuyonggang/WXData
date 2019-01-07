@@ -81,13 +81,20 @@
             <PropertyRef Name="AppId" />
           </Key>
           <Property Name="AppId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TypeId" Type="int" />
           <Property Name="AppName" Type="nvarchar" MaxLength="50" />
           <Property Name="AppSecret" Type="varchar" MaxLength="50" />
           <Property Name="WXId" Type="varchar" MaxLength="50" />
-          <Property Name="AppType" Type="nvarchar" MaxLength="10" />
           <Property Name="AppState" Type="nvarchar" MaxLength="10" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
           <Property Name="Remark" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="WX_AppType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="WX_CustomMsg">
           <Key>
@@ -178,7 +185,7 @@
             <PropertyRef Name="OpenID" />
           </Key>
           <Property Name="OpenID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="GrooupId" Type="int" />
+          <Property Name="GroupId" Type="int" />
           <Property Name="AppId" Type="varchar" MaxLength="50" />
           <Property Name="UserId" Type="int" />
           <Property Name="UserNick" Type="varchar" MaxLength="50" />
@@ -349,6 +356,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WX_APP_REFERENCE_WX_APPTY">
+          <End Role="WX_AppType" Type="Self.WX_AppType" Multiplicity="0..1" />
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_AppType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="WX_App">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WX_CUSTO_REFERENCE_SYS_USER">
           <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="0..1" />
           <End Role="WX_CustomMsg" Type="Self.WX_CustomMsg" Multiplicity="*" />
@@ -501,7 +520,7 @@
               <PropertyRef Name="GroupId" />
             </Principal>
             <Dependent Role="WX_User">
-              <PropertyRef Name="GrooupId" />
+              <PropertyRef Name="GroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -574,6 +593,7 @@
           <EntitySet Name="SYS_Setting" EntityType="Self.SYS_Setting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_User" EntityType="Self.SYS_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_App" EntityType="Self.WX_App" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_AppType" EntityType="Self.WX_AppType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_CustomMsg" EntityType="Self.WX_CustomMsg" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_EventQueue" EntityType="Self.WX_EventQueue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Media" EntityType="Self.WX_Media" Schema="dbo" store:Type="Tables" />
@@ -623,6 +643,10 @@
           <AssociationSet Name="FK_SYS_USER_REFERENCE_WX_APP" Association="Self.FK_SYS_USER_REFERENCE_WX_APP">
             <End Role="WX_App" EntitySet="WX_App" />
             <End Role="SYS_User" EntitySet="SYS_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_APP_REFERENCE_WX_APPTY" Association="Self.FK_WX_APP_REFERENCE_WX_APPTY">
+            <End Role="WX_AppType" EntitySet="WX_AppType" />
+            <End Role="WX_App" EntitySet="WX_App" />
           </AssociationSet>
           <AssociationSet Name="FK_WX_CUSTO_REFERENCE_SYS_USER" Association="Self.FK_WX_CUSTO_REFERENCE_SYS_USER">
             <End Role="SYS_User" EntitySet="SYS_User" />
@@ -788,10 +812,10 @@
             <PropertyRef Name="AppId" />
           </Key>
           <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TypeId" Type="Int32" />
           <Property Name="AppName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AppSecret" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="WXId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AppType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="AppState" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -799,6 +823,7 @@
           <NavigationProperty Name="SYS_Role" Relationship="Self.FK_SYS_ROLE_REFERENCE_WX_APP" FromRole="WX_App" ToRole="SYS_Role" />
           <NavigationProperty Name="SYS_Setting" Relationship="Self.FK_SYS_SETT_REFERENCE_WX_APP" FromRole="WX_App" ToRole="SYS_Setting" />
           <NavigationProperty Name="SYS_User" Relationship="Self.FK_SYS_USER_REFERENCE_WX_APP" FromRole="WX_App" ToRole="SYS_User" />
+          <NavigationProperty Name="WX_AppType" Relationship="Self.FK_WX_APP_REFERENCE_WX_APPTY" FromRole="WX_App" ToRole="WX_AppType" />
           <NavigationProperty Name="WX_CustomMsg" Relationship="Self.FK_WX_CUSTO_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_CustomMsg" />
           <NavigationProperty Name="WX_Media" Relationship="Self.FK_WX_MEDIA_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_Media" />
           <NavigationProperty Name="WX_Menu" Relationship="Self.FK_WX_MENU_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_Menu" />
@@ -807,6 +832,14 @@
           <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_USER_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_User" />
           <NavigationProperty Name="WX_UserGroup" Relationship="Self.FK_WX_USERG_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_UserGroup" />
           <NavigationProperty Name="WX_UserTag" Relationship="Self.FK_WX_USERT_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_UserTag" />
+        </EntityType>
+        <EntityType Name="WX_AppType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_APP_REFERENCE_WX_APPTY" FromRole="WX_AppType" ToRole="WX_App" />
         </EntityType>
         <EntityType Name="WX_CustomMsg">
           <Key>
@@ -908,7 +941,7 @@
             <PropertyRef Name="OpenID" />
           </Key>
           <Property Name="OpenID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="GrooupId" Type="Int32" />
+          <Property Name="GroupId" Type="Int32" />
           <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Int32" />
           <Property Name="UserNick" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1106,6 +1139,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WX_APP_REFERENCE_WX_APPTY">
+          <End Role="WX_AppType" Type="Self.WX_AppType" Multiplicity="0..1" />
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_AppType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="WX_App">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WX_CUSTO_REFERENCE_WX_APP">
           <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
           <End Role="WX_CustomMsg" Type="Self.WX_CustomMsg" Multiplicity="*" />
@@ -1246,7 +1291,7 @@
               <PropertyRef Name="GroupId" />
             </Principal>
             <Dependent Role="WX_User">
-              <PropertyRef Name="GrooupId" />
+              <PropertyRef Name="GroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1266,6 +1311,7 @@
           <EntitySet Name="SYS_Setting" EntityType="Self.SYS_Setting" />
           <EntitySet Name="SYS_User" EntityType="Self.SYS_User" />
           <EntitySet Name="WX_App" EntityType="Self.WX_App" />
+          <EntitySet Name="WX_AppType" EntityType="Self.WX_AppType" />
           <EntitySet Name="WX_CustomMsg" EntityType="Self.WX_CustomMsg" />
           <EntitySet Name="WX_EventQueue" EntityType="Self.WX_EventQueue" />
           <EntitySet Name="WX_Media" EntityType="Self.WX_Media" />
@@ -1322,6 +1368,10 @@
           <AssociationSet Name="FK_WX_USERG_REFERENCE_SYS_USER" Association="Self.FK_WX_USERG_REFERENCE_SYS_USER">
             <End Role="SYS_User" EntitySet="SYS_User" />
             <End Role="WX_UserGroup" EntitySet="WX_UserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_APP_REFERENCE_WX_APPTY" Association="Self.FK_WX_APP_REFERENCE_WX_APPTY">
+            <End Role="WX_AppType" EntitySet="WX_AppType" />
+            <End Role="WX_App" EntitySet="WX_App" />
           </AssociationSet>
           <AssociationSet Name="FK_WX_CUSTO_REFERENCE_WX_APP" Association="Self.FK_WX_CUSTO_REFERENCE_WX_APP">
             <End Role="WX_App" EntitySet="WX_App" />
@@ -1459,13 +1509,21 @@
             <EntityTypeMapping TypeName="WXDataModel.WX_App">
               <MappingFragment StoreEntitySet="WX_App">
                 <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
                 <ScalarProperty Name="AppName" ColumnName="AppName" />
                 <ScalarProperty Name="AppSecret" ColumnName="AppSecret" />
                 <ScalarProperty Name="WXId" ColumnName="WXId" />
-                <ScalarProperty Name="AppType" ColumnName="AppType" />
                 <ScalarProperty Name="AppState" ColumnName="AppState" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_AppType">
+            <EntityTypeMapping TypeName="WXDataModel.WX_AppType">
+              <MappingFragment StoreEntitySet="WX_AppType">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1563,7 +1621,7 @@
             <EntityTypeMapping TypeName="WXDataModel.WX_User">
               <MappingFragment StoreEntitySet="WX_User">
                 <ScalarProperty Name="OpenID" ColumnName="OpenID" />
-                <ScalarProperty Name="GrooupId" ColumnName="GrooupId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
                 <ScalarProperty Name="AppId" ColumnName="AppId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserNick" ColumnName="UserNick" />

@@ -86,7 +86,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
         {
             WX_UserManager bll = new WX_UserManager();
             WX_User user = bll.GetByPK(OpenId);
-            user.GrooupId = GroupId;
+            user.GroupId = GroupId;
             var result = new ReturnResult()
             {
                 ErrorMsg = "修改失败!",

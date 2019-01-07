@@ -3,6 +3,7 @@
 
 @{ 
     WX_App app = ViewBag.App as WX_App;
+    List<WX_AppType> TypeList = ViewBag.TypeList as List<WX_AppType>;
 }
 
 <form action="/Base/APP/UpdateApp" id="form" method="post">
@@ -39,11 +40,20 @@
                 <div class="form-group">
                     <label for="AppType" class="col-sm-2 control-label">公众号类型</label>
                     <div class="col-sm-4">
-                        <select class="form-control" name="AppType" id="AppType">
-                            <option value="订阅号">订阅号</option>
-                            <option value="公众号">公众号</option>
-                            <option value="企业号">企业号</option>
-                            <option value="小程序">小程序</option>
+                        <select class="form-control" name="TypeId" id="TypeId">
+                            @foreach (var i in TypeList)
+                            {
+                                if (app.TypeId == i.TypeId)
+                                {
+                                    <option value="@i.TypeId" selected>@i.TypeName</option>
+                                }
+                                else
+                                {
+                                    <option value="@i.TypeId">@i.TypeName</option>
+                                }
+
+                            }
+                            
                         </select>
                     </div>
 

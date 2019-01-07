@@ -20,6 +20,7 @@ namespace WXDataUI.Areas.Base.Controllers
         // GET: Base/APP
         public ActionResult Index()
         {
+            ViewBag.TypeList = new WX_AppTypeManager().GetAll();
             return View();
         }
 
@@ -41,16 +42,16 @@ namespace WXDataUI.Areas.Base.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetAppList(string type = "All", string key = null)
+        public ActionResult GetAppList(int typeId = 0, string key = null)
         {
 
             List<WX_App> list = null;
-            if (type.Equals("All"))
+            if (typeId == 0)
             {
                 list = new WX_AppManager().GetAll();
             }else
             {
-                list = new WX_AppManager().Where(a => a.AppType.Equals(type));
+                list = new WX_AppManager().Where(a => a.TypeId == typeId);
             }
             if (!string.IsNullOrEmpty(key))
             {
@@ -72,15 +73,22 @@ namespace WXDataUI.Areas.Base.Controllers
                 }
             }
 
+
+
+
+
+
+
             var json = list.Select(s => new
             {
-                s.AppType,
+                AppType = s.WX_AppType.TypeName,
                 s.AppName,
                 s.AppId,
                 s.WXId,
                 s.CompanyName,
                 s.AppState,
-                s.Remark
+                s.Remark,
+                s.TypeId
             });
 
             return Json(json, JsonRequestBehavior.AllowGet);
@@ -89,6 +97,7 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpGet]
         public ActionResult AddApp()
         {
+            ViewBag.TypeList = new WX_AppTypeManager().GetAll();
             return PartialView();
         }
 
@@ -104,6 +113,7 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult UpdateApp(string id)
         {
             ViewBag.App = new WX_AppManager().GetByPK(id);
+            ViewBag.TypeList = new WX_AppTypeManager().GetAll();
             return PartialView();
         }
 
