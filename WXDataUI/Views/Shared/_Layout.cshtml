@@ -67,11 +67,11 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="@i.FunctionID">
                             <h4 class="panel-title">
-                                <a role="button" class="" data-toggle="collapse" data-parent="#funcList" href="#collapse-@i.FunctionID" aria-expanded="true" aria-controls="collapse-@i.FunctionID">@i.FunctionName</a>
+                                <a role="button" class="" data-toggle="collapse" data-parent="#funcList" href="#collapse-@i.FunctionID" aria-expanded="true" aria-controls="collapse-@i.FunctionID"><i></i>@i.FunctionName</a>
                             </h4>
                         </div>
                         <div id='collapse-@i.FunctionID' class="panel-collapse collapse " role="tabpanel" aria-labelledby="@i.FunctionID">
-                            <div class="panel-body">
+                            <div class="panel-body" style="border:none;">
                                 <ul class="nav nav-sidebar navbox">
                                     @*<li><a href="/Base/App/Index">公众号管理</a></li>
                                     <li><a href="/Base/SYSUser/Index">系统用户管理</a></li>
@@ -223,7 +223,7 @@
             url = url.substring(url.indexOf('localhost:'));
             url = url.substring(url.indexOf('/'));
             var a = $("a[href='" + url + "']");
-            console.log(a);
+            $(a).css("color","white");
             $(a).parents("li").addClass("active");
             $(a).parents(".panel-collapse").removeClass("collapse").addClass("in");
         }

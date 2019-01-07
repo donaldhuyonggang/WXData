@@ -105,12 +105,12 @@
     $(function () {
         $("#submit").click(function () {
             $.post('/Base/APP/UpdateApp', $("form").serialize(), function (r) {
-                if (r) {
+                if (r.Result) {
                     $("#EditApp").modal('hide');
                     GetApp();
                 } else {
-                    $("#EditApp").modal('hide');
-                    alert("操作失败!");
+                    //$("#EditApp").modal('hide');
+                    alert(r.ErrorMsg);
                 }
             });
         });
