@@ -150,9 +150,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Common.css" />
+    <Content Include="Content\iconfont.css" />
     <Content Include="Content\Images\Denglu\downld.png" />
     <Content Include="Content\Images\Denglu\download.png" />
     <Content Include="Content\Images\Denglu\download.svg" />
+    <Content Include="Content\Index.css" />
     <Content Include="Content\Media\fileinput.min.css" />
     <Content Include="Scripts\bootstrap-treeview.js" />
     <Content Include="Content\bootstrap.css" />
@@ -272,7 +274,9 @@
     <Content Include="Areas\WXMenu\Views\Home\Add_zi.cshtml" />
     <Content Include="Areas\WXMenu\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXMenu\Views\Home\Add_yiji_pd.cshtml" />
+    <Content Include="fonts\iconfont.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\fileinput.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
