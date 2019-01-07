@@ -31,10 +31,10 @@ namespace WXDataModel
         }
     
         public string AppId { get; set; }
+        public Nullable<int> TypeId { get; set; }
         public string AppName { get; set; }
         public string AppSecret { get; set; }
         public string WXId { get; set; }
-        public string AppType { get; set; }
         public string AppState { get; set; }
         public string CompanyName { get; set; }
         public string Remark { get; set; }
@@ -43,6 +43,7 @@ namespace WXDataModel
         public virtual ICollection<SYS_Role> SYS_Role { get; set; }
         public virtual ICollection<SYS_Setting> SYS_Setting { get; set; }
         public virtual ICollection<SYS_User> SYS_User { get; set; }
+        public virtual WX_AppType WX_AppType { get; set; }
         public virtual ICollection<WX_CustomMsg> WX_CustomMsg { get; set; }
         public virtual ICollection<WX_Media> WX_Media { get; set; }
         public virtual ICollection<WX_Menu> WX_Menu { get; set; }

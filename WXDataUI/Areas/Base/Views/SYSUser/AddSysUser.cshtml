@@ -108,12 +108,11 @@
     $(function () {
         $("#submit").click(function () {
             $.post("/Base/SYSUser/AddSysUser", $("#form").serialize(), function (r) {
-                if (r) {
+                if (r.Result) {
                     $("#EditSysUser").modal("hide");
                     GetSYSUser();
                 } else {
-                    $("#EditSysUser").modal("hide");
-                    alert("操作失败!");
+                    alert(r.ErrorMsg);
                 }
             });
         });

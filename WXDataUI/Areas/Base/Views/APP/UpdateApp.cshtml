@@ -1,6 +1,11 @@
 ﻿
 @using WXDataModel
 
+@{ 
+    WX_App app = ViewBag.App as WX_App;
+    List<WX_AppType> TypeList = ViewBag.TypeList as List<WX_AppType>;
+}
+
 <form action="/Base/APP/UpdateApp" id="form" method="post">
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
@@ -12,47 +17,56 @@
                 <div class="form-group">
                     <label for="AppId" class="col-sm-2 control-label">公众号ID</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="AppId" id="AppId" placeholder="公众号ID" value="@ViewBag.App.AppId">
+                        <input type="text" class="form-control" name="AppId" id="AppId" placeholder="公众号ID" value="@app.AppId">
                     </div>
                     <label for="AppSecret" class="col-sm-2 control-label">公众号密码</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="AppSecret" id="AppSecret" placeholder="公众号密码" value="@ViewBag.App.AppSecret">
+                        <input type="text" class="form-control" name="AppSecret" id="AppSecret" placeholder="公众号密码" value="@app.AppSecret">
                     </div>
                 </div><!--form-group end-->
 
                 <div class="form-group">
                     <label for="inputAppName" class="col-sm-2 control-label">公众号名称</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="AppName" id="AppName" placeholder="公众号名称" value="@ViewBag.App.AppName">
+                        <input type="text" class="form-control" name="AppName" id="AppName" placeholder="公众号名称" value="@app.AppName">
                     </div>
 
                     <label for="WXId" class="col-sm-2 control-label">微信ID</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="WXId" id="WXId" placeholder="微信ID" value="@ViewBag.App.WXId">
+                        <input type="text" class="form-control" name="WXId" id="WXId" placeholder="微信ID" value="@app.WXId">
                     </div>
                 </div><!--form-group end-->
 
                 <div class="form-group">
                     <label for="AppType" class="col-sm-2 control-label">公众号类型</label>
                     <div class="col-sm-4">
-                        <select class="form-control" name="AppType" id="AppType">
-                            <option value="订阅号">订阅号</option>
-                            <option value="公众号">公众号</option>
-                            <option value="企业号">企业号</option>
-                            <option value="小程序">小程序</option>
+                        <select class="form-control" name="TypeId" id="TypeId">
+                            @foreach (var i in TypeList)
+                            {
+                                if (app.TypeId == i.TypeId)
+                                {
+                                    <option value="@i.TypeId" selected>@i.TypeName</option>
+                                }
+                                else
+                                {
+                                    <option value="@i.TypeId">@i.TypeName</option>
+                                }
+
+                            }
+                            
                         </select>
                     </div>
 
                     <label for="CompanyName" class="col-sm-2 control-label">公司名称</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="CompanyName" id="CompanyName" placeholder="公司名称" value="@ViewBag.App.CompanyName">
+                        <input type="text" class="form-control" name="CompanyName" id="CompanyName" placeholder="公司名称" value="@app.CompanyName">
                     </div>
                 </div><!--form-group end-->
 
                 <div class="form-group">
                     <label for="Remark" class="col-sm-2 control-label">备注</label>
                     <div class="col-sm-10">
-                        <textarea type="text" name="Remark" class="form-control" id="Remark" placeholder="备注" >@ViewBag.App.Remark</textarea>
+                        <textarea type="text" name="Remark" class="form-control" id="Remark" placeholder="备注" >@app.Remark</textarea>
                     </div>
                 </div><!--form-group end-->
 
@@ -64,7 +78,15 @@
                             <span style="margin-right:20px;">正常</span><input type="radio" name="AppState" value="正常" checked>
                         </div>
                         <div class="col-sm-6" style="height:34px;line-height:34px;">
-                            <span style="margin-right:20px;">无效</span><input type="radio" name="AppState" value="无效">
+                            <span style="margin-right:20px;">无效</span>
+                            @if (app.AppState.Equals("正常"))
+                            {
+                                <input type="radio" name="AppState" value="无效">
+                            }
+                            else
+                            {
+                                <input type="radio" name="AppState" value="无效" checked>
+                            }
                         </div>
                     </div>
                 </div><!--form-group end-->

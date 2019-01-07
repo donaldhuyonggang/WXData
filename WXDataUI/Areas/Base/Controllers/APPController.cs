@@ -12,12 +12,15 @@ using WXService.Utility;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
+    /// <summary>
+    /// 公众号控制器
+    /// </summary>
     public class APPController : Controller
-    //public class APPController: Controller_EX
     {
         // GET: Base/APP
         public ActionResult Index()
         {
+            ViewBag.TypeList = new WX_AppTypeManager().GetAll();
             return View();
         }
 
@@ -39,16 +42,16 @@ namespace WXDataUI.Areas.Base.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetAppList(string type = "All", string key = null)
+        public ActionResult GetAppList(int typeId = 0, string key = null)
         {
 
             List<WX_App> list = null;
-            if (type.Equals("All"))
+            if (typeId == 0)
             {
                 list = new WX_AppManager().GetAll();
             }else
             {
-                list = new WX_AppManager().Where(a => a.AppType.Equals(type));
+                list = new WX_AppManager().Where(a => a.TypeId == typeId);
             }
             if (!string.IsNullOrEmpty(key))
             {
@@ -69,16 +72,16 @@ namespace WXDataUI.Areas.Base.Controllers
                     list = list.Where(a => a.CompanyName != null && a.CompanyName.Contains(CompanyName)).ToList();
                 }
             }
-
             var json = list.Select(s => new
             {
-                s.AppType,
+                AppType = s.WX_AppType.TypeName,
                 s.AppName,
                 s.AppId,
                 s.WXId,
                 s.CompanyName,
                 s.AppState,
-                s.Remark
+                s.Remark,
+                s.TypeId
             });
 
             return Json(json, JsonRequestBehavior.AllowGet);
@@ -87,6 +90,7 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpGet]
         public ActionResult AddApp()
         {
+            ViewBag.TypeList = new WX_AppTypeManager().GetAll();
             return PartialView();
         }
 
@@ -94,7 +98,16 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult AddApp(WX_App app)
         {
             app.AppState = "正常";
-            return Json(new WX_AppManager().Add(app), JsonRequestBehavior.AllowGet);
+            ReturnResult result = new ReturnResult();
+            result.ErrorMsg = "新增失败!";
+            if (!CheckAppId(app.AppId))
+            {
+                result.ErrorMsg += "公众号Id重复!";
+                result.Result = false;
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            result.Result = new WX_AppManager().Add(app);
+            return Json(result, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -102,6 +115,7 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult UpdateApp(string id)
         {
             ViewBag.App = new WX_AppManager().GetByPK(id);
+            ViewBag.TypeList = new WX_AppTypeManager().GetAll();
             return PartialView();
         }
 
@@ -114,18 +128,19 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpPost]
         public ActionResult DeleteApp(string id)
         {
-
-
-           
             WX_AppManager bll = new WX_AppManager();
             WX_App app = bll.GetByPK(id);
             WX_App app1 = new WX_App();
             EntityUntility.CopyProperty(app, app1);
             app1.AppState = "无效"; 
-
             return Json(new WX_AppManager().Update(app1), JsonRequestBehavior.AllowGet);
         }
-
+        
+        private bool CheckAppId(string appId)
+        {
+            var list = new WX_AppManager().Where(a => a.AppId.Equals(appId));
+            return list.Count() == 0;
+        }
        
     }
 }

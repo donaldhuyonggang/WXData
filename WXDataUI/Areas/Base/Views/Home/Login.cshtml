@@ -73,13 +73,14 @@
         }
        
         .login {
-            min-height: 300px;
-            max-width: 420px;
+            max-height: 350px;
+            max-width: 350px;
             padding: 40px;
             margin: 90px;
             background-color: #ffffff;
             margin-left: 900px;
             box-sizing: border-box;
+            border-radius: 4px;
         }
         .content {
             background:url('../../../../Content/Images/Denglu/download.png')no-repeat;
@@ -145,13 +146,13 @@
                     <div class="message">管理登录</div>
                     <div id="darkbannerwrap"></div>
 
-                    <form method="post" action="/Base/Home/Login">
+                    <form method="post" id="LoginForm" action="/Base/Home/Login">
                         <input name="action" value="login" type="hidden">
                         <input name="LoginId" placeholder="用户名" required="" type="text" value="xcy">
                         <hr class="hr15">
                         <input name="Password" placeholder="密码" required="" type="password" value="xcy">
                         <hr class="hr15">
-                        <input value="登录" style="width: 100%;" type="submit">
+                        <input value="登录" style="width: 100%;" type="button" id="Login">
                         <hr class="hr20">
                     </form>
 
@@ -174,5 +175,16 @@
     </div>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        $("#Login").click(function () {
+            $.post("/Base/Home/Login", $("#LoginForm").serialize(), function (r) {
+                if (r) {
+                    location.href = "/Base/Home/Index";
+                } else {
+                    alert("登录失败!");
+                }
+            });
+        });
+    </script>
 </body>
 </html>

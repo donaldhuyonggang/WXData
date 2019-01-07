@@ -24,8 +24,8 @@ a {
     cursor: pointer;
 }
 
-.login {
-    /*margin: 150px auto 0 auto;*/
+/*.login {
+    margin: 150px auto 0 auto;
     min-height: 420px;
     max-width: 420px;
     padding: 40px;
@@ -33,9 +33,9 @@ a {
     margin-left: auto;
     margin-right: auto;
     border-radius: 4px;
-    /* overflow-x: hidden; */
+     overflow-x: hidden; 
     box-sizing: border-box;
-}
+}*/
 
 a.logo {
     display: block;
@@ -46,8 +46,8 @@ a.logo {
 }
 
 .message {
-    margin: 10px 0 0 -58px;
-    padding: 18px 10px 18px 60px;
+    margin: 5px 0 0 -50px;
+    padding: 15px 10px 15px 50px;
     background: #27A9E3;
     position: relative;
     color: #fff;

@@ -1,5 +1,7 @@
 ﻿@using WXDataModel
-
+@{
+    List<WX_AppType> TypeList = ViewBag.TypeList as List<WX_AppType>;
+}
 <form action="/Base/APP/AddApp" id="form" method="post">
     <div class="modal-dialog"  style="width:800px">
         <div class="modal-content">
@@ -34,11 +36,11 @@
                 <div class="form-group">
                     <label for="AppType" class="col-sm-2 control-label">公众号类型</label>
                     <div class="col-sm-4">
-                        <select  class="form-control" name="AppType" id="AppType">
-                            <option value="订阅号">订阅号</option>
-                            <option value="公众号">公众号</option>
-                            <option value="企业号">企业号</option>
-                            <option value="小程序">小程序</option>
+                        <select  class="form-control" name="TypeId" id="AppType">
+                            @foreach (var i in TypeList)
+                            {
+                                <option value="@i.TypeId">@i.TypeName</option>
+                            }
                         </select>
                     </div>
 
@@ -72,13 +74,14 @@
 <script>
     $(function () {
         $("#submit").click(function () {
+
             $.post('/Base/APP/AddApp', $("form").serialize(), function (r) {
-                if (r) {
+                if (r.Result) {
                     $("#EditApp").modal('hide');
                     GetApp();
                 } else {
-                    $("#EditApp").modal('hide');
-                    alert("操作失败!");
+                    //$("#EditApp").modal('hide');
+                    alert(r.ErrorMsg);
                 }
             });
         });

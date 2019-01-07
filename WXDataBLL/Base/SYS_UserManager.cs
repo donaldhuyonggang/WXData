@@ -14,7 +14,6 @@ namespace WXDataBLL.Base
         {
             return  new BaseDAL<SYS_User>()
                 .Where(x => x.LoginId == info.LoginId && x.Password == info.Password).FirstOrDefault();
-
         }
     }
 }

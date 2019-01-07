@@ -20,6 +20,11 @@ namespace WXDataModel
         {
         }
     
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+    
         public DbSet<SYS_Department> SYS_Department { get; set; }
         public DbSet<SYS_Function> SYS_Function { get; set; }
         public DbSet<SYS_Log> SYS_Log { get; set; }
@@ -27,6 +32,7 @@ namespace WXDataModel
         public DbSet<SYS_Setting> SYS_Setting { get; set; }
         public DbSet<SYS_User> SYS_User { get; set; }
         public DbSet<WX_App> WX_App { get; set; }
+        public DbSet<WX_AppType> WX_AppType { get; set; }
         public DbSet<WX_CustomMsg> WX_CustomMsg { get; set; }
         public DbSet<WX_EventQueue> WX_EventQueue { get; set; }
         public DbSet<WX_Media> WX_Media { get; set; }

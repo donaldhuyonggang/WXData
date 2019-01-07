@@ -125,11 +125,13 @@
     <Compile Include="Areas\Base\Controllers\APPController.cs" />
     <Compile Include="Areas\Base\Controllers\HomeController.cs" />
     <Compile Include="Areas\Base\Controllers\MediaController.cs" />
+    <Compile Include="Areas\Base\Controllers\MobileController.cs" />
     <Compile Include="Areas\Base\Controllers\RoleController.cs" />
     <Compile Include="Areas\Base\Controllers\SYSUserController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\WXApp\WXAppAreaRegistration.cs" />
     <Compile Include="Areas\WXCustom\Controllers\HomeController.cs" />
+    <Compile Include="Areas\WXCustom\Controllers\QRController.cs" />
     <Compile Include="Areas\WXCustom\WXCustomAreaRegistration.cs" />
     <Compile Include="Areas\WXMedia\WXMediaAreaRegistration.cs" />
     <Compile Include="Areas\WXMenu\Controllers\HomeController.cs" />
@@ -141,14 +143,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PageList.cs" />
     <Compile Include="Models\Controller_EX.cs" />
+    <Compile Include="Models\ReturnResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Common.css" />
+    <Content Include="Content\iconfont.css" />
     <Content Include="Content\Images\Denglu\downld.png" />
     <Content Include="Content\Images\Denglu\download.png" />
     <Content Include="Content\Images\Denglu\download.svg" />
+    <Content Include="Content\Index.css" />
     <Content Include="Content\Media\fileinput.min.css" />
     <Content Include="Scripts\bootstrap-treeview.js" />
     <Content Include="Content\bootstrap.css" />
@@ -262,10 +268,15 @@
     <Content Include="Areas\Base\Views\SYSUser\LookSysUser.cshtml" />
     <Content Include="Areas\Base\Views\Media\Index.cshtml" />
     <Content Include="Areas\Base\Views\Media\AddMedia.cshtml" />
+    <Content Include="Areas\WXCustom\Views\QR\Add.cshtml" />
+    <Content Include="Areas\WXCustom\Views\QR\Index.cshtml" />
+    <Content Include="Areas\Base\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXMenu\Views\Home\Add_zi.cshtml" />
     <Content Include="Areas\WXMenu\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXMenu\Views\Home\Add_yiji_pd.cshtml" />
+    <Content Include="fonts\iconfont.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\fileinput.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -297,6 +308,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Base\Views\Mobile\" />
     <Folder Include="Areas\Base\Views\Shared\" />
     <Folder Include="Areas\Common\Controllers\" />
     <Folder Include="Areas\Common\Models\" />
