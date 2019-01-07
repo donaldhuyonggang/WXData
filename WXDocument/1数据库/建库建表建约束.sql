@@ -1,8 +1,7 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2019/1/5 11:08:30                            */
+/* Created on:     2019-01-07 08:43:45                          */
 /*==============================================================*/
-
 
 
 
@@ -11,6 +10,7 @@ go
 
 use WXData
 go
+
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -84,9 +84,9 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('WX_App') and o.name = 'FK_WX_APP_REFERENCE_APPTYPE')
+   where r.fkeyid = object_id('WX_App') and o.name = 'FK_WX_APP_REFERENCE_WX_APPTY')
 alter table WX_App
-   drop constraint FK_WX_APP_REFERENCE_APPTYPE
+   drop constraint FK_WX_APP_REFERENCE_WX_APPTY
 go
 
 if exists (select 1
@@ -217,13 +217,6 @@ go
 
 if exists (select 1
             from  sysobjects
-           where  id = object_id('AppType')
-            and   type = 'U')
-   drop table AppType
-go
-
-if exists (select 1
-            from  sysobjects
            where  id = object_id('SYS_Department')
             and   type = 'U')
    drop table SYS_Department
@@ -276,6 +269,13 @@ if exists (select 1
            where  id = object_id('WX_App')
             and   type = 'U')
    drop table WX_App
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('WX_AppType')
+            and   type = 'U')
+   drop table WX_AppType
 go
 
 if exists (select 1
@@ -346,16 +346,6 @@ if exists (select 1
            where  id = object_id('WX_UserTagRelation')
             and   type = 'U')
    drop table WX_UserTagRelation
-go
-
-/*==============================================================*/
-/* Table: AppType                                               */
-/*==============================================================*/
-create table AppType (
-   TypeId               int                  identity,
-   TypeName             nvarchar(20)         null,
-   constraint PK_APPTYPE primary key (TypeId)
-)
 go
 
 /*==============================================================*/
@@ -813,6 +803,16 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '±¸×¢',
    'user', @CurrentUser, 'table', 'WX_App', 'column', 'Remark'
+go
+
+/*==============================================================*/
+/* Table: WX_AppType                                            */
+/*==============================================================*/
+create table WX_AppType (
+   TypeId               int                  identity,
+   TypeName             nvarchar(20)         null,
+   constraint PK_WX_APPTYPE primary key (TypeId)
+)
 go
 
 /*==============================================================*/
@@ -1588,8 +1588,8 @@ alter table SYS_User
 go
 
 alter table WX_App
-   add constraint FK_WX_APP_REFERENCE_APPTYPE foreign key (TypeId)
-      references AppType (TypeId)
+   add constraint FK_WX_APP_REFERENCE_WX_APPTY foreign key (TypeId)
+      references WX_AppType (TypeId)
 go
 
 alter table WX_CustomMsg
