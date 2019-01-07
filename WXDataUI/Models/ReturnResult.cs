@@ -10,6 +10,16 @@ namespace WXDataUI.Models
     /// </summary>
     public class ReturnResult
     {
+        public ReturnResult()
+        {
+            Result = true;
+        }
+        public ReturnResult(string ErrorCode,string ErrorMsg,bool Result)
+        {
+            this.ErrorCode = ErrorCode;
+            this.ErrorMsg = ErrorMsg;
+            this.Result = Result;
+        }
         /// <summary>
         /// 错误代码
         /// </summary>
