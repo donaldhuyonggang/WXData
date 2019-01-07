@@ -3,14 +3,14 @@
     ViewBag.Title = "Index";
 }
 @using WXDataModel
-<a class="btn btn-default" href="/WXMenu/Home/Add_yiji_pd" role="button" data-toggle="modal" data-target="#LZ_Add_WX_Menu">新增一级菜单</a>
+@*<a class="btn btn-default" href="/WXMenu/Home/Add_yiji_pd" role="button" data-toggle="modal" data-target="#LZ_Add_WX_Menu">新增一级菜单</a>*@
+<a class="btn btn-default" id="Add_yiji" href="#" role="button">新增一级菜单</a>
 <table id="shuju"class="table table-bordered">
     <tr>
         <td>菜单名称</td>
         <td>菜单类型</td>
         <td>菜单KEY</td>
         <td>菜单URL</td>
-        <td>是否可见</td>
         <td>排序号</td>
         <td>操作</td>
     </tr>
@@ -22,7 +22,6 @@
                 <td>@item.MenuType</td>
                 <td>@item.MenuKey</td>
                 <td>@item.MenuUrl</td>
-                <td>@item.MenuVisable</td>
                 <td>@item.MenuSort</td>
                 <td><a href="/WXMenu/Home/Add_zi/@item.MenuId" data-toggle="modal" data-target="#LZ_Add_WX_Menu">新增子级菜单</a></td>
             </tr>
@@ -35,7 +34,6 @@
                         <td>@item2.MenuType</td>
                         <td>@item2.MenuKey</td>
                         <td>@item2.MenuUrl</td>
-                        <td>@item2.MenuVisable</td>
                         <td>@item2.MenuSort</td>
                         <td><a href="#" class="del_ziji" data_id="@item2.MenuId">删除</a></td>
                     </tr>
@@ -43,11 +41,50 @@
             }
         }
 </table>
+
+<div style="border-top:1px solid #ff6a00;padding-top:20px;display:none;" id="add_yiji_div">
+    <form action="" id="form" method="post">
+        <div class="container-fluid">
+            <!--第一行-->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label style="float:right;">菜单名称：</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input style="height:28px;" type="text" id="MenuName" name="MenuName" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--第二行-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label style="float:right;">菜单内容：</label>
+                        </div>
+                        <div class="col-md-10">
+                            <label id="xiaoxi" style="cursor: pointer;"><input class="ck" checked type="radio" /> 发送消息</label>
+                            <label id="yemian" style="cursor: pointer;"><input class="ck" type="radio" />  跳转网页</label>
+                            <label id="xiaocunxu" style="cursor: pointer;"><input class="ck" type="radio" /> 跳转小程序 </label>
+                        </div>
+                        <div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 <script>
     $(function () {
-        $("#chaxun").click(function () {
-            shua();
-        });
+        ///所有的删除子菜单
         $(".del_ziji").click(function () {
             var id = $(this).attr("data_id");//获取id
             $.post("/WXMenu/Home/Delect_id/"+id, function (data) {
@@ -59,11 +96,24 @@
                 }
             });
         });
+        $("#Add_yiji").click(function () {
+            $.post("/WXMenu/Home/Add_yiji_pd", function (data) {
+                if (data) {
+                    $("#add_yiji_div").css("display", "block");
+                }
+                else {
+                    alert("一级菜单不能超过三个！");
+                }
+            });
+        });
+        $(".ck").click(function () {
+            $(".ck").prop("checked", false);
+            $(this).prop("checked", true);
+        });
     });//加载方法
 
-    function shua() {//刷新当前选中的公众号的菜单
-        var id = $("#Select1").val();//获取当前选中的公众号id
-        $.post('/WXMenu/Home/Select_gzh_id/' + id, function (data) {
+    function shua() {//刷新当前公众号的菜单
+        $.post('/WXMenu/Home/Select_gzh_id', function (data) {
             var text = "";
             $.each(data, function (i, obj) {
                 if (obj.ParentMenuId == null) {
@@ -72,7 +122,6 @@
                                 "<td>" + obj.MenuType + "</td>" +
                                 "<td>" + obj.MenuKey + "</td>" +
                                 "<td>" + obj.MenuUrl + "</td>" +
-                                "<td>" + obj.MenuVisable + "</td>" +
                                 "<td>" + obj.MenuSort + "</td>" +
                                 "<td><a href='#'>新增子级菜单</a></td>" +
                             "</tr>";
@@ -83,7 +132,6 @@
                                 "<td>" + ob2j.MenuType + "</td>" +
                                 "<td>" + ob2j.MenuKey + "</td>" +
                                 "<td>" + ob2j.MenuUrl + "</td>" +
-                                "<td>" + ob2j.MenuVisable + "</td>" +
                                 "<td>" + ob2j.MenuSort + "</td>" +
                                 "<td><a href='#' class='del_ziji' data_id='"+ob2j.MenuId+"'>删除</a></td>" +
                             "</tr>";
@@ -96,7 +144,6 @@
                             "<td>菜单类型</td>" +
                             "<td>菜单KEY</td>" +
                             "<td>菜单URL</td>" +
-                            "<td>是否可见</td>" +
                             "<td>排序号</td>" +
                             "<td>操作</td>" +
                         "</tr>";

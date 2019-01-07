@@ -12,20 +12,27 @@ namespace WXDataUI.Areas.WXMenu.Controllers
         // GET: WXMenu/Home
         public ActionResult Index()
         {
-            string id = (Session["SYSUSER"] as SYS_User).AppId;
-            var list2 = new WXDataBLL.WXMenu.WXMenuManger().Where(g => g.AppId == id && g.ParentMenuId == null && g.MenuVisable == 0).ToList();//获取当前公众号的所有一级菜单
-            List<WX_Menu> list3 = new List<WX_Menu>();//二级菜单
-            foreach (var item in list2)
+            if (Session["SYSUSER"] == null)
             {
-                var data = new WXDataBLL.WXMenu.WXMenuManger().Where(g => g.AppId == id && g.ParentMenuId == item.MenuId && g.MenuVisable == 0).ToList();
-                foreach (var item2 in data)
-                {
-                    list3.Add(item2);
-                }
+                return Redirect("/base/home/login");
             }
-            ViewBag.yiji = list2;
-            ViewBag.erji = list3;
-            return View();
+            else
+            {
+                string id = (Session["SYSUSER"] as SYS_User).AppId;
+                var list2 = new WXDataBLL.WXMenu.WXMenuManger().Where(g => g.AppId == id && g.ParentMenuId == null && g.MenuVisable == 0).ToList();//获取当前公众号的所有一级菜单
+                List<WX_Menu> list3 = new List<WX_Menu>();//二级菜单
+                foreach (var item in list2)
+                {
+                    var data = new WXDataBLL.WXMenu.WXMenuManger().Where(g => g.AppId == id && g.ParentMenuId == item.MenuId && g.MenuVisable == 0).ToList();
+                    foreach (var item2 in data)
+                    {
+                        list3.Add(item2);
+                    }
+                }
+                ViewBag.yiji = list2;
+                ViewBag.erji = list3;
+                return View();
+            }
         }
 
         /// <summary>
@@ -33,8 +40,9 @@ namespace WXDataUI.Areas.WXMenu.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Select_gzh_id(string id)
+        public ActionResult Select_gzh_id()
         {
+            string id = (Session["SYSUSER"] as SYS_User).AppId;
             var list1 = new WXDataBLL.WXMenu.WXMenuManger().Where(g => g.AppId == id && g.MenuVisable == 0).ToList();
             var json = list1.Select(s => new
             {
@@ -81,8 +89,7 @@ namespace WXDataUI.Areas.WXMenu.Controllers
         public ActionResult Add_yiji_pd()
         {
             bool pd = new WXDataBLL.WXMenu.WXMenuManger().Add_yiji_pd((Session["SYSUSER"] as SYS_User).AppId);
-            ViewBag.pd = pd;
-            return PartialView();
+            return Json(pd, JsonRequestBehavior.AllowGet);
         }
 
 
