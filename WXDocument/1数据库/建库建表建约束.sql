@@ -1,7 +1,9 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2018-11-30 09:25:03                          */
+/* Created on:     2019/1/5 11:08:30                            */
 /*==============================================================*/
+
+
 
 
 create database WXData
@@ -78,6 +80,13 @@ if exists (select 1
    where r.fkeyid = object_id('SYS_User') and o.name = 'FK_SYS_USER_REFERENCE_WX_APP')
 alter table SYS_User
    drop constraint FK_SYS_USER_REFERENCE_WX_APP
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_App') and o.name = 'FK_WX_APP_REFERENCE_APPTYPE')
+alter table WX_App
+   drop constraint FK_WX_APP_REFERENCE_APPTYPE
 go
 
 if exists (select 1
@@ -208,6 +217,13 @@ go
 
 if exists (select 1
             from  sysobjects
+           where  id = object_id('AppType')
+            and   type = 'U')
+   drop table AppType
+go
+
+if exists (select 1
+            from  sysobjects
            where  id = object_id('SYS_Department')
             and   type = 'U')
    drop table SYS_Department
@@ -330,6 +346,16 @@ if exists (select 1
            where  id = object_id('WX_UserTagRelation')
             and   type = 'U')
    drop table WX_UserTagRelation
+go
+
+/*==============================================================*/
+/* Table: AppType                                               */
+/*==============================================================*/
+create table AppType (
+   TypeId               int                  identity,
+   TypeName             nvarchar(20)         null,
+   constraint PK_APPTYPE primary key (TypeId)
+)
 go
 
 /*==============================================================*/
@@ -722,10 +748,10 @@ go
 /*==============================================================*/
 create table WX_App (
    AppId                varchar(50)          not null,
+   TypeId               int                  null,
    AppName              nvarchar(50)         null,
    AppSecret            varchar(50)          null,
    WXId                 varchar(50)          null,
-   AppType              nvarchar(10)         null,
    AppState             nvarchar(10)         null,
    CompanyName          nvarchar(50)         null,
    Remark               nvarchar(255)        null,
@@ -766,13 +792,6 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '微信号',
    'user', @CurrentUser, 'table', 'WX_App', 'column', 'WXId'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '公众号类型',
-   'user', @CurrentUser, 'table', 'WX_App', 'column', 'AppType'
 go
 
 declare @CurrentUser sysname
@@ -1218,7 +1237,7 @@ go
 /*==============================================================*/
 create table WX_User (
    OpenID               VARCHAR(50)          not null,
-   GrooupId             int                  null,
+   GroupId              int                  null,
    AppId                varchar(50)          null,
    UserId               int                  null,
    UserNick             VARCHAR(50)          null,
@@ -1263,7 +1282,7 @@ declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '用户组编号',
-   'user', @CurrentUser, 'table', 'WX_User', 'column', 'GrooupId'
+   'user', @CurrentUser, 'table', 'WX_User', 'column', 'GroupId'
 go
 
 declare @CurrentUser sysname
@@ -1568,6 +1587,11 @@ alter table SYS_User
       references WX_App (AppId)
 go
 
+alter table WX_App
+   add constraint FK_WX_APP_REFERENCE_APPTYPE foreign key (TypeId)
+      references AppType (TypeId)
+go
+
 alter table WX_CustomMsg
    add constraint FK_WX_CUSTO_REFERENCE_WX_USER foreign key (OpenID)
       references WX_User (OpenID)
@@ -1629,7 +1653,7 @@ alter table WX_User
 go
 
 alter table WX_User
-   add constraint FK_WX_USER_REFERENCE_WX_USERG foreign key (GrooupId)
+   add constraint FK_WX_USER_REFERENCE_WX_USERG foreign key (GroupId)
       references WX_UserGroup (GroupId)
 go
 

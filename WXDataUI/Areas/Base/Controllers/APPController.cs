@@ -72,13 +72,6 @@ namespace WXDataUI.Areas.Base.Controllers
                     list = list.Where(a => a.CompanyName != null && a.CompanyName.Contains(CompanyName)).ToList();
                 }
             }
-
-
-
-
-
-
-
             var json = list.Select(s => new
             {
                 AppType = s.WX_AppType.TypeName,
@@ -105,7 +98,16 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult AddApp(WX_App app)
         {
             app.AppState = "正常";
-            return Json(new WX_AppManager().Add(app), JsonRequestBehavior.AllowGet);
+            ReturnResult result = new ReturnResult();
+            result.ErrorMsg = "新增失败!";
+            if (!CheckAppId(app.AppId))
+            {
+                result.ErrorMsg += "公众号Id重复!";
+                result.Result = false;
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            result.Result = new WX_AppManager().Add(app);
+            return Json(result, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -126,18 +128,19 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpPost]
         public ActionResult DeleteApp(string id)
         {
-
-
-           
             WX_AppManager bll = new WX_AppManager();
             WX_App app = bll.GetByPK(id);
             WX_App app1 = new WX_App();
             EntityUntility.CopyProperty(app, app1);
             app1.AppState = "无效"; 
-
             return Json(new WX_AppManager().Update(app1), JsonRequestBehavior.AllowGet);
         }
-
+        
+        private bool CheckAppId(string appId)
+        {
+            var list = new WX_AppManager().Where(a => a.AppId.Equals(appId));
+            return list.Count() == 0;
+        }
        
     }
 }
