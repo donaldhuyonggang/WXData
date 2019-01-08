@@ -155,6 +155,7 @@
     <Content Include="Content\Images\Denglu\downld.png" />
     <Content Include="Content\Images\Denglu\download.png" />
     <Content Include="Content\Images\Denglu\download.svg" />
+    <Content Include="Content\Images\WXMenu\1.png" />
     <Content Include="Content\Images\funcImg\icon1.png" />
     <Content Include="Content\Images\funcImg\icon2.png" />
     <Content Include="Content\Images\funcImg\icon3.png" />
