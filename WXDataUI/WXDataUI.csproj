@@ -155,6 +155,14 @@
     <Content Include="Content\Images\Denglu\downld.png" />
     <Content Include="Content\Images\Denglu\download.png" />
     <Content Include="Content\Images\Denglu\download.svg" />
+    <Content Include="Content\Images\funcImg\icon1.png" />
+    <Content Include="Content\Images\funcImg\icon2.png" />
+    <Content Include="Content\Images\funcImg\icon3.png" />
+    <Content Include="Content\Images\funcImg\icon4.png" />
+    <Content Include="Content\Images\funcImg\icon5.png" />
+    <Content Include="Content\Images\funcImg\icon6.png" />
+    <Content Include="Content\Images\funcImg\unie6bd.png" />
+    <Content Include="Content\Images\funcImg\unie93b.png" />
     <Content Include="Content\Index.css" />
     <Content Include="Content\Media\fileinput.min.css" />
     <Content Include="Scripts\bootstrap-treeview.js" />

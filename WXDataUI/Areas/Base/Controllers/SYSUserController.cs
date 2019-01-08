@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using WXDataBLL;
 using WXDataBLL.Base;
 using WXDataModel;
+using WXDataUI.Filter;
 using WXDataUI.Models;
 
 namespace WXDataUI.Areas.Base.Controllers
@@ -14,6 +15,7 @@ namespace WXDataUI.Areas.Base.Controllers
     /// <summary>
     /// 系统用户管理控制器
     /// </summary>
+    [RightFilter(Message = "系统用户管理")]
     public class SYSUserController : Controller
     {
         // GET: Base/SYSUser
