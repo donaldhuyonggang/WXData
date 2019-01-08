@@ -20,31 +20,54 @@
                         <input type="text" name="UserName" class="form-control" id="UserName" placeholder="">
                     </div>
                 </div><!--form-group-->
-
+                
                 <div class="form-group">
                     <label for="select1" class="col-sm-2 control-label">公众号</label>
                     <div class="col-sm-4">
-                        <input type="hidden" name="AppId" value="@sysUser.WX_App.AppId" />
-                        <select class="form-control" name="" id="select1"  disabled>
-                            @foreach (var a in (List<WX_App>)ViewBag.AppList)
-                            {
-                                if (a.AppId == sysUser.WX_App.AppId)
+                        @if (sysUser.SYS_Role.RoleSign.Equals("SYS_ADMIN"))
+                        {
+                            <select class="form-control" name="AppId" id="appSelect">
+                                @foreach (var a in (List<WX_App>)ViewBag.AppList)
                                 {
-                                    <option value="@a.AppId" selected>@a.AppName</option>
+                                    if (a.AppId == sysUser.WX_App.AppId)
+                                    {
+                                        <option value="@a.AppId" selected>@a.AppName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@a.AppId">@a.AppName</option>
+                                    }
                                 }
-                                else
+                            </select>
+                        }
+                        else
+                        {
+                            <input type="hidden" name="AppId" value="@sysUser.WX_App.AppId" />
+                            <select class="form-control" name="AppId" id="appSelect" disabled>
+                                @foreach (var a in (List<WX_App>)ViewBag.AppList)
                                 {
-                                    <option value="@a.AppId">@a.AppName</option>
+                                    if (a.AppId == sysUser.WX_App.AppId)
+                                    {
+                                        <option value="@a.AppId" selected>@a.AppName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@a.AppId">@a.AppName</option>
+                                    }
                                 }
-                            }
-                        </select>
+                            </select>
+                            
+                        }
                     </div>
                     <label for="select2" class="col-sm-2 control-label">角色类型</label>
                     <div class="col-sm-4">
-                        <select class="form-control" name="RoleId" id="select2">
+                        <select class="form-control" name="RoleId" id="roleSelect">
                             @foreach (var a in (List<SYS_Role>)ViewBag.RoleList)
                             {
-                                <option value="@a.RoleId">@a.RoleName</option>
+                                if (!a.RoleSign.Equals("SYS_ADMIN"))
+                                {
+                                    <option value="@a.RoleId">@a.RoleName</option>
+                                }
                             }
                         </select>
                     </div>
@@ -60,25 +83,25 @@
                     </div>
                     <label for="cPassword" class="col-sm-2 control-label">确认密码</label>
                     <div class="col-sm-4">
-                        <input type="password" name="Password" class="form-control" id="cPassword" placeholder="">
+                        <input type="password" name="cPassword" class="form-control" id="cPassword" placeholder="">
                     </div>
                 </div><!--form-group-->
 
                 <div class="form-group">
                     <label for="Email" class="col-sm-2 control-label">邮件地址</label>
                     <div class="col-sm-4">
-                        <input type="email" name="Email" class="form-control" id="Email" placeholder="">
+                        <input type="email" name="Email" class="form-control"  placeholder="">
                     </div>
                     <label for="Telphone" class="col-sm-2 control-label">移动电话</label>
                     <div class="col-sm-4">
-                        <input type="text" name="Telphone" class="form-control" id="Telphone" placeholder="">
+                        <input type="text" name="Telphone" class="form-control"  placeholder="">
                     </div>
                 </div><!--form-group-->
 
                 <div class="form-group">
                     <label for="WXId" class="col-sm-2 control-label">微信号</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="WXId" id="WXId" placeholder="">
+                        <input type="text" class="form-control" name="WXId" placeholder="">
                     </div>
                     <label class="col-sm-2 control-label">性别</label>
                     <div class="col-sm-4">
@@ -106,6 +129,16 @@
 <script>
     //EditSysUser
     $(function () {
+        $("#appSelect").change(function () {
+            var appid = $("#appSelect").val();
+            $.post("/Base/SYSUser/GetRoleByAppId", "appId="+appid, function (json) {
+                var opts = "";
+                $.each(json, function (i, obj) {
+                    opts += "<option value=" + obj.RoleId + ">" + obj.RoleName + "</option>";
+                });
+                $("#roleSelect").html(opts);
+            });
+        });
         $("#submit").click(function () {
             $.post("/Base/SYSUser/AddSysUser", $("#form").serialize(), function (r) {
                 if (r.Result) {

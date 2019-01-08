@@ -40,8 +40,10 @@ namespace WXDataUI.Areas.Base.Controllers
                 Session["SYSUSER"] = user;
                 Controller_EX.BindSession(Session);
                 return Json(true, JsonRequestBehavior.AllowGet);
+                //return Redirect("/Base/Home/Index");
             }
-            return Json(false,JsonRequestBehavior.AllowGet);
+            //return JavaScript("<script>alert('登录失败!');location.href='/Base/Home/Login'</script>");
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

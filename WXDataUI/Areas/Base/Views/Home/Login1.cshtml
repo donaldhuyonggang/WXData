@@ -1,0 +1,144 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>登录</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/login.css" rel="stylesheet" />
+    <style>
+        .header, .footer {
+            padding:2% 0 1% 0;
+            text-align: center;
+            height:12%;
+        }
+
+       
+        .tab-content {
+            border: 1px solid #ddd;
+            border-top: none;
+        }
+
+        .tab-pane {
+            padding: 0 15px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-top: 15px;
+        }
+        hr {
+            border:2px solid #00df1d;
+            margin:0px;
+        }
+       
+        a{
+            color:#808080;
+        }
+            a:hover {
+            color:red;
+            text-decoration:none;
+            }
+      
+        
+        
+       
+        .login {
+            max-height: 350px;
+            max-width: 350px;
+            padding: 40px;
+            margin: 90px;
+            background-color: #ffffff;
+            margin-left: 900px;
+            box-sizing: border-box;
+            border-radius: 4px;
+        }
+        .content {
+            background:url('../../../../Content/Images/Login/download.png')no-repeat;
+            background-size: cover;  
+            
+        }
+        
+        .foot {
+            margin-top:30px;
+        }
+        
+        
+        .links a:hover{
+            color:#576b95;
+            text-decoration:underline;
+        }
+        .links a {
+         color:#576b95;
+        }
+        .links a{
+            margin-bottom:70px;
+            margin-right:10px;
+            margin-left:10px;
+          
+        }
+        .links {
+              margin-top:50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="row">
+            <div class="col-lg-5"><img src="~/Content/Images/Login/download.svg" /></div>
+        </div>
+    </div>
+    <div class="content row">
+        <div>
+            <div id="Login_Form" class="col-lg-12">
+
+                <div class="login">
+                    <div class="message">管理登录</div>
+                    <div id="darkbannerwrap"></div>
+
+                    <form method="post" id="LoginForm" action="/Base/Home/Login">
+                        <input name="action" value="login" type="hidden">
+                        <input name="LoginId" placeholder="用户名" required="" type="text" value="xcy">
+                        <hr class="hr15">
+                        <input name="Password" placeholder="密码" required="" type="password" value="xcy">
+                        <hr class="hr15">
+                        <input value="登录" style="width: 100%;" type="button" id="Login">
+                        <hr class="hr20">
+                    </form>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @*<div class="row footer">
+        <div class="links">
+            <a href="#">关于腾讯</a>|
+            <a href="#">服务协议</a>|
+            <a href="#">运营中心</a>|
+            <a href="#">辟谣中心</a>|
+            <a href="#">腾讯客服</a>|
+            <a href="#">联系邮箱</a>|
+            <a href="#">侵权投诉</a>
+        </div>
+    </div>*@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        $("#Login").click(function () {
+            $.post("/Base/Home/Login", $("#LoginForm").serialize(), function (r) {
+                if (r) {
+                    location.href = "/Base/Home/Index";
+                } else {
+                    alert("登录失败!");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

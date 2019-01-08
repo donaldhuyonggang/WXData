@@ -109,10 +109,20 @@ namespace WXDataUI.Areas.Base.Controllers
 
          [HttpGet]
         public ActionResult LookSysUser(int id) {
-           ViewBag.LookSysUser = new SYS_UserManager().GetByPK(id);
+            ViewBag.LookSysUser = new SYS_UserManager().GetByPK(id);
             ViewBag.RoleList = new SYS_RoleManager().GetAll();
             ViewBag.AppList = new WX_AppManager().GetAll();
             return PartialView();
+        }
+
+        public ActionResult GetRoleByAppId(string appId)
+        {
+            var list = new SYS_RoleManager().Where(s => !s.RoleSign.Equals("SYS_ADMIN") && (s.AppId == null || s.AppId.Equals(appId))).Select(s => new
+            {
+                s.RoleId,
+                s.RoleName
+            });
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
     }
 }
