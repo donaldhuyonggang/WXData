@@ -1,13 +1,95 @@
-﻿@{
+﻿@using WXDataModel
+@{
     ViewBag.Title = "管理订阅用户";
+    List<WX_UserTag> TagList = ViewBag.TagList as List<WX_UserTag>;
+    List<WX_UserGroup> GroupList = ViewBag.GroupList as List<WX_UserGroup>;
 }
 @section styles{
 
-   <link href="~/Content/Common.css" rel="stylesheet" />
+    <link href="~/Content/Common.css" rel="stylesheet" />
+    <style>
+        .nav>li>a {
+            padding: 5px;
+            font-size:13px;
+        }
+        .form-group label{
+            height:34px;
+            line-height:34px;
+        }
+        .UserGroup .panel {
+            margin-bottom: 0;
+        }
+        .UserGroup .panel-heading {
+            background-color: #fff; 
+        }
+        .UserGroup .panel-title a{
+            font-size:13px;
+            border:none;
+        }
+    </style>
 }
 
 <div class="usercontent">
-    <div class="col-xs-12 padd">
+    <div class="col-xs-2 padd usetlef">
+        <nav class="navbar marg  navbar-default navbar-static-top">
+            <div class="col-xs-12">
+                <h5 class="navbar-text navbar-left">用户分类<a href="#" class="navbar-link"></a></h5>
+            </div>
+        </nav>
+        <div class="UserGroup">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#TagList" aria-controls="TagList" role="tab" data-toggle="tab">按标签查看</a></li>
+                <li role="presentation"><a href="#GroupList" aria-controls="GroupList" role="tab" data-toggle="tab">按分组查看</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="TagList">
+                    @for (var i = 0; i < TagList.Count; i++)
+                    {
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="Tag-heading-@i">
+                                <h4 class="panel-title">
+                                    <a role="button" class="" data-toggle="collapse" data-parent="#TagList" href="#Tag-collapse-@i" aria-expanded="true" aria-controls="Tag-collapse-@i">
+                                        @TagList[i].TagName
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="Tag-collapse-@i" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@i">
+                                <div class="panel-body">
+                                    1
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div role="tabpanel" class="tab-pane" id="GroupList">
+                    @for (var i = 0; i < GroupList.Count; i++)
+                    {
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="Group-heading-@i">
+                                <h4 class="panel-title">
+                                    <a role="button" class="" data-toggle="collapse" data-parent="#GroupList" href="#Group-collapse-@i" aria-expanded="true" aria-controls="Group-collapse-@i">
+                                        @GroupList[i].GroupName
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="Group-collapse-@i" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@i">
+                                <div class="panel-body">
+                                    2
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-xs-10 padd">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="rightheadingone">
@@ -21,23 +103,23 @@
                     <div class="panel-body">
                         <div class="col-xs-11">
                             <div class="form-inline topfind">
-                                <div class="form-group">
-                                    <label for="">用户编码:</label>
-                                    <input type="text" class="form-control" name="OpenID" id="OpenID" placeholder="用户编码">
+                                <div class="form-group col-xs-6">
+                                    <label for="S_OpenID" class="col-xs-3">用户编码:</label>
+                                    <div class="col-xs-9"><input type="text" class="form-control" name="OpenID" id="S_OpenID" placeholder="用户编码"></div> 
                                 </div>
-                                <div class="form-group">
-                                    <label for="">用户名:</label>
-                                    <input type="text" class="form-control" name="UserNick" id="UserNick" placeholder="用户名">
+                                <div class="form-group  col-xs-6">
+                                    <label for="S_UserNick" class="col-xs-3">用户名:</label>
+                                    <div class="col-xs-9"><input type="text" class="form-control" name="UserNick" id="S_UserNick" placeholder="用户名"></div>
                                 </div>
                             </div>
                             <div class="form-inline topfind">
-                                <div class="form-group">
-                                    <label for="">移动电话:</label>
-                                    <input type="text" class="form-control" name="Telphone" id="Telphone" placeholder="移动电话">
+                                <div class="form-group col-xs-6">
+                                    <label for="S_Telphone" class="col-xs-3">移动电话:</label>
+                                    <div class="col-xs-9"><input type="text" class="form-control" name="Telphone" id="S_Telphone" placeholder="移动电话"></div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="">邮件地址:</label>
-                                    <input type="text" class="form-control" name="Emial" id="Emial" placeholder="邮件地址">
+                                <div class="form-group col-xs-6">
+                                    <label for="S_Emial" class="col-xs-3">邮件地址:</label>
+                                    <div class="col-xs-9"><input type="text" class="form-control" name="Emial" id="S_Emial" placeholder="邮件地址"></div>
                                 </div>
                             </div>
                         </div>

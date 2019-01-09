@@ -221,12 +221,11 @@
         </EntityType>
         <EntityType Name="WX_UserTag">
           <Key>
-            <PropertyRef Name="TageId" />
+            <PropertyRef Name="TagId" />
           </Key>
-          <Property Name="TageId" Type="int" Nullable="false" />
+          <Property Name="TagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AppId" Type="varchar" MaxLength="50" />
           <Property Name="TagName" Type="nvarchar" MaxLength="50" />
-          <Property Name="UserCount" Type="int" />
         </EntityType>
         <EntityType Name="WX_UserTagRelation">
           <Key>
@@ -577,7 +576,7 @@
           <End Role="WX_UserTagRelation" Type="Self.WX_UserTagRelation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WX_UserTag">
-              <PropertyRef Name="TageId" />
+              <PropertyRef Name="TagId" />
             </Principal>
             <Dependent Role="WX_UserTagRelation">
               <PropertyRef Name="TageId" />
@@ -986,12 +985,11 @@
         </EntityType>
         <EntityType Name="WX_UserTag">
           <Key>
-            <PropertyRef Name="TageId" />
+            <PropertyRef Name="TagId" />
           </Key>
-          <Property Name="TageId" Type="Int32" Nullable="false" />
+          <Property Name="TagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TagName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UserCount" Type="Int32" />
           <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_USERT_REFERENCE_WX_APP" FromRole="WX_UserTag" ToRole="WX_App" />
           <NavigationProperty Name="WX_User" Relationship="Self.WX_UserTagRelation" FromRole="WX_UserTag" ToRole="WX_User" />
         </EntityType>
@@ -1661,10 +1659,9 @@
           <EntitySetMapping Name="WX_UserTag">
             <EntityTypeMapping TypeName="WXDataModel.WX_UserTag">
               <MappingFragment StoreEntitySet="WX_UserTag">
-                <ScalarProperty Name="TageId" ColumnName="TageId" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
                 <ScalarProperty Name="AppId" ColumnName="AppId" />
                 <ScalarProperty Name="TagName" ColumnName="TagName" />
-                <ScalarProperty Name="UserCount" ColumnName="UserCount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1681,7 +1678,7 @@
               <ScalarProperty Name="OpenID" ColumnName="OpenID" />
             </EndProperty>
             <EndProperty Name="WX_UserTag">
-              <ScalarProperty Name="TageId" ColumnName="TageId" />
+              <ScalarProperty Name="TagId" ColumnName="TageId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

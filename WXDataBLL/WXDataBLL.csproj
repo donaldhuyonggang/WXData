@@ -56,6 +56,7 @@
     <Compile Include="WXCustom\WX_QueueManager.cs" />
     <Compile Include="WXMenu\WXMenuManger.cs" />
     <Compile Include="WXQR\WX_QRManager.cs" />
+    <Compile Include="WXUser\WX_UserTagManager.cs" />
     <Compile Include="WXUser\WX_UserManager.cs" />
     <Compile Include="WXEvent\WX_EvenQueueManager.cs" />
     <Compile Include="WXUser\WX_UserGroupManager.cs" />
