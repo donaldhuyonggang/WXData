@@ -75,6 +75,34 @@ namespace WXDataUI.Areas.WXMenu.Controllers
         }
 
         /// <summary>
+        /// 新增一级菜单页面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Add() {
+            if (Session["SYSUSER"] == null)
+            {
+                return Redirect("/base/home/login");
+            }
+            bool pd = new WXDataBLL.WXMenu.WXMenuManger().Add_yiji_pd((Session["SYSUSER"] as SYS_User).AppId);
+            ViewBag.pd = pd;
+            return View();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /// <summary>
         /// 模态框 判断新建子级元素判断二级菜单是否超过五个
         /// </summary>
         /// <param name="id"></param>
