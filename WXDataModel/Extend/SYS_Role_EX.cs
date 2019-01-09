@@ -25,5 +25,17 @@ namespace WXDataModel.Extend
             }
             return list;
         }
+
+        public static bool CheckRight(this SYS_Role role,string FunctionName)
+        {
+            foreach (var f in role.SYS_Function)
+            {
+                if (f.FunctionName.Equals(FunctionName))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

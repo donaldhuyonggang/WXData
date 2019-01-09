@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WXDataModel;
+using WXDataModel.Extend;
 
 namespace WXDataUI.Filter
 {
@@ -20,8 +21,14 @@ namespace WXDataUI.Filter
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
-            SYS_User user = filterContext.HttpContext.Session["SYSUSER"] as SYS_User;
-
+            SYS_Role role = (filterContext.HttpContext.Session["SYSUSER"] as SYS_User).SYS_Role;
+            if (!role.RoleSign.Equals("SYS_ADMIN"))
+            {
+                if (!role.CheckRight(Message))
+                {
+                    filterContext.HttpContext.Response.Write(ReturnMsg);
+                }
+            }
             //filterContext.HttpContext.Response.Write("Action执行之前" + Message + "<br />");
         }
         /// <summary>

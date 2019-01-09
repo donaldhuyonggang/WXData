@@ -234,7 +234,14 @@ body {
     border-color:#222a31;
 }
 
+.sidebar .panel-title img{
+    height:16px;
+    width:16px;
+    vertical-align:middle;
+    margin-right:5px;
 
+
+}
 
 
 .active a{
@@ -243,9 +250,12 @@ body {
 
 
 .nav-sidebar a{
-    margin-left:2em;
+    margin-left:3em;
 }
 
 
 
 
+.navbar-header .navbar-brand{
+    color:white;
+}

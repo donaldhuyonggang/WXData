@@ -156,13 +156,14 @@
     function Init() {
     
         var myChart1 = new Chart(ctx1, {
-            type: 'doughnut',
+            //type: 'doughnut',
+            type:'polarArea',
             data: data,
             options: options
         });
         var myChart2 = new Chart(ctx2, {
-            type: 'line',
             data: data,
+            type: 'bar',
             options: options
         });
 }

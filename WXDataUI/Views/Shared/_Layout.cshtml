@@ -52,9 +52,9 @@
                            data-target="#MenuEdit">添加菜单</a>
                     </li>*@
                 </ul>
-                <form class="navbar-form navbar-right">
+                @*<form class="navbar-form navbar-right">
                     <input type="text" class="form-control" placeholder="搜索...">
-                </form>
+                </form>*@
             </div>
         </div>
     </nav>
@@ -67,7 +67,10 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="@i.FunctionID">
                             <h4 class="panel-title">
-                                <a role="button" class="" data-toggle="collapse" data-parent="#funcList" href="#collapse-@i.FunctionID" aria-expanded="true" aria-controls="collapse-@i.FunctionID"><i></i>@i.FunctionName</a>
+                                <a role="button" class="" data-toggle="collapse" data-parent="#funcList" href="#collapse-@i.FunctionID" aria-expanded="true" aria-controls="collapse-@i.FunctionID">
+                                    <img src="/Content/Images/@i.ImageUrl"/>
+                                    <span>@i.FunctionName</span>
+                                </a>
                             </h4>
                         </div>
                         <div id='collapse-@i.FunctionID' class="panel-collapse collapse " role="tabpanel" aria-labelledby="@i.FunctionID">
