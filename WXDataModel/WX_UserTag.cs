@@ -19,10 +19,9 @@ namespace WXDataModel
             this.WX_User = new HashSet<WX_User>();
         }
     
-        public int TageId { get; set; }
+        public int TagId { get; set; }
         public string AppId { get; set; }
         public string TagName { get; set; }
-        public Nullable<int> UserCount { get; set; }
     
         public virtual WX_App WX_App { get; set; }
         public virtual ICollection<WX_User> WX_User { get; set; }

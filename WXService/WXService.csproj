@@ -51,6 +51,7 @@
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Utility\DateTimeUtility.cs" />
     <Compile Include="Utility\EntityUntility.cs" />
+    <Compile Include="Utility\GetInitialUtility.cs" />
     <Compile Include="Utility\MyHttpUtility.cs" />
     <Compile Include="Utility\XmlUtility.cs" />
   </ItemGroup>

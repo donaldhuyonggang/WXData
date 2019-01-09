@@ -2,8 +2,6 @@
 go
 
 
-//=================
-
 --Start新增用户角色
 insert into SYS_Role(RoleSign,RoleName)values('SYS_ADMIN','超级管理员')
 insert into SYS_Role(RoleSign,RoleName)values('APP_ADMIN','平台管理员')
@@ -69,3 +67,10 @@ insert into WX_UserGroup(AppId,UserId,GroupName,GroupSort)values(null,null,'新�
 insert into WX_UserGroup(AppId,UserId,GroupName,GroupSort)values(null,null,'成交用户',2)
 insert into WX_UserGroup(AppId,UserId,GroupName,GroupSort)values(null,null,'星级用户',3)
 --End新增用户组别
+
+--Start新增用户标签
+insert into WX_UserTag(AppId,TagName)values(null,'星标客户')
+insert into WX_UserTag(AppId,TagName)values(null,'重要客户')
+insert into WX_UserTag(AppId,TagName)values(null,'朋友')
+--End新增用户标签
+

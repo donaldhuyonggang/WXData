@@ -17,13 +17,15 @@ namespace WXDataUI.Areas.WXUser.Controllers
         // GET: WXUser/Home
         public ActionResult Index()
         {
+            string appId = (Session["SYSUSER"] as SYS_User).AppId;
+            ViewBag.TagList = new WX_UserTagManager().GetTagList(appId);
+            ViewBag.GroupList = new WX_UserGroupManager().GetGroupList(appId);
             return View();
         }
         [HttpGet]
         public ActionResult AllotUser(string id)
         {
             ViewBag.SYSUserList = (Session["SYSUSER"] as SYS_User).WX_App.SYS_User.ToList();
-
             ViewBag.OpenId = id;
             return PartialView();
         }
