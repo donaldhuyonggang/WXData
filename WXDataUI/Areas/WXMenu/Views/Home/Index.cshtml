@@ -4,6 +4,24 @@
 }
 @using WXDataModel
 @*<a class="btn btn-default" href="/WXMenu/Home/Add_yiji_pd" role="button" data-toggle="modal" data-target="#LZ_Add_WX_Menu">新增一级菜单</a>*@
+<style>
+    #fasong_tou_ul li{
+        display: inline-block;
+        padding:10px 20px;
+        background-color: #f6f8f9;
+    }
+    #fasong_tou_ul li a {
+        text-decoration: none;
+        color: #222;
+    }
+    #fasong_tou_ul li a:hover{
+        color: #8CB590;
+    }
+    #fasong_tou_ul li img {
+        margin-right: 3px;
+        margin-top: -2px;
+    }
+</style>
 <a class="btn btn-default" id="Add_yiji" href="#" role="button">新增一级菜单</a>
 <table id="shuju"class="table table-bordered">
     <tr>
@@ -71,9 +89,27 @@
                             <label id="xiaocunxu" style="cursor: pointer;"><input class="ck" type="radio" /> 跳转小程序 </label>
                         </div>
                         <div>
+                            <div id="fasong_tou">
+                                <div>
+                                    <ul style="" id="fasong_tou_ul">
+                                        <li>
+                                            <a href="javascript:void(0);"><img src="~/Content/Images/WXMenu/a1.png" />图文消息</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);"><img src="~/Content/Images/WXMenu/a2.png" />图片</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);"><img src="~/Content/Images/WXMenu/a3.png" />语音</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);"><img src="~/Content/Images/WXMenu/a4.png" />视频</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="fasong_xia">
 
-
-
+                            </div>
                         </div>
                     </div>
                 </div>

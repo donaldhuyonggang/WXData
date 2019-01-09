@@ -156,6 +156,10 @@
     <Content Include="Content\Images\Denglu\download.png" />
     <Content Include="Content\Images\Denglu\download.svg" />
     <Content Include="Content\Images\WXMenu\1.png" />
+    <Content Include="Content\Images\WXMenu\a1.png" />
+    <Content Include="Content\Images\WXMenu\a2.png" />
+    <Content Include="Content\Images\WXMenu\a3.png" />
+    <Content Include="Content\Images\WXMenu\a4.png" />
     <Content Include="Content\Index.css" />
     <Content Include="Content\Media\fileinput.min.css" />
     <Content Include="Scripts\bootstrap-treeview.js" />
