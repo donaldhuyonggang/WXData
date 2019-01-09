@@ -19,7 +19,7 @@ namespace WXDataUI
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //启动一个服务。
-            new AutoService().Start();
+            //new AutoService().Start();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WXDataBLL.Base;
 using WXDataModel;
+using WXDataUI.Filter;
 using WXDataUI.Models;
 
 namespace WXDataUI.Areas.Base.Controllers
@@ -12,6 +13,7 @@ namespace WXDataUI.Areas.Base.Controllers
     /// <summary>
     /// 素材管理控制器
     /// </summary>
+    [RightFilter(Message = "素材管理")]
     public class MediaController : Controller
     {
         // GET: Base/Media

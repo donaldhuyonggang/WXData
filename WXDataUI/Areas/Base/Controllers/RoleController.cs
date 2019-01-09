@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using WXDataBLL;
 using WXDataBLL.Base;
 using WXDataModel;
+using WXDataUI.Filter;
 using WXDataUI.Models;
 
 namespace WXDataUI.Areas.Base.Controllers
@@ -14,6 +15,7 @@ namespace WXDataUI.Areas.Base.Controllers
     /// <summary>
     /// 角色控制器
     /// </summary>
+    [RightFilter(Message = "角色管理")]
     public class RoleController : Controller
     {
         // GET: Base/Role

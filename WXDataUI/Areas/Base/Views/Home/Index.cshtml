@@ -112,12 +112,12 @@
 
 
 </section>
-
-
 <script src="/Scripts/Chart.min.js"></script>
 <script>
 
-$(function () {
+    $(function () {
+        Init();
+    });
     var ctx1 = document.getElementById("myChart1").getContext('2d');
     var ctx2 = document.getElementById("myChart2").getContext('2d');
     var data = {
@@ -153,15 +153,18 @@ $(function () {
             }
         }
     };
-    var myChart1 = new Chart(ctx1, {
-        type: 'doughnut',
-        data: data,
-        options: options
-    });
-    var myChart2 = new Chart(ctx2, {
-        type: 'line',
-        data: data,
-        options: options
-    });
-});
+    function Init() {
+    
+        var myChart1 = new Chart(ctx1, {
+            //type: 'doughnut',
+            type:'polarArea',
+            data: data,
+            options: options
+        });
+        var myChart2 = new Chart(ctx2, {
+            data: data,
+            type: 'bar',
+            options: options
+        });
+}
 </script>

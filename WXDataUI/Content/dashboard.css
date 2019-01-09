@@ -69,12 +69,7 @@ body {
   padding-right: 20px;
   padding-left: 20px;
 }
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
-}
+
 
 
 /*
@@ -194,9 +189,73 @@ body {
             text-decoration: none;
             background-color: #eee;
         }
-.active{
-    background: #2a6496;
+
+
+
+.mains{
+    background-color:white;
 }
+#navbar ,
+.sidebar,
+.sidebar .panel,
+.sidebar .panel .panel-heading,
+.content{
+    background-color:#283643;
+    border-color:#283643;
+}
+.sidebar .panel-group{
+    margin-top:20px;
+}
+.sidebar .panel-heading:hover{
+    background-color: #24303c;
+}
+
+.sidebar .panel-heading a,
+.sidebar .panel-body a{
+   color: #A2B4BA;
+   font-size:14px;
+}
+
+.sidebar .panel-heading a:hover,
+.sidebar .panel-body a:hover{
+   color: white;
+   text-decoration:none;
+}
+.sidebar .panel-body a:hover{
+    background: #222a31;
+}
+
+
+
+
+.sidebar .panel-collapse>.panel-body{
+    border-top-color:#222a31;
+    background: #222a31;
+    border-color:#222a31;
+}
+
+.sidebar .panel-title img{
+    height:16px;
+    width:16px;
+    vertical-align:middle;
+    margin-right:5px;
+
+
+}
+
+
 .active a{
+    color:white;
+}
+
+
+.nav-sidebar a{
+    margin-left:3em;
+}
+
+
+
+
+.navbar-header .navbar-brand{
     color:white;
 }

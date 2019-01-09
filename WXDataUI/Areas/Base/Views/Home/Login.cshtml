@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = null;
 }
 
@@ -7,175 +8,64 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>登录</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/login.css" rel="stylesheet" />
+    <title>Login</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/Login.css" rel="stylesheet" />
     <style>
-          .header, .footer {
-            padding:2% 0 1% 0;
-            text-align: center;
-            height:12%;
-        }
-
-       
-        .tab-content {
-            border: 1px solid #ddd;
-            border-top: none;
-        }
-
-        .tab-pane {
-            padding: 0 15px;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-top: 15px;
-        }
-        hr {
-        border:2px solid #00df1d;
-        margin:0px;
-        }
-        .images_turen { 
-            background-image: url('/Content/Images/Denglu/downld.png');
-            display: inline-block;
-            width: 30px;
-            height: 20px;
-            background-size: 400%;
-            background-position: 6px 0px;
-            margin-right: 10px;
-        }
-      
-        .zhuce {
-            display:inline-block;
-            margin-top:15px;
-        }
-        a{
-            color:#808080;
-        }
-            a:hover {
-            color:red;
-            text-decoration:none;
-            }
-      
-        .zhfl_Login {
-            text-align:left;
-            margin-left:300px;
-            
-        }
-        .divy_log {
-            margin-left:300px;
-        }
-        .divy_log,.divr_log,.divs_log{
-            border:1px solid #ddd;
-            margin-right:10px;
-            width:300px;
-            padding:0px 30px;
-        }
-       
-        .login {
-            max-height: 350px;
-            max-width: 350px;
-            padding: 40px;
-            margin: 90px;
-            background-color: #ffffff;
-            margin-left: 900px;
-            box-sizing: border-box;
-            border-radius: 4px;
-        }
-        .content {
-            background:url('../../../../Content/Images/Denglu/download.png')no-repeat;
-            background-size: cover;  
-            
-        }
-        .div_wenzi {
-            color:#cdcdcd;
-            margin-top:10px;
-            margin-bottom:20px;
-        }
-        .foot {
-            margin-top:30px;
-        }
-        .yc {
-            
-        }
-        .xs {
-        display:none;
-       
-        }
-        .ckxq {
-            background-color:#44b549;
-            width:130px;
-            padding:8px;
-            border-radius:3px;
-            color:white;
-            margin-left:50px;
-            margin-top:100px;
-            margin-bottom:20px;
-        }
-        .lj a:hover{
-            color:#576b95;
-            text-decoration:underline;
-        }
-        .lj a {
-         color:#576b95;
-        }
-        .lj a{
-            margin-bottom:70px;
-            margin-right:10px;
-            margin-left:10px;
-          
-        }
-        .lj {
-              margin-top:50px;
+        .input-group-addon {
+            padding: 5px 12px 10px 12px;
         }
     </style>
 </head>
-<body>
-    <div class="header">
-        <div class="row">
-            <div class="col-lg-5"><img src="~/Content/Images/Denglu/download.svg" /></div>
+
+<body class="login-page sidebar-expanded">
+    <div class="login-wrapper">
+        <div class="header skew">
         </div>
-    </div>
-    <div class="content row">
-        <div>
-            <div id="Login_Form" class="col-lg-12">
+        <div class="login-logo">
+            <a href="#">
+                <strong>Welcome</strong>
+            </a>
+        </div>
+        <div class="login-body">
+            <p class="text-primary text-center">欢迎使用微信公众号管理平台</p>
+            <div class="form">
+                <form method="post" id="LoginForm" action="/Base/Home/Login">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </span>
+                            <input type="email" name="LoginId" value="xcy" class="form-control" placeholder="输入用户名/电子邮箱">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-lock"></i>
+                            </span>
+                            <input type="password" name="Password" value="xcy" class="form-control" placeholder="输入密码">
+                        </div>
+                    </div>
 
-               
+                    <div class="form-group">
 
-                <div class="login">
-                    <div class="message">管理登录</div>
-                    <div id="darkbannerwrap"></div>
+                        <button type="button" id="Login" class="btn btn-primary" style="width:100%;">登录</button>
 
-                    <form method="post" id="LoginForm" action="/Base/Home/Login">
-                        <input name="action" value="login" type="hidden">
-                        <input name="LoginId" placeholder="用户名" required="" type="text" value="xcy">
-                        <hr class="hr15">
-                        <input name="Password" placeholder="密码" required="" type="password" value="xcy">
-                        <hr class="hr15">
-                        <input value="登录" style="width: 100%;" type="button" id="Login">
-                        <hr class="hr20">
-                    </form>
-
-
-                </div>
+                    </div>
+                </form>
 
             </div>
         </div>
     </div>
-    <div class="row footer">
-        <div class="lj">
-            <a href="#">关于腾讯</a>|
-            <a href="#">服务协议</a>|
-            <a href="#">运营中心</a>|
-            <a href="#">辟谣中心</a>|
-            <a href="#">腾讯客服</a>|
-            <a href="#">联系邮箱</a>|
-            <a href="#">侵权投诉</a>
-        </div>
-    </div>
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script>
+
+
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    <!-- icheck.js -->
+
+
+    <script type="text/javascript">
         $("#Login").click(function () {
             $.post("/Base/Home/Login", $("#LoginForm").serialize(), function (r) {
                 if (r) {
@@ -186,5 +76,8 @@
             });
         });
     </script>
+
+
 </body>
+
 </html>
