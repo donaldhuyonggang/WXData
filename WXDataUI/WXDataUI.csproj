@@ -172,6 +172,14 @@
     <Content Include="Content\Images\funcImg\icon6.png" />
     <Content Include="Content\Images\funcImg\unie6bd.png" />
     <Content Include="Content\Images\funcImg\unie93b.png" />
+    <Content Include="Content\Images\WXMenu\a1.png" />
+    <Content Include="Content\Images\WXMenu\a2.png" />
+    <Content Include="Content\Images\WXMenu\a3.png" />
+    <Content Include="Content\Images\WXMenu\a4.png" />
+    <Content Include="Content\Images\WXMenu\b1.png" />
+    <Content Include="Content\Images\WXMenu\b2.png" />
+    <Content Include="Content\Images\WXMenu\b3.png" />
+    <Content Include="Content\Images\WXMenu\b4.png" />
     <Content Include="Content\Index.css" />
     <Content Include="Content\Login.css" />
     <Content Include="Content\Media\fileinput.min.css" />
@@ -295,6 +303,7 @@
     <Content Include="Areas\WXMenu\Views\Home\Add_yiji_pd.cshtml" />
     <Content Include="fonts\iconfont.woff" />
     <Content Include="Areas\Base\Views\Home\Login.cshtml" />
+    <Content Include="Areas\WXMenu\Views\Home\Add.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />

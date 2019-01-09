@@ -1,0 +1,173 @@
+﻿@using WXDataModel
+@{
+    bool pd = ViewBag.pd;
+}
+<style>
+    #WXMenu_add {
+        background-color: #f4f5f9;
+        padding: 10px;
+    }
+
+    .WXMenu_add_bianju {
+        margin-bottom: 10px;
+        margin-top: 30px;
+        padding-bottom: 0;
+    }
+
+    .frm_label {
+        width: 5em;
+        float: left;
+        margin-top: .3em;
+        margin-right: 1em;
+        font-size: 14px;
+    }
+
+    #WXMenu_add_bianju_input_name {
+        display: table-cell;
+        vertical-align: top;
+        float: none;
+        width: auto;
+    }
+
+        #WXMenu_add_bianju_input_name span {
+            width: 228px;
+            padding-right: 60px;
+            display: inline-block;
+            position: relative;
+            height: 30px;
+            line-height: 30px;
+            vertical-align: middle;
+            font-size: 14px;
+            padding: 0 10px;
+            border: 1px solid #e7e7eb;
+            -webkit-border-radius: 0;
+            background-color: #fff;
+        }
+
+    .js_menu_name {
+        height: 22px;
+        width: 100%;
+        background-color: transparent;
+        border: 0;
+        outline: 0;
+        overflow: visible;
+        font-family: inherit;
+        font-size: 100%;
+        color: #222;
+    }
+
+    .frm_msg {
+        padding-top: 4px;
+    }
+
+    .frm_label strong, .frm_radio_label span {
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .frm_controls {
+        display: table-cell;
+        vertical-align: top;
+        float: none;
+        width: auto;
+        padding-top: .3em;
+    }
+
+    .frm_radio_label {
+        display: inline-block;
+        text-align: left;
+        cursor: pointer;
+        margin-right: 1em;
+    }
+
+    #WXMenu_add_jihe {
+    }
+
+    .msg_sender {
+        border: 1px solid #e7e7eb;
+    }
+
+    .msg_tab {
+        background-color: #fff;
+    }
+
+    #WXMenu_add_jihe_1_shang {
+        overflow: hidden;
+        background-color: #f6f8f9;
+    }
+
+    #WXMenu_add_jihe_1_shang_ul {
+        margin-left: 0;
+        background-color: #f6f8f9;
+        line-height: 60px;
+        height: 60px;
+        white-space: nowrap;
+        text-align: left;
+        font-size: 0;
+        border-bottom-width: 0;
+        box-shadow: none;
+        border-top-width: 0;
+    }
+        #WXMenu_add_jihe_1_shang_ul li {
+            background-color: transparent;
+        }
+</style>
+<div id="WXMenu_add">
+    <div class="WXMenu_add_bianju">
+        <label class="frm_label">
+            <strong>菜单名称</strong>
+        </label>
+        <div id="WXMenu_add_bianju_input_name">
+            <span>
+                <input type="text" class="js_menu_name">
+            </span>
+            <p class="frm_msg" style="display: none;">字数超过上限</p>
+            <p class="frm_msg" style="display: none;">请输入菜单名称</p>
+            <p class="frm_msg" style="color: rgba(0,0,0,0.5);;">仅支持中英文和数字，字数不超过4个汉字或8个字母</p>
+        </div>
+    </div>
+    <div class="WXMenu_add_bianju">
+        <label class="frm_label">
+            <strong>菜单内容</strong>
+        </label>
+        <div class="frm_controls">
+            <label class="frm_radio_label">
+                <input name="ck" checked type="radio" />  <span>发送消息</span>
+            </label>
+            <label class="frm_radio_label">
+                <input name="ck" type="radio" />  <span>跳转网页</span>
+            </label>
+            <label class="frm_radio_label">
+                <input name="ck" type="radio" />  <span>跳转小程序 </span>
+            </label>
+        </div>
+    </div>
+    <div id="WXMenu_add_jihe">
+        <div>
+            <div class="msg_sender" style="width: 500px;">
+                <div class="msg_tab" style="width: 500px;">
+                    <div id="WXMenu_add_jihe_1_shang" style="width: 500px;">
+                        <div style="width: 417px;">
+                            <ul id="WXMenu_add_jihe_1_shang_ul">
+                                <li>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("[name=ck]").click(function () {
+            $("[name=ck]").prop("checked", false);
+            $(this).prop("checked", true);
+        });
+    });
+</script>
