@@ -76,9 +76,13 @@ namespace WXDataUI.Areas.Base.Controllers
             var list = UserCode.OrderBy(x=>x.Code).Select(x=>x.Code).Distinct(); //获取当前所有不同分组，去掉重复的部分
             foreach (var item in list)
             {
-                var UCode = UserCode.OrderBy(x => x.Code).Where(s => s.Code.Equals(item)).ToList();
-                Dic.Add(item, UCode);
+                if (!item.Equals("#"))
+                {
+                    var UCode = UserCode.OrderBy(x => x.Code).Where(s => s.Code.Equals(item)).ToList();
+                    Dic.Add(item, UCode);
+                }
             }
+            Dic.Add("#",UserCode.Where(x=>x.Code.Equals("#")).ToList());
             return Json(Dic.ToList(), JsonRequestBehavior.AllowGet);
         }
 

@@ -3,26 +3,6 @@
     ViewBag.Title = "Index";
 }
 @using WXDataModel
-@*<a class="btn btn-default" href="/WXMenu/Home/Add_yiji_pd" role="button" data-toggle="modal" data-target="#LZ_Add_WX_Menu">新增一级菜单</a>*@
-<style>
-    #fasong_tou_ul li{
-        display: inline-block;
-        padding:10px 20px;
-        background-color: #f6f8f9;
-    }
-    #fasong_tou_ul li a {
-        text-decoration: none;
-        color: #222;
-    }
-    #fasong_tou_ul li a:hover{
-        color: #8CB590;
-    }
-    #fasong_tou_ul li img {
-        margin-right: 3px;
-        margin-top: -2px;
-    }
-</style>
-<a class="btn btn-default" id="Add_yiji" href="#" role="button">新增一级菜单</a>
 <table id="shuju"class="table table-bordered">
     <tr>
         <td>菜单名称</td>
@@ -59,65 +39,6 @@
             }
         }
 </table>
-
-<div style="border-top:1px solid #ff6a00;padding-top:20px;display:none;" id="add_yiji_div">
-    <form action="" id="form" method="post">
-        <div class="container-fluid">
-            <!--第一行-->
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label style="float:right;">菜单名称：</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input style="height:28px;" type="text" id="MenuName" name="MenuName" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--第二行-->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label style="float:right;">菜单内容：</label>
-                        </div>
-                        <div class="col-md-10">
-                            <label id="xiaoxi" style="cursor: pointer;"><input class="ck" checked type="radio" /> 发送消息</label>
-                            <label id="yemian" style="cursor: pointer;"><input class="ck" type="radio" />  跳转网页</label>
-                            <label id="xiaocunxu" style="cursor: pointer;"><input class="ck" type="radio" /> 跳转小程序 </label>
-                        </div>
-                        <div>
-                            <div id="fasong_tou">
-                                <div>
-                                    <ul style="" id="fasong_tou_ul">
-                                        <li>
-                                            <a href="javascript:void(0);"><img src="~/Content/Images/WXMenu/a1.png" />图文消息</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);"><img src="~/Content/Images/WXMenu/a2.png" />图片</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);"><img src="~/Content/Images/WXMenu/a3.png" />语音</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);"><img src="~/Content/Images/WXMenu/a4.png" />视频</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div id="fasong_xia">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-
 <script>
     $(function () {
         ///所有的删除子菜单
@@ -132,20 +53,16 @@
                 }
             });
         });
-        $("#Add_yiji").click(function () {
-            $.post("/WXMenu/Home/Add_yiji_pd", function (data) {
-                if (data) {
-                    $("#add_yiji_div").css("display", "block");
-                }
-                else {
-                    alert("一级菜单不能超过三个！");
-                }
-            });
-        });
-        $(".ck").click(function () {
-            $(".ck").prop("checked", false);
-            $(this).prop("checked", true);
-        });
+        //$("#Add_yiji").click(function () {
+        //    $.post("/WXMenu/Home/Add_yiji_pd", function (data) {
+        //        if (data) {
+        //            $("#add_yiji_div").css("display", "block");
+        //        }
+        //        else {
+        //            alert("一级菜单不能超过三个！");
+        //        }
+        //    });
+        //});
     });//加载方法
 
     function shua() {//刷新当前公众号的菜单
