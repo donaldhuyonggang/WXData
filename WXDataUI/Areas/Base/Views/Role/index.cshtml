@@ -27,18 +27,7 @@
                     <div class="panel-body">
                         <div class="col-xs-11">
                             <div class="form-inline topfind">
-                                @*<div class="form-group">
-                                    <label for="InputAppName">公众号名称:</label>
-                                    <input type="text" class="form-control" id="InputAppName" placeholder="公众号名称">
-                                </div>
-                                <div class="form-group">
-                                    <label for="InputAppId">微信号:</label>
-                                    <input type="text" class="form-control" id="InputAppId" placeholder="微信号">
-                                </div>
-                                <div class="form-group">
-                                    <label for="InputRemark">备注信息:</label>
-                                    <input type="text" class="form-control" id="InputRemark" placeholder="备注信息">
-                                </div>*@
+                                
                             </div>
 
                         </div>
@@ -90,7 +79,7 @@
                         <table class="table table-bordered table-hover RoleList">
                             <thead>
                                 <tr class="text-center">
-                                    <th><input type="checkbox" name="name" /></th>
+                                    <th><input type="checkbox" name="name" id="CheckAll"/></th>
                                     <th>角色编号</th>
                                     <th>角色标识</th>
                                     <th>角色名称</th>
@@ -164,7 +153,7 @@
                 $.each(json, function (i, obj) {
                     tr += "<tr class=\"text-center\">" +
                                "<td>" +
-                               "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
+                               "    <input type=\"checkbox\" name=\"name\" value=\"\" class='ck' />" +
                                "</td>" +
                                "<td>" + obj.RoleId + "</td>" +
                                "<td>" + obj.RoleSign + "</td>" +
