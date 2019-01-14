@@ -75,6 +75,9 @@
                                 <button type="button" class="btn btn-default" title="查看">
                                     <i class="glyphicon glyphicon-search"></i>
                                 </button>
+                                <button type="button" class="btn btn-default" id="SyncTag" title="同步">
+                                    <i class="glyphicon glyphicon-refresh"></i>
+                                </button>
                             </div>
                         </li>
                         <li class="SearchTag"> 
@@ -305,13 +308,18 @@
 @section scripts{
     <script>
         $(function () {
-            $(".pagination li").first().removeClass("active").children("a").css("color","rgb(199,199,199)");
-            $(".pagination li").last().removeClass("active").children("a").css("color", "rgb(199,199,199)");
+            $(".pagination li").removeClass("active").children("a").css("color","rgb(199,199,199)");
+            $("a[href*='pageIndex="+@MyPage.PageIndex+"']").css("color","white").parents("li").addClass("active");
             $(".SearchTag a").click(function () {
                 GetUser(3,@MyPage.PageIndex,$("#PageSize").val(),$(this).attr("tagId"));
             });
             $(".SearchGroup a").click(function () {
                 GetUser(4,@MyPage.PageIndex,$("#PageSize").val(),$(this).attr("gId"));
+            });
+            $("#SyncTag").click(function(){
+                $.post("/WXUser/Tag/SyncTag",function(){
+
+                });
             });
         });
         function GetUser(type,pageIndex,pageSize,key) {

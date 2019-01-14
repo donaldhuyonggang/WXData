@@ -227,14 +227,14 @@
         });
         //保持导航栏状态
         function Keep() {
-            
-            var url = location.href;
-            url = url.substring(url.indexOf('localhost:'));
-            url = url.substring(url.indexOf('/'));
-            if (url.indexOf('?') != -1) {
-                url = url.substring(0, url.indexOf('?'));
+            var strs = location.href.split('/');
+            if (strs[strs.length-1].indexOf('?') != -1) {
+                strs[strs.length-1] = strs[strs.length-1].substring(0, strs[strs.length-1].indexOf('?'));
             }
-            var a = $("a[href='" + url + "']");
+            //console.info(strs);
+            var url = strs[strs.length - 3] + "/" + strs[strs.length - 2] + "/" + strs[strs.length - 1];
+            var a = $("a[href *='" + url + "']");
+            //console.info(a);
             $(a).css("color","white");
             $(a).parents("li").addClass("active");
             $(a).parents(".panel-collapse").removeClass("collapse").addClass("in");

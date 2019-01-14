@@ -1,5 +1,5 @@
 ﻿@model WXDataModel.WX_UserTag
-
+@using WXDataModel
 <form action="/WXUser/Tag/AddTag" id="form" method="post">
     <div class="modal-dialog" style="width:500px">
         <div class="modal-content">
@@ -11,7 +11,8 @@
                <div class="form-group">
                    <label class="col-sm-3">标签名称</label>
                    <div class="col-sm-9">
-                       <input type="text" name="TagName" value="" class="form-control" id="TagName" />
+                       <input type="text" name="tagName" value="" class="form-control" id="TagName" />
+                       <input type="hidden" name="appId" id="AppId" value="@((Session["SYSUSER"] as SYS_User).WX_App.AppId)" />
                    </div>
                    
                </div>
@@ -27,3 +28,18 @@
     </div><!-- /.modal-dialog -->
 
 </form>
+<script>
+    $("#submit").click(function () {
+        var tagName = $("#TagName").val();
+        var appId = $("#AppId").val();
+        if (tagName != "") {
+            $.post("/WXUser/Tag/AddTag", "appId=" + appId + "&tagName=" + tagName, function (r) {
+                if (r.Result) {
+                    $("#TagGroupEdit").modal('hide');
+                } else {
+                    alert(r.ErrorMsg);
+                }
+            });
+        }
+    });
+</script>

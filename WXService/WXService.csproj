@@ -48,6 +48,7 @@
     <Compile Include="Service\BaseService.cs" />
     <Compile Include="Service\CustomService.cs" />
     <Compile Include="Service\QRService.cs" />
+    <Compile Include="Service\TagService.cs" />
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Utility\DateTimeUtility.cs" />
     <Compile Include="Utility\EntityUntility.cs" />
@@ -57,6 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Handler\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WXDataModel\WXDataModel.csproj">
+      <Project>{4925BB63-A6F9-4B87-AD78-F4959FAF5324}</Project>
+      <Name>WXDataModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

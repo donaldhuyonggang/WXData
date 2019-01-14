@@ -189,6 +189,9 @@ body {
             text-decoration: none;
             background-color: #eee;
         }
+        .SearchTag a,.SearchGroup a{
+            width:100%;
+        }
 
 
 

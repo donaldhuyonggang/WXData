@@ -14,6 +14,13 @@ namespace WXDataBLL.WXUser
             List<WX_UserTag> list = base.GetAll().Where(t => t.AppId == null || t.AppId.Equals(appId)).ToList();
             return list;
         }
+        //public override bool Update(WX_UserTag info)
+        //{
+        //    WX_UserTag user = base.GetByPK(info.TagId);
+        //    user.TagName = info.TagName;
+
+        //    return base.Update(user);
+        //}
     }
 
 }
