@@ -140,7 +140,9 @@
     <Compile Include="Areas\WXMedia\WXMediaAreaRegistration.cs" />
     <Compile Include="Areas\WXMenu\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXMenu\WXMenuAreaRegistration.cs" />
+    <Compile Include="Areas\WXUser\Controllers\GroupController.cs" />
     <Compile Include="Areas\WXUser\Controllers\HomeController.cs" />
+    <Compile Include="Areas\WXUser\Controllers\TagController.cs" />
     <Compile Include="Areas\WXUser\WXUserAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -176,6 +178,10 @@
     <Content Include="Content\Images\WXMenu\b2.png" />
     <Content Include="Content\Images\WXMenu\b3.png" />
     <Content Include="Content\Images\WXMenu\b4.png" />
+    <Content Include="Content\Images\WXMenu\base_z413fd5.png" />
+    <Content Include="Content\Images\WXMenu\bg_mobile_foot_default3a7b38.png" />
+    <Content Include="Content\Images\WXMenu\bg_mobile_head_default3a7b38.png" />
+    <Content Include="Content\Images\WXMenu\index_z430cc0.png" />
     <Content Include="Content\Index.css" />
     <Content Include="Content\Login.css" />
     <Content Include="Content\Media\fileinput.min.css" />
@@ -245,7 +251,6 @@
     <Content Include="Content\easyui\mobile.css" />
     <Content Include="Content\Images\aiwrap.png" />
     <Content Include="Content\Images\web_login_bg.jpg" />
-    <Content Include="Content\login1.css" />
     <Content Include="Content\WXCustom\Index.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -271,7 +276,6 @@
     <Content Include="Areas\WXCustom\Views\Home\UserInfo.cshtml" />
     <Content Include="Areas\Base\Views\SYSUser\UpdateSysUser.cshtml" />
     <Content Include="Areas\Base\Views\SYSUser\SYS_User.cshtml" />
-    <Content Include="Areas\Base\Views\Home\Login1.cshtml" />
     <Content Include="Areas\WXCustom\Views\Home\TaleToUser.cshtml" />
     <Content Include="Areas\Base\Views\APP\AddApp.cshtml" />
     <Content Include="Areas\Base\Views\APP\ChangeApp.cshtml" />
@@ -300,6 +304,7 @@
     <Content Include="fonts\iconfont.woff" />
     <Content Include="Areas\Base\Views\Home\Login.cshtml" />
     <Content Include="Areas\WXMenu\Views\Home\Add.cshtml" />
+    <Content Include="Areas\WXUser\Views\Tag\AddTag.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
@@ -349,6 +354,7 @@
     <Folder Include="Areas\WXMenu\Models\" />
     <Folder Include="Areas\WXMenu\Views\Shared\" />
     <Folder Include="Areas\WXUser\Models\" />
+    <Folder Include="Areas\WXUser\Views\Group\" />
     <Folder Include="Areas\WXUser\Views\Shared\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>

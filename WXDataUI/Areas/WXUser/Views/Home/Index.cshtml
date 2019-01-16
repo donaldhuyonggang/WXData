@@ -1,14 +1,18 @@
 ﻿@using WXDataModel
+@using WXDataUI.Helpers
+@using WXDataModel.Extend
 @{
     ViewBag.Title = "管理订阅用户";
     List<WX_UserTag> TagList = ViewBag.TagList as List<WX_UserTag>;
     List<WX_UserGroup> GroupList = ViewBag.GroupList as List<WX_UserGroup>;
+    PageList<WX_User> MyPage = ViewBag.Page as PageList<WX_User>;
+
 }
 @section styles{
 
     <link href="~/Content/Common.css" rel="stylesheet" />
     <style>
-        .nav>li>a {
+        .UserGroup .nav>li>a {
             padding: 5px;
             font-size:13px;
         }
@@ -25,6 +29,15 @@
         .UserGroup .panel-title a{
             font-size:13px;
             border:none;
+        }
+        .ul-full{
+            margin-top:10px;
+        }
+        .toolList i{
+            font-size:10px;
+        }
+        .toolList .btn{
+            padding:0 5px;
         }
     </style>
 }
@@ -47,42 +60,63 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="TagList">
-                    @for (var i = 0; i < TagList.Count; i++)
-                    {
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="Tag-heading-@i">
-                                <h4 class="panel-title">
-                                    <a role="button" class="" data-toggle="collapse" data-parent="#TagList" href="#Tag-collapse-@i" aria-expanded="true" aria-controls="Tag-collapse-@i">
-                                        @TagList[i].TagName
-                                    </a>
-                                </h4>
+                    <ul style="list-style:none;" class="ul-full" id="TagList">
+                        <li class="toolList">
+                            <div class="btn-group" role="group" aria-label="...">
+                                <a href="/WXUser/Tag/AddTag" data-backdrop="false" data-target="#TagGroupEdit" data-toggle="modal" type="button" class="btn btn-default" title="添加标签">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                </a>
+                                <button type="button" class="btn btn-default" title="移除标签">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                                <button type="button" class="btn btn-default" title="编辑">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-default" title="查看">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
                             </div>
-                            <div id="Tag-collapse-@i" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@i">
-                                <div class="panel-body">
-                                    1
-                                </div>
-                            </div>
-                        </div>
-                    }
+                        </li>
+                        <li class="SearchTag"> 
+                            <span><a href="#" tagId="0">全部(@TagList.Sum(s => s.WX_User.Count()))</a></span>
+                            <ul style="list-style:none;">
+                                @foreach (var i in TagList)
+                                {
+                                    <li><a href="#" tagId="@i.TagId">@i.TagName (@i.WX_User.Count())</a></li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="GroupList">
-                    @for (var i = 0; i < GroupList.Count; i++)
-                    {
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="Group-heading-@i">
-                                <h4 class="panel-title">
-                                    <a role="button" class="" data-toggle="collapse" data-parent="#GroupList" href="#Group-collapse-@i" aria-expanded="true" aria-controls="Group-collapse-@i">
-                                        @GroupList[i].GroupName
-                                    </a>
-                                </h4>
+                    <ul style="list-style:none;" class="ul-full" id="GroupList">
+                        <li class="toolList">
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-default" title="添加组">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                </button>
+                                <button type="button" class="btn btn-default" title="移除组">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                                <button type="button" class="btn btn-default" title="编辑">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-default" title="查看">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
                             </div>
-                            <div id="Group-collapse-@i" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@i">
-                                <div class="panel-body">
-                                    2
-                                </div>
-                            </div>
-                        </div>
-                    }
+                        </li>
+                        <li class="SearchGroup">
+                            <span><a href="#" tagId="0">全部(@GroupList.Sum(s => s.WX_User.Count()))</a></span>
+                            <ul style="list-style:none;">
+                                @foreach (var i in GroupList)
+                                {
+                                    <li><a href="#" gId="@i.GroupId">@i.GroupName (@i.WX_User.Count())</a></li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                    
                 </div>
             </div>
 
@@ -150,10 +184,11 @@
                                 <li><i class="glyphicon glyphicon-refresh"></i><a href="#" id="Refresh">刷新</a></li>
                             </ul>
                         </div>
+                        <input type="hidden" name="PageSize" id="PageSize" value="3" />
                     </div>
                 </nav>
                 <div class="datacontent">
-                    <div class="page-header">
+                    @*<div class="page-header">
                         <ul class="list-inline">
                             <li>
                                 每页显示
@@ -167,12 +202,12 @@
                             <li>总页数：<span>10</span>页</li>
                             <li>只显示未分配的用户<input type="checkbox" id="showMode"/></li>
                         </ul>
-                    </div>
+                    </div>*@
                     <div class="fromcontent">
                         <table class="table table-bordered table-hover userList">
                             <thead>
                                 <tr class="text-center">
-                                    <th><input type="checkbox" name="name" /></th>
+                                    <th><input type="checkbox" name="name" id="CheckAll"/></th>
                                     <th>关注</th>
                                     <th>用户标识</th>
                                     <th>昵称</th>     
@@ -186,24 +221,78 @@
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody>
+                                @foreach (var i in MyPage)
+                                {
+                                    <tr class="text-center">
+                                        <td><input type="checkbox" name="name" value="" class="ck"></td>
+                                        <td>@i.GetFollowStatus()</td>
+                                        <td>@i.OpenID</td>
+                                        <td>@i.UserNick</td>
+                                        <td><img style="width:40px" src="@i.HeadImageUrl" alt="@i.UserNick"></td>
+                                        <td>@i.UserSex</td>
+                                        <td>@i.City</td>
+                                        <td>@i.Province</td>
+                                        <td>@i.Country</td>
+                                        <td>@i.SubscribeTime</td>
+                                        <td>@i.SYS_User.UserName</td>
+                                        <td>
+                                            <ul class="list-inline marg operation">
+                                                <li class="Find btn btn-success" data-toggle="tooltip" data-placement="right" title="查看"><a href="/WXUser/Home/UserInfo/@i.OpenID" data-toggle="modal" data-target="#EditWXUser" class="glyphicon glyphicon-search"></a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
                         </table>
                     </div>
                     <div>
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
-                                <li class="disabled marg">
-                                    <a href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                                <li class=""><a href="#">2 <span class="sr-only">(current)</span></a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
+                                @if (MyPage.HasPreviousPage)
+                                {
+                                    <li>
+                                        <a href="/WXUser/Home/Index?pageIndex=@MyPage.PreviousPage" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="disabled">
+                                        <a href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                @for (var i = 1; i <= MyPage.TotalPages; i++)
+                                {
+                                    if (i == MyPage.PageIndex)
+                                    {
+                                        <li class="active"><a href="/WXUser/Home/Index?pageIndex=@i">@i</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="/WXUser/Home/Index?pageIndex=@i">@i</a></li>
+                                    }
+                                }
+                                @if (MyPage.HasNextPage)
+                                {
+                                    <li>
+                                        <a href="/WXUser/Home/Index?pageIndex=@MyPage.NextPage" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="disabled">
+                                        <a href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                
 
                             </ul>
                         </nav>
@@ -215,69 +304,22 @@
 </div>
 @section scripts{
     <script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-
-        
-        LoadUser();
-
-        $("#Refresh").click(function () {
-            LoadUser();
-        });
-
-        $("#showMode").change(function () {
-            LoadUser();
-        });
-    })
-
-
-    function LoadUser() {
-        //拉取用户信息填充表格
-        var type = 1;
-        if ($("#showMode").prop("checked")) {
-            type = 2;
-        }
-        $.post("/WXUser/Home/GetUsers", "type="+type, function (json) {
-            var tr = "";
-            $.each(json, function (i, obj) {
-                var temp = "";
-                if (obj.SYS_UserName == "暂无所属客服") {
-                    temp = "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"分配客服\">" + "   <a href=\"/WXUser/Home/AllotUser/" + obj.OpenID + "\" class=\"glyphicon glyphicon-user\" data-toggle='modal' data-target='#AllotUser'></a></li>";
-                }
-                tr += "<tr class=\"text-center\">" +
-                           "<td>" +
-                           "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
-                           "</td>" +
-                           "<td>" + obj.FollowStatus + "</td>" +
-                           "<td>" + obj.OpenID + "</td>" +
-                           "<td>" + obj.UserNick + "</td>" +
-                           "<td><img style='width:40px' src=" + obj.HeadImageUrl + " alt=" + obj.UserNick + " /></td>" +
-                           "<td>" + obj.UserSex + "</td>" +
-                           "<td>" + obj.City + "</td>" +
-                           "<td>" + obj.Province + "</td>" +
-                           "<td>" + obj.Country + "</td>" +
-                           "<td>" + obj.SubscribeTime + "</td>" +
-                           "<td>" + obj.SYS_UserName + "</td>" +
-                           "<td>" +
-                               "<ul class=\"list-inline marg operation\">" +
-                                   "<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看\">" +
-                                   "   <a href=\"/WXUser/Home/UserInfo/" + obj.OpenID + "\" data-toggle='modal' data-target='#EditWXUser' class=\"glyphicon glyphicon-search\"></a></li>" +
-
-                                   //"<li class=\"Find btn btn-success\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"修改分组\">" +
-                                   //"   <a href=\"/WXUser/Home/ChangeGroup/" + obj.OpenID + "\" data-toggle='modal' data-target='#EditWXUser' class=\"glyphicon glyphicon-folder-open\"></a></li>" +
-
-
-                                   temp +
-
-                               "</ul>" +
-                           "</td>" +
-                       "</tr>";
-
+        $(function () {
+            $(".pagination li").first().removeClass("active").children("a").css("color","rgb(199,199,199)");
+            $(".pagination li").last().removeClass("active").children("a").css("color", "rgb(199,199,199)");
+            $(".SearchTag a").click(function () {
+                GetUser(3,@MyPage.PageIndex,$("#PageSize").val(),$(this).attr("tagId"));
             });
-            $(".userList tbody").html(tr);
+            $(".SearchGroup a").click(function () {
+                GetUser(4,@MyPage.PageIndex,$("#PageSize").val(),$(this).attr("gId"));
+            });
         });
-        //拉取用户信息填充表格end
-    }
+        function GetUser(type,pageIndex,pageSize,key) {
+            if(key==0)type=1;
+            location.href = "/WXUser/Home/Index?type="+type+"&pageIndex="+pageIndex+"&pageSize="+pageSize+"&key="+key;
+        }
+
+    
     </script>
 
 }

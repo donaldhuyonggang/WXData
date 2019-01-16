@@ -7,6 +7,7 @@ using WXDataBLL;
 using WXDataBLL.WXCustom;
 using WXDataBLL.WXUser;
 using WXDataModel;
+using WXDataUI.Helpers;
 using WXDataUI.Models;
 using WXService.Utility;
 
@@ -15,11 +16,12 @@ namespace WXDataUI.Areas.WXUser.Controllers
     public class HomeController : Controller
     {
         // GET: WXUser/Home
-        public ActionResult Index()
+        public ActionResult Index(int type = 1, int pageIndex = 1, int pageSize = 3,int key = 0)
         {
             string appId = (Session["SYSUSER"] as SYS_User).AppId;
             ViewBag.TagList = new WX_UserTagManager().GetTagList(appId);
             ViewBag.GroupList = new WX_UserGroupManager().GetGroupList(appId);
+            ViewBag.Page = GetUsers(type, pageIndex, pageSize,key);
             return View();
         }
         [HttpGet]
@@ -42,30 +44,27 @@ namespace WXDataUI.Areas.WXUser.Controllers
         }
 
 
-        public ActionResult GetUsers(int type = 1)
+        public PageList<WX_User> GetUsers(int type,int pageIndex,int pageSize,int key)
         {
             WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
             List<WX_User> list;  
-            if (type != 1)
+            if(type == 2)   //查询未分配用户
             {
                 list = new WX_UserManager().Where(u => u.AppId == app.AppId && u.UserId == null);
-            }else
+            }else if(type == 3)//根据标签查询
+            {
+                list = new WX_UserTagManager().GetByPK(key).WX_User.Where(u => u.AppId == app.AppId).ToList();
+            }
+            else if (type == 4)//根据分组查询
+            {
+                list = new WX_UserGroupManager().GetByPK(key).WX_User.Where(u => u.AppId == app.AppId).ToList();
+            }
+            else
             {
                 list = new WX_UserManager().Where(u => u.AppId == app.AppId);
             }
-            var json = list.Select(u => new {
-                FollowStatus = (u.UnSubscribeTime == null?"已关注":"已退订"),
-                u.OpenID,
-                u.UserNick,
-                u.HeadImageUrl,
-                u.UserSex,
-                u.City,
-                u.Province,
-                u.Country,
-                SubscribeTime = u.SubscribeTime.ToString(),
-                SYS_UserName = (u.UserId==null?"暂无所属客服":u.SYS_User.UserName),
-            });
-            return Json(json, JsonRequestBehavior.AllowGet);
+            PageList<WX_User> page = new PageList<WX_User>(list,pageIndex,pageSize); 
+            return page;
 
         }
 
