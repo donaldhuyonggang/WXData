@@ -12,32 +12,39 @@
 
     <link href="~/Content/Common.css" rel="stylesheet" />
     <style>
-        .UserGroup .nav>li>a {
+        .UserGroup .nav > li > a {
             padding: 5px;
-            font-size:13px;
+            font-size: 13px;
         }
-        .form-group label{
-            height:34px;
-            line-height:34px;
+
+        .form-group label {
+            height: 34px;
+            line-height: 34px;
         }
+
         .UserGroup .panel {
             margin-bottom: 0;
         }
+
         .UserGroup .panel-heading {
-            background-color: #fff; 
+            background-color: #fff;
         }
-        .UserGroup .panel-title a{
-            font-size:13px;
-            border:none;
+
+        .UserGroup .panel-title a {
+            font-size: 13px;
+            border: none;
         }
-        .ul-full{
-            margin-top:10px;
+
+        .ul-full {
+            margin-top: 10px;
         }
-        .toolList i{
-            font-size:10px;
+
+        .toolList i {
+            font-size: 10px;
         }
-        .toolList .btn{
-            padding:0 5px;
+
+        .toolList .btn {
+            padding: 0 5px;
         }
     </style>
 }
@@ -80,7 +87,7 @@
                                 </button>
                             </div>
                         </li>
-                        <li class="SearchTag"> 
+                        <li class="SearchTag">
                             <span><a href="#" tagId="0">全部(@TagList.Sum(s => s.WX_User.Count()))</a></span>
                             <ul style="list-style:none;">
                                 @foreach (var i in TagList)
@@ -119,7 +126,7 @@
                             </ul>
                         </li>
                     </ul>
-                    
+
                 </div>
             </div>
 
@@ -142,7 +149,7 @@
                             <div class="form-inline topfind">
                                 <div class="form-group col-xs-6">
                                     <label for="S_OpenID" class="col-xs-3">用户编码:</label>
-                                    <div class="col-xs-9"><input type="text" class="form-control" name="OpenID" id="S_OpenID" placeholder="用户编码"></div> 
+                                    <div class="col-xs-9"><input type="text" class="form-control" name="OpenID" id="S_OpenID" placeholder="用户编码"></div>
                                 </div>
                                 <div class="form-group  col-xs-6">
                                     <label for="S_UserNick" class="col-xs-3">用户名:</label>
@@ -178,10 +185,10 @@
                         <div class="navbar-text navbar-right ">
                             <ul class="list-inline marg">
                                 <li>
-                                    <i class="glyphicon glyphicon-plus"></i>
-                                    <a href="#">新增</a>
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                    <a href="#">分组</a>
                                 </li>
-                                <li><i class="glyphicon glyphicon-pencil"></i><a href="#">修改</a></li>
+                                <li><i class="glyphicon glyphicon-pencil"></i><a href="/WXUser/Home/AddTag" data-target="#TagGroupEdit" data-toggle="modal" class="disable" id="AddTag">添加标签</a></li>
                                 <li><i class="glyphicon glyphicon-list"></i><a href="#">查看</a></li>
                                 <li><i class="glyphicon glyphicon-minus"></i><a href="#">删除</a></li>
                                 <li><i class="glyphicon glyphicon-refresh"></i><a href="#" id="Refresh">刷新</a></li>
@@ -192,28 +199,28 @@
                 </nav>
                 <div class="datacontent">
                     @*<div class="page-header">
-                        <ul class="list-inline">
-                            <li>
-                                每页显示
-                                <select>
-                                    <option value="value">5</option>
-                                    <option value="value">10</option>
-                                </select>
-                                条记录
-                            </li>
-                            <li>共有记录：<span>50</span>条</li>
-                            <li>总页数：<span>10</span>页</li>
-                            <li>只显示未分配的用户<input type="checkbox" id="showMode"/></li>
-                        </ul>
-                    </div>*@
+                            <ul class="list-inline">
+                                <li>
+                                    每页显示
+                                    <select>
+                                        <option value="value">5</option>
+                                        <option value="value">10</option>
+                                    </select>
+                                    条记录
+                                </li>
+                                <li>共有记录：<span>50</span>条</li>
+                                <li>总页数：<span>10</span>页</li>
+                                <li>只显示未分配的用户<input type="checkbox" id="showMode"/></li>
+                            </ul>
+                        </div>*@
                     <div class="fromcontent">
                         <table class="table table-bordered table-hover userList">
                             <thead>
                                 <tr class="text-center">
-                                    <th><input type="checkbox" name="name" id="CheckAll"/></th>
+                                    <th><input type="checkbox" name="name" id="CheckAll" /></th>
                                     <th>关注</th>
                                     <th>用户标识</th>
-                                    <th>昵称</th>     
+                                    <th>昵称</th>
                                     <th>头像</th>
                                     <th>性别</th>
                                     <th>所在城市</th>
@@ -228,7 +235,7 @@
                                 @foreach (var i in MyPage)
                                 {
                                     <tr class="text-center">
-                                        <td><input type="checkbox" name="name" value="" class="ck"></td>
+                                        <td><input type="checkbox" name="name" value="" class="ck" openId="@i.OpenID"></td>
                                         <td>@i.GetFollowStatus()</td>
                                         <td>@i.OpenID</td>
                                         <td>@i.UserNick</td>
@@ -238,7 +245,7 @@
                                         <td>@i.Province</td>
                                         <td>@i.Country</td>
                                         <td>@i.SubscribeTime</td>
-                                        <td>@i.SYS_User.UserName</td>
+                                        <td>@i.GetSysUser()</td>
                                         <td>
                                             <ul class="list-inline marg operation">
                                                 <li class="Find btn btn-success" data-toggle="tooltip" data-placement="right" title="查看"><a href="/WXUser/Home/UserInfo/@i.OpenID" data-toggle="modal" data-target="#EditWXUser" class="glyphicon glyphicon-search"></a></li>
@@ -295,7 +302,7 @@
                                         </a>
                                     </li>
                                 }
-                                
+
 
                             </ul>
                         </nav>
@@ -308,6 +315,7 @@
 @section scripts{
     <script>
         $(function () {
+            //分页相关
             $(".pagination li").removeClass("active").children("a").css("color","rgb(199,199,199)");
             $("a[href*='pageIndex="+@MyPage.PageIndex+"']").css("color","white").parents("li").addClass("active");
             $(".SearchTag a").click(function () {
@@ -316,18 +324,57 @@
             $(".SearchGroup a").click(function () {
                 GetUser(4,@MyPage.PageIndex,$("#PageSize").val(),$(this).attr("gId"));
             });
-            $("#SyncTag").click(function(){
-                $.post("/WXUser/Tag/SyncTag",function(){
+            //分页相关end
 
+            //更新标签
+            $("#SyncTag").click(function(){
+                $.post("/WXUser/Tag/SyncTag",function(data){
+                    console.info(data);
+                    var li = "";
+                    $.each(data,function(i,obj){
+                        li += "<li><a href='#' tagid=" + obj.TagId + ">" + obj.TagName + " (" + obj.count + ")</a></li>";
+                        
+                    });
+                    $(".SearchTag>ul").html(li);
                 });
             });
+            //更新标签end
+
+            //刷新用户列表
+            $("#Refresh").click(function(){
+
+            });
+            //刷新用户列表end
+
+            //给用户添加标签
+            $(".userList input[type=checkbox]").change(function(){
+                var openIdList = [];
+                $(".ck:checked").each(function(i,obj){
+                    openIdList[i] = $(obj).attr("openid");
+                });
+                //console.info(openIdList);
+                if(openIdList.length == 0){
+                    $("#AddTag").addClass("disable");
+                }else{
+                    $("#AddTag").removeClass("disable").attr("href","/WXUser/Home/AddTag?openId="+openIdList);
+                    //console.info($("#AddTag").attr("data-whatever"));
+                }  
+                
+            });
+
+
+            
+            //给用户添加标签end
+
+
+
         });
         function GetUser(type,pageIndex,pageSize,key) {
             if(key==0)type=1;
             location.href = "/WXUser/Home/Index?type="+type+"&pageIndex="+pageIndex+"&pageSize="+pageSize+"&key="+key;
         }
 
-    
+
     </script>
 
 }

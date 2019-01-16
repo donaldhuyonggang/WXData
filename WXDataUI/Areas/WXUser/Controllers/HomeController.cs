@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,7 @@ using WXDataBLL.WXUser;
 using WXDataModel;
 using WXDataUI.Helpers;
 using WXDataUI.Models;
+using WXService.Service;
 using WXService.Utility;
 
 namespace WXDataUI.Areas.WXUser.Controllers
@@ -101,6 +103,74 @@ namespace WXDataUI.Areas.WXUser.Controllers
             if (app != null)
             {
 
+            }
+        }
+        [HttpGet]
+        public ActionResult AddTag(string openId)
+        {
+            ViewBag.openId = openId;
+            ViewBag.TagList = new WX_UserTagManager().Where(t => t.AppId.Equals((Session["SYSUSER"] as SYS_User).WX_App.AppId));
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult AddTag(List<string>openId,string tagid)
+        {
+            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
+            new UserService(app.AppId,app.AppSecret).AddTag(openId, tagid);
+            return Json("",JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 更新用户列表
+        /// </summary>
+        public void UpdateList()
+        {
+            WX_UserManager manager = new WX_UserManager();
+            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
+            UserService ser = new UserService(app.AppId,app.AppSecret);
+            JToken jo = JObject.Parse(ser.Get());
+            var list = new List<WX_User>();
+            foreach (string i in jo["data"]["openid"].Children())
+            {
+                string json = ser.Info(i);
+                JObject userJo = JObject.Parse(json);
+                if (userJo["subscribe"].ToString().Equals("0"))
+                {
+
+                }else
+                {
+                    long unixTimeStamp = Convert.ToInt32(userJo["subscribe_time"]);
+                    System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 当地时区
+                    DateTime dt = startTime.AddSeconds(unixTimeStamp);
+                    System.Console.WriteLine(dt.ToString("yyyy/MM/dd HH:mm:ss:ffff"));
+                    WX_User user = new WX_User()
+                    {
+                        OpenID = i,
+                        AppId = app.AppId,
+                        UserNick = userJo["nickname"].ToString(),
+                        UserSex = userJo["sex"].ToString().Equals("1") ? "男":"女",
+                        City = userJo["city"].ToString(),
+                        Province = userJo["province"].ToString(),
+                        Country = userJo["country"].ToString(),
+                        HeadImageUrl = userJo["headimgurl"].ToString(),
+                        SubscribeTime = dt,
+                        Remark = userJo["remark"].ToString(),
+                        GroupId = Convert.ToInt32(userJo["groupid"]),
+                        UserState = "正常",
+                    };
+                    foreach (var t in userJo["tagid_list"].Children())
+                    {
+                        user.WX_UserTag.Add(new WX_UserTagManager().GetByPK(Convert.ToInt32(t)));
+                    }
+                    WX_User info = manager.GetByPK(user.OpenID);
+                    if (info == null)//新增
+                    {
+                        manager.Add(user);
+                    }else
+                    {
+
+                    }
+                }
             }
         }
     }

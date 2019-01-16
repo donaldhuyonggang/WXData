@@ -48,6 +48,22 @@ namespace WXDataUI.Areas.WXUser.Controllers
             }
             return Json(result,JsonRequestBehavior.AllowGet);
         }
+        
+        /// <summary>
+        /// 更新标签
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SyncTag()
+        {
+            var list = GetTagList().Select(t => new
+            {
+                t.TagId,
+                t.TagName,
+                count = t.WX_User.Count()
+            });
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
 
         public List<WX_UserTag> GetTagList()
         {
@@ -68,7 +84,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
                 {
 
                     info.TagName = tag.TagName;
-                    manager.Update(info);
+                    //manager.Update(info);
                 }else
                 {
                     manager.Add(tag);

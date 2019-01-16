@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace WXService.Service
     {
         private const string USER_INFO_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang={2}";
         private const string USER_GET_URL = "https://api.weixin.qq.com/cgi-bin/user/get?access_token={0}&next_openid={1}";
+        private const string USER_ADD_TAG_URL = "https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token={0}";
 
         public UserService(string appId, string appSecert)
             :base(appId, appSecert)
@@ -44,6 +46,19 @@ namespace WXService.Service
             string access_token = this.Get_Access_Token();
             string url = string.Format(USER_GET_URL, access_token, next_openid);
             string respJson = MyHttpUtility.SendGet(url);
+            return respJson;
+        }
+
+        public string AddTag(List<string> openIdList,string tagId)
+        {
+            if (openIdList.Count == 0) return "" ;
+            var data = new
+            {
+                openid_list = openIdList,
+                tagid=tagId
+            };
+            string url = string.Format(USER_ADD_TAG_URL, this.Get_Access_Token());
+            string respJson = MyHttpUtility.SendPost(url, JsonConvert.SerializeObject(data));
             return respJson;
         }
     }

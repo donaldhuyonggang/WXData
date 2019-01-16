@@ -12,5 +12,9 @@ namespace WXDataModel.Extend
         {
             return user.UnSubscribeTime == null ? "已关注" : "已退订";
         }
+        public static string GetSysUser(this WX_User user)
+        {
+            return user.SYS_User == null ? "未分配" : user.SYS_User.UserName;
+        }
     }
 }

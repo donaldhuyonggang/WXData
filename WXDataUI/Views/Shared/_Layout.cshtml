@@ -37,6 +37,11 @@
             padding: 5px 10px 5px; 
             margin:0;
         }
+        a.disable{ 
+            pointer-events:none; 
+            color:#afafaf; 
+            cursor:default 
+        } 
     </style>
     @RenderSection("styles", required: false)
 
@@ -222,6 +227,7 @@
                     if (!$(obj).prop("checked"))temp = false;
                 });
                 $("#CheckAll").prop("checked", temp);
+                IsChecked = temp;
             });
             //通用全选反选end
         });

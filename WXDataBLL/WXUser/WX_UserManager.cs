@@ -9,6 +9,6 @@ namespace WXDataBLL.WXUser
 {
     public class WX_UserManager:BaseBLL<WX_User>
     {
-        
+
     }
 }
