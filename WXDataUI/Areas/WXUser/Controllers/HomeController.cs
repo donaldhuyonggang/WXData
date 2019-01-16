@@ -123,55 +123,70 @@ namespace WXDataUI.Areas.WXUser.Controllers
         /// <summary>
         /// 更新用户列表
         /// </summary>
-        public void UpdateList()
+        public ActionResult UpdateList()
         {
+            ReturnResult rs = new ReturnResult() { Result = true };
             WX_UserManager manager = new WX_UserManager();
             WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
-            UserService ser = new UserService(app.AppId,app.AppSecret);
-            JToken jo = JObject.Parse(ser.Get());
-            var list = new List<WX_User>();
-            foreach (string i in jo["data"]["openid"].Children())
+            UserService ser = new UserService(app.AppId, app.AppSecret);
+            try
             {
-                string json = ser.Info(i);
-                JObject userJo = JObject.Parse(json);
-                if (userJo["subscribe"].ToString().Equals("0"))
+                
+                JToken jo = JObject.Parse(ser.Get());
+                var list = new List<WX_User>();
+                foreach (string i in jo["data"]["openid"].Children())
                 {
+                    string json = ser.Info(i);
+                    JObject userJo = JObject.Parse(json);
+                    if (userJo["subscribe"].ToString().Equals("0"))//已退订
+                    {
 
-                }else
-                {
-                    long unixTimeStamp = Convert.ToInt32(userJo["subscribe_time"]);
-                    System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 当地时区
-                    DateTime dt = startTime.AddSeconds(unixTimeStamp);
-                    System.Console.WriteLine(dt.ToString("yyyy/MM/dd HH:mm:ss:ffff"));
-                    WX_User user = new WX_User()
-                    {
-                        OpenID = i,
-                        AppId = app.AppId,
-                        UserNick = userJo["nickname"].ToString(),
-                        UserSex = userJo["sex"].ToString().Equals("1") ? "男":"女",
-                        City = userJo["city"].ToString(),
-                        Province = userJo["province"].ToString(),
-                        Country = userJo["country"].ToString(),
-                        HeadImageUrl = userJo["headimgurl"].ToString(),
-                        SubscribeTime = dt,
-                        Remark = userJo["remark"].ToString(),
-                        GroupId = Convert.ToInt32(userJo["groupid"]),
-                        UserState = "正常",
-                    };
-                    foreach (var t in userJo["tagid_list"].Children())
-                    {
-                        user.WX_UserTag.Add(new WX_UserTagManager().GetByPK(Convert.ToInt32(t)));
                     }
-                    WX_User info = manager.GetByPK(user.OpenID);
-                    if (info == null)//新增
+                    else
                     {
-                        manager.Add(user);
-                    }else
-                    {
+                        long unixTimeStamp = Convert.ToInt32(userJo["subscribe_time"]);
+                        System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 当地时区
+                        DateTime dt = startTime.AddSeconds(unixTimeStamp);
+                        System.Console.WriteLine(dt.ToString("yyyy/MM/dd HH:mm:ss:ffff"));
+                        WX_User user = new WX_User()
+                        {
+                            OpenID = i,
+                            AppId = app.AppId,
+                            UserNick = userJo["nickname"].ToString(),
+                            UserSex = userJo["sex"].ToString().Equals("1") ? "男" : "女",
+                            City = userJo["city"].ToString(),
+                            Province = userJo["province"].ToString(),
+                            Country = userJo["country"].ToString(),
+                            HeadImageUrl = userJo["headimgurl"].ToString(),
+                            SubscribeTime = dt,
+                            Remark = userJo["remark"].ToString(),
+                            GroupId = Convert.ToInt32(userJo["groupid"]),
+                            UserState = "正常",
+                        };
+                        foreach (var t in userJo["tagid_list"].Children())
+                        {
+                            user.WX_UserTag.Add(new WX_UserTagManager().GetByPK(Convert.ToInt32(t)));
+                        }
+                        WX_User info = manager.GetByPK(user.OpenID);
+                        if (info == null)//新增
+                        {
+                            manager.Add(user);
+                        }
+                        else
+                        {
 
+                        }
                     }
                 }
+
             }
+            catch (Exception)
+            {
+                rs.Result = false;
+                rs.ErrorMsg = "更新失败!";
+                return Json(rs,JsonRequestBehavior.AllowGet);
+            }
+            return Json(rs, JsonRequestBehavior.AllowGet);
         }
     }
 }

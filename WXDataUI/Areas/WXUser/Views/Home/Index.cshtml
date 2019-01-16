@@ -342,9 +342,21 @@
 
             //刷新用户列表
             $("#Refresh").click(function(){
-
+                $.post("/WXUser/Home/UpdateList",function(r){
+                    if(!r.Result){
+                        alert(r.ErrorMsg);
+                    }else{
+                        alert("更新成功!");
+                        location.reload();
+                    }
+                });
             });
+
             //刷新用户列表end
+
+            //添加组
+
+            //添加组end
 
             //给用户添加标签
             $(".userList input[type=checkbox]").change(function(){
