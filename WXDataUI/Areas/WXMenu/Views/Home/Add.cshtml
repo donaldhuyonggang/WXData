@@ -3,9 +3,27 @@
     bool pd = ViewBag.pd;
 }
 <style>
+    a {
+        text-decoration: none;
+    }
+
     #WXMenu_add {
         background-color: #f4f5f9;
         padding: 10px;
+        display: inline-block;
+    }
+
+    #shouji_div {
+        width: 550px;
+        display: inline-block;
+        width: 294px;
+        background-size: contain;
+        position: relative;
+        width: 317px;
+        height: 580px;
+        background: transparent url(../../../../Content/Images/WXMenu/bg_mobile_head_default3a7b38.png) no-repeat 0 0;
+        background-position: 0 0;
+        border: 1px solid #e7e7eb;
     }
 
     .WXMenu_add_bianju {
@@ -19,6 +37,7 @@
         float: left;
         margin-top: .3em;
         margin-right: 1em;
+        font-weight: 400;
         font-size: 14px;
     }
 
@@ -89,6 +108,7 @@
 
     .msg_tab {
         background-color: #fff;
+        width: 500px;
     }
 
     #WXMenu_add_jihe_1_shang {
@@ -98,65 +118,491 @@
 
     #WXMenu_add_jihe_1_shang_ul {
         margin-left: 0;
+        margin-bottom: 0;
         background-color: #f6f8f9;
         line-height: 60px;
         height: 60px;
         white-space: nowrap;
         text-align: left;
-        font-size: 0;
         border-bottom-width: 0;
         box-shadow: none;
         border-top-width: 0;
     }
+
         #WXMenu_add_jihe_1_shang_ul li {
             background-color: transparent;
+            float: none;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+            #WXMenu_add_jihe_1_shang_ul li a {
+                display: block;
+                text-decoration: none;
+                color: #222;
+                outline: 0;
+                padding: 0 20px;
+            }
+
+                #WXMenu_add_jihe_1_shang_ul li a img {
+                    margin-right: 3px;
+                    margin-top: -2px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    width: 22px;
+                    height: 20px;
+                }
+
+    #WXMenu_add_jihe_1_shang_neirong {
+        border: 1px solid #c6c6c6;
+    }
+
+    .create-type__item {
+        display: inline-block;
+        width: 130px;
+        color: #8d8d8d;
+        vertical-align: top;
+        margin: 0 10px;
+        transition: all .3s;
+        text-align: center;
+    }
+
+    .sucai_tubiao {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+    }
+
+        .sucai_tubiao.file {
+            background: url(/Content/Images/WXMenu/1.png) 0 -44px no-repeat;
+        }
+
+        .sucai_tubiao.new {
+            background: url(/Content/Images/WXMenu/1.png) 0 0 no-repeat;
+        }
+
+        .sucai_tubiao.share {
+            background: url(/Content/Images/WXMenu/1.png) 0 -88px no-repeat;
+        }
+
+        .sucai_tubiao.pic {
+            background: url(/Content/Images/WXMenu/1.png) 0 -220px no-repeat;
+        }
+
+        .sucai_tubiao.voice {
+            background: url(/Content/Images/WXMenu/1.png) 0 -176px no-repeat;
+        }
+
+        .sucai_tubiao.video {
+            background: url(/Content/Images/WXMenu/1.png) 0 -132px no-repeat;
+        }
+
+
+
+    .create-type__item a {
+        color: #8d8d8d;
+        display: block;
+        height: 100%;
+        padding-top: 28px;
+        padding-bottom: 34px;
+        box-sizing: border-box;
+    }
+
+        .create-type__item a:hover {
+            text-decoration: none;
+        }
+
+    .create-type__item:hover {
+        background-color: #e8e9ec;
+    }
+
+    .frm_input_box {
+        display: inline-block;
+        position: relative;
+        height: 30px;
+        line-height: 30px;
+        vertical-align: middle;
+        font-size: 14px;
+        padding: 0 10px;
+        border: 1px solid #e7e7eb;
+    }
+
+    .frm_input {
+        color: #8d8d8d;
+        /*去除输入鼠标指针*/
+        /*cursor: default;*/
+        height: 22px;
+        margin: 4px 0;
+        width: 100%;
+        background-color: transparent;
+        border: 0;
+        outline: 0;
+        font-family: inherit;
+        font-size: 100%;
+    }
+
+    #anniu_xiaocunsxu {
+        min-width: 60px;
+        display: inline-block;
+        overflow: visible;
+        padding: 0 22px;
+        height: 30px;
+        line-height: 30px;
+        vertical-align: middle;
+        text-align: center;
+        text-decoration: none;
+        -webkit-border-radius: 3px;
+        font-size: 14px;
+        border-width: 1px;
+        border-style: solid;
+        cursor: pointer;
+        border-color: #8d8d8d;
+        color: #222;
+    }
+
+    .frm_controls a:hover {
+        text-decoration: none;
+    }
+
+    #shouji_tou {
+        color: #fff;
+        text-align: center;
+        padding-top: 30px;
+        font-size: 15px;
+        width: auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: normal;
+        margin: 0 30px;
+    }
+
+    #shouji_xia_ul {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-top: 1px solid #e7e7eb;
+        background: transparent url(../../../../Content/Images/WXMenu/bg_mobile_foot_default3a7b38.png) no-repeat 0 0;
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        padding-left: 43px;
+    }
+
+        #shouji_xia_ul li {
+            line-height: 50px;
+            position: relative;
+            float: left;
+            width: 33.33%;
+            text-align: center;
+        }
+
+    /*手机添加按钮样式*/
+    .add_anniu_shuji {
+        border: 1px solid #44b549;
+        color: #44b549;
+        display: block;
+        width: auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: normal;
+        text-decoration: none;
+    }
+
+        .add_anniu_shuji a i {
+            background: url(../../../../Content/Images/WXMenu/index_z430cc0.png) 0 -18px no-repeat;
+            width: 14px;
+            height: 14px;
+            vertical-align: middle;
+            display: inline-block;
+            margin-top: -2px;
+        }
+
+        .add_anniu_shuji a span {
+            color: #44b549;
+            white-space: nowrap;
+            word-wrap: normal;
+        }
+
+    #add_tishi_div {
+        display: block;
+        padding-top: 14px;
+        padding-bottom: 14px;
+        overflow: hidden;
+        border-top: 1px solid #e7e7eb;
+        margin-bottom: 40px;
+        position: relative;
+        padding: 9px 30px;
+        background-color: #f4f5f9;
+        line-height: 1.6;
+    }
+
+    #add_tishi_div_tupian {
+        background: url(../../../../Content/Images/WXMenu/base_z413fd5.png) 0 -1008px no-repeat;
+        margin-top: 5px;
+        float: left;
+        margin-right: 15px;
+        width: 32px;
+        height: 32px;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    #shouji_div_0 {
+        float: left;
+        margin-right: 12px;
+        position: relative;
+        margin: 0px 50px;
+    }
+
+    #WXMenu_add_0 {
+        display: table-cell;
+        vertical-align: top;
+        float: none;
+        width: auto;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    .add_anniu_shuji_tianjia {
+        border: 1px solid #e7e7eb;
+        color: #44b549;
+        display: block;
+        width: auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: normal;
+        text-decoration: none;
+    }
+
+        .add_anniu_shuji_tianjia a i {
+            background: url(../../../../Content/Images/WXMenu/index_z430cc0.png) 0 0 no-repeat;
+            width: 14px;
+            height: 14px;
+            vertical-align: middle;
+            display: inline-block;
+            margin-top: -2px;
         }
 </style>
-<div id="WXMenu_add">
-    <div class="WXMenu_add_bianju">
-        <label class="frm_label">
-            <strong>菜单名称</strong>
-        </label>
-        <div id="WXMenu_add_bianju_input_name">
-            <span>
-                <input type="text" class="js_menu_name">
-            </span>
-            <p class="frm_msg" style="display: none;">字数超过上限</p>
-            <p class="frm_msg" style="display: none;">请输入菜单名称</p>
-            <p class="frm_msg" style="color: rgba(0,0,0,0.5);;">仅支持中英文和数字，字数不超过4个汉字或8个字母</p>
+<div>
+    @* 提示框 *@
+    <div id="add_tishi_div">
+        <i id="add_tishi_div_tupian"></i>
+        <p>菜单编辑中</p>
+        <p style="color: #8d8d8d;">
+            菜单未发布，请确认菜单编辑完成后点击“保存并发布”同步到手机。若停用菜单，请<a href="javascript:void(0);">点击这里</a>
+        </p>
+    </div>
+    <div id="shouji_div_0" style="margin-bottom:100px;">
+        <div id="shouji_div">
+            <div id="shouji_tou">
+                AptechTextAdmin
+            </div>
+            <div>
+                <ul id="shouji_xia_ul" style="margin-bottom: 0px;">
+                    <li class="add_anniu_shuji" style="width:100%;">
+                        <a href="javascript:void(0);">
+                            <i></i>
+                            <span>添加菜单</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-    <div class="WXMenu_add_bianju">
-        <label class="frm_label">
-            <strong>菜单内容</strong>
-        </label>
-        <div class="frm_controls">
-            <label class="frm_radio_label">
-                <input name="ck" checked type="radio" />  <span>发送消息</span>
-            </label>
-            <label class="frm_radio_label">
-                <input name="ck" type="radio" />  <span>跳转网页</span>
-            </label>
-            <label class="frm_radio_label">
-                <input name="ck" type="radio" />  <span>跳转小程序 </span>
-            </label>
-        </div>
-    </div>
-    <div id="WXMenu_add_jihe">
-        <div>
-            <div class="msg_sender" style="width: 500px;">
-                <div class="msg_tab" style="width: 500px;">
-                    <div id="WXMenu_add_jihe_1_shang" style="width: 500px;">
-                        <div style="width: 417px;">
-                            <ul id="WXMenu_add_jihe_1_shang_ul">
-                                <li>
+    <div id="WXMenu_add_0">
+        <div id="WXMenu_add">
+            <div class="WXMenu_add_bianju">
+                <label class="frm_label">
+                    <strong>菜单名称</strong>
+                </label>
+                <div id="WXMenu_add_bianju_input_name">
+                    <span>
+                        <input type="text" class="js_menu_name">
+                    </span>
+                    <p class="frm_msg" style="display: none;">字数超过上限</p>
+                    <p class="frm_msg" style="display: none;">请输入菜单名称</p>
+                    <p class="frm_msg" style="color: rgba(0,0,0,0.5);">仅支持中英文和数字，字数不超过4个汉字或8个字母</p>
+                </div>
+            </div>
+            <div class="WXMenu_add_bianju">
+                <label class="frm_label">
+                    <strong>菜单内容</strong>
+                </label>
+                <div class="frm_controls">
+                    <label class="frm_radio_label">
+                        <input name="ck" data-pd="1" checked type="radio" />  <span>发送消息</span>
+                    </label>
+                    <label class="frm_radio_label">
+                        <input name="ck" data-pd="2" type="radio" />  <span>跳转网页</span>
+                    </label>
+                    <label class="frm_radio_label">
+                        <input name="ck" data-pd="3" type="radio" />  <span>跳转小程序 </span>
+                    </label>
+                </div>
+            </div>
+            <div id="WXMenu_add_jihe">
+                <div>
+                    <div class="msg_sender" style="width: 500px;">
+                        @* 图文消息 *@
+                        <div class="msg_tab" data-pd="1" style="display:block;">
+                            <div id="WXMenu_add_jihe_1_shang" style="width: 500px;">
+                                <div style="width: 417px;">
+                                    <ul id="WXMenu_add_jihe_1_shang_ul">
+                                        <li data-sum="1">
+                                            <a href="javascript:void(0);">
+                                                <img src="~/Content/Images/WXMenu/b1.png" /><span style="color: #44b549;">图文消息</span>
+                                            </a>
+                                        </li>
+                                        <li data-sum="2">
+                                            <a href="javascript:void(0);">
+                                                <img src="~/Content/Images/WXMenu/a2.png" /><span style="color: #8d8d8d;">图片</span>
+                                            </a>
+                                        </li>
+                                        <li data-sum="3">
+                                            <a href="javascript:void(0);">
+                                                <img src="~/Content/Images/WXMenu/a3.png" /><span style="color: #8d8d8d;">语音</span>
+                                            </a>
+                                        </li>
+                                        <li data-sum="4">
+                                            <a href="javascript:void(0);">
+                                                <img src="~/Content/Images/WXMenu/a4.png" /><span style="color: #8d8d8d;">视频</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                                </li>
-                            </ul>
+                            <div>
+                                @* 图文消息 *@
+                                <div id="WXMenu_add_jihe_1_shang_tuwen" class="hezi_neirong" data-sum="1">
+                                    <div id="WXMenu_add_jihe_1_shang_neirong">
+                                        <div style="padding: 20px;">
+                                            <div class="create-type__item">
+                                                <a href="javascript:;">
+                                                    <i class="sucai_tubiao file"></i>
+                                                    <strong style="font-weight: normal;display: block;color: #8d8d8d;">从素材库选择</strong>
+                                                </a>
+                                            </div>
+                                            <div class="create-type__item">
+                                                <a href="javascript:;">
+                                                    <i class="sucai_tubiao new"></i>
+                                                    <strong style="font-weight: normal;display: block;color: #8d8d8d;">自建图文</strong>
+                                                </a>
+                                            </div>
+                                            <div class="create-type__item">
+                                                <a href="javascript:;">
+                                                    <i class="sucai_tubiao share"></i>
+                                                    <strong style="font-weight: normal;display: block;color: #8d8d8d;">转载文章</strong>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @* 图片 *@
+                                <div id="WXMenu_add_jihe_1_shang_tupian" class="hezi_neirong" data-sum="2" style="display:none;">
+                                    <div style="border: 1px solid #c6c6c6;">
+                                        <div style="padding: 20px;text-align: center;">
+                                            <div class="create-type__item">
+                                                <a href="javascript:;">
+                                                    <i class="sucai_tubiao file"></i>
+                                                    <strong style="font-weight: normal;display: block;color: #8d8d8d;">从素材库选择</strong>
+                                                </a>
+                                            </div>
+                                            <div class="create-type__item">
+                                                <a href="javascript:;">
+                                                    <i class="sucai_tubiao pic"></i>
+                                                    <strong style="font-weight: normal;display: block;color: #8d8d8d;">上传图片</strong>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @* 语音 *@
+                                <div id="WXMenu_add_jihe_1_shang_yuyin" class="hezi_neirong" data-sum="3" style="display:none;">
+                                    <div style="border: 1px solid #c6c6c6;">
+                                        <div style="padding: 20px;text-align: center;">
+                                            <div class="create-type__item">
+                                                <a href="javascript:;">
+                                                    <i class="sucai_tubiao file"></i>
+                                                    <strong style="font-weight: normal;display: block;color: #8d8d8d;">从素材库选择</strong>
+                                                </a>
+                                            </div>
+                                            <div class="create-type__item">
+                                                <a href="javascript:;">
+                                                    <i class="sucai_tubiao voice"></i>
+                                                    <strong style="font-weight: normal;display: block;color: #8d8d8d;">新建语音</strong>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @* 视频 *@
+                                <div id="WXMenu_add_jihe_1_shang_yuyin" class="hezi_neirong" data-sum="4" style="display:none;">
+                                    <div style="border: 1px solid #c6c6c6;">
+                                        <div style="padding: 20px;text-align: center;">
+                                            <div class="create-type__item">
+                                                <a href="javascript:;">
+                                                    <i class="sucai_tubiao file"></i>
+                                                    <strong style="font-weight: normal;display: block;color: #8d8d8d;">从素材库选择</strong>
+                                                </a>
+                                            </div>
+                                            <div class="create-type__item">
+                                                <a href="javascript:;">
+                                                    <i class="sucai_tubiao video"></i>
+                                                    <strong style="font-weight: normal;display: block;color: #8d8d8d;">新建视频</strong>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-
+                        @* 跳转网页 *@
+                        <div class="msg_tab" data-pd="2" style="padding: 16px 20px;display: none;">
+                            <p style="padding-bottom: 10px;color: #8d8d8d;">订阅者点击该子菜单会跳到以下链接</p>
+                            <div>
+                                <label class="frm_label" style="margin-top: 10px;">页面地址</label>
+                                <div class="frm_controls">
+                                    <span class="frm_input_box">
+                                        <input type="text" class="frm_input">
+                                    </span>
+                                </div>
+                            </div>
+                            <div style="padding-left: 85px;">
+                                <div class="frm_controls">
+                                    <a href="javascript:;" style="color: #576b95;">从公众号图文消息中选择</a>
+                                </div>
+                            </div>
+                        </div>
+                        @* 跳转小程序 *@
+                        <div class="msg_tab" data-pd="3" style="padding: 16px 20px;display: none;">
+                            <div>
+                                <p style="padding-bottom: 10px;color: #8d8d8d;">订阅者点击该子菜单会跳到以下小程序</p>
+                                <div>
+                                    <label class="frm_label" style="margin-top: 8px;">小程序</label>
+                                    <div class="frm_controls">
+                                        <a href="javascript:;" id="anniu_xiaocunsxu">选择小程序</a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label style="margin-top: 8px;" class="frm_label">备用网页</label>
+                                    <div class="frm_controls">
+                                        <span class="frm_input_box">
+                                            <input type="text" class="frm_input" style="width: 200px;">
+                                        </span>
+                                        <div style="margin-top:10px;">
+                                            <p><a href="javascript:;">从公众号图文消息中选择</a></p>
+                                        </div>
+                                        <p style="color: #8d8d8d;">旧版微信客户端无法支持小程序，用户点击菜单时将会打开备用网页。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,6 +614,71 @@
         $("[name=ck]").click(function () {
             $("[name=ck]").prop("checked", false);
             $(this).prop("checked", true);
+
+            var pd = $(this).attr("data-pd");
+            var attr = $(".msg_tab");
+            $(".msg_tab").css("display", "none");
+            $.each(attr, function (i, obj) {
+                var xun_id = $(obj).attr("data-pd");
+                if (xun_id == pd) {
+                    $(obj).css("display", "block");
+                }
+            });
         });
+        $("#WXMenu_add_jihe_1_shang_ul li").click(function () {
+            //更换颜色  图标
+            $("#WXMenu_add_jihe_1_shang_ul").find("span").css("color", "#8d8d8d");
+            $(this).find("span").css("color", "#44b549");
+
+            var attr = $("#WXMenu_add_jihe_1_shang_ul li");
+            $.each(attr, function (i, obj) {
+                var xun_id = $(obj).attr("data-sum");
+                $(obj).find("img").attr("src", "/Content/Images/WXMenu/a" + xun_id + ".png");
+            });
+
+            var id = $(this).attr("data-sum");
+            $(this).find("img").attr("src", "/Content/Images/WXMenu/b" + id + ".png");
+            //显示该题目的内容
+            $(".hezi_neirong").css("display", "none");
+            var attr2 = $(".hezi_neirong");
+            $.each(attr2, function (i, obj) {
+                var id2 = $(obj).attr("data-sum");
+                if (id == id2) {
+                    $(obj).css("display", "block");
+                }
+            });
+        });
+
+        //查询当前用户有没有菜单
+        $.post("/WXMenu/Home/chaxun_sum", function (data) {
+            if (data.length != 0) {
+                var sum1 = 0;//一级单元数量
+                $.each(data, function (i,obj) {
+
+                });
+
+
+
+
+                if (data.length == 1) {
+                    var a = $(".add_anniu_shuji").html();
+                    var b = "<li class='add_anniu_shuji_tianjia' style='width:50%;'>"+
+                        "<a href='javascript:void(0);'>"+
+                            "<i></i>"+
+                        "</a>"+
+                    "</li>";
+                    $("#shouji_xia_ul").append(b);
+                    $(".add_anniu_shuji").find("span").html(data[0].MenuName);
+                    $(".add_anniu_shuji").css("width", "50%");
+                    $(".add_anniu_shuji").find("i").css("display", "none");
+
+                    $(".add_anniu_shuji").css("border", "1px solid #44b549");
+                }
+            }
+            else {
+                $("#WXMenu_add_0").css("display", "none");
+            }
+        });
+
     });
 </script>
