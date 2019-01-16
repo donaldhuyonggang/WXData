@@ -9,6 +9,7 @@ using WXDataBLL.WXUser;
 using WXDataUI.Models;
 using WXService.Utility;
 using System.Collections;
+using Newtonsoft.Json;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
@@ -41,7 +42,7 @@ namespace WXDataUI.Areas.Base.Controllers
                     x.AppId,
                     x.RoleId,
                     x.HeadImageUrl,
-                    x.UserId
+                    x.UserId,
                 })
                 .FirstOrDefault();
             return Json(user, JsonRequestBehavior.AllowGet);
@@ -52,7 +53,8 @@ namespace WXDataUI.Areas.Base.Controllers
         /// </summary>
         /// <param name="UserID"></param>
         /// <returns></returns>
-        public ActionResult GetAllUserInfo(int UserID) {
+        public ActionResult GetAllUserInfo(int UserID)
+        {
             List<WX_User> UserInfo = new WX_UserManager().Where(s => s.UserId == UserID).ToList(); //获取所有该客服下的用户
             List<GetCharSpellCode> UserCode = new List<GetCharSpellCode>(); //存储所有用户以及首字母
             Dictionary<string, List<GetCharSpellCode>> Dic = new Dictionary<string, List<GetCharSpellCode>>(); //将用户以键值对的方式存储
@@ -73,7 +75,7 @@ namespace WXDataUI.Areas.Base.Controllers
                 code.HeadImageUrl = item.HeadImageUrl;
                 UserCode.Add(code);//添加到集合
             }
-            var list = UserCode.OrderBy(x=>x.Code).Select(x=>x.Code).Distinct(); //获取当前所有不同分组，去掉重复的部分
+            var list = UserCode.OrderBy(x => x.Code).Select(x => x.Code).Distinct(); //获取当前所有不同分组，去掉重复的部分
             foreach (var item in list)
             {
                 if (!item.Equals("#"))
@@ -82,7 +84,7 @@ namespace WXDataUI.Areas.Base.Controllers
                     Dic.Add(item, UCode);
                 }
             }
-            Dic.Add("#",UserCode.Where(x=>x.Code.Equals("#")).ToList());
+            Dic.Add("#", UserCode.Where(x => x.Code.Equals("#")).ToList());
             return Json(Dic.ToList(), JsonRequestBehavior.AllowGet);
         }
 
@@ -115,6 +117,10 @@ namespace WXDataUI.Areas.Base.Controllers
         {
             var info = new WX_UserManager().Where(s => s.OpenID.Equals(OpenID)).Select(x => new
             {
+                Tag=x.WX_UserTag.Select(s=>new {
+                    s.TagId,
+                    s.TagName
+                }),
                 UserName = x.UserName,
                 UserNick = x.UserNick,
                 Province = x.Province,
@@ -122,7 +128,86 @@ namespace WXDataUI.Areas.Base.Controllers
                 Address = x.Address,
                 UserSex = x.UserSex,
                 HeadImageUrl = x.HeadImageUrl
-            }).FirstOrDefault();
+            }).ToList();
+            return Json(info, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 按照客服编号查找所有有用户的标签
+        /// </summary>
+        /// <param name="UserId">客服编号</param>
+        /// <returns></returns>
+        public ActionResult UserOnTag(int UserId)
+        {
+            var info = new WX_UserTagManager().Where(s =>s.WX_User.Where(x=>x.UserId==UserId)!=null).Select(s => new
+            {
+                //UserStr= JsonConvert.SerializeObject(s.WX_User.Select(x => new
+                //{
+                //    UserName = x.UserName,
+                //    UserNick = x.UserNick,
+                //    OpenID = x.OpenID,
+                //    HeadImageUrl = x.HeadImageUrl,
+                //}).ToList()),
+                s.TagId,
+                Count = s.WX_User.Count(),
+                s.TagName,
+            }).ToList();
+            return Json(info, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 根据标签编号和客服编号查询所有用户
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <param name="TagId"></param>
+        /// <returns></returns>
+        public ActionResult TagInfo(int UserId, int TagId) {
+            var info = new WX_UserTagManager().Where(x => x.TagId == TagId && x.WX_User.Where(s => s.UserId == UserId) != null).Select(s => new
+            {
+                User = s.WX_User.Select(x => new
+                {
+                    x.UserName,
+                    x.UserNick,
+                    x.HeadImageUrl,
+                    x.OpenID
+                }),
+                s.TagName
+            }).ToList();
+            return Json(info,JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 查询用户分组
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        public ActionResult UserOnGroup(int UserID)
+        {
+            var info = new WX_UserGroupManager().Where(s => s.WX_User.Where(x => x.UserId == UserID && x.GroupId == x.WX_UserGroup.GroupId) != null).Select(s => new
+            {
+                GroupName = s.GroupName,
+                Count = s.WX_User.Count(),
+                GroupId = s.GroupId
+            }).ToList();
+            return Json(info, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 根据客服编号和用户分组查询用户
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <param name="GroupID"></param>
+        /// <returns></returns>
+        public ActionResult GroupInfo(int UserID,int GroupID) {
+            var info = new WX_UserGroupManager().Where(s => s.WX_User.Where(x => x.UserId == UserID) != null &&s.GroupId==GroupID).Select(x => new
+            {
+                x.GroupName,
+                User=x.WX_User.Select(s=>new {
+                    s.HeadImageUrl,
+                    s.OpenID,
+                    s.UserNick,
+                    s.UserName
+                }).ToList()
+            }).ToList();
             return Json(info, JsonRequestBehavior.AllowGet);
         }
     }

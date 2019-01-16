@@ -129,5 +129,24 @@ namespace WXDataUI.Areas.WXMenu.Controllers
         }
 
 
+        public ActionResult chaxun_sum() {
+            string id = (Session["SYSUSER"] as SYS_User).AppId;
+            var list1 = new WXDataBLL.WXMenu.WXMenuManger().Where(g => g.AppId == id && g.MenuVisable == 0).ToList();
+            var json = list1.Select(s => new
+            {
+                s.MenuId,
+                s.AppId,
+                s.MenuName,
+                s.MenuType,
+                s.MenuKey,
+                s.MenuUrl,
+                s.MenuVisable,
+                s.MenuSort,
+                s.ParentMenuId
+            });
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }
