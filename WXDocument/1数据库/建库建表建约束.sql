@@ -1,16 +1,12 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2019-01-07 08:43:45                          */
+/* Created on:     2019/1/9 14:26:05                            */
 /*==============================================================*/
-
-
-
 create database WXData
 go 
 
 use WXData
 go
-
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -1470,11 +1466,10 @@ go
 /* Table: WX_UserTag                                            */
 /*==============================================================*/
 create table WX_UserTag (
-   TageId               int                  not null,
+   TagId                int                  identity,
    AppId                varchar(50)          null,
    TagName              nvarchar(50)         null,
-   UserCount            int                  null,
-   constraint PK_WX_USERTAG primary key (TageId)
+   constraint PK_WX_USERTAG primary key (TagId)
 )
 go
 
@@ -1489,7 +1484,7 @@ declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '用户标签ID 有微信分配，不能够自增长',
-   'user', @CurrentUser, 'table', 'WX_UserTag', 'column', 'TageId'
+   'user', @CurrentUser, 'table', 'WX_UserTag', 'column', 'TagId'
 go
 
 declare @CurrentUser sysname
@@ -1504,13 +1499,6 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '用户标签名称',
    'user', @CurrentUser, 'table', 'WX_UserTag', 'column', 'TagName'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '用户数',
-   'user', @CurrentUser, 'table', 'WX_UserTag', 'column', 'UserCount'
 go
 
 /*==============================================================*/
@@ -1674,7 +1662,7 @@ go
 
 alter table WX_UserTagRelation
    add constraint FK_WX_USERT_REFERENCE_WX_USERT foreign key (TageId)
-      references WX_UserTag (TageId)
+      references WX_UserTag (TagId)
 go
 
 alter table WX_UserTagRelation

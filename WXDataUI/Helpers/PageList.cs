@@ -42,6 +42,28 @@ namespace WXDataUI.Helpers
             TotalPages = (int)Math.Ceiling(TotalCount / (double)PageSize);
             this.AddRange(source.Skip((PageIndex - 1) * PageSize).Take(PageSize));
         }
+        public int NextPage
+        {
+            get
+            {
+                if (HasNextPage)
+                {
+                    return PageIndex + 1;
+                }
+                return PageIndex;
+            }
+        }
+        public int PreviousPage
+        {
+            get
+            {
+                if (HasPreviousPage)
+                {
+                    return PageIndex - 1;
+                }
+                return 1;
+            }
+        }
         /// <summary>
         /// 当前页是否有上一页
         /// </summary>

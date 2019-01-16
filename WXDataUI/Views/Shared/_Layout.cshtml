@@ -14,8 +14,32 @@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <style>
+        #CheckAll{
+            width:100%;
+        }
+        .FuncList>li {
+            position: relative;
+            display: block;
+        }
+        .FuncList{
+            padding:0;
+        }
+        .FuncList>li>a {
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+        }
+
+        .FuncList a {
+            margin-left: 3em;
+        }
+        .modal-footer{
+            padding: 5px 10px 5px; 
+            margin:0;
+        }
     </style>
     @RenderSection("styles", required: false)
+
 </head>
 @{
     SYS_User user = Session["SYSUSER"] as SYS_User;
@@ -75,7 +99,8 @@
                         </div>
                         <div id='collapse-@i.FunctionID' class="panel-collapse collapse " role="tabpanel" aria-labelledby="@i.FunctionID">
                             <div class="panel-body" style="border:none;">
-                                <ul class="nav nav-sidebar navbox">
+                                @*nav nav-sidebar navbox*@
+                                <ul class="FuncList">
                                     @*<li><a href="/Base/App/Index">公众号管理</a></li>
                                     <li><a href="/Base/SYSUser/Index">系统用户管理</a></li>
                                     <li><a href="/Base/Role/Index">角色管理</a></li>*@
@@ -96,11 +121,7 @@
     </div>
     @* 编辑系统用户 *@
     <div class="modal fade" id="EditSysUser">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+        
     </div><!-- /.modal -->
     @* 编辑系统用户end *@
 
@@ -126,82 +147,56 @@
 
     @*编辑公众号模态框*@
     <div class="modal fade" id="EditApp">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+        
     </div><!-- /.modal -->
     @*编辑公众号模态框end*@
 
 
     @*分配客服模态框*@
     <div class="modal fade" id="AllotUser">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+        
     </div><!-- /.modal -->
     @*分配客服模态框end*@
 
     @*修改角色权限模态框*@
     <div class="modal fade" id="EditFunction">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+        
     </div><!-- /.modal -->
     @*修改角色权限模态框end*@
 
     @*编辑角色模态框*@
     <div class="modal fade" id="EditRole">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+        
     </div><!-- /.modal -->
     @*编辑角色模态框end*@
 
     @*编辑微信用户模态框*@
     <div class="modal fade" id="EditWXUser">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+        
     </div><!-- /.modal -->
     @*编辑微信用户模态框end*@
 
     @*系统管理查看信息*@
     <div class="modal fade" id="LookSysUser">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+        
     </div><!-- /.modal -->
     @*系统管理查看信息end*@
     
+    @*订阅用户管理 标签|组编辑*@
+    <div class="modal fade" id="TagGroupEdit">
+        
+    </div><!-- /.modal -->
+    @*订阅用户管理 标签|组编辑*@
+
     @*新增素材*@
     <div class="modal fade" id="AddMedia">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+        
     </div><!-- /.modal -->
     @*新增素材end*@
 
     @*李政 菜单管理 新增*@
     <div class="modal fade" id="LZ_Add_WX_Menu">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+        
     </div><!-- /.modal -->
     @*李政 菜单管理 新增end*@
 
@@ -217,7 +212,18 @@
             //GetFunction();
             Keep();
 
-            
+            //通用全选反选 id: CheckAll || class: ck
+            $("#CheckAll").change(function () {
+                $(".ck").prop("checked", $(this).prop("checked"));
+            });
+            $(".ck").change(function () {
+                var temp = true;
+                $.each($(".ck"), function (i,obj) {
+                    if (!$(obj).prop("checked"))temp = false;
+                });
+                $("#CheckAll").prop("checked", temp);
+            });
+            //通用全选反选end
         });
         //保持导航栏状态
         function Keep() {
@@ -225,6 +231,9 @@
             var url = location.href;
             url = url.substring(url.indexOf('localhost:'));
             url = url.substring(url.indexOf('/'));
+            if (url.indexOf('?') != -1) {
+                url = url.substring(0, url.indexOf('?'));
+            }
             var a = $("a[href='" + url + "']");
             $(a).css("color","white");
             $(a).parents("li").addClass("active");

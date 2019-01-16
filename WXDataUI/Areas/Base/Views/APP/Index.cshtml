@@ -110,7 +110,7 @@
                         <table class="table table-bordered table-hover appList">
                             <thead>
                                 <tr class="text-center">
-                                    <th><input type="checkbox" name="name" /></th>
+                                    <th><input type="checkbox" name="name" id="CheckAll"/></th>
                                     <th>账号类型</th>
                                     <th>公众号名称</th>
                                     <th>公众号ID</th>
@@ -194,7 +194,7 @@
                 $.each(json, function (i, obj) {
                     tr += "<tr class=\"text-center\">" +
                                "<td>" +
-                               "    <input type=\"checkbox\" name=\"name\" value=\"\" />" +
+                               "    <input type=\"checkbox\" name=\"name\" value=\"\" class='ck'/>" +
                                "</td>" +
                                "<td>" + obj.AppType + "</td>" +
                                "<td>" + obj.AppName + "</td>" +
