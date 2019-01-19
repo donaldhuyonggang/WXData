@@ -21,14 +21,12 @@ namespace WXDataBLL.Base
         {
             SYS_Role role = new SYS_Role();
             EntityUntility.CopyProperty(info, role);
-             
             foreach (var id in funcList)
             {
                 SYS_Function func = new SYS_Function();
                 func.FunctionID = id;
                 role.SYS_Function.Add(func);
             }
-
             return new SYS_RoleService().Update(role);
         }
 

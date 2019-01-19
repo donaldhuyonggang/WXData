@@ -117,17 +117,20 @@ namespace WXDataUI.Areas.Base.Controllers
         {
             var info = new WX_UserManager().Where(s => s.OpenID.Equals(OpenID)).Select(x => new
             {
-                Tag=x.WX_UserTag.Select(s=>new {
+                Tag = x.WX_UserTag.Select(s => new
+                {
                     s.TagId,
                     s.TagName
                 }),
-                UserName = x.UserName,
-                UserNick = x.UserNick,
-                Province = x.Province,
-                City = x.City,
-                Address = x.Address,
-                UserSex = x.UserSex,
-                HeadImageUrl = x.HeadImageUrl
+                x.UserName,
+                x.UserNick,
+                x.Province,
+                x.City,
+                x.Address,
+                x.UserSex,
+                x.HeadImageUrl,
+                x.Telphone,
+                x.Remark
             }).ToList();
             return Json(info, JsonRequestBehavior.AllowGet);
         }
@@ -139,7 +142,7 @@ namespace WXDataUI.Areas.Base.Controllers
         /// <returns></returns>
         public ActionResult UserOnTag(int UserId)
         {
-            var info = new WX_UserTagManager().Where(s =>s.WX_User.Where(x=>x.UserId==UserId)!=null).Select(s => new
+            var info = new WX_UserTagManager().Where(s => s.WX_User.Where(x => x.UserId == UserId) != null).Select(s => new
             {
                 //UserStr= JsonConvert.SerializeObject(s.WX_User.Select(x => new
                 //{
@@ -160,7 +163,8 @@ namespace WXDataUI.Areas.Base.Controllers
         /// <param name="UserId"></param>
         /// <param name="TagId"></param>
         /// <returns></returns>
-        public ActionResult TagInfo(int UserId, int TagId) {
+        public ActionResult TagInfo(int UserId, int TagId)
+        {
             var info = new WX_UserTagManager().Where(x => x.TagId == TagId && x.WX_User.Where(s => s.UserId == UserId) != null).Select(s => new
             {
                 User = s.WX_User.Select(x => new
@@ -172,7 +176,7 @@ namespace WXDataUI.Areas.Base.Controllers
                 }),
                 s.TagName
             }).ToList();
-            return Json(info,JsonRequestBehavior.AllowGet);
+            return Json(info, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -197,11 +201,13 @@ namespace WXDataUI.Areas.Base.Controllers
         /// <param name="UserID"></param>
         /// <param name="GroupID"></param>
         /// <returns></returns>
-        public ActionResult GroupInfo(int UserID,int GroupID) {
-            var info = new WX_UserGroupManager().Where(s => s.WX_User.Where(x => x.UserId == UserID) != null &&s.GroupId==GroupID).Select(x => new
+        public ActionResult GroupInfo(int UserID, int GroupID)
+        {
+            var info = new WX_UserGroupManager().Where(s => s.WX_User.Where(x => x.UserId == UserID) != null && s.GroupId == GroupID).Select(x => new
             {
                 x.GroupName,
-                User=x.WX_User.Select(s=>new {
+                User = x.WX_User.Select(s => new
+                {
                     s.HeadImageUrl,
                     s.OpenID,
                     s.UserNick,
