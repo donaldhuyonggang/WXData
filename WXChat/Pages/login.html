@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style>
+			#login-form {
+				margin-top: 10px;
+			}
+			#login-form label {
+				width: 22%;
+			}
+			#login-form input {
+				width: 78%;
+			}
+			#login-auto {
+				margin-top: 10px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav mui-bar-transparent">
+			<h1 class="mui-title">登陆</h1>
+		</header>
+		<div class="mui-content">
+			<form id="login-form" class="mui-input-group">
+				<div class="mui-input-row">
+					<label>账号</label>
+					<input type="text" id="account" class="mui-input-clear" value="xcy" placeholder="账号">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input type="password" id="password" class="mui-input-clear" value="xcy" placeholder="密码">
+				</div>
+			</form>
+			<form id="login-auto" class="mui-input-group">
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">
+						自动登录
+						<div id="autoLogin" class="mui-switch">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul>
+			</form>
+			<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+			</div>
+		</div>
+		
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var isActive = document.getElementById("autoLogin").classList.contains("mui-active");//判断是否自动登陆
+				var baseUrl="http://litianle.ngrok.xiaomiqiu.cn";
+				plus.storage.setItem("BaseUrl",baseUrl);
+				var loginButtom = document.getElementById("login");
+				loginButtom.addEventListener("tap", function() {
+					var accountBox = document.getElementById("account");
+					var PasswordBox = document.getElementById("password");
+					var info={
+						LoginId: accountBox.value,
+						Password: PasswordBox.value
+					}
+					mui.ajax({
+						url: baseUrl+'/Mobile/Login',
+						data:info,
+						success: function(data) {
+							if(data) {
+								if(data.RoleId==1){
+									mui.openWindow({
+										url: 'index.html',
+										id: 'index'
+									});
+								}else if (data.RoleId==2) {
+									alert(data.RoleId);
+								}else{
+									alert(data.RoleId);
+								}
+								plus.storage.setItem("Custom",JSON.stringify(data));//存储用户信息
+							} else {
+								mui.toast('账号或密码错误')
+							}
+						},error:function(XMLHttpRequest,textStatus,errorThrown){
+							console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+							console.log("错误类型textStatus: "+textStatus);
+							console.log("异常对象errorThrown: "+errorThrown);
+					}
+					});//ajax
+				});//tap
+			});//ready
+			
+		</script>
+
+	</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*html,body,.mui-content,#item1,#item2{
+				height: 100%;
+			}*/
+			.mui-table-view-cell:after{
+				left: 0;
+			}
+			.mui-content>.mui-table-view:first-child{
+				margin: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mui-content">
+			<ul class="mui-table-view" id="MyVe">
+				<li v-for="item in datas" class="mui-table-view-cell mui-media FansLi" v-bind:mydata="item.title">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">
+						<div class="mui-media-body">
+							<div class="mui-row">
+								<div class="mui-col-xs-8 mui-ellipsis">{{item.title}}</div>
+								<p class="mui-col-xs-4 mui-text-right">11:56</p>
+							</div>
+							<p class="mui-ellipsis">{{item.name}}</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		
+		<div id="UserSheet" class="mui-popover mui-popover-bottom mui-popover-action">
+		    <!-- 可选择菜单 -->
+		    <ul class="mui-table-view">
+		      <li class="mui-table-view-cell">
+		        <a href="#">标记为已读/未读</a>
+		      </li>
+		      <li id="DeleteU" class="mui-table-view-cell">
+		        <a href="#">删除该聊天</a>
+		      </li>
+		    </ul>
+		    <!-- 取消菜单 -->
+		    <ul class="mui-table-view">
+		      <li class="mui-table-view-cell">
+		        <a href="#UserSheet"><b>取消</b></a>
+		      </li>
+		    </ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig:{
+					tap: true, //默认为true
+					doubletap: true, //默认为false
+					longtap: true, //默认为false
+					swipe: true, //默认为true
+					drag: true, //默认为true
+					hold:false,//默认为false，不监听
+					release:false//默认为false，不监听
+			  	}
+			});
+			var MyList=[{title:"12",name:"123456"},{title:"24",name:"546"}]
+			var VM = new Vue({
+					el:"#MyVe",
+					data:{
+						datas:MyList
+					}
+			});
+			mui.plusReady(function(){
+				var info=null; //接收用户标识
+				mui('.mui-content').on('longtap','.FansLi',function(){
+					info =this.getAttribute('mydata'); //获取当前长按的粉丝
+					mui('#UserSheet').popover('toggle');//打开菜单选项
+				});//长按某个粉丝信息
+				mui("#UserSheet").on('tap','.mui-popover>ul>li',function(){
+					mui('#UserSheet').popover('toggle');
+					alert(info);
+				});//弹出菜单操作
+				
+			});
+		</script>
+	</body>
+</html>

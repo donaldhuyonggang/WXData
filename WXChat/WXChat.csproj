@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5AAF580B-426D-452F-9D0F-ABE9CBF65FAA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WXChat</RootNamespace>
+    <AssemblyName>WXChat</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".project" />
+    <None Include="fonts\mui.ttf" />
+    <None Include="manifest.json" />
+    <None Include="unpackage\.confirmed_dependencies" />
+    <None Include="unpackage\.confusion" />
+    <None Include="unpackage\.dependencies" />
+    <None Include="unpackage\release\H51BE4818_1210144125.apk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="css\mui.css" />
+    <Content Include="css\mui.indexedlist.css" />
+    <Content Include="css\mui.min.css" />
+    <Content Include="css\mui.picker.css" />
+    <Content Include="css\mui.poppicker.css" />
+    <Content Include="Images\f809cce4074f5c51f5483aed4b6b5406.jpg" />
+    <Content Include="Images\Icon\add.png" />
+    <Content Include="Images\Icon\addpeople_fill.png" />
+    <Content Include="Images\Icon\cry.png" />
+    <Content Include="Images\Icon\group_fill.png" />
+    <Content Include="Images\Icon\jian.png" />
+    <Content Include="Images\Icon\label_fill.png" />
+    <Content Include="js\jquery-2.2.4.js" />
+    <Content Include="js\jquery-indexedlist.js" />
+    <Content Include="js\mui.js" />
+    <Content Include="js\mui.min.js" />
+    <Content Include="js\mui.picker.js" />
+    <Content Include="js\mui.picker.min.js" />
+    <Content Include="js\mui.poppicker.js" />
+    <Content Include="js\vue.js" />
+    <Content Include="Pages\Group\SaveGroup.html" />
+    <Content Include="Pages\Group\UserGroup.html" />
+    <Content Include="Pages\index.html" />
+    <Content Include="Pages\login.html" />
+    <Content Include="Pages\Tag\AddTag.html" />
+    <Content Include="Pages\Tag\AllTag.html" />
+    <Content Include="Pages\Tag\SaveTag.html" />
+    <Content Include="Pages\User\Chart.html" />
+    <Content Include="Pages\User\ChatMessage.html" />
+    <Content Include="Pages\User\im-Chart.html" />
+    <Content Include="Pages\User\MailList.html" />
+    <Content Include="Pages\User\MyInfo.html" />
+    <Content Include="Pages\User\NewFriend.html" />
+    <Content Include="Pages\User\Remarks.html" />
+    <Content Include="Pages\User\SaoSao.html" />
+    <Content Include="Pages\User\UserInfo.html" />
+    <Content Include="unpackage\res\icons\100x100.png" />
+    <Content Include="unpackage\res\icons\114x114.png" />
+    <Content Include="unpackage\res\icons\120x120.png" />
+    <Content Include="unpackage\res\icons\144x144.png" />
+    <Content Include="unpackage\res\icons\152x152.png" />
+    <Content Include="unpackage\res\icons\180x180.png" />
+    <Content Include="unpackage\res\icons\192x192.png" />
+    <Content Include="unpackage\res\icons\256x256.png" />
+    <Content Include="unpackage\res\icons\29x29.png" />
+    <Content Include="unpackage\res\icons\40x40.png" />
+    <Content Include="unpackage\res\icons\48x48.png" />
+    <Content Include="unpackage\res\icons\50x50.png" />
+    <Content Include="unpackage\res\icons\57x57.png" />
+    <Content Include="unpackage\res\icons\58x58.png" />
+    <Content Include="unpackage\res\icons\72x72.png" />
+    <Content Include="unpackage\res\icons\76x76.png" />
+    <Content Include="unpackage\res\icons\80x80.png" />
+    <Content Include="unpackage\res\icons\87x87.png" />
+    <Content Include="unpackage\res\icons\96x96.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

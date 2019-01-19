@@ -1,0 +1,265 @@
+{
+	"index.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"Chart.html"
+		],
+		"refer": [
+			"Chart.html",
+			"MyHtml.html",
+			"MyInfo.html",
+			"SaoSao.html",
+			"MailList.html"
+		]
+	},
+	"login.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"index.html",
+			"js/vue.js"
+		],
+		"refer": [
+			"index.html"
+		]
+	},
+	"Chart.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/vue.js"
+		],
+		"refer": []
+	},
+	"MyHtml.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/jquery-2.2.4.js",
+			"css/mui.indexedlist.css",
+			"js/jquery-indexedlist.js",
+			"Images/f809cce4074f5c51f5483aed4b6b5406.jpg"
+		],
+		"refer": []
+	},
+	"MyInfo.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/mui.picker.min.js",
+			"js/mui.poppicker.js",
+			"js/mui.picker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"js/vue.js"
+		],
+		"refer": []
+	},
+	"ChatMessage.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"SaoSao.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"NewFriend.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/vue.js"
+		],
+		"refer": []
+	},
+	"UserInfo.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"Images/f809cce4074f5c51f5483aed4b6b5406.jpg",
+			"js/vue.js"
+		],
+		"refer": []
+	},
+	"AllTag.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/vue.js"
+		],
+		"refer": [
+			"SaveTag.html"
+		]
+	},
+	"SaveTag.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"Images/f809cce4074f5c51f5483aed4b6b5406.jpg",
+			"js/vue.js",
+			"Images/Icon/jian.png",
+			"Images/Icon/add.png",
+			"Images/Icon/cry.png"
+		],
+		"refer": []
+	},
+	"MailList.html": {
+		"resources": [
+			"js/jquery-2.2.4.js",
+			"Images/f809cce4074f5c51f5483aed4b6b5406.jpg",
+			"css/mui.indexedlist.css",
+			"js/jquery-indexedlist.js",
+			"UserInfo.html",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/vue.js",
+			"Images/Icon/group_fill.png",
+			"Images/Icon/label_fill.png",
+			"Images/Icon/addpeople_fill.png"
+		],
+		"refer": [
+			"UserInfo.html",
+			"AllTag.html",
+			"UserGroup.html"
+		]
+	},
+	"UserGroup.html": {
+		"resources": [
+			"js/vue.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"SaveTag.html",
+			"SaveGroup.html"
+		]
+	},
+	"SaveGroup.html": {
+		"resources": [
+			"Images/Icon/jian.png",
+			"js/vue.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"Images/Icon/add.png",
+			"css/mui.min.css",
+			"Images/Icon/cry.png"
+		]
+	},
+	"Pages/login.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"Pages/index.html"
+		]
+	},
+	"Pages/User/MailList.html": {
+		"resources": [
+			"Images/Icon/group_fill.png",
+			"js/jquery-2.2.4.js",
+			"Images/Icon/label_fill.png",
+			"Images/Icon/addpeople_fill.png",
+			"css/mui.indexedlist.css",
+			"js/jquery-indexedlist.js",
+			"js/vue.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"Pages/User/UserInfo.html",
+			"Pages/Tag/AllTag.html",
+			"Pages/Group/UserGroup.html"
+		]
+	},
+	"Pages/User/Chart.html": {
+		"resources": [
+			"js/vue.js"
+		]
+	},
+	"Pages/User/MyInfo.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css"
+		]
+	},
+	"Pages/index.html": {
+		"resources": [
+			"Pages/User/Chart.html",
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"Pages/User/MailList.html",
+			"Pages/User/Chart.html",
+			"Pages/User/MyInfo.html",
+			"Pages/User/SaoSao.html"
+		]
+	},
+	"Pages/Tag/AllTag.html": {
+		"refer": [
+			"Pages/Tag/SaveTag.html"
+		]
+	},
+	"Pages/Tag/SaveTag.html": {
+		"resources": [
+			"Images/Icon/jian.png",
+			"Images/Icon/cry.png",
+			"Images/Icon/add.png"
+		]
+	},
+	"Pages/User/UserInfo.html": {
+		"resources": [
+			"js/vue.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"Pages/User/Remarks.html"
+		]
+	},
+	"Pages/Group/UserGroup.html": {
+		"refer": [
+			"Pages/Group/SaveGroup.html"
+		]
+	},
+	"Pages/Group/SaveGroup.html": {
+		"resources": [
+			"Images/Icon/jian.png",
+			"Images/Icon/cry.png",
+			"Images/Icon/add.png",
+			"js/vue.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"Pages/User/Remarks.html": {
+		"resources": [
+			"js/vue.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	}
+}

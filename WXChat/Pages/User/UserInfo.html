@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+	<style type="text/css">
+		#info{
+			display: flex;
+			padding: 30px 0 45px 0;
+		}
+		#header_image{
+			text-align: center;
+		}
+		#header_image img{
+			border-radius: 5px;
+		}
+		#U_Info li{
+			height: 22px;
+			line-height: 22px;
+		}
+		.mui-content>.mui-table-view:first-child{
+			margin: 0;
+		}
+		#tag{
+			height: 40px;
+			line-height: 40px; 
+			margin-right: 30px;
+		}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title mui-text-right" ><strong class="mui-icon mui-icon-more"></strong></h1>
+		</header>
+		<div class="mui-content">
+			<div id="User">
+				<ul id="info" class="mui-table-view mui-list-inline">
+			        <li v-for="UserData in obj" id="header_image" class="mui-col-xs-4">
+			        	<img v-bind:src="UserData.HeadImageUrl" width="80px"/>
+			        </li>
+			        <li class="mui-col-xs-7">
+			           <ul id="U_Info" v-for="UserData in obj" class="mui-list-unstyled">
+			           	 	<li v-if="UserData.UserName != null" class="mui-ellipsis" style="height:35px;">
+		                       <strong><h3>{{UserData.UserName}}</h3></strong>
+		                   </li>
+		                   <li v-else-if="UserData.UserName == null&&UserData.UserNick !=null" class="mui-ellipsis" style="height:35px;">
+		                       <strong><h3>{{UserData.UserNick}}</h3></strong>
+		                   </li>
+		                   <li  v-if="UserData.UserName != null" class="mui-ellipsis">
+		                    	<p>昵称：<span>{{UserData.UserNick}}</span></p>   	
+		                   </li>
+		                   <li v-if="UserData.Province !=null&&UserData.City !=null" class="mui-ellipsis">
+		                       	<p>地区：<span>{{UserData.Province}} {{UserData.City}}</span></p>
+		                   </li>
+		               </ul>
+			        </li>
+			    </ul>
+			    <ul v-for="item in obj" class="mui-table-view">
+		            <li id="Tag_Click" class="mui-table-view-cell">
+		            	<div v-if="item.Tag !='' " class="mui-input-row mui-navigate-right">
+							<label style="width: 20%;">标签</label>
+							<ul id="tag"  class="mui-list-inline mui-ellipsis" >
+								<li v-for="t in item.Tag"><p>{{t.TagName}}</p></li>
+							</ul>
+						</div>
+						<div v-else class="mui-input-row mui-navigate-right">
+							<label style="width: 100%;">设置备注和标签</label>
+						</div>
+		            </li>
+		            <li class="mui-table-view-cell">
+		            	<div  class="mui-input-row mui-navigate-right">
+							<label>更多信息</label>
+						</div>
+		            </li>
+		        </ul>
+			</div>
+	        <ul id="toChat" class="mui-table-view" style="margin-top: 20px; color: skyblue;">
+                <li class="mui-table-view-cell mui-text-center">
+                   	<a><span class="mui-icon mui-icon-chatbubble"></span>发消息</a>
+                </li>
+         	</ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var BaseUrl=plus.storage.getItem("BaseUrl");
+				var self = plus.webview.currentWebview();
+				var OpenID = self.OpenID; //接收
+				
+				var info={
+					OpenID:OpenID
+				}
+				mui.ajax({
+					url:BaseUrl+"/Mobile/UserIDL",
+					data:info,
+					success:function(data){
+						Action(data);
+					},error:function(XMLHttpRequest,textStatus,errorThrown){
+							console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+							console.log("错误类型textStatus: "+textStatus);
+							console.log("异常对象errorThrown: "+errorThrown);
+					}
+				});//ajax
+				mui('.mui-content').on('tap','#Tag_Click',function(){
+					mui.openWindow({
+					    id:"Remarks",
+					    url:"../User/Remarks.html",
+					    extras:{
+					      	OpenID:OpenID//自定义扩展参数，可以用来处理页面间传值
+					    },
+					    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+					    show:{
+					      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+//					      aniShow:slide-in-right,//页面显示动画，默认为”slide-in-right“；
+					      duration:500//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					    },
+					    waiting:{
+					      autoShow:true,//自动显示等待框，默认为true
+					      title:'正在加载...'//等待对话框上显示的提示内容
+					    }
+					});//新开窗体
+					
+				}); //TagClick
+			});
+			function Action(data){
+				var MyInfo=new Vue({
+					el:"#User",
+					data:{
+						obj:data
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

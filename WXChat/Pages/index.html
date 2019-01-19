@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.title-position .mui-title {
+				left: 0;
+				right: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<div class="mui-row title-position">
+				<div class="mui-col-xs-8">
+					<h1 class="mui-title mui-text-left">微信</h1>
+				</div>
+				<div class="mui-col-xs-4 right-icon mui-row">
+					<button id="btnSS" class="mui-btn mui-btn-link mui-col-xs-6 mui-text-center">
+						<span class="mui-icon mui-icon-search"></span>
+					</button>
+					<button id="btnSS" class="mui-btn mui-btn-link mui-col-xs-6 mui-text-center">
+						<span class="mui-icon mui-icon-plus"></span>
+					</button>
+				</div>
+			</div>
+		</header>
+		<nav id="ButtomBar" class="mui-bar mui-bar-tab">
+			<a href="User/Chart.html" class="mui-tab-item mui-active ButtomBar-item">
+				<span class="mui-icon mui-icon-chatbubble"><span class="mui-badge">5</span></span>
+				<span class="mui-tab-label">消息</span>
+			</a>
+			<a href="User/MailList.html" class="mui-tab-item ButtomBar-item">
+				<span class="mui-icon mui-icon-person mui-icon-bars"><span class="mui-badge">5</span></span>
+				<span class="mui-tab-label">通讯录</span>
+			</a>
+			<a class="mui-tab-item ButtomBar-item">
+				<span class="mui-icon mui-icon-navigate"></span>
+				<span class="mui-tab-label">发现</span>
+			</a>
+			<a href="User/MyInfo.html" class="mui-tab-item ButtomBar-item">
+				<span class="mui-icon mui-icon-person"></span>
+				<span class="mui-tab-label">我</span>
+			</a>
+		</nav>
+		<script type="text/javascript" charset="utf-8">
+			mui.init(); //mui初始化
+			//存储页面 集合
+			var subpages = ['User/Chart.html', 'User/MailList.html','User/MyInfo.html'];
+			//子页面的样式
+			var subpage_style = {
+				top: '45px',
+				bottom: '51px'
+			};
+			var aniShow = {};
+			mui.plusReady(function() {
+				//获取当前页面（index）
+				var self = plus.webview.currentWebview();
+				for(var i = 0; i < 3; i++) {
+					var temp = {};
+					//创捷页面
+					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+					if(i > 0) {
+						//创建子页面，首个选项卡页面显示，其它均隐藏
+						sub.hide();
+					}
+					//把创建的页面附加到当前页（所创建的页面就变成了子页面）
+					self.append(sub);
+				}
+				//当前激活选项
+				var activeTab = subpages[0];
+				mui('#ButtomBar').on('tap', '.ButtomBar-item', function(e) {
+					var tagPage = this.getAttribute('href');
+					if(activeTab == tagPage) {
+						return; 
+					} if(mui.os.ios || aniShow[tagPage]) {
+						plus.webview.show(tagPage);
+					} else {
+						//否则，使用fade-in动画，且保存变量
+						var temp = {};
+						temp[tagPage] = "true"; mui.extend(aniShow, temp);
+						plus.webview.show(tagPage, "fade-in", 300);
+					} //隐藏当前;
+					plus.webview.hide(activeTab);
+					//更改当前活跃的选项卡
+					activeTab = tagPage; 
+				});
+				document.getElementById("btnSS").addEventListener('tap',function(){
+					mui.openWindow({
+						url:"User/SaoSao.html",
+    					id:"SaoSao.html",
+					});
+				}); //给加号捆版事件
+			}); //H5+窗体加载事件
+		</script>
+	</body>
+
+</html>
