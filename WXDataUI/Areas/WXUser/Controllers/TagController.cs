@@ -48,6 +48,30 @@ namespace WXDataUI.Areas.WXUser.Controllers
             }
             return Json(result,JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
+        public ActionResult DeleteTag()
+        {
+            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
+            ViewBag.TagList = app.WX_UserTag.ToList();
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult DeleteTag(int tagid)
+        {
+            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
+            TagService ser = new TagService(app.AppId, app.AppSecret);
+            JObject jo = JObject.Parse(ser.Delete(tagid));
+            var result = new
+            {
+                errcode = jo["errcode"],
+                errmsg = jo["errmsg"]
+            };
+            if (result.errcode.Equals(0))
+            {
+                new WX_UserTagManager().Delete(tagid);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         
         /// <summary>
         /// 更新标签

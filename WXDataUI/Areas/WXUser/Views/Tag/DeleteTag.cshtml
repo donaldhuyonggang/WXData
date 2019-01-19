@@ -1,18 +1,17 @@
 ﻿@using WXDataModel
 
-@{ 
+@{
     List<WX_UserTag> tagList = ViewBag.TagList as List<WX_UserTag>;
-    string openId = ViewBag.openId;
 }
-<form action="/WXUser/Home/AddTag" id="form" method="post">
+
+<form action="/WXUser/Tag/DeleteTag" id="form" method="post">
     <div class="modal-dialog" style="width:500px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">分配标签</h4>
+                <h4 class="modal-title">删除标签</h4>
             </div>
             <div class="modal-body">
-                <input type="hidden" name="openId" id="openId" value="@openId" />
                 <div class="form-group">
                     <label class="col-sm-3">标签名称</label>
                     <div class="col-sm-9">
@@ -37,25 +36,17 @@
     </div><!-- /.modal-dialog -->
 
 </form>
+
 <script>
-    $("#submit").click(function () {
-        var data = {
-            openId: $("#openId").val().split(','),
-            tagid : $("#tagid").val()
-        };
-        console.info(data);
-        $.ajax({
-            url: "/WXUser/Home/AddTag",
-            type: "post",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            success: function (r) {
+    $(function () {
+        $("#submit").click(function () {
+            $.post("/WXUser/Tag/DeleteTag","tagid="+$("#tagid").val(), function (r) {
                 if (r.errcode == 0) {
                     $("#TagGroupEdit").modal('hide');
                 } else {
                     alert("错误代码:" + r.errcode + "," + r.errmsg);
                 }
-            }
+            });
         });
     });
 </script>

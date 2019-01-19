@@ -116,8 +116,13 @@ namespace WXDataUI.Areas.WXUser.Controllers
         public ActionResult AddTag(List<string>openId,string tagid)
         {
             WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
-            new UserService(app.AppId,app.AppSecret).AddTag(openId, tagid);
-            return Json("",JsonRequestBehavior.AllowGet);
+            JObject jo = JObject.Parse(new UserService(app.AppId, app.AppSecret).AddTag(openId, tagid));
+            var result = new
+            {
+                errcode = jo["errcode"],
+                errmsg = jo["errmsg"]
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -125,7 +130,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
         /// </summary>
         public ActionResult UpdateList()
         {
-            ReturnResult rs = new ReturnResult() { Result = true };
+            ReturnResult rs = new ReturnResult();
             WX_UserManager manager = new WX_UserManager();
             WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
             UserService ser = new UserService(app.AppId, app.AppSecret);

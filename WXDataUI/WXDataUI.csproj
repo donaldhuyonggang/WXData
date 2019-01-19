@@ -306,6 +306,7 @@
     <Content Include="Areas\WXMenu\Views\Home\Add.cshtml" />
     <Content Include="Areas\WXUser\Views\Tag\AddTag.cshtml" />
     <Content Include="Areas\WXUser\Views\Home\AddTag.cshtml" />
+    <Content Include="Areas\WXUser\Views\Tag\DeleteTag.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
