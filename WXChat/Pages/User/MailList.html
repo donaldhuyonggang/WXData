@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+	<link rel="stylesheet" type="text/css" href="../../css/mui.indexedlist.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<style>
+			html,
+			.mui-content,
+			#list,
+			body {
+				height: 100%;
+			}
+			.mui-bar {
+				-webkit-box-shadow: none;
+				box-shadow: none;
+			}
+			.mui-indexed-list-bar a {
+				display: block;
+				text-align: center;
+				font-size: 11px;
+				padding: 0px;
+				margin: 0px;
+				line-height: 18px;
+				color: #aaa;
+			}
+			.mui-indexed-list-inner {
+				height: 100%;
+			}
+			.userN{
+				height:42px;
+				line-height: 42px;
+			}
+		</style>
+	<body>
+		<div class="mui-content">
+			<div id='list' class="mui-indexed-list">
+				<div class="mui-indexed-list-bar">
+					<a>↑</a>
+					<a>★</a>
+					<a>A</a>
+					<a>B</a>
+					<a>C</a>
+					<a>D</a>
+					<a>E</a>
+					<a>F</a>
+					<a>G</a>
+					<a>H</a>
+					<a>I</a>
+					<a>J</a>
+					<a>K</a>
+					<a>L</a>
+					<a>M</a>
+					<a>N</a>
+					<a>O</a>
+					<a>P</a>
+					<a>Q</a>
+					<a>R</a>
+					<a>S</a>
+					<a>T</a>
+					<a>U</a>
+					<a>V</a>
+					<a>W</a>
+					<a>X</a>
+					<a>Y</a>
+					<a>Z</a>
+					<a>#</a>
+				</div>
+				<div class="mui-indexed-list-alert"></div>
+				<div class="mui-indexed-list-inner">
+					<ul id="Mail" class="mui-table-view">
+						<ul data-group="↑" class="mui-table-view">
+						    <li id="NewFans" class="mui-table-view-cell mui-media">
+						        <a href="javascript:;">
+						            <img class="mui-media-object mui-pull-left" src="../../Images/Icon/addpeople_fill.png" style="background-color:orange;">
+						            <div class="mui-media-body mui-col-xs-4 userN">新粉丝</div>
+						        </a>
+						    </li>
+						    <li id="AllTag" class="mui-table-view-cell mui-media">
+						        <a href="javascript:;">
+						            <img class="mui-media-object mui-pull-left" src="../../Images/Icon/label_fill.png" style="background-color:deepskyblue;"> 
+						            <div class="mui-media-body userN">
+						               	标签
+						            </div>
+						        </a>
+						    </li>
+						    <li id="AllGroup" class="mui-table-view-cell mui-media">
+						        <a href="javascript:;">
+						            <img class="mui-media-object mui-pull-left" src="../../Images/Icon/group_fill.png" style="background-color: green;">
+						            <div class="mui-media-body userN">
+						                	分组
+						            </div>
+						        </a>
+						    </li>
+						</ul>
+
+						<li data-group="★" class="mui-table-view-divider mui-indexed-list-group">星标好友</li>
+					    <li class="individual mui-table-view-cell mui-indexed-list-item">
+					        <a href="javascript:;" MyID="of_EO00-KLk0NNt-fg5qRF11xK9E">
+					            <img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">
+					            <div class="mui-media-body userN">
+					                CBD
+					            </div>
+					        </a>
+					    </li>
+					    <ul v-for="item in obj" class="mui-list-unstyled">
+					    	<li v-for="key in item.Key" v-bind:data-group="key" class="mui-table-view-divider mui-indexed-list-group">{{key}}</li>
+					    	<li v-for="value in item.Value" class="individual mui-table-view-cell mui-indexed-list-item">
+					    		<a href="javascript:;" v-bind:MyID="value.OpenID">
+						            <img class="mui-media-object mui-pull-left" v-bind:src="value.HeadImageUrl">
+						            <div v-if="value.UserName !=null" class="mui-media-body userN">
+						                {{value.UserName}}
+						            </div>
+						            <div v-if="value.UserName ==null" class="mui-media-body userN">
+						                {{value.UserNick}}
+						            </div>
+						        </a>
+					    	</li>
+					    </ul>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/jquery-2.2.4.js"></script>
+		<script src="../../js/jquery-indexedlist.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init()
+			var header = document.querySelector('header.mui-bar');
+//			list.style.height = (document.body.offsetHeight - header.offsetHeight) + 'px';
+			$('#list').IndexedList({
+				$bar: $('.mui-indexed-list-bar'), // 存储索引的盒子
+				$inner: $('.mui-indexed-list-inner'), // 列表盒子
+				$alert: $('.mui-indexed-list-alert') // 显示索引提示的盒子
+			});
+			mui.plusReady(function(){
+				var BaseUrl=plus.storage.getItem("BaseUrl");
+				var custom=JSON.parse(plus.storage.getItem("Custom"));
+				mui('.mui-content').on('tap','#AllTag',function(){
+					mui.openWindow({
+						id:"AllTag",
+						url:"../Tag/AllTag.html"
+					});
+				});//Tag
+				
+				mui('.mui-content').on('tap','#NewFans',function(){
+					mui.openWindow({
+						id:"Fans",
+						url:"../User/NewFriend.html"
+					});
+				});//NewFans
+				
+				mui('.mui-content').on('tap','#AllGroup',function(){
+					var nwaiting = plus.nativeUI.showWaiting();  
+					webviewShow = plus.webview.create("../Group/UserGroup.html");
+//					mui.openWindow({
+//						id:"AllGroup",
+//						url:"UserGroup.html"
+//					});
+				});//Group
+				
+				mui('.mui-content').on('tap','.individual a',function(e){
+					var OpenID=this.getAttribute("MyID");
+						mui.openWindow({
+						    id:OpenID,
+						    url:"../User/UserInfo.html",
+						    extras:{
+						      	OpenID:OpenID//自定义扩展参数，可以用来处理页面间传值
+						    },
+						    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+						    show:{
+						      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+	//					      aniShow:slide-in-right,//页面显示动画，默认为”slide-in-right“；
+						      duration:500//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+						    },
+						    waiting:{
+						      autoShow:true,//自动显示等待框，默认为true
+						      title:'正在加载...'//等待对话框上显示的提示内容
+						    }
+						});//新开窗体
+				}); //打开用户详细页面
+				var info={
+					UserID:custom.UserId
+				};
+				mui.ajax({
+					url:BaseUrl+'/Mobile/GetAllUserInfo',
+					data:info,
+					success:function(data){
+						Action(data);
+					},error:function(XMLHttpRequest,textStatus,errorThrown){
+							console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+							console.log("错误类型textStatus: "+textStatus);
+							console.log("异常对象errorThrown: "+errorThrown);
+					}
+				}); //ajax
+			});
+			
+			function Action(datas){
+				var UserV =new Vue({
+					el:"#Mail",
+					data:{
+						obj:datas
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

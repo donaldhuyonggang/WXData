@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+	<style type="text/css">
+		.receive{
+			height: 42px;
+			line-height: 42px;
+		}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title mui-text-left">新的朋友</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+			    <li class="mui-table-view-cell mui-media">
+			    	<div class="mui-row">
+			    		<img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">
+			            <div class="mui-media-body mui-col-xs-8">
+		                	幸福
+			                <p class="mui-ellipsis">能和心爱的人一起睡觉</p>
+			            </div>
+			            <div class="mui-col-xs-2 receive mui-text-right">
+			            	<button v-if="ses" type="button" class="mui-btn-mini mui-btn-success">接受</button>
+			            	<p v-else="ses">已接受</p>
+			            </div>
+			    	</div>
+			    </li>
+			</ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var Receive=new Vue({
+				el:".receive",
+				data:{
+					ses:1==1
+				}
+			});
+		</script>
+	</body>
+
+</html>

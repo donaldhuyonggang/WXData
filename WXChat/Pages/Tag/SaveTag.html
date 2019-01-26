@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+	<style>
+		#TagBox{
+			background-color:white ;
+			padding-left:25px ;
+			padding-top: 15px;
+		}
+		#TagBox li{
+			margin: 0 2px ;
+		}
+		#TagBox li img{
+			border-radius: 5px;
+			width: 55px;
+		}
+		#NoBody{
+			margin: 15% 0 0 0 ;
+		}
+		#NoBody ul li{
+			line-height: 50px;
+		}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title mui-text-left">保存为标签</h1>
+		    <button type="button" class="mui-btn mui-btn-green mui-pull-right">保存</button>
+		</header>
+		<div class="mui-content" id="HeaderImage">
+			<div v-for="item in obj" v-if="item.User != ''" id="Content">
+				<form class="mui-input-group" style="margin: 20px 0;">
+					<div v-for="tag in obj" class="mui-input-row">
+						<label>标签名字</label>
+						<input type="text" class="mui-input-clear" placeholder="输入名字" v-bind:value="tag.TagName">
+					</div>
+				</form>
+				<ul v-for="item in obj" class="mui-list-inline" id="TagBox">
+					<li v-for="object in item.User" class="mui-text-center OpenUserInfo">
+						<ul class="mui-list-unstyled" v-bind:OpenID="object.OpenID">
+							<li><img V-bind:src="object.HeadImageUrl" /></li>
+							<li style="max-width: 50px;" class="mui-ellipsis"><p v-if="object.UserName !=null">{{object.UserName}}</p><p v-else="object.UserNick !=null">{{object.UserNick}}</p></li>
+						</ul>
+					</li>
+					<li class="mui-ellipsis " id="add">
+						<ul class="mui-list-unstyled">
+							<li><img src="../../Images/Icon/add.png" style="border: 1px solid #CCCCCC;"/></li>
+							<li> <p>&nbsp;</p></li>
+						</ul>
+					</li>
+					<li class="mui-ellipsis ">
+						<ul class="mui-list-unstyled">
+							<li><img src="../../Images/Icon/jian.png" style="border: 1px solid #CCCCCC;"/></li>
+							<li> <p>&nbsp;</p></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div v-else id="NoBody">
+				<ul class="mui-list-unstyled mui-text-center">
+					<li><img src="../../Images/Icon/cry.png" width="80px"/></li>
+					<li><p><strong>该标签下还没有任何成员，快去添加吧</strong></p></li>
+				</ul>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+				var TagId = self.TagId; //接收
+				var BaseUrl=plus.storage.getItem("BaseUrl");
+				var custom=JSON.parse(plus.storage.getItem("Custom"));//获取登陆对象
+				var info={
+					UserId:custom.UserId,
+					TagId:TagId
+				};
+				mui.ajax({
+					url:BaseUrl+"/Mobile/TagInfo",
+					data:info,
+					success:function(data){
+						Action(data);
+					},error:function(XMLHttpRequest,textStatus,errorThrown){
+							console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+							console.log("错误类型textStatus: "+textStatus);
+							console.log("异常对象errorThrown: "+errorThrown);
+					}
+				});//ajax
+			});//窗体加载
+			function Action(data){
+				var UserTag=new Vue({
+					el:"#HeaderImage",
+					data:{
+						obj:data
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

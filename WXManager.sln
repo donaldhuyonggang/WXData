@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WXDataUI", "WXDataUI\WXData
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WXService", "WXService\WXService.csproj", "{830E0A30-8499-4158-B623-9AE3FE5CB6EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WXChat", "WXChat\WXChat.csproj", "{5AAF580B-426D-452F-9D0F-ABE9CBF65FAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{830E0A30-8499-4158-B623-9AE3FE5CB6EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{830E0A30-8499-4158-B623-9AE3FE5CB6EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{830E0A30-8499-4158-B623-9AE3FE5CB6EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AAF580B-426D-452F-9D0F-ABE9CBF65FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AAF580B-426D-452F-9D0F-ABE9CBF65FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AAF580B-426D-452F-9D0F-ABE9CBF65FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AAF580B-426D-452F-9D0F-ABE9CBF65FAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

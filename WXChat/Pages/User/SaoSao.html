@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			html,body,.mui-content{
+				height: 100%;
+			}
+			#header,.mui-content{
+				background-color: transparent;
+			}
+			body{
+				background-color: black;
+			}
+			.mui-title{
+				color:white;
+			}
+			#bcid{
+				position: absolute;
+				top: 0;
+				height: 100%;
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">二维码/条码</h1>
+		</header>
+		<div class="mui-content">
+			<div id="bcid">
+				
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var bc=new plus.barcode.Barcode("bcid");
+				var BaseUrl=plus.storage.getItem("BaseUrl");
+				bc.onmarked=function(type,code,file){
+					var info={
+						uid:plus.storage.getItem("LoginID"),
+						pwd:plus.storage.getItem("LoginPwd"),
+						sessionID:code
+					};
+					mui.ajax({
+						url:BaseUrl+"/Account/QRLogin",
+						type:"post",
+						data:info,
+						contentType:"application/json",
+						success:function(data){
+							mui.back();
+						},error:function(xhr){ 
+							mui.toast(xhr.responseText);
+						}
+					});//ajax请求
+				}
+				bc.start();
+			})//窗体加载事件
+		</script>
+	</body>
+
+</html>

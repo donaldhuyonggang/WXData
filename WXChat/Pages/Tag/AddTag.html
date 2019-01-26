@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title mui-text-left">选择联系人</h1>
+		    <button type="button" class="mui-btn mui-btn-green mui-pull-right">新增</button>
+		</header>
+		<div class="mui-content">
+			
+		</div>
+		<script src="../../js/jquery-2.2.4.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var BaseUrl=plus.storage.getItem("BaseUrl");
+				var custom=JSON.parse(plus.storage.getItem("Custom"));
+				var info={
+					UserID:custom.UserId
+				};
+				mui.ajax({
+					url:BaseUrl+'/Mobile/GetAllUserInfo',
+					data:info,
+					success:function(data){
+						Action(data);
+					},error:function(XMLHttpRequest,textStatus,errorThrown){
+							console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+							console.log("错误类型textStatus: "+textStatus);
+							console.log("异常对象errorThrown: "+errorThrown);
+					}
+				});
+			});
+			function Action(data){
+			}
+		</script>
+	</body>
+
+</html>
