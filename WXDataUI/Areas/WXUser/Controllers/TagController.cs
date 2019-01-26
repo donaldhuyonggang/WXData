@@ -72,7 +72,36 @@ namespace WXDataUI.Areas.WXUser.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        
+
+
+        [HttpGet]
+        public ActionResult EditTag()
+        {
+            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
+            ViewBag.TagList = app.WX_UserTag.ToList();
+            return PartialView();
+        }
+        /// <summary>
+        /// 编辑标签
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditTag(WX_UserTag tag)
+        {
+            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
+            TagService ser = new TagService(app.AppId, app.AppSecret);
+            GetTagList();
+            JObject jo = JObject.Parse(ser.Update(tag.TagId, tag.TagName));
+            var result = new
+            {
+                errcode = jo["errcode"],
+                errmsg = jo["errmsg"]
+            };
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
+
+
+
         /// <summary>
         /// 更新标签
         /// </summary>
@@ -89,6 +118,10 @@ namespace WXDataUI.Areas.WXUser.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// 从服务器更新标签集合
+        /// </summary>
+        /// <returns></returns>
         public List<WX_UserTag> GetTagList()
         {
             WX_UserTagManager manager = new WX_UserTagManager();
@@ -102,20 +135,34 @@ namespace WXDataUI.Areas.WXUser.Controllers
                 {
                     TagId = (int)i["id"],
                     TagName = i["name"].ToString(),
+                    AppId = app.AppId
                 };
                 var info = manager.GetByPK(tag.TagId);
                 if (info != null)
                 {
-
-                    info.TagName = tag.TagName;
-                    //manager.Update(info);
+                    //info.TagName = tag.TagName;
+                    manager.Update(tag);
                 }else
                 {
                     manager.Add(tag);
                 }
-
                 list.Add(tag);
             }
+
+            var idList = new List<int>();
+            foreach (var i in manager.GetAll())
+            {
+                if(list.Where(t => t.TagId.Equals(i.TagId)).Count() == 0)
+                {
+                    idList.Add(i.TagId);
+                }
+            }
+            foreach (var id in idList)
+            {
+                manager.Delete(id);
+            }
+
+            Controller_EX.BindSession(Session);
             return list;
         }
     }

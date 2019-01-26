@@ -145,7 +145,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
                     JObject userJo = JObject.Parse(json);
                     if (userJo["subscribe"].ToString().Equals("0"))//已退订
                     {
-
+                        manager.Update(new WX_User() { OpenID = i, UnSubscribeTime = DateTime.Now, UserState = "已退订" });
                     }
                     else
                     {
@@ -179,7 +179,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
                         }
                         else
                         {
-
+                            manager.Update(user);
                         }
                     }
                 }
