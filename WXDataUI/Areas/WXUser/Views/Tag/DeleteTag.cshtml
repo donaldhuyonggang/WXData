@@ -40,9 +40,11 @@
 <script>
     $(function () {
         $("#submit").click(function () {
-            $.post("/WXUser/Tag/DeleteTag","tagid="+$("#tagid").val(), function (r) {
+            $.post("/WXUser/Tag/DeleteTag", "tagid=" + $("#tagid").val(), function (r) {
+                console.log(r);
                 if (r.errcode == 0) {
                     $("#TagGroupEdit").modal('hide');
+                    GetTags();
                 } else {
                     alert("错误代码:" + r.errcode + "," + r.errmsg);
                 }

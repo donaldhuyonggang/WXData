@@ -6,7 +6,7 @@
     List<WX_UserTag> TagList = ViewBag.TagList as List<WX_UserTag>;
     List<WX_UserGroup> GroupList = ViewBag.GroupList as List<WX_UserGroup>;
     PageList<WX_User> MyPage = ViewBag.Page as PageList<WX_User>;
-
+    WX_App MyApp = (Session["SYSUSER"] as SYS_User).WX_App;
 }
 @section styles{
 
@@ -88,7 +88,8 @@
                             </div>
                         </li>
                         <li class="SearchTag">
-                            <span><a href="#" tagId="0">全部(@TagList.Sum(s => s.WX_User.Count()))</a></span>
+                            <span><a href="#" tagId="0">全部(@MyApp.WX_User.Count())</a></span>
+                            <span><a href="#" tagId="-1">未分组(@MyApp.WX_User.Where(u => u.WX_UserTag.Count == 0).Count())</a></span>
                             <ul style="list-style:none;">
                                 @foreach (var i in TagList)
                                 {
@@ -328,15 +329,7 @@
 
             //更新标签
             $("#SyncTag").click(function(){
-                $.post("/WXUser/Tag/SyncTag",function(data){
-                    console.info(data);
-                    var li = "";
-                    $.each(data,function(i,obj){
-                        li += "<li><a href='#' tagid=" + obj.TagId + ">" + obj.TagName + " (" + obj.count + ")</a></li>";
-                        
-                    });
-                    $(".SearchTag>ul").html(li);
-                });
+                GetTags();
             });
             //更新标签end
 
@@ -386,7 +379,17 @@
             location.href = "/WXUser/Home/Index?type="+type+"&pageIndex="+pageIndex+"&pageSize="+pageSize+"&key="+key;
         }
 
-
+        function GetTags(){
+            $.post("/WXUser/Tag/SyncTag",function(data){
+                console.info(data);
+                var li = "";
+                $.each(data,function(i,obj){
+                    li += "<li><a href='#' tagid=" + obj.TagId + ">" + obj.TagName + " (" + obj.count + ")</a></li>";
+                        
+                });
+                $(".SearchTag>ul").html(li);
+            });
+        }
     </script>
 
 }

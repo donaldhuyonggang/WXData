@@ -15,7 +15,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
 {
     public class TagController : Controller
     {
-        public object TagServices { get; private set; }
+        //public object TagServices { get; private set; }
 
         // GET: WXUser/Tag
         public ActionResult Index()

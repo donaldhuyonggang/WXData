@@ -55,7 +55,10 @@ namespace WXDataUI.Areas.WXUser.Controllers
                 list = new WX_UserManager().Where(u => u.AppId == app.AppId && u.UserId == null);
             }else if(type == 3)//根据标签查询
             {
-                list = new WX_UserTagManager().GetByPK(key).WX_User.Where(u => u.AppId == app.AppId).ToList();
+                if (key.Equals(-1))
+                    list = app.WX_User.Where(u => u.WX_UserTag.Count == 0).ToList();
+                else
+                    list = new WX_UserTagManager().GetByPK(key).WX_User.Where(u => u.AppId == app.AppId).ToList();
             }
             else if (type == 4)//根据分组查询
             {
@@ -119,9 +122,13 @@ namespace WXDataUI.Areas.WXUser.Controllers
             JObject jo = JObject.Parse(new UserService(app.AppId, app.AppSecret).AddTag(openId, tagid));
             var result = new
             {
-                errcode = jo["errcode"],
-                errmsg = jo["errmsg"]
+                errcode = jo["errcode"].ToString(),
+                errmsg = jo["errmsg"].ToString()
             };
+            if(result.errcode.Equals("0"))
+            {
+
+            }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
