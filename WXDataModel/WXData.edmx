@@ -213,7 +213,7 @@
           <Key>
             <PropertyRef Name="GroupId" />
           </Key>
-          <Property Name="GroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
           <Property Name="AppId" Type="varchar" MaxLength="50" />
           <Property Name="UserId" Type="int" />
           <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
@@ -223,7 +223,7 @@
           <Key>
             <PropertyRef Name="TagId" />
           </Key>
-          <Property Name="TagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagId" Type="int" Nullable="false" />
           <Property Name="AppId" Type="varchar" MaxLength="50" />
           <Property Name="TagName" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -974,7 +974,7 @@
           <Key>
             <PropertyRef Name="GroupId" />
           </Key>
-          <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
           <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Int32" />
           <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -987,7 +987,7 @@
           <Key>
             <PropertyRef Name="TagId" />
           </Key>
-          <Property Name="TagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagId" Type="Int32" Nullable="false" />
           <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TagName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_USERT_REFERENCE_WX_APP" FromRole="WX_UserTag" ToRole="WX_App" />

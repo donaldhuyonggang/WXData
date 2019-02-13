@@ -131,14 +131,14 @@ namespace WXDataUI.Areas.WXUser.Controllers
             JToken jo = JObject.Parse(ser.GetList())["tags"];
             foreach (var i in jo.Children())
             {
-                WX_UserTag tag = new WX_UserTag()
+                var tag = new WX_UserTag()
                 {
                     TagId = (int)i["id"],
                     TagName = i["name"].ToString(),
                     AppId = app.AppId
                 };
-                var info = manager.GetByPK(tag.TagId);
-                if (info != null)
+                var info = manager.GetAll().Where(t => t.TagId == Convert.ToInt32(i["id"]) && t.AppId.Equals(app.AppId));
+                if (info.Count() > 0)
                 {
                     //info.TagName = tag.TagName;
                     manager.Update(tag);

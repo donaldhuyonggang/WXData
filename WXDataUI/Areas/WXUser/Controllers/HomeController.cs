@@ -26,6 +26,8 @@ namespace WXDataUI.Areas.WXUser.Controllers
             ViewBag.Page = GetUsers(type, pageIndex, pageSize,key);
             return View();
         }
+
+        //为用户分配客服
         [HttpGet]
         public ActionResult AllotUser(string id)
         {
@@ -44,8 +46,9 @@ namespace WXDataUI.Areas.WXUser.Controllers
             user1.UserId = UserId;
             return Json(new WX_UserManager().Update(user1),JsonRequestBehavior.AllowGet);
         }
+        //为用户分配客服end
 
-
+        //从数据库获取用户
         public PageList<WX_User> GetUsers(int type,int pageIndex,int pageSize,int key)
         {
             WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
@@ -73,12 +76,14 @@ namespace WXDataUI.Areas.WXUser.Controllers
 
         }
 
+        //查看用户详情
         public ActionResult UserInfo(string id)
         {
             ViewBag.User = new WX_UserManager().GetByPK(id);
             return PartialView();
         }
 
+        //修改用户分组
         [HttpGet]
         public ActionResult ChangeGroup(string id)
         {
@@ -100,6 +105,10 @@ namespace WXDataUI.Areas.WXUser.Controllers
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        //修改用户分组end
+
+
         private void GetByWX()
         {
             WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
@@ -108,6 +117,8 @@ namespace WXDataUI.Areas.WXUser.Controllers
 
             }
         }
+
+        //为用户添加标签
         [HttpGet]
         public ActionResult AddTag(string openId)
         {
@@ -116,7 +127,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
             return PartialView();
         }
         [HttpPost]
-        public ActionResult AddTag(List<string>openId,string tagid)
+        public ActionResult AddTag(List<string>openId,int tagid)
         {
             WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
             JObject jo = JObject.Parse(new UserService(app.AppId, app.AppSecret).AddTag(openId, tagid));
@@ -127,13 +138,22 @@ namespace WXDataUI.Areas.WXUser.Controllers
             };
             if(result.errcode.Equals("0"))
             {
-
+                WX_UserManager manager = new WX_UserManager();
+                foreach (var id in openId)
+                {
+                    WX_User user = manager.GetByPK(id);
+                    WX_User user1 = new WX_User();
+                    EntityUntility.CopyProperty(user, user1);
+                    user1.WX_UserTag.Add(new WX_UserTag() {TagId = tagid });
+                    manager.Update(user1);
+                }
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        //为用户添加标签end
 
         /// <summary>
-        /// 更新用户列表
+        /// 从服务器更新用户列表
         /// </summary>
         public ActionResult UpdateList()
         {

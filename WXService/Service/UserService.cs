@@ -49,7 +49,7 @@ namespace WXService.Service
             return respJson;
         }
 
-        public string AddTag(List<string> openIdList,string tagId)
+        public string AddTag(List<string> openIdList,int tagId)
         {
             if (openIdList.Count == 0) return "" ;
             var data = new
