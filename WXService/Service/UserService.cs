@@ -15,6 +15,8 @@ namespace WXService.Service
         private const string USER_INFO_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang={2}";
         private const string USER_GET_URL = "https://api.weixin.qq.com/cgi-bin/user/get?access_token={0}&next_openid={1}";
         private const string USER_ADD_TAG_URL = "https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token={0}";
+        private const string USER_REMOVE_TAG_URL = "https://api.weixin.qq.com/cgi-bin/tags/members/batchuntagging?access_token={0}";
+        //
 
         public UserService(string appId, string appSecert)
             :base(appId, appSecert)
@@ -49,6 +51,12 @@ namespace WXService.Service
             return respJson;
         }
 
+        /// <summary>
+        /// 批量为用户添加标签
+        /// </summary>
+        /// <param name="openIdList"></param>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
         public string AddTag(List<string> openIdList,int tagId)
         {
             if (openIdList.Count == 0) return "" ;
@@ -58,6 +66,26 @@ namespace WXService.Service
                 tagid=tagId
             };
             string url = string.Format(USER_ADD_TAG_URL, this.Get_Access_Token());
+            string respJson = MyHttpUtility.SendPost(url, JsonConvert.SerializeObject(data));
+            return respJson;
+        }
+        /// <summary>
+        /// 移除用户标签
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        public string RemoveTag(string openId,int tagId)
+        {
+            var data = new
+            {
+                openid_list = new
+                {
+                    openId
+                },
+                tagid = tagId
+            };
+            string url = string.Format(USER_REMOVE_TAG_URL, this.Get_Access_Token());
             string respJson = MyHttpUtility.SendPost(url, JsonConvert.SerializeObject(data));
             return respJson;
         }

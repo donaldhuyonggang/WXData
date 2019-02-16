@@ -61,7 +61,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
                 if (key.Equals(-1))
                     list = app.WX_User.Where(u => u.WX_UserTag.Count == 0).ToList();
                 else
-                    list = new WX_UserTagManager().GetByPK(key).WX_User.Where(u => u.AppId == app.AppId).ToList();
+                    list = new WX_UserTagManager().GetByPK(key,app.AppId).WX_User.Where(u => u.AppId == app.AppId).ToList();
             }
             else if (type == 4)//根据分组查询
             {
@@ -71,7 +71,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
             {
                 list = new WX_UserManager().Where(u => u.AppId == app.AppId);
             }
-            PageList<WX_User> page = new PageList<WX_User>(list,pageIndex,pageSize); 
+            PageList<WX_User> page = new PageList<WX_User>(list.OrderBy(t => t.SubscribeTime).ToList(), pageIndex,pageSize); 
             return page;
 
         }
@@ -141,16 +141,34 @@ namespace WXDataUI.Areas.WXUser.Controllers
                 WX_UserManager manager = new WX_UserManager();
                 foreach (var id in openId)
                 {
-                    WX_User user = manager.GetByPK(id);
-                    WX_User user1 = new WX_User();
-                    EntityUntility.CopyProperty(user, user1);
-                    user1.WX_UserTag.Add(new WX_UserTag() {TagId = tagid });
-                    manager.Update(user1);
+                    manager.AddTag(manager.GetByPK(id), tagid);
                 }
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         //为用户添加标签end
+
+        //移除用户标签
+        [HttpPost]
+        public ActionResult RemoveTag(string openId,int tagId)
+        {
+            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
+            JObject jo = JObject.Parse(new UserService(app.AppId, app.AppSecret).RemoveTag(openId, tagId));
+            var result = new
+            {
+                errcode = jo["errcode"].ToString(),
+                errmsg = jo["errmsg"].ToString()
+            };
+            if (result.errcode.Equals("0"))
+            {
+                WX_UserManager manager = new WX_UserManager();
+                manager.RemoveTag(manager.GetByPK(openId), tagId);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //移除用户标签end
+
+
 
         /// <summary>
         /// 从服务器更新用户列表
@@ -179,7 +197,6 @@ namespace WXDataUI.Areas.WXUser.Controllers
                         long unixTimeStamp = Convert.ToInt32(userJo["subscribe_time"]);
                         System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 当地时区
                         DateTime dt = startTime.AddSeconds(unixTimeStamp);
-                        System.Console.WriteLine(dt.ToString("yyyy/MM/dd HH:mm:ss:ffff"));
                         WX_User user = new WX_User()
                         {
                             OpenID = i,
@@ -192,13 +209,10 @@ namespace WXDataUI.Areas.WXUser.Controllers
                             HeadImageUrl = userJo["headimgurl"].ToString(),
                             SubscribeTime = dt,
                             Remark = userJo["remark"].ToString(),
-                            GroupId = Convert.ToInt32(userJo["groupid"]),
+                            //GroupId = Convert.ToInt32(userJo["groupid"]),
+                            GroupId = 0,
                             UserState = "正常",
                         };
-                        foreach (var t in userJo["tagid_list"].Children())
-                        {
-                            user.WX_UserTag.Add(new WX_UserTagManager().GetByPK(Convert.ToInt32(t)));
-                        }
                         WX_User info = manager.GetByPK(user.OpenID);
                         if (info == null)//新增
                         {
@@ -208,17 +222,22 @@ namespace WXDataUI.Areas.WXUser.Controllers
                         {
                             manager.Update(user);
                         }
+                        foreach (var t in userJo["tagid_list"].Children())
+                        {
+                            manager.AddTag(user, Convert.ToInt32(t));
+                        }
                     }
                 }
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 rs.Result = false;
-                rs.ErrorMsg = "更新失败!";
+                rs.ErrorMsg = e.Message;
                 return Json(rs,JsonRequestBehavior.AllowGet);
             }
             return Json(rs, JsonRequestBehavior.AllowGet);
         }
+
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WXDataDAL.WX;
 using WXDataModel;
 
 namespace WXDataBLL.WXUser
@@ -13,6 +14,11 @@ namespace WXDataBLL.WXUser
         {
             List<WX_UserTag> list = base.GetAll().Where(t => t.AppId == null || t.AppId.Equals(appId)).ToList();
             return list;
+        }
+
+        public WX_UserTag GetByPK(int tagid,string appid)
+        {
+            return new WX_UserTagService().GetByPK(tagid, appid);
         }
         //public override bool Update(WX_UserTag info)
         //{

@@ -2,6 +2,19 @@
 @{
     WX_User User = ViewBag.User as WX_User;
 }
+    <style>
+        .UserTag,.UserTag>div{
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 6px 12px;
+            vertical-align:middle;
+        }
+        .UserTag>div{
+            display:inline-block;
+            vertical-align:middle;
+        }
+        
+    </style>    
 
 <div class="modal-dialog" style="width:800px;">
     <div class="modal-content">
@@ -76,11 +89,58 @@
                             <input type="text" class="form-control" name="GroupName" id="GroupName" value="@User.WX_UserGroup.GroupName">
                         </div>
                     </div>
+                    @if (User.WX_UserTag.Count > 0)
+                    {
+                        <div class="form-group">
+                            <label for="UnSubscribeTime" class="col-sm-2 control-label" style="">用户标签</label>
+                            <div class="col-sm-10">
+                                <div class="UserTag">
+                                    @foreach (var tag in User.WX_UserTag)
+                                    {
+                                        <div>
+                                            <button type="button" class="close removeTag" TagId="@tag.TagId">
+                                                <span>×</span>
+                                            </button>
+                                            <span style="margin-right:1em;">@tag.TagName</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
 
+                        </div>
+                    }
                 </div>
+
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
         </div>
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
+
+<script>
+    $(function () {
+        $(".removeTag").click(function () {
+            var tagid = $(this).attr("TagId");
+            var data = {
+                openid : "@User.OpenID",
+                tagid : tagid,
+            };
+            console.log(data);
+            $.ajax({
+                url: "/WXUser/Home/RemoveTag",
+                data: data,
+                type: "post",
+                success: function (r) {
+                    if (r.errcode == 0) {
+                        $(".removeTag[TagId='" + tagid + "']").parent().remove();
+                        console.info($(".removeTag[TagId='" + tagid + "']"));
+                        alert("ok");
+                    } else {
+                        alert(r.errmsg);
+                    }
+                }
+            }); 
+        });
+    });
+</script>
