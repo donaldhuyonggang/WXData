@@ -10,6 +10,7 @@ namespace WXDataDAL.WX
 {
     public class WX_UserService: BaseDAL<WX_User>
     {
+        //给用户添加标签
         public bool AddTag(WX_User user, int tagid)
         {
             using (var db = new WXDataEntities())
@@ -21,6 +22,7 @@ namespace WXDataDAL.WX
                 return result > 0;
             }
         }
+        //给用户删除标签
         public bool RemoveTag(WX_User user, int tagid)
         {
             using (var db = new WXDataEntities())
