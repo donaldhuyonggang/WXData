@@ -29,9 +29,12 @@ namespace WXService.Service
         //测试
         private string APPID = "wxb51501fa9702675f";
         private string APPSECRET = "a56e69ded9b5eab3579ce771f2f9a668";
-   
+    
         private static string access_token = string.Empty;
         private static DateTime expires_Time = DateTime.Now.AddDays(-1);
+
+        public static string LastApp = "";
+
 
         public BaseService(string appId,string appSecert)
         {
@@ -41,16 +44,18 @@ namespace WXService.Service
 
         internal string Get_Access_Token()
         {
-            if (string.IsNullOrEmpty(access_token)
-                && DateTime.Now > expires_Time)
+            if ((string.IsNullOrEmpty(access_token)
+            && DateTime.Now > expires_Time) || (!string.IsNullOrEmpty(LastApp) && !LastApp.Equals(APPID)))
             {
                 string url = string.Format(ACCESS_TOKEN_URL, APPID, APPSECRET);
                 string json = MyHttpUtility.SendGet(url);
                 JObject jo = (JObject)JsonConvert.DeserializeObject(json);
                 access_token = Convert.ToString(jo["access_token"].ToString());
                 int expires_in = Convert.ToInt32(jo["expires_in"].ToString());
-                expires_Time= DateTime.Now.AddSeconds(expires_in);
+                expires_Time = DateTime.Now.AddSeconds(expires_in);
+                LastApp = APPID;
             }
+            
             return access_token;
         }
 

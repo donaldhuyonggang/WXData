@@ -15,6 +15,19 @@ namespace WXDataUI.Areas.WXUser.Controllers
 {
     public class TagController : Controller
     {
+
+        public WX_App WXAPP
+        {
+            get
+            {
+                return (Session["SYSUSER"] as SYS_User).WX_App;
+            }
+        }
+
+
+
+
+
         //public object TagServices { get; private set; }
 
         // GET: WXUser/Tag
@@ -51,15 +64,13 @@ namespace WXDataUI.Areas.WXUser.Controllers
         [HttpGet]
         public ActionResult DeleteTag()
         {
-            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
-            ViewBag.TagList = app.WX_UserTag.ToList();
+            ViewBag.TagList = WXAPP.WX_UserTag.ToList();
             return PartialView();
         }
         [HttpPost]
         public ActionResult DeleteTag(int tagid)
         {
-            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
-            TagService ser = new TagService(app.AppId, app.AppSecret);
+            TagService ser = new TagService(WXAPP.AppId, WXAPP.AppSecret);
             JObject jo = JObject.Parse(ser.Delete(tagid));
             var result = new
             {
@@ -68,7 +79,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
             };
             if (result.errcode.Equals(0))
             {
-                new WX_UserTagManager().Delete(tagid);
+                new WX_UserTagManager().Delete(tagid,WXAPP.AppId);
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -77,8 +88,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
         [HttpGet]
         public ActionResult EditTag()
         {
-            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
-            ViewBag.TagList = app.WX_UserTag.ToList();
+            ViewBag.TagList = WXAPP.WX_UserTag.ToList();
             return PartialView();
         }
         /// <summary>
@@ -88,8 +98,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
         [HttpPost]
         public ActionResult EditTag(WX_UserTag tag)
         {
-            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
-            TagService ser = new TagService(app.AppId, app.AppSecret);
+            TagService ser = new TagService(WXAPP.AppId, WXAPP.AppSecret);
             GetTagList();
             JObject jo = JObject.Parse(ser.Update(tag.TagId, tag.TagName));
             var result = new
@@ -109,13 +118,19 @@ namespace WXDataUI.Areas.WXUser.Controllers
         [HttpPost]
         public ActionResult SyncTag()
         {
-            var list = GetTagList().Select(t => new
+            GetTagList();
+            var TagList = new
             {
-                t.TagId,
-                t.TagName,
-                count = t.WX_User.Count()
-            });
-            return Json(list, JsonRequestBehavior.AllowGet);
+                data = new WX_UserTagManager().GetTagList(WXAPP.AppId).Select(s => new
+                {
+                    s.TagId,
+                    s.TagName,
+                    UserCount = s.WX_User.Count,
+                }),
+                UnTagCount = WXAPP.WX_User.Where(u => u.WX_UserTag.Count == 0).Count(),
+                AllCount = WXAPP.WX_User.Count()
+            };
+            return Json(TagList, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -125,8 +140,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
         public List<WX_UserTag> GetTagList()
         {
             WX_UserTagManager manager = new WX_UserTagManager();
-            WX_App app = (Session["SYSUSER"] as SYS_User).WX_App;
-            TagService ser = new TagService(app.AppId, app.AppSecret);
+            TagService ser = new TagService(WXAPP.AppId, WXAPP.AppSecret);
             List<WX_UserTag> list = new List<WX_UserTag>();
             JToken jo = JObject.Parse(ser.GetList())["tags"];
             foreach (var i in jo.Children())
@@ -135,9 +149,9 @@ namespace WXDataUI.Areas.WXUser.Controllers
                 {
                     TagId = (int)i["id"],
                     TagName = i["name"].ToString(),
-                    AppId = app.AppId
+                    AppId = WXAPP.AppId
                 };
-                var info = manager.GetAll().Where(t => t.TagId == Convert.ToInt32(i["id"]) && t.AppId.Equals(app.AppId));
+                var info = manager.GetAll().Where(t => t.TagId == Convert.ToInt32(i["id"]) && t.AppId.Equals(WXAPP.AppId));
                 if (info.Count() > 0)
                 {
                     //info.TagName = tag.TagName;
@@ -159,7 +173,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
             }
             foreach (var id in idList)
             {
-                manager.Delete(id);
+                manager.Delete(id,WXAPP.AppId);
             }
 
             Controller_EX.BindSession(Session);

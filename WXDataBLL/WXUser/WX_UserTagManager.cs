@@ -20,6 +20,12 @@ namespace WXDataBLL.WXUser
         {
             return new WX_UserTagService().GetByPK(tagid, appid);
         }
+        public bool Delete(int tagid, string appid)
+        {
+
+            return new WX_UserTagService().Delete( tagid, appid );
+        }
+
         //public override bool Update(WX_UserTag info)
         //{
         //    WX_UserTag user = base.GetByPK(info.TagId);
