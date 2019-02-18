@@ -16,5 +16,7 @@ namespace WXDataModel.Extend
         {
             return user.SYS_User == null ? "未分配" : user.SYS_User.UserName;
         }
+
+      
     }
 }

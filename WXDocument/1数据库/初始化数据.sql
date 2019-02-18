@@ -32,19 +32,19 @@ insert into SYS_User(AppId,RoleId,LoginId,Password,UserName,Telphone,Email,WXId,
 
 
 --新增功能
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'系统管理',null,null,'系统',null)
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'客服经理',null,null,'系统',null)
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'客服功能',null,null,'系统',null)
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'菜单管理',null,null,'系统',null)
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'素材管理',null,null,'系统',null)
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'系统设置',null,null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'系统管理','funcImg/icon1.png',null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'客服经理','funcImg/icon2.png',null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'客服功能','funcImg/icon3.png',null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'菜单管理','funcImg/icon4.png',null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'素材管理','funcImg/icon5.png',null,'系统',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (null,'系统设置','funcImg/icon6.png',null,'系统',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (1,'公众号管理',null,'/Base/App/Index','模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (1,'系统用户管理',null,'/Base/SYSUser/Index','模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (1,'角色管理',null,'/Base/Role/Index','模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (2,'客服管理',null,null,'模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (2,'标签管理',null,null,'模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (2,'组别管理',null,null,'模块',null)
-insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (2,'粉丝管理',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (2,'粉丝管理',null,'/WXUser/Home/Index','模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (2,'常用语管理',null,null,'模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的用户',null,'/wxcustom/home/index','模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的分组',null,null,'模块',null)
@@ -63,14 +63,5 @@ insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType
 --新增权限end
 
 --Start新增用户组别
-insert into WX_UserGroup(AppId,UserId,GroupName,GroupSort)values(null,null,'新用户',1)
-insert into WX_UserGroup(AppId,UserId,GroupName,GroupSort)values(null,null,'成交用户',2)
-insert into WX_UserGroup(AppId,UserId,GroupName,GroupSort)values(null,null,'星级用户',3)
+insert into WX_UserGroup(GroupId,UserId,GroupName,GroupSort)values(0,null,null,'未分组',1)
 --End新增用户组别
-
---Start新增用户标签
-insert into WX_UserTag(AppId,TagName)values(null,'星标客户')
-insert into WX_UserTag(AppId,TagName)values(null,'重要客户')
-insert into WX_UserTag(AppId,TagName)values(null,'朋友')
---End新增用户标签
-

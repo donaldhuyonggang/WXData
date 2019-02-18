@@ -8,6 +8,7 @@ using WXDataBLL.Base;
 using WXDataModel;
 using WXDataModel.Extend;
 using WXDataUI.Models;
+using WXService.Service;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
@@ -49,7 +50,9 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
+            
             Session.Clear();
+            
             return Redirect("/Base/Home/Login");
         }
 

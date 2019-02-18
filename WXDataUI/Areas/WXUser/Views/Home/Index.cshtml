@@ -3,7 +3,6 @@
 @using WXDataModel.Extend
 @{
     ViewBag.Title = "管理订阅用户";
-    List<WX_UserTag> TagList = ViewBag.TagList as List<WX_UserTag>;
     List<WX_UserGroup> GroupList = ViewBag.GroupList as List<WX_UserGroup>;
     PageList<WX_User> MyPage = ViewBag.Page as PageList<WX_User>;
     WX_App MyApp = (Session["SYSUSER"] as SYS_User).WX_App;
@@ -88,13 +87,13 @@
                             </div>
                         </li>
                         <li class="SearchTag">
-                            <span><a href="#" tagId="0">全部(@MyApp.WX_User.Count())</a></span>
-                            <span><a href="#" tagId="-1">未分组(@MyApp.WX_User.Where(u => u.WX_UserTag.Count == 0).Count())</a></span>
+                            <span><a href="#" tagId="0">全部(<span class="AllCount"></span>)</a></span>
+                            <span><a href="#" tagId="-1">未分组(<span class="UnTagCount"></span>)</a></span>
                             <ul style="list-style:none;">
-                                @foreach (var i in TagList)
+                                @*@foreach (var i in TagList)
                                 {
                                     <li><a href="#" tagId="@i.TagId">@i.TagName (@i.WX_User.Count())</a></li>
-                                }
+                                }*@
                             </ul>
                         </li>
                     </ul>
@@ -195,25 +194,11 @@
                                 <li><i class="glyphicon glyphicon-refresh"></i><a href="#" id="Refresh">刷新</a></li>
                             </ul>
                         </div>
-                        <input type="hidden" name="PageSize" id="PageSize" value="3" />
+                        
                     </div>
                 </nav>
                 <div class="datacontent">
-                    @*<div class="page-header">
-                            <ul class="list-inline">
-                                <li>
-                                    每页显示
-                                    <select>
-                                        <option value="value">5</option>
-                                        <option value="value">10</option>
-                                    </select>
-                                    条记录
-                                </li>
-                                <li>共有记录：<span>50</span>条</li>
-                                <li>总页数：<span>10</span>页</li>
-                                <li>只显示未分配的用户<input type="checkbox" id="showMode"/></li>
-                            </ul>
-                        </div>*@
+                    
                     <div class="fromcontent">
                         <table class="table table-bordered table-hover userList">
                             <thead>
@@ -258,8 +243,8 @@
                         </table>
                     </div>
                     <div>
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
+                        <nav class="PageIndexList" aria-label="Page navigation">
+                            @*<ul class="pagination">
                                 @if (MyPage.HasPreviousPage)
                                 {
                                     <li>
@@ -305,6 +290,46 @@
                                 }
 
 
+                            </ul>*@
+                            <ul class="pagination">
+                                @if (MyPage.HasPreviousPage)
+                                {
+                                    <li>
+                                        <a href="#" id="PrevPage" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="disabled">
+                                        <a href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                @for (var i = 1; i <= MyPage.TotalPages; i++)
+                                {
+                                    <li><a href="#" PageIndex="@i">@i</a></li>
+                                }
+                                @if (MyPage.HasNextPage)
+                                {
+                                    <li>
+                                        <a href="#" id="NextPage" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="disabled">
+                                        <a href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                }
+
+
                             </ul>
                         </nav>
                     </div>
@@ -312,18 +337,43 @@
             </div>
         </div>
     </div>
+    @*type,pageIndex,pageSize,key*@
+    <input type="hidden" id="Search_Type" value="@ViewBag.SearchType" />
+    <input type="hidden" id="Search_PageIndex" value="@MyPage.PageIndex" />
+    <input type="hidden" id="Search_PageSize" value="3" />
+    <input type="hidden" id="Search_Key" value="@ViewBag.SearchKey" />
+
+
 </div>
-@section scripts{
     <script>
         $(function () {
+            GetTags();
             //分页相关
-            $(".pagination li").removeClass("active").children("a").css("color","rgb(199,199,199)");
-            $("a[href*='pageIndex="+@MyPage.PageIndex+"']").css("color","white").parents("li").addClass("active");
-            $(".SearchTag a").click(function () {
-                GetUser(3,@MyPage.PageIndex,$("#PageSize").val(),$(this).attr("tagId"));
+            $("a[PageIndex='@MyPage.PageIndex']").css("color","white").parents("li").addClass("active");
+            $(".SearchTag").delegate("a","click",function () {
+                $("#Search_Type").val(3);
+                $("#Search_PageIndex").val();
+                $("#Search_Key").val($(this).attr("tagId"));
+                GetUser();
             });
-            $(".SearchGroup a").click(function () {
-                GetUser(4,@MyPage.PageIndex,$("#PageSize").val(),$(this).attr("gId"));
+            $(".SearchGroup").delegate("a","click",function () {
+                $("#Search_Type").val(4);
+                $("#Search_Key").val($(this).attr("gId"));
+                GetUser();
+            });
+
+            $(".PageIndexList").delegate("a[PageIndex]","click",function(){
+                var pageIndex = $(this).attr("PageIndex");
+                $("#Search_PageIndex").val(pageIndex);
+                GetUser();
+            });
+            $("#NextPage").on("click",function(){
+                $("#Search_PageIndex").val(@MyPage.NextPage);
+                GetUser();
+            });
+            $("#PrevPage").on("click",function(){
+                $("#Search_PageIndex").val(@MyPage.PreviousPage);
+                GetUser();
             });
             //分页相关end
 
@@ -363,33 +413,34 @@
                 }else{
                     $("#AddTag").removeClass("disable").attr("href","/WXUser/Home/AddTag?openId="+openIdList);
                     //console.info($("#AddTag").attr("data-whatever"));
-                }  
-                
+                }
+
             });
-
-
-            
             //给用户添加标签end
 
 
-
         });
-        function GetUser(type,pageIndex,pageSize,key) {
-            if(key==0)type=1;
-            location.href = "/WXUser/Home/Index?type="+type+"&pageIndex="+pageIndex+"&pageSize="+pageSize+"&key="+key;
+        function GetUser() {
+            var Search_Type = $("#Search_Type").val();
+            var Search_PageIndex = $("#Search_PageIndex").val();
+            var Search_PageSize = $("#Search_PageSize").val();
+            var Search_Key = $("#Search_Key").val();
+            console.info(Search_PageSize);
+            if(Search_Key==0)Search_Type=1;
+            location.href = "/WXUser/Home/Index?type="+Search_Type+"&pageIndex="+Search_PageIndex+"&pageSize="+Search_PageSize+"&key="+Search_Key;
         }
 
         function GetTags(){
             $.post("/WXUser/Tag/SyncTag",function(data){
                 console.info(data);
                 var li = "";
-                $.each(data,function(i,obj){
-                    li += "<li><a href='#' tagid=" + obj.TagId + ">" + obj.TagName + " (" + obj.count + ")</a></li>";
-                        
+                $.each(data.data,function(i,obj){
+                    li += "<li><a href='#' tagid=" + obj.TagId + ">" + obj.TagName + " (" + obj.UserCount + ")</a></li>";
                 });
                 $(".SearchTag>ul").html(li);
+                $(".SearchTag .AllCount").html(data.AllCount);
+                $(".SearchTag .UnTagCount").html(data.UnTagCount);
             });
         }
     </script>
 
-}

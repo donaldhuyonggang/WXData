@@ -64,6 +64,22 @@ namespace WXDataDAL
             }
         }
 
+        public virtual bool Delete(object [] pkList)
+        {
+            using (WXDataEntities db = new WXDataEntities())
+            {
+                var info = db.Set<T>().Find(pkList);
+                if (info != null)
+                {
+                    db.Set<T>().Remove(info);
+                    return db.SaveChanges() > 0;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
     }
 }
