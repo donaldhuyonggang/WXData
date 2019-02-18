@@ -159,10 +159,6 @@
 				mui('.mui-content').on('tap','#AllGroup',function(){
 					var nwaiting = plus.nativeUI.showWaiting();  
 					webviewShow = plus.webview.create("../Group/UserGroup.html");
-//					mui.openWindow({
-//						id:"AllGroup",
-//						url:"UserGroup.html"
-//					});
 				});//Group
 				
 				mui('.mui-content').on('tap','.individual a',function(e){
@@ -199,7 +195,10 @@
 							console.log("异常对象errorThrown: "+errorThrown);
 					}
 				}); //ajax
-			});
+				
+				
+				
+			});//ready
 			
 			function Action(datas){
 				var UserV =new Vue({

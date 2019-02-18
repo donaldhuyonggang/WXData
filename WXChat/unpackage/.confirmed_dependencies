@@ -185,7 +185,8 @@
 		"refer": [
 			"Pages/User/UserInfo.html",
 			"Pages/Tag/AllTag.html",
-			"Pages/Group/UserGroup.html"
+			"Pages/Group/UserGroup.html",
+			"Pages/User/NewFriend.html"
 		]
 	},
 	"Pages/User/Chart.html": {
@@ -224,7 +225,13 @@
 		"resources": [
 			"Images/Icon/jian.png",
 			"Images/Icon/cry.png",
-			"Images/Icon/add.png"
+			"Images/Icon/add.png",
+			"js/vue.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"Images/Icon/minus-circle-fill.png",
+			"js/jquery-2.2.4.js"
 		]
 	},
 	"Pages/User/UserInfo.html": {
@@ -251,7 +258,8 @@
 			"js/vue.js",
 			"js/mui.min.js",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/jquery-2.2.4.js"
 		]
 	},
 	"Pages/User/Remarks.html": {

@@ -122,6 +122,7 @@ namespace WXDataUI.Areas.Base.Controllers
                     s.TagId,
                     s.TagName
                 }),
+                x.OpenID,
                 x.UserName,
                 x.UserNick,
                 x.Province,
@@ -133,6 +134,17 @@ namespace WXDataUI.Areas.Base.Controllers
                 x.Remark
             }).ToList();
             return Json(info, JsonRequestBehavior.AllowGet);
+        }
+
+
+        /// <summary>
+        /// 修改指定用户个人信息
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public ActionResult UpUserIDL(WX_User user) {
+            var info = new WX_UserManager().NewUpdate(user);
+            return Json(info,JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -174,10 +186,30 @@ namespace WXDataUI.Areas.Base.Controllers
                     x.HeadImageUrl,
                     x.OpenID
                 }),
-                s.TagName
+                s.TagName,
+                s.TagId,
+                s.AppId
             }).ToList();
             return Json(info, JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        /// 修改标签名称
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public ActionResult UpTagName(WX_UserTag tag) {
+            var info = new WX_UserTagManager().Update(tag);
+            return Json(info,JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 删除该标签下的用户
+        /// </summary>
+        /// <returns></returns>
+        //public ActionResult DeletTagByUser(string OpenID) {
+           
+        //}
 
         /// <summary>
         /// 查询用户分组
@@ -215,6 +247,16 @@ namespace WXDataUI.Areas.Base.Controllers
                 }).ToList()
             }).ToList();
             return Json(info, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 添加标签
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public ActionResult AddTag(WX_UserTag tag) {
+            var info = new WX_UserTagManager().Add(tag);
+            return Json(info,JsonRequestBehavior.AllowGet);
         }
     }
 }

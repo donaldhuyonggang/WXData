@@ -87,12 +87,11 @@
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init();
 			mui.plusReady(function(){
 				var BaseUrl=plus.storage.getItem("BaseUrl");
 				var self = plus.webview.currentWebview();
 				var OpenID = self.OpenID; //接收
-				
 				var info={
 					OpenID:OpenID
 				}
@@ -127,7 +126,11 @@
 					});//新开窗体
 					
 				}); //TagClick
-			});
+				
+				window.addEventListener('refresh', function(e){//执行刷新
+				    location.reload();
+				});
+			});//plusready
 			function Action(data){
 				var MyInfo=new Vue({
 					el:"#User",
