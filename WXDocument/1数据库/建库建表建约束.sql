@@ -1,10 +1,10 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2019-02-16 08:50:10                          */
+/* Created on:     2019-02-22 16:35:03                          */
 /*==============================================================*/
 create database WXData
 go
-use WXData 
+use WXData
 go
 
 if exists (select 1
@@ -117,6 +117,13 @@ if exists (select 1
    where r.fkeyid = object_id('WX_Menu') and o.name = 'FK_WX_MENU_REFERENCE_WX_APP')
 alter table WX_Menu
    drop constraint FK_WX_MENU_REFERENCE_WX_APP
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_Menu') and o.name = 'FK_WX_MENU_REFERENCE_WX_MENUT')
+alter table WX_Menu
+   drop constraint FK_WX_MENU_REFERENCE_WX_MENUT
 go
 
 if exists (select 1
@@ -299,6 +306,13 @@ if exists (select 1
            where  id = object_id('WX_Menu')
             and   type = 'U')
    drop table WX_Menu
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('WX_MenuType')
+            and   type = 'U')
+   drop table WX_MenuType
 go
 
 if exists (select 1
@@ -1035,9 +1049,9 @@ create table WX_Menu (
    MenuId               int                  identity,
    ParentMenuId         int                  null,
    AppId                varchar(50)          null,
+   TypeId               int                  null,
    MenuName             nvarchar(50)         null,
-   MenuType             int                  null,
-   MenuKey              int                  null,
+   MenuKey              nvarchar(255)        null,
    MenuUrl              nvarchar(255)        null,
    MenuVisable          int                  null,
    MenuSort             int                  null,
@@ -1083,13 +1097,6 @@ go
 declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
-   '菜单类型',
-   'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'MenuType'
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
    '菜单KEY',
    'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'MenuKey'
 go
@@ -1113,6 +1120,16 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '排序号',
    'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'MenuSort'
+go
+
+/*==============================================================*/
+/* Table: WX_MenuType                                           */
+/*==============================================================*/
+create table WX_MenuType (
+   TypeId               int                  identity,
+   TypeName             varchar(50)          null,
+   constraint PK_WX_MENUTYPE primary key (TypeId)
+)
 go
 
 /*==============================================================*/
@@ -1610,6 +1627,11 @@ go
 alter table WX_Menu
    add constraint FK_WX_MENU_REFERENCE_WX_APP foreign key (AppId)
       references WX_App (AppId)
+go
+
+alter table WX_Menu
+   add constraint FK_WX_MENU_REFERENCE_WX_MENUT foreign key (TypeId)
+      references WX_MenuType (TypeId)
 go
 
 alter table WX_Menu
