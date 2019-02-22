@@ -1,4 +1,4 @@
-﻿
+﻿@using WXDataUI.Models
 @{
     Layout = null;
 }
@@ -10,10 +10,28 @@
     <meta name="viewport" content="width=device-width" />
     <title>Login</title>
     <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/loaders.min.css" rel="stylesheet" />
     <link href="/Content/Login.css" rel="stylesheet" />
     <style>
         .input-group-addon {
             padding: 5px 12px 10px 12px;
+        }
+        #LoadingBox{
+            width:100%;
+            background:#009a61;
+            height:100%;
+        }
+        #LoadingBox>div{
+            width:80px;
+            height:80px;
+            display:inline-block;
+            text-align: center; 
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
     </style>
 </head>
@@ -59,6 +77,31 @@
         </div>
     </div>
 
+    <div class="modal fade" id="Loading" style="height:100%;">
+        <div class="modal-dialog" style="height:100%;margin:0;width:100%;padding:0;">
+            <div id="LoadingBox">
+                <div>
+                    <div class="loader">
+                        <div class="loader-inner line-scale-pulse-out-rapid">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+
+
+
 
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
@@ -66,7 +109,9 @@
 
 
     <script type="text/javascript">
+        $("#LoadingBox").css("background", "@LoadingColor.GetColor()");
         $("#Login").click(function () {
+            $("#Loading").modal('show');
             $.post("/Base/Home/Login", $("#LoginForm").serialize(), function (r) {
                 if (r) {
                     location.href = "/Base/Home/Index";

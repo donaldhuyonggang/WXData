@@ -1,5 +1,10 @@
 ﻿@using WXDataModel
 @using WXDataModel.Extend
+@using WXDataUI.Models
+
+@{
+    string COLOR = LoadingColor.GetColor();
+}
 
 <!DOCTYPE html>
 <html>
@@ -9,10 +14,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @RenderSection("easyui", required: false)
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/dashboard.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/loaders.min.css" rel="stylesheet" />
+    <link href="/Content/dashboard.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
     <style>
         #CheckAll{
             width:100%;
@@ -42,6 +48,33 @@
             color:#afafaf; 
             cursor:default 
         } 
+        #BackDrop{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        #LoadingBox,#BackDrop{
+            width:100%;
+            background:@COLOR;
+            height:100%;
+        }
+        #LoadingBox>div,#BackDrop>div{
+            width:80px;
+            height:80px;
+            display:inline-block;
+            text-align: center; 
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .table>thead>tr>th{
+            text-align: center;
+        }
     </style>
     @RenderSection("styles", required: false)
 
@@ -199,19 +232,84 @@
     </div><!-- /.modal -->
     @*新增素材end*@
 
+    @*菜单管理*@
+    <div class="modal fade" id="EditMenu">
+
+    </div><!-- /.modal -->
+    @*菜单管理end*@
+
     @*李政 菜单管理 新增*@
     <div class="modal fade" id="LZ_Add_WX_Menu">
         
     </div><!-- /.modal -->
     @*李政 菜单管理 新增end*@
 
+    <div id="BackDrop" style="z-index:9999;">
+        <div>
+            <div class="loader">
+                <div class="loader-inner line-scale-pulse-out-rapid">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="Loading" style="height:100%;">
+        <div class="modal-dialog" style="height:100%;margin:0;width:100%;padding:0;">
+            <div id="LoadingBox">
+                <div>
+                    <div class="loader">
+                        <div class="loader-inner line-scale-pulse-out-rapid">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
     <script>
         $(function () {
+
             //设置模态框属性
             $('.modal').on('hidden.bs.modal', function (e) {
                 $(this).removeData();
             });
             //设置模态框属性end
+
+            //加载框相关
+            Init();
+            $(".FuncList").delegate('a[href]', 'click', function () {
+                $("#Loading").modal('show');
+            });
+            function Init() {
+                $("#Loading").css("background", "@COLOR");
+                //$("#Loading").modal('show');
+                LoadingHide();
+
+               
+            }
+            function LoadingHide() {
+                setTimeout(function () {
+                    $("#BackDrop").fadeOut(500);
+                }, 2000);
+            }
+            //加载框相关end
 
 
             //GetFunction();
@@ -246,7 +344,7 @@
             $(a).parents(".panel-collapse").removeClass("collapse").addClass("in");
         }
         //保持导航栏状态end
-
+        
 
 
         //function GetFunction (){

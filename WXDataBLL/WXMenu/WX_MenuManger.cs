@@ -9,7 +9,7 @@ namespace WXDataBLL.WXMenu
     /// <summary>
     /// 微信菜单管理-李政
     /// </summary>
-    public class WXMenuManger : BaseBLL<WXDataModel.WX_Menu>
+    public class WX_MenuManger : BaseBLL<WXDataModel.WX_Menu>
     {
         /// <summary>
         /// 根据id逻辑删除菜单
@@ -30,7 +30,7 @@ namespace WXDataBLL.WXMenu
         }
 
         /// <summary>
-        /// 新增一级菜单  判断当前公众号的一级菜单是否超过5个
+        /// 新增一级菜单  判断当前公众号的一级菜单是否超过3个
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

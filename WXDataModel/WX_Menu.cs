@@ -22,9 +22,9 @@ namespace WXDataModel
         public int MenuId { get; set; }
         public Nullable<int> ParentMenuId { get; set; }
         public string AppId { get; set; }
+        public Nullable<int> TypeId { get; set; }
         public string MenuName { get; set; }
-        public Nullable<int> MenuType { get; set; }
-        public Nullable<int> MenuKey { get; set; }
+        public string MenuKey { get; set; }
         public string MenuUrl { get; set; }
         public Nullable<int> MenuVisable { get; set; }
         public Nullable<int> MenuSort { get; set; }
@@ -32,5 +32,6 @@ namespace WXDataModel
         public virtual WX_App WX_App { get; set; }
         public virtual ICollection<WX_Menu> WX_Menu1 { get; set; }
         public virtual WX_Menu WX_Menu2 { get; set; }
+        public virtual WX_MenuType WX_MenuType { get; set; }
     }
 }

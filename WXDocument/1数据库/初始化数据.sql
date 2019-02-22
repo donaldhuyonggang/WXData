@@ -51,6 +51,7 @@ insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的二维码',null,'/wxcustom/qr/index','模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的常用语',null,null,'模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (3,'我的素材',null,null,'模块',null)
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (4,'我的菜单',null,'/WXMenu/Home/Index','模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (5,'公共素材管理',null,'/Base/Media/Index','模块',null)
 
 
@@ -63,5 +64,10 @@ insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType
 --新增权限end
 
 --Start新增用户组别
-insert into WX_UserGroup(GroupId,UserId,GroupName,GroupSort)values(0,null,null,'未分组',1)
+insert into WX_UserGroup(GroupId,UserId,GroupName,GroupSort)values(0,null,'未分组',1)
 --End新增用户组别
+
+--新增菜单类型
+insert into WX_MenuType(TypeName) values('click');
+insert into WX_MenuType(TypeName) values('view');
+--新增菜单类型end

@@ -18,17 +18,24 @@ namespace WXDataUI.Areas.Base.Controllers
     [RightFilter(Message = "系统用户管理")]
     public class SYSUserController : Controller
     {
+        public WX_App WXAPP
+        {
+            get
+            {
+                return (Session["SYSUSER"] as SYS_User).WX_App;
+            }
+        }
         // GET: Base/SYSUser
         public ActionResult Index()
         {
-            ViewBag.RoleList = new SYS_RoleManager().Where(r => (r.AppId == (Session["SYSUSER"] as SYS_User).WX_App.AppId) || (r.AppId == null));
+            ViewBag.RoleList = new SYS_RoleManager().Where(r => (r.AppId == WXAPP.AppId) || (r.AppId == null));
             return View();
         }
 
         [HttpGet]
         public ActionResult AddSysUser()
         {
-            ViewBag.RoleList = new SYS_RoleManager().Where(r => (r.AppId == (Session["SYSUSER"] as SYS_User).WX_App.AppId) || (r.AppId == null));
+            ViewBag.RoleList = new SYS_RoleManager().Where(r => (r.AppId == WXAPP.AppId) || (r.AppId == null));
             ViewBag.AppList = new WX_AppManager().GetAll();
             return PartialView();
         }
@@ -56,7 +63,7 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult UpdateSysUser(int id)
         {
             ViewBag.SYSUser = new SYS_UserManager().GetByPK(id);
-            ViewBag.RoleList = new SYS_RoleManager().Where(r => (r.AppId == (Session["SYSUSER"] as SYS_User).WX_App.AppId) || (r.AppId == null));
+            ViewBag.RoleList = new SYS_RoleManager().Where(r => (r.AppId == WXAPP.AppId) || (r.AppId == null));
             ViewBag.AppList = new WX_AppManager().GetAll();
             return PartialView();
         }
