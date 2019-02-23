@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using WXDataBLL.WXMenu;
 using WXDataModel;
+using WXDataModel.Extend;
+using WXService.Service;
 
 namespace WXDataUI.Areas.WXMenu.Controllers
 {
@@ -27,11 +29,11 @@ namespace WXDataUI.Areas.WXMenu.Controllers
             else
             {
                 string id = (Session["SYSUSER"] as SYS_User).AppId;
-                var list2 = new WXDataBLL.WXMenu.WX_MenuManger().Where(g => g.AppId == id && g.ParentMenuId == null && g.MenuVisable == 0).ToList();//获取当前公众号的所有一级菜单
+                var list2 = new WX_MenuManger().Where(g => g.AppId == id && g.ParentMenuId == null && g.MenuVisable == 0).ToList();//获取当前公众号的所有一级菜单
                 List<WX_Menu> list3 = new List<WX_Menu>();//二级菜单
                 foreach (var item in list2)
                 {
-                    var data = new WXDataBLL.WXMenu.WX_MenuManger().Where(g => g.AppId == id && g.ParentMenuId == item.MenuId && g.MenuVisable == 0).ToList();
+                    var data = new WX_MenuManger().Where(g => g.AppId == id && g.ParentMenuId == item.MenuId && g.MenuVisable == 0).ToList();
                     foreach (var item2 in data)
                     {
                         list3.Add(item2);
@@ -55,7 +57,7 @@ namespace WXDataUI.Areas.WXMenu.Controllers
                 return Redirect("/base/home/login");
             }
             string id = (Session["SYSUSER"] as SYS_User).AppId;
-            var list1 = new WXDataBLL.WXMenu.WX_MenuManger().Where(g => g.AppId == id && g.MenuVisable == 0).ToList();
+            var list1 = new WX_MenuManger().Where(g => g.AppId == id && g.MenuVisable == 0).ToList();
             var json = list1.Select(s => new
             {
                 s.MenuId,
@@ -74,7 +76,7 @@ namespace WXDataUI.Areas.WXMenu.Controllers
         //获取所有一级菜单
         public ActionResult GetParentMenu()
         {
-            var list = new WXDataBLL.WXMenu.WX_MenuManger().Where(g => g.AppId == WXAPP.AppId && g.ParentMenuId == null && g.MenuVisable == 0 && g.WX_Menu1.Count() < 5).Select(m => new
+            var list = new WX_MenuManger().Where(g => g.AppId == WXAPP.AppId && g.ParentMenuId == null && g.MenuVisable == 0 && g.WX_Menu1.Count() < 5).Select(m => new
             {
                 m.MenuId,
                 m.MenuName
@@ -89,7 +91,7 @@ namespace WXDataUI.Areas.WXMenu.Controllers
         /// <returns></returns>
         public ActionResult Delect_id(int id)
         {
-            bool pd = new WXDataBLL.WXMenu.WX_MenuManger().Delect_id(id);
+            bool pd = new WX_MenuManger().Delect_id(id);
             return Json(pd, JsonRequestBehavior.AllowGet);
         }
 
@@ -116,7 +118,14 @@ namespace WXDataUI.Areas.WXMenu.Controllers
         }
 
 
+        //同步至服务器
+        public ActionResult Sync()
+        {
+            List<WX_Menu> list = new WX_MenuManger().Where(g => g.AppId == WXAPP.AppId && g.ParentMenuId == null && g.MenuVisable == 0).ToList();
 
+
+            return Json(new MenuService(WXAPP.AppId,WXAPP.AppSecret).Create(list.GetJson()),JsonRequestBehavior.AllowGet);
+        }
 
 
 
@@ -135,7 +144,7 @@ namespace WXDataUI.Areas.WXMenu.Controllers
         /// <returns></returns>
         public ActionResult Add_zi(int id)
         {
-            bool pd = new WXDataBLL.WXMenu.WX_MenuManger().Add_zi_pd(id);
+            bool pd = new WX_MenuManger().Add_zi_pd(id);
             ViewBag.pd = pd;
             return PartialView();
         }
@@ -150,14 +159,14 @@ namespace WXDataUI.Areas.WXMenu.Controllers
             {
                 return Redirect("/base/home/login");
             }
-            bool pd = new WXDataBLL.WXMenu.WX_MenuManger().Add_yiji_pd((Session["SYSUSER"] as SYS_User).AppId);
+            bool pd = new WX_MenuManger().Add_yiji_pd((Session["SYSUSER"] as SYS_User).AppId);
             return Json(pd, JsonRequestBehavior.AllowGet);
         }
 
 
         public ActionResult chaxun_sum() {
             string id = (Session["SYSUSER"] as SYS_User).AppId;
-            var list1 = new WXDataBLL.WXMenu.WX_MenuManger().Where(g => g.AppId == id && g.MenuVisable == 0).ToList();
+            var list1 = new WX_MenuManger().Where(g => g.AppId == id && g.MenuVisable == 0).ToList();
             var json = list1.Select(s => new
             {
                 s.MenuId,

@@ -86,7 +86,7 @@
                                 <li><i class="glyphicon glyphicon-list"></i><a href="#">编辑</a></li>
                                 <li><i class="glyphicon glyphicon-remove-circle"></i><a href="#">删除</a></li>
                                 <li><i class="glyphicon glyphicon-download"></i><a href="#" id="">获取服务器菜单</a></li>
-                                <li><i class="glyphicon glyphicon-upload"></i><a href="#" id="">同步至服务器</a></li>
+                                <li><i class="glyphicon glyphicon-upload" ></i><a href="#" id="Sync">同步至服务器</a></li>
                             </ul>
                         </div>
 
@@ -177,6 +177,9 @@
 <script>
     $(function () {
         GetMenu();
+        $("#Sync").click(function () {
+            alert(1);
+        });
     });
     function GetMenu(){
         $.post("/WXMenu/Home/Select_gzh_id", function (result) {
@@ -192,7 +195,7 @@
                     + "<td>"
                     + "<ul class='list-inline marg operation'>"
                     +   "<li class='Find btn btn-success' data-toggle='tooltip' data-placement='right' title='查看'>"
-                    +       "<a href='#' data-toggle='modal' data-target='#EditWXUser' class='glyphicon glyphicon-search'></a></li>"
+                    +       "<a href='#' data-toggle='modal' data-target='#' class='glyphicon glyphicon-search'></a></li>"
                     + "</ul></td></tr>";
 
             });
