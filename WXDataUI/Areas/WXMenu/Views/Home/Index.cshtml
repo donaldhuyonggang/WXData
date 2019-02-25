@@ -85,7 +85,7 @@
                                     <a href="/WXMenu/Home/AddMenu" data-target="#EditMenu" data-toggle="modal" id="">新增菜单</a></li>
                                 <li><i class="glyphicon glyphicon-list"></i><a href="#">编辑</a></li>
                                 <li><i class="glyphicon glyphicon-remove-circle"></i><a href="#">删除</a></li>
-                                <li><i class="glyphicon glyphicon-download"></i><a href="#" id="">获取服务器菜单</a></li>
+                                <li><i class="glyphicon glyphicon-download"></i><a href="#" id="Pull">获取服务器菜单</a></li>
                                 <li><i class="glyphicon glyphicon-upload" ></i><a href="#" id="Sync">同步至服务器</a></li>
                             </ul>
                         </div>
@@ -178,7 +178,18 @@
     $(function () {
         GetMenu();
         $("#Sync").click(function () {
-            alert(1);
+            $.post("/WXMenu/Home/Sync", function (r) {
+                if (r.errcode == 0) {
+                    alert("提交成功!");
+                } else {
+                    alert("提交失败!" + r.errmsg);
+                }
+            });
+        });
+        $("#Pull").click(function () {
+            $.post("/WXMenu/Home/Pull", function (r) {
+                GetMenu();
+            });
         });
     });
     function GetMenu(){

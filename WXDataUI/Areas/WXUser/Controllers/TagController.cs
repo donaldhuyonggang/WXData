@@ -74,10 +74,10 @@ namespace WXDataUI.Areas.WXUser.Controllers
             JObject jo = JObject.Parse(ser.Delete(tagid));
             var result = new
             {
-                errcode = jo["errcode"],
-                errmsg = jo["errmsg"]
+                errcode = jo["errcode"].ToString(),
+                errmsg = jo["errmsg"].ToString()
             };
-            if (result.errcode.Equals(0))
+            if (result.errcode.Equals("0"))
             {
                 new WX_UserTagManager().Delete(tagid,WXAPP.AppId);
             }

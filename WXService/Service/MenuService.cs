@@ -21,7 +21,13 @@ namespace WXService.Service
         {
         }
 
-
+        public string Get()
+        {
+            string access_token = this.Get_Access_Token();
+            string url = string.Format(MENU_GET_URL, access_token);
+            string respJson = MyHttpUtility.SendGet(url);
+            return respJson;
+        }
 
         public string Delete()
         {

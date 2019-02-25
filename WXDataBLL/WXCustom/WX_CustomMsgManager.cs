@@ -7,7 +7,7 @@ using WXDataModel;
 
 namespace WXDataBLL.WXCustom
 {
-    public class WX_CustomMsgManger:BaseBLL<WXDataModel.WX_CustomMsg>
+    public class WX_CustomMsgManager:BaseBLL<WXDataModel.WX_CustomMsg>
     {
         
     }

@@ -98,8 +98,9 @@
         </EntityType>
         <EntityType Name="WX_CustomMsg">
           <Key>
-            <PropertyRef Name="MsgId" />
+            <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MsgId" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="OpenID" Type="varchar" MaxLength="50" />
           <Property Name="UserId" Type="int" />
@@ -871,8 +872,9 @@
         </EntityType>
         <EntityType Name="WX_CustomMsg">
           <Key>
-            <PropertyRef Name="MsgId" />
+            <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MsgId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="OpenID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Int32" />
@@ -1584,6 +1586,7 @@
           <EntitySetMapping Name="WX_CustomMsg">
             <EntityTypeMapping TypeName="WXDataModel.WX_CustomMsg">
               <MappingFragment StoreEntitySet="WX_CustomMsg">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="MsgId" ColumnName="MsgId" />
                 <ScalarProperty Name="OpenID" ColumnName="OpenID" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

@@ -47,7 +47,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\BaseService.cs" />
     <Compile Include="Service\CustomService.cs" />
+    <Compile Include="Service\MediaService.cs" />
     <Compile Include="Service\MenuService.cs" />
+    <Compile Include="Service\MessageService.cs" />
     <Compile Include="Service\QRService.cs" />
     <Compile Include="Service\TagService.cs" />
     <Compile Include="Service\UserService.cs" />

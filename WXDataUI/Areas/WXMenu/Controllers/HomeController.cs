@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -56,6 +57,7 @@ namespace WXDataUI.Areas.WXMenu.Controllers
             {
                 return Redirect("/base/home/login");
             }
+            Pull();
             string id = (Session["SYSUSER"] as SYS_User).AppId;
             var list1 = new WX_MenuManger().Where(g => g.AppId == id && g.MenuVisable == 0).ToList();
             var json = list1.Select(s => new
@@ -122,13 +124,63 @@ namespace WXDataUI.Areas.WXMenu.Controllers
         public ActionResult Sync()
         {
             List<WX_Menu> list = new WX_MenuManger().Where(g => g.AppId == WXAPP.AppId && g.ParentMenuId == null && g.MenuVisable == 0).ToList();
-
-
             return Json(new MenuService(WXAPP.AppId,WXAPP.AppSecret).Create(list.GetJson()),JsonRequestBehavior.AllowGet);
         }
 
+        //从服务器拉取菜单
+        public void Pull()
+        {
+            var str = new MenuService(WXAPP.AppId, WXAPP.AppSecret).Get();
+            var json = JObject.Parse(str)["menu"]["button"];
+            WX_MenuManger manager = new WX_MenuManger();
+            manager.Clear(WXAPP.AppId);
+            foreach (var i in json.Children())
+            {
+                var menu = new WX_Menu();
+                menu.AppId = WXAPP.AppId;
+                menu.MenuName = i["name"].ToString();
+                menu.MenuVisable = 0;
+                if (i["sub_button"].Count() > 0)
+                {
+                    foreach (var j in i["sub_button"])
+                    {
+                        var sub_menu = new WX_Menu();
+                        sub_menu.AppId = WXAPP.AppId;
+                        sub_menu.MenuName = j["name"].ToString();
+                        sub_menu.MenuVisable = 0;
+                        string type = j["type"].ToString();
+                        if (type.Equals("click"))
+                        {
+                            sub_menu.MenuKey = j["key"].ToString();
+                            sub_menu.TypeId = 1;
+                        }
+                        else
+                        {
+                            sub_menu.MenuUrl = j["url"].ToString();
+                            sub_menu.TypeId = 2;
+                        }
+                        menu.TypeId = 1;
+                        menu.WX_Menu1.Add(sub_menu);
+                    }
+                }
+                else
+                {
+                    string type = i["type"].ToString();
+                    if (type.Equals("click"))
+                    {
+                        menu.MenuKey = i["key"].ToString();
+                        menu.TypeId = 1;
+                    }
+                    else
+                    {
+                        menu.MenuUrl = i["url"].ToString();
+                        menu.TypeId = 2;
+                    }
+                }
 
-
+                manager.Add(menu);
+            }
+        }
 
 
 

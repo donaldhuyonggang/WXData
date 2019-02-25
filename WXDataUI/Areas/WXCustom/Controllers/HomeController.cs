@@ -99,7 +99,7 @@ namespace WXDataUI.Areas.WXCustom.Controllers
         [HttpPost]
         public ActionResult UserHistory(string id, int page = 3, int rows = 1) {
             SYS_User SYSUSER = Session["SYSUSER"] as SYS_User;
-            var list = new WXDataBLL.WXCustom.WX_CustomMsgManger().Where(s => s.AppId == SYSUSER.AppId && s.UserId == SYSUSER.UserId && s.OpenID == id).OrderBy(x=>x.CreateTime).ToList();
+            var list = new WXDataBLL.WXCustom.WX_CustomMsgManager().Where(s => s.AppId == SYSUSER.AppId && s.UserId == SYSUSER.UserId && s.OpenID == id).OrderBy(x=>x.CreateTime).ToList();
             var Data = list.Skip((page - 1) * rows).Take(rows).Select(s => new
             {
                 s.AppId,
@@ -171,8 +171,8 @@ namespace WXDataUI.Areas.WXCustom.Controllers
                 CM.XmlContent = item.XmlContent;
 
                 new WXDataBLL.WXCustom.WX_QueueManager().Delete(item.MsgId);//删除
-                new WXDataBLL.WXCustom.WX_CustomMsgManger().Add(CM); //添加到数据库
-                var info = new WXDataBLL.WXCustom.WX_CustomMsgManger().GetByPK(CM.MsgId);
+                new WXDataBLL.WXCustom.WX_CustomMsgManager().Add(CM); //添加到数据库
+                var info = new WXDataBLL.WXCustom.WX_CustomMsgManager().GetByPK(CM.MsgId);
                 msg.Add(info);//添加到集合
             }
             return msg;
@@ -197,7 +197,7 @@ namespace WXDataUI.Areas.WXCustom.Controllers
             CustomService customSvr = new CustomService(SYSUSER.AppId, SYSUSER.WX_App.AppSecret);
             customSvr.SendText(msg.OpenID, msg.Content);
 
-            bool IsTrue = new WXDataBLL.WXCustom.WX_CustomMsgManger().Add(msg);
+            bool IsTrue = new WXDataBLL.WXCustom.WX_CustomMsgManager().Add(msg);
             return Json(IsTrue, JsonRequestBehavior.AllowGet);
         }
 

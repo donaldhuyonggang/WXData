@@ -48,7 +48,7 @@
     <Compile Include="Base\SYS_UserManager.cs" />
     <Compile Include="Base\SYS_RoleManager.cs" />
     <Compile Include="WXAPP\WX_AppManager.cs" />
-    <Compile Include="WXCustom\WX_CustomMsgManger.cs" />
+    <Compile Include="WXCustom\WX_CustomMsgManager.cs" />
     <Compile Include="WXCustom\WX_QueueManager.cs" />
     <Compile Include="WXMenu\WX_MenuTypeManger.cs" />
     <Compile Include="WXMenu\WX_MenuManger.cs" />
