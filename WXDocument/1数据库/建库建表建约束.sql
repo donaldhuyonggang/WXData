@@ -1,11 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2019-02-22 16:35:03                          */
+/* Created on:     2019-02-25 14:34:54                          */
 /*==============================================================*/
-create database WXData
-go
-use WXData
-go
+
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -828,6 +825,7 @@ go
 /* Table: WX_CustomMsg                                          */
 /*==============================================================*/
 create table WX_CustomMsg (
+   Id                   int                  identity,
    MsgId                varchar(50)          not null,
    OpenID               VARCHAR(50)          null,
    UserId               int                  null,
@@ -838,7 +836,7 @@ create table WX_CustomMsg (
    MediaId              varchar(50)          null,
    MsgType              varchar(20)          null,
    XmlContent           nvarchar(max)        null,
-   constraint PK_WX_CUSTOMMSG primary key (MsgId)
+   constraint PK_WX_CUSTOMMSG primary key (Id)
 )
 go
 
