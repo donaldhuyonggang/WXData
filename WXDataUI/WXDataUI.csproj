@@ -134,6 +134,7 @@
     <Compile Include="Areas\WXCustom\Controllers\QRController.cs" />
     <Compile Include="Areas\WXCustom\WXCustomAreaRegistration.cs" />
     <Compile Include="Areas\WXMedia\Controllers\HomeController.cs" />
+    <Compile Include="Areas\WXMedia\Controllers\NewsController.cs" />
     <Compile Include="Areas\WXMedia\WXMediaAreaRegistration.cs" />
     <Compile Include="Areas\WXMenu\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXMenu\WXMenuAreaRegistration.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CurlHelper.cs" />
     <Compile Include="Helpers\PageList.cs" />
     <Compile Include="Models\Controller_EX.cs" />
     <Compile Include="Models\GetCharSpellCode.cs" />
@@ -307,6 +309,7 @@
     <Content Include="Areas\WXMenu\Views\Home\AddMenu.cshtml" />
     <Content Include="Areas\WXMedia\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXMedia\Views\Home\AddMedia.cshtml" />
+    <Content Include="Areas\WXMedia\Views\News\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
@@ -357,6 +360,7 @@
     <Folder Include="Areas\WXUser\Models\" />
     <Folder Include="Areas\WXUser\Views\Group\" />
     <Folder Include="Areas\WXUser\Views\Shared\" />
+    <Folder Include="Upload\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>

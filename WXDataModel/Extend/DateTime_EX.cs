@@ -21,5 +21,11 @@ namespace WXDataModel.Extend
             }
             return "下午好";
         }
+        public static DateTime GetDateTime(long unixTimeStamp)
+        {
+            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 当地时区
+            DateTime dt = startTime.AddSeconds(unixTimeStamp);
+            return dt;
+        }
     }
 }

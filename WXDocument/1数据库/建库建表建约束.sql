@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2019-02-25 14:34:54                          */
+/* Created on:     2019-02-26 17:44:54                          */
 /*==============================================================*/
 
 
@@ -967,8 +967,8 @@ go
 create table WX_Media (
    MyMediaId            int                  identity,
    AppId                varchar(50)          null,
-   MediaId              varchar(50)          null,
-   MediaName            varchar(50)          null,
+   MediaId              varchar(200)         null,
+   MediaName            varchar(200)         null,
    MediaType            varchar(50)          null,
    MediaContent         nvarchar(max)        null,
    MediaState           int                  null,

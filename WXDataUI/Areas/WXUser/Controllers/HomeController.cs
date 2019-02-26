@@ -8,6 +8,7 @@ using WXDataBLL;
 using WXDataBLL.WXCustom;
 using WXDataBLL.WXUser;
 using WXDataModel;
+using WXDataModel.Extend;
 using WXDataUI.Helpers;
 using WXDataUI.Models;
 using WXService.Service;
@@ -195,9 +196,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
                     }
                     else
                     {
-                        long unixTimeStamp = Convert.ToInt32(userJo["subscribe_time"]);
-                        System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 当地时区
-                        DateTime dt = startTime.AddSeconds(unixTimeStamp);
+                        
                         WX_User user = new WX_User()
                         {
                             OpenID = i,
@@ -208,7 +207,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
                             Province = userJo["province"].ToString(),
                             Country = userJo["country"].ToString(),
                             HeadImageUrl = userJo["headimgurl"].ToString(),
-                            SubscribeTime = dt,
+                            SubscribeTime = DateTime_EX.GetDateTime(Convert.ToInt32(userJo["subscribe_time"])),
                             Remark = userJo["remark"].ToString(),
                             //GroupId = Convert.ToInt32(userJo["groupid"]),
                             GroupId = 0,

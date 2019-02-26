@@ -131,8 +131,8 @@
           </Key>
           <Property Name="MyMediaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AppId" Type="varchar" MaxLength="50" />
-          <Property Name="MediaId" Type="varchar" MaxLength="50" />
-          <Property Name="MediaName" Type="varchar" MaxLength="50" />
+          <Property Name="MediaId" Type="varchar" MaxLength="200" />
+          <Property Name="MediaName" Type="varchar" MaxLength="200" />
           <Property Name="MediaType" Type="varchar" MaxLength="50" />
           <Property Name="MediaContent" Type="nvarchar(max)" />
           <Property Name="MediaState" Type="int" />
@@ -908,8 +908,8 @@
           </Key>
           <Property Name="MyMediaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MediaId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MediaName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MediaId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MediaName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="MediaType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MediaContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MediaState" Type="Int32" />
