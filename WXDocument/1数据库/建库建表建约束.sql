@@ -1,11 +1,10 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2019/1/9 14:26:05                            */
+/* Created on:     2019-02-16 08:50:10                          */
 /*==============================================================*/
 create database WXData
-go 
-
-use WXData
+go
+use WXData 
 go
 
 if exists (select 1
@@ -1411,7 +1410,7 @@ go
 /* Table: WX_UserGroup                                          */
 /*==============================================================*/
 create table WX_UserGroup (
-   GroupId              int                  identity,
+   GroupId              int                  not null,
    AppId                varchar(50)          null,
    UserId               int                  null,
    GroupName            nvarchar(50)         null,
@@ -1466,10 +1465,10 @@ go
 /* Table: WX_UserTag                                            */
 /*==============================================================*/
 create table WX_UserTag (
-   TagId                int                  identity,
-   AppId                varchar(50)          null,
+   TagId                int                  not null,
+   AppId                varchar(50)          not null,
    TagName              nvarchar(50)         null,
-   constraint PK_WX_USERTAG primary key (TagId)
+   constraint PK_WX_USERTAG primary key (TagId, AppId)
 )
 go
 
@@ -1505,17 +1504,18 @@ go
 /* Table: WX_UserTagRelation                                    */
 /*==============================================================*/
 create table WX_UserTagRelation (
-   TageId               int                  not null,
+   TagId                int                  not null,
    OpenID               VARCHAR(50)          not null,
-   constraint PK_WX_USERTAGRELATION primary key (TageId, OpenID)
+   AppId                varchar(50)          not null,
+   constraint PK_WX_USERTAGRELATION primary key (OpenID, TagId, AppId)
 )
 go
 
 declare @CurrentUser sysname
 select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
-   '用户标签ID',
-   'user', @CurrentUser, 'table', 'WX_UserTagRelation', 'column', 'TageId'
+   '用户标签ID 有微信分配，不能够自增长',
+   'user', @CurrentUser, 'table', 'WX_UserTagRelation', 'column', 'TagId'
 go
 
 declare @CurrentUser sysname
@@ -1523,6 +1523,13 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '用户标识',
    'user', @CurrentUser, 'table', 'WX_UserTagRelation', 'column', 'OpenID'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '公众号ID',
+   'user', @CurrentUser, 'table', 'WX_UserTagRelation', 'column', 'AppId'
 go
 
 alter table SYS_Department
@@ -1661,8 +1668,8 @@ alter table WX_UserTag
 go
 
 alter table WX_UserTagRelation
-   add constraint FK_WX_USERT_REFERENCE_WX_USERT foreign key (TageId)
-      references WX_UserTag (TagId)
+   add constraint FK_WX_USERT_REFERENCE_WX_USERT foreign key (TagId, AppId)
+      references WX_UserTag (TagId, AppId)
 go
 
 alter table WX_UserTagRelation
