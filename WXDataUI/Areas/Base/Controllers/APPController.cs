@@ -24,6 +24,7 @@ namespace WXDataUI.Areas.Base.Controllers
         {
             
         }
+        
         // GET: Base/APP
         public ActionResult Index()
         {

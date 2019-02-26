@@ -34,6 +34,9 @@
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -51,73 +54,77 @@
     <Compile Include="Extend\DateTime_EX.cs" />
     <Compile Include="Extend\SYS_Function_EX.cs" />
     <Compile Include="Extend\SYS_Role_EX.cs" />
+    <Compile Include="Extend\WX_Menu_EX.cs" />
     <Compile Include="Extend\WX_User_EX.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SYS_Department.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="SYS_Function.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="SYS_Log.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="SYS_Role.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="SYS_Setting.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="SYS_User.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="WXData.Context.cs">
+    <Compile Include="WXDataEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WXData.Context.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="WXData.cs">
+    <Compile Include="WXDataEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="WXData.Designer.cs">
+    <Compile Include="WXDataEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WXData.edmx</DependentUpon>
+      <DependentUpon>WXDataEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="WX_App.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_AppType.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_CustomMsg.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_EventQueue.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_Media.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_Menu.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WX_MenuType.cs">
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_QR.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_Queue.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_User.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_UserGroup.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_UserTag.cs">
-      <DependentUpon>WXData.tt</DependentUpon>
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -127,28 +134,28 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="WXData.edmx">
+    <EntityDeploy Include="WXDataEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WXData.Designer.cs</LastGenOutput>
+      <LastGenOutput>WXDataEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="packages.config" />
-    <None Include="WXData.edmx.diagram">
-      <DependentUpon>WXData.edmx</DependentUpon>
+    <None Include="WXDataEntities.edmx.diagram">
+      <DependentUpon>WXDataEntities.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="WXData.Context.tt">
+    <Content Include="WXDataEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WXData.edmx</DependentUpon>
-      <LastGenOutput>WXData.Context.cs</LastGenOutput>
+      <DependentUpon>WXDataEntities.edmx</DependentUpon>
+      <LastGenOutput>WXDataEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="WXData.tt">
+    <Content Include="WXDataEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WXData.edmx</DependentUpon>
-      <LastGenOutput>WXData.cs</LastGenOutput>
+      <DependentUpon>WXDataEntities.edmx</DependentUpon>
+      <LastGenOutput>WXDataEntities.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

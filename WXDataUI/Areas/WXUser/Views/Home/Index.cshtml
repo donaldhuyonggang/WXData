@@ -87,14 +87,11 @@
                             </div>
                         </li>
                         <li class="SearchTag">
-                            <span><a href="#" tagId="0">全部(<span class="AllCount"></span>)</a></span>
-                            <span><a href="#" tagId="-1">未分组(<span class="UnTagCount"></span>)</a></span>
-                            <ul style="list-style:none;">
-                                @*@foreach (var i in TagList)
-                                {
-                                    <li><a href="#" tagId="@i.TagId">@i.TagName (@i.WX_User.Count())</a></li>
-                                }*@
-                            </ul>
+                            <div style="margin-top:20px;">
+                                <div class="loader-inner ball-clip-rotate">
+                                    <div></div>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -244,53 +241,6 @@
                     </div>
                     <div>
                         <nav class="PageIndexList" aria-label="Page navigation">
-                            @*<ul class="pagination">
-                                @if (MyPage.HasPreviousPage)
-                                {
-                                    <li>
-                                        <a href="/WXUser/Home/Index?pageIndex=@MyPage.PreviousPage" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li class="disabled">
-                                        <a href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                }
-                                @for (var i = 1; i <= MyPage.TotalPages; i++)
-                                {
-                                    if (i == MyPage.PageIndex)
-                                    {
-                                        <li class="active"><a href="/WXUser/Home/Index?pageIndex=@i">@i</a></li>
-                                    }
-                                    else
-                                    {
-                                        <li><a href="/WXUser/Home/Index?pageIndex=@i">@i</a></li>
-                                    }
-                                }
-                                @if (MyPage.HasNextPage)
-                                {
-                                    <li>
-                                        <a href="/WXUser/Home/Index?pageIndex=@MyPage.NextPage" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li class="disabled">
-                                        <a href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                }
-
-
-                            </ul>*@
                             <ul class="pagination">
                                 @if (MyPage.HasPreviousPage)
                                 {
@@ -337,7 +287,6 @@
             </div>
         </div>
     </div>
-    @*type,pageIndex,pageSize,key*@
     <input type="hidden" id="Search_Type" value="@ViewBag.SearchType" />
     <input type="hidden" id="Search_PageIndex" value="@MyPage.PageIndex" />
     <input type="hidden" id="Search_PageSize" value="3" />
@@ -390,7 +339,8 @@
                         alert(r.ErrorMsg);
                     }else{
                         alert("更新成功!");
-                        location.reload();
+                        GetUser();
+                        GetTags();
                     }
                 });
             });
@@ -437,9 +387,14 @@
                 $.each(data.data,function(i,obj){
                     li += "<li><a href='#' tagid=" + obj.TagId + ">" + obj.TagName + " (" + obj.UserCount + ")</a></li>";
                 });
-                $(".SearchTag>ul").html(li);
-                $(".SearchTag .AllCount").html(data.AllCount);
-                $(".SearchTag .UnTagCount").html(data.UnTagCount);
+                var node = "<span><a href='#' tagId='0'>全部(<span>" + data.AllCount + "</span>)</a></span>" +
+                            "<span><a href='#' tagId='-1'>未分组(<span>" + data.UnTagCount + "</span>)</a></span>" +
+                            "<ul style='list-style:none;'>"+
+                                li+
+                            "</ul>";
+                //console.log(node);
+
+                $(".SearchTag").html(node);
             });
         }
     </script>

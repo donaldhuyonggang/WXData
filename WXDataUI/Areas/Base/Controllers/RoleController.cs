@@ -18,6 +18,13 @@ namespace WXDataUI.Areas.Base.Controllers
     [RightFilter(Message = "角色管理")]
     public class RoleController : Controller
     {
+        public WX_App WXAPP
+        {
+            get
+            {
+                return (Session["SYSUSER"] as SYS_User).WX_App;
+            }
+        }
         // GET: Base/Role
         public ActionResult Index()
         {
@@ -26,9 +33,7 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpPost]
         public ActionResult GetRole()
         {
-
-            SYS_User user = (Session["SYSUSER"] as SYS_User);
-            var list = new SYS_RoleManager().Where(s => (s.AppId == user.WX_App.AppId) || (string.IsNullOrEmpty(s.AppId)));
+            var list = new SYS_RoleManager().Where(s => (s.AppId == WXAPP.AppId) || (string.IsNullOrEmpty(s.AppId)));
             var json = list.Select(s => new
             {
                 s.RoleId,

@@ -3,105 +3,203 @@
     ViewBag.Title = "Index";
 }
 @using WXDataModel
-<table id="shuju"class="table table-bordered">
-    <tr>
-        <td>菜单名称</td>
-        <td>菜单类型</td>
-        <td>菜单KEY</td>
-        <td>菜单URL</td>
-        <td>排序号</td>
-        <td>操作</td>
-    </tr>
-    @* 一级菜单 *@
-        @foreach (WX_Menu item in ViewBag.yiji)
-        {
-            <tr class="danger">
-                <td>@item.MenuName</td>
-                <td>@item.MenuType</td>
-                <td>@item.MenuKey</td>
-                <td>@item.MenuUrl</td>
-                <td>@item.MenuSort</td>
-                <td><a href="/WXMenu/Home/Add_zi/@item.MenuId" data-toggle="modal" data-target="#LZ_Add_WX_Menu">新增子级菜单</a></td>
-            </tr>
-            foreach (WX_Menu item2 in ViewBag.erji)
-            {
-                if (item2.ParentMenuId == item.MenuId)
-                {
-                    <tr>
-                        <td>@item2.MenuName</td>
-                        <td>@item2.MenuType</td>
-                        <td>@item2.MenuKey</td>
-                        <td>@item2.MenuUrl</td>
-                        <td>@item2.MenuSort</td>
-                        <td><a href="#" class="del_ziji" data_id="@item2.MenuId">删除</a></td>
-                    </tr>
-                }
-            }
+@using WXDataUI.Helpers
+@using WXDataModel.Extend
+@{
+//List<WX_UserGroup> GroupList = ViewBag.GroupList as List<WX_UserGroup>;
+//PageList<WX_User> MyPage = ViewBag.Page as PageList<WX_User>;
+//WX_App MyApp = (Session["SYSUSER"] as SYS_User).WX_App;
+}
+@section styles{
+
+    <link href="~/Content/Common.css" rel="stylesheet" />
+    <style>
+        .UserGroup .nav > li > a {
+            padding: 5px;
+            font-size: 13px;
         }
-</table>
+
+        .form-group label {
+            height: 34px;
+            line-height: 34px;
+        }
+
+        .UserGroup .panel {
+            margin-bottom: 0;
+        }
+
+        .UserGroup .panel-heading {
+            background-color: #fff;
+        }
+
+        .UserGroup .panel-title a {
+            font-size: 13px;
+            border: none;
+        }
+
+        .ul-full {
+            margin-top: 10px;
+        }
+
+        .toolList i {
+            font-size: 10px;
+        }
+
+        .toolList .btn {
+            padding: 0 5px;
+        }
+    </style>
+}
+
+<div class="usercontent">
+    <div class="col-xs-2 padd usetlef">
+        <nav class="navbar marg  navbar-default navbar-static-top">
+            <div class="col-xs-12">
+                <h5 class="navbar-text navbar-left">菜单分类<a href="#" class="navbar-link"></a></h5>
+            </div>
+        </nav>
+        <div class="">
+            <ul style="list-style:none;" class="ul-full" id="">
+                
+                <li class="">
+                    <div style="margin-top:20px;">
+                        <div class="loader-inner ball-clip-rotate">
+                            <div></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+    <div class="col-xs-10 padd">
+        <div>
+            <div class="datalist">
+                <nav class="navbar marg  navbar-default navbar-static-top">
+                    <div class="col-xs-12">
+                        <h5 class="navbar-text navbar-left">数据列表<a href="#" class="navbar-link"></a></h5>
+                        <div class="navbar-text navbar-right ">
+                            <ul class="list-inline marg">
+                                <li><i class="glyphicon glyphicon-plus"></i>
+                                    <a href="/WXMenu/Home/AddMenu" data-target="#EditMenu" data-toggle="modal" id="">新增菜单</a></li>
+                                <li><i class="glyphicon glyphicon-list"></i><a href="#">编辑</a></li>
+                                <li><i class="glyphicon glyphicon-remove-circle"></i><a href="#">删除</a></li>
+                                <li><i class="glyphicon glyphicon-download"></i><a href="#" id="">获取服务器菜单</a></li>
+                                <li><i class="glyphicon glyphicon-upload" ></i><a href="#" id="Sync">同步至服务器</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </nav>
+                <div class="datacontent">
+
+                    <div class="fromcontent">
+                        <table class="table table-bordered table-hover menuList">
+                            <thead>
+                                <tr class="text-center">
+                                    <th><input type="checkbox" name="name" id="CheckAll" /></th>
+                                    <th>菜单名称</th>
+                                    <th>菜单类型</th>
+                                    <th>菜单KEY</th>
+                                    <th>菜单URL</th>
+                                    <th>排序号</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*@foreach (var i in MyPage)
+                                {
+                                    <tr class="text-center">
+                                        <td><input type="checkbox" name="name" value="" class="ck" openId="@i.OpenID"></td>
+                                        <td>@i.GetFollowStatus()</td>
+                                        <td>
+                                            <ul class="list-inline marg operation">
+                                                <li class="Find btn btn-success" data-toggle="tooltip" data-placement="right" title="查看"><a href="/WXUser/Home/UserInfo/@i.OpenID" data-toggle="modal" data-target="#EditWXUser" class="glyphicon glyphicon-search"></a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                }*@
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <nav class="PageIndexList" aria-label="Page navigation">
+                            <ul class="pagination">
+                                @*@if (MyPage.HasPreviousPage)
+                                {
+                                    <li>
+                                        <a href="#" id="PrevPage" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="disabled">
+                                        <a href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                @for (var i = 1; i <= MyPage.TotalPages; i++)
+                                {
+                                    <li><a href="#" PageIndex="@i">@i</a></li>
+                                }
+                                @if (MyPage.HasNextPage)
+                                {
+                                    <li>
+                                        <a href="#" id="NextPage" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="disabled">
+                                        <a href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                }*@
+
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 <script>
     $(function () {
-        ///所有的删除子菜单
-        $(".del_ziji").click(function () {
-            var id = $(this).attr("data_id");//获取id
-            $.post("/WXMenu/Home/Delect_id/"+id, function (data) {
-                if (data) {
-                    shua();
-                }
-                else {
-                    alert("删除失败！");
-                }
-            });
+        GetMenu();
+        $("#Sync").click(function () {
+            alert(1);
         });
-        //$("#Add_yiji").click(function () {
-        //    $.post("/WXMenu/Home/Add_yiji_pd", function (data) {
-        //        if (data) {
-        //            $("#add_yiji_div").css("display", "block");
-        //        }
-        //        else {
-        //            alert("一级菜单不能超过三个！");
-        //        }
-        //    });
-        //});
-    });//加载方法
+    });
+    function GetMenu(){
+        $.post("/WXMenu/Home/Select_gzh_id", function (result) {
+            var tr = "";
+            $.each(result, function (i, obj) {
+                tr += "<tr class='text-center'>"
+                    + "<td><input type='checkbox' name='name' value='' class='ck' ></td>"
+                    + "<td>" + obj.MenuName + "</td>"
+                    + "<td>" + obj.TypeName + "</td>"
+                    + "<td>" + obj.MenuKey + "</td>"
+                    + "<td>" + obj.MenuUrl + "</td>"
+                    + "<td>" + obj.MenuSort + "</td>"
+                    + "<td>"
+                    + "<ul class='list-inline marg operation'>"
+                    +   "<li class='Find btn btn-success' data-toggle='tooltip' data-placement='right' title='查看'>"
+                    +       "<a href='#' data-toggle='modal' data-target='#' class='glyphicon glyphicon-search'></a></li>"
+                    + "</ul></td></tr>";
 
-    function shua() {//刷新当前公众号的菜单
-        $.post('/WXMenu/Home/Select_gzh_id', function (data) {
-            var text = "";
-            $.each(data, function (i, obj) {
-                if (obj.ParentMenuId == null) {
-                    text += "<tr class='danger'>" +
-                                "<td>" + obj.MenuName + "</td>" +
-                                "<td>" + obj.MenuType + "</td>" +
-                                "<td>" + obj.MenuKey + "</td>" +
-                                "<td>" + obj.MenuUrl + "</td>" +
-                                "<td>" + obj.MenuSort + "</td>" +
-                                "<td><a href='#'>新增子级菜单</a></td>" +
-                            "</tr>";
-                    $.each(data, function (j, ob2j) {
-                        if (obj.MenuId == ob2j.ParentMenuId) {
-                            text += "<tr>" +
-                                "<td>" + ob2j.MenuName + "</td>" +
-                                "<td>" + ob2j.MenuType + "</td>" +
-                                "<td>" + ob2j.MenuKey + "</td>" +
-                                "<td>" + ob2j.MenuUrl + "</td>" +
-                                "<td>" + ob2j.MenuSort + "</td>" +
-                                "<td><a href='#' class='del_ziji' data_id='"+ob2j.MenuId+"'>删除</a></td>" +
-                            "</tr>";
-                        }
-                    });
-                }
             });
-            var zong = "<tr>" +
-                            "<td>菜单名称</td>" +
-                            "<td>菜单类型</td>" +
-                            "<td>菜单KEY</td>" +
-                            "<td>菜单URL</td>" +
-                            "<td>排序号</td>" +
-                            "<td>操作</td>" +
-                        "</tr>";
-            zong += text;
-            $("#shuju").html(zong);
+            $(".menuList>tbody").html(tr);
         });
     }
 </script>

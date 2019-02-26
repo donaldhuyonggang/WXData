@@ -41,7 +41,7 @@ namespace WXDataDAL.WXMenu
         }
 
         /// <summary>
-        /// 新增一级菜单  判断当前公众号的一级菜单是否超过5个
+        /// 新增一级菜单  判断当前公众号的一级菜单是否超过3个
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

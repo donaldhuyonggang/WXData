@@ -178,6 +178,7 @@
     <Compile Include="Helpers\PageList.cs" />
     <Compile Include="Models\Controller_EX.cs" />
     <Compile Include="Models\GetCharSpellCode.cs" />
+    <Compile Include="Models\LoadingColor.cs" />
     <Compile Include="Models\ReturnResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -208,6 +209,7 @@
     <Content Include="Content\Images\WXMenu\bg_mobile_head_default3a7b38.png" />
     <Content Include="Content\Images\WXMenu\index_z430cc0.png" />
     <Content Include="Content\Index.css" />
+    <Content Include="Content\loaders.min.css" />
     <Content Include="Content\Login.css" />
     <Content Include="Content\Media\fileinput.min.css" />
     <Content Include="Scripts\bootstrap-treeview.js" />
@@ -323,16 +325,14 @@
     <Content Include="Areas\WXCustom\Views\QR\Add.cshtml" />
     <Content Include="Areas\WXCustom\Views\QR\Index.cshtml" />
     <Content Include="Areas\Base\Views\Home\Index.cshtml" />
-    <Content Include="Areas\WXMenu\Views\Home\Add_zi.cshtml" />
     <Content Include="Areas\WXMenu\Views\Home\Index.cshtml" />
-    <Content Include="Areas\WXMenu\Views\Home\Add_yiji_pd.cshtml" />
     <Content Include="fonts\iconfont.woff" />
     <Content Include="Areas\Base\Views\Home\Login.cshtml" />
-    <Content Include="Areas\WXMenu\Views\Home\Add.cshtml" />
     <Content Include="Areas\WXUser\Views\Tag\AddTag.cshtml" />
     <Content Include="Areas\WXUser\Views\Home\AddTag.cshtml" />
     <Content Include="Areas\WXUser\Views\Tag\DeleteTag.cshtml" />
     <Content Include="Areas\WXUser\Views\Tag\EditTag.cshtml" />
+    <Content Include="Areas\WXMenu\Views\Home\AddMenu.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />

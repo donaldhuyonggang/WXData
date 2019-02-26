@@ -50,7 +50,8 @@
     <Compile Include="WXAPP\WX_AppManager.cs" />
     <Compile Include="WXCustom\WX_CustomMsgManger.cs" />
     <Compile Include="WXCustom\WX_QueueManager.cs" />
-    <Compile Include="WXMenu\WXMenuManger.cs" />
+    <Compile Include="WXMenu\WX_MenuTypeManger.cs" />
+    <Compile Include="WXMenu\WX_MenuManger.cs" />
     <Compile Include="WXQR\WX_QRManager.cs" />
     <Compile Include="WXUser\WX_UserTagManager.cs" />
     <Compile Include="WXUser\WX_UserManager.cs" />
