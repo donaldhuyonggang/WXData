@@ -11,25 +11,33 @@
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title mui-text-left">标题</h1>
-		    <button type="button" class="mui-btn mui-pull-right">新建</button>
+		    <button type="button" onclick="AddBtn()" class="mui-btn mui-pull-right">新建</button>
 		</header>
 		<div class="mui-content">
 		   	<ul id="UserTags"  class="mui-table-view">
-	   	        <li v-for="item in obj" class="mui-table-view-cell" v-bind:TagId="item.TagId">
-	   	            <a>{{item.TagName}}({{item.Count}})</a>
-	   	        </li>
+		   		<template v-for="item in obj">
+		   			<li class="mui-table-view-cell" v-bind:TagId="item.TagId">
+						<div class="mui-slider-right mui-disabled">
+							<a class="mui-btn mui-btn-red" v-on:click="Del">删除</a>
+						</div>
+						<div class="mui-slider-handle" >
+							{{item.TagName}}({{item.Count}})
+						</div>
+					</li>
+		   		</template>
 	   	    </ul>
 		</div>
+		<script type="text/javascript" src="../../js/jquery-2.2.4.js" ></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.js"></script>
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function(){
-				
 				var BaseUrl=plus.storage.getItem("BaseUrl");
 				var custom=JSON.parse(plus.storage.getItem("Custom"));//获取登陆对象
 				var info={
-					UserId:custom.UserId
+					UserId:custom.UserId,
+					AppId:custom.AppId
 				};
 				mui.ajax({
 					url:BaseUrl+"/Mobile/UserOnTag",
@@ -44,6 +52,7 @@
 				}); //ajax
 				mui('.mui-content').on('tap','#UserTags li',function(){
 					var TagId=this.getAttribute("TagId");
+					
 					mui.openWindow({
 						id:"SaveTag",
 						url:"SaveTag.html",
@@ -62,14 +71,73 @@
 					    }
 					});//ON
 				});//Open
+				
+				window.addEventListener('refresh', function(e){//执行刷新
+				    location.reload();
+				});//刷新页面
 			});//Ready
 			function Action(data){
+				var custom=JSON.parse(plus.storage.getItem("Custom"));//获取登陆对象
 				var MyTag=new Vue({
 					el:"#UserTags",
 					data:{
 						obj:data
+					},methods:{
+						Del:function(event){
+							var li=event.target.parentNode.parentNode;
+							var info={
+								TagId:li.getAttribute("TagId"),
+								AppId:custom.AppId
+							};
+							var btnArray = ['确认', '取消'];
+							mui.confirm('确认删除该条记录？', 'Hello MUI', btnArray, function(e) {
+								if (e.index == 0) {
+									mui.ajax({
+										url:plus.storage.getItem("BaseUrl")+"/Mobile/DeleteTag",
+										data:info,
+										success:function(data){
+											if(data.errmsg=="ok"){
+												li.parentNode.removeChild(li);
+											}else{
+												mui.toast("系统错误");
+											}
+										},error:function(XMLHttpRequest,textStatus,errorThrown){
+												console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+												console.log("错误类型textStatus: "+textStatus);
+												console.log("异常对象errorThrown: "+errorThrown);
+										}
+									});
+								}
+								else
+								{
+									setTimeout(function() {
+										mui.swipeoutClose(li);
+									}, 0);
+								}
+							});
+						}
 					}
 				});
+			}
+			
+			function AddBtn(){
+				mui.openWindow({
+				    id:"AddTag",
+				    url:"../Tag/AddTag.html",
+				    extras:{
+				      	IsAdd:1//自定义扩展参数，可以用来处理页面间传值
+				    },
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+//					      aniShow:slide-in-right,//页面显示动画，默认为”slide-in-right“；
+				      duration:500//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...'//等待对话框上显示的提示内容
+				    }
+				});//新开窗体
 			}
 		</script>
 	</body>

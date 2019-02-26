@@ -79,7 +79,7 @@
 								<h5><p>标签</p></h5></li>
 							<li id="TagBox">
 								<template v-if="item.Tag != ''">
-									<a class="mui-table-view-cell" v-for="tag in item.Tag">{{tag.TagName}}</a>
+									<a class="mui-table-view-cell tags" v-for="tag in item.Tag">{{tag.TagName}}</a>
 								</template>
 								<template v-else>
 									<p style="padding-top:8px ;">添加标签对联系人进行分类</p>

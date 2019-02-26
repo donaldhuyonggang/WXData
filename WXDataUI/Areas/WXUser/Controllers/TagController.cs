@@ -74,8 +74,8 @@ namespace WXDataUI.Areas.WXUser.Controllers
             JObject jo = JObject.Parse(ser.Delete(tagid));
             var result = new
             {
-                errcode = jo["errcode"],
-                errmsg = jo["errmsg"]
+                errcode = jo["errcode"].ToString(),
+                errmsg = jo["errmsg"].ToString()
             };
             if (result.errcode.Equals(0))
             {
@@ -99,13 +99,13 @@ namespace WXDataUI.Areas.WXUser.Controllers
         public ActionResult EditTag(WX_UserTag tag)
         {
             TagService ser = new TagService(WXAPP.AppId, WXAPP.AppSecret);
-            GetTagList();
             JObject jo = JObject.Parse(ser.Update(tag.TagId, tag.TagName));
             var result = new
             {
                 errcode = jo["errcode"],
                 errmsg = jo["errmsg"]
             };
+            GetTagList();
             return Json(result,JsonRequestBehavior.AllowGet);
         }
 

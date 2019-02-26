@@ -63,5 +63,5 @@ insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType
 --新增权限end
 
 --Start新增用户组别
-insert into WX_UserGroup(GroupId,UserId,GroupName,GroupSort)values(0,null,null,'未分组',1)
+insert into WX_UserGroup(GroupId,AppId,UserId,GroupName,GroupSort)values(0,null,null,'未分组',1)
 --End新增用户组别

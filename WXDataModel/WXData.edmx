@@ -213,7 +213,7 @@
           <Key>
             <PropertyRef Name="GroupId" />
           </Key>
-          <Property Name="GroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
           <Property Name="AppId" Type="varchar" MaxLength="50" />
           <Property Name="UserId" Type="int" />
           <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
@@ -222,18 +222,21 @@
         <EntityType Name="WX_UserTag">
           <Key>
             <PropertyRef Name="TagId" />
+            <PropertyRef Name="AppId" />
           </Key>
           <Property Name="TagId" Type="int" Nullable="false" />
-          <Property Name="AppId" Type="varchar" MaxLength="50" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TagName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="WX_UserTagRelation">
           <Key>
-            <PropertyRef Name="TageId" />
+            <PropertyRef Name="TagId" />
             <PropertyRef Name="OpenID" />
+            <PropertyRef Name="AppId" />
           </Key>
-          <Property Name="TageId" Type="int" Nullable="false" />
+          <Property Name="TagId" Type="int" Nullable="false" />
           <Property Name="OpenID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppId" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_SYS_DEPA_REFERENCE_SYS_DEPA">
           <End Role="SYS_Department" Type="Self.SYS_Department" Multiplicity="0..1" />
@@ -548,7 +551,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_WX_USERT_REFERENCE_WX_APP">
-          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="1" />
           <End Role="WX_UserTag" Type="Self.WX_UserTag" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WX_App">
@@ -577,9 +580,11 @@
           <ReferentialConstraint>
             <Principal Role="WX_UserTag">
               <PropertyRef Name="TagId" />
+              <PropertyRef Name="AppId" />
             </Principal>
             <Dependent Role="WX_UserTagRelation">
-              <PropertyRef Name="TageId" />
+              <PropertyRef Name="TagId" />
+              <PropertyRef Name="AppId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -974,7 +979,7 @@
           <Key>
             <PropertyRef Name="GroupId" />
           </Key>
-          <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
           <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Int32" />
           <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -986,9 +991,10 @@
         <EntityType Name="WX_UserTag">
           <Key>
             <PropertyRef Name="TagId" />
+            <PropertyRef Name="AppId" />
           </Key>
           <Property Name="TagId" Type="Int32" Nullable="false" />
-          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TagName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_USERT_REFERENCE_WX_APP" FromRole="WX_UserTag" ToRole="WX_App" />
           <NavigationProperty Name="WX_User" Relationship="Self.WX_UserTagRelation" FromRole="WX_UserTag" ToRole="WX_User" />
@@ -1234,7 +1240,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_WX_USERT_REFERENCE_WX_APP">
-          <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="1" />
           <End Role="WX_UserTag" Type="Self.WX_UserTag" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WX_App">
@@ -1678,7 +1684,8 @@
               <ScalarProperty Name="OpenID" ColumnName="OpenID" />
             </EndProperty>
             <EndProperty Name="WX_UserTag">
-              <ScalarProperty Name="TagId" ColumnName="TageId" />
+              <ScalarProperty Name="TagId" ColumnName="TagId" />
+              <ScalarProperty Name="AppId" ColumnName="AppId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

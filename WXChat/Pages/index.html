@@ -5,7 +5,6 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
-		<script src="../js/mui.min.js"></script>
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<style type="text/css">
 			.title-position .mui-title {
@@ -37,7 +36,7 @@
 				<span class="mui-tab-label">消息</span>
 			</a>
 			<a href="User/MailList.html" class="mui-tab-item ButtomBar-item">
-				<span class="mui-icon mui-icon-person mui-icon-bars"><span class="mui-badge">5</span></span>
+				<span class="mui-icon mui-icon-person mui-icon-bars" id="mail"></span>
 				<span class="mui-tab-label">通讯录</span>
 			</a>
 			<a class="mui-tab-item ButtomBar-item">
@@ -49,6 +48,9 @@
 				<span class="mui-tab-label">我</span>
 			</a>
 		</nav>
+		<script type="text/javascript" src="../js/jquery-1.10.2.min.js" ></script>
+		<script type="text/javascript" src="../js/jquery.signalR-2.1.2.min.js" ></script>
+		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init(); //mui初始化
 			//存储页面 集合
@@ -78,7 +80,7 @@
 				mui('#ButtomBar').on('tap', '.ButtomBar-item', function(e) {
 					var tagPage = this.getAttribute('href');
 					if(activeTab == tagPage) {
-						return; 
+						return;
 					} if(mui.os.ios || aniShow[tagPage]) {
 						plus.webview.show(tagPage);
 					} else {
@@ -98,7 +100,21 @@
 					});
 				}); //给加号捆版事件
 			}); //H5+窗体加载事件
+			
+			mui.ready(function(){
+				var count=0;
+				var connection=$.hubConnection("http://litianle.ngrok.xiaomiqiu.cn/signalr",{useDefaultPath:false}); //创建连接
+				var chat=connection.createHubProxy("MobileHub");
+				connection.start().done(function(){
+					console.log("Start");
+				}).fail(function(error){
+					console.log(error);
+				});	
+				chat.on("hello",function(msg){
+					count=count+msg;
+					document.getElementById("mail").innerHTML="<span class=\"mui-badge\">"+ count +"</span>";
+				});
+			});
 		</script>
 	</body>
-
 </html>

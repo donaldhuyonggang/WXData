@@ -35,8 +35,13 @@
 			    </li>
 			</ul>
 		</div>
+		
+		<script type="text/javascript" src="../../js/jquery-1.10.2.min.js" ></script>
+		<script type="text/javascript" src="../../js/jquery.signalR-2.1.2.min.js" ></script>
+		
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.js"></script>
+		
 		<script type="text/javascript">
 			mui.init()
 			var Receive=new Vue({
@@ -45,6 +50,45 @@
 					ses:1==1
 				}
 			});
+			
+			mui.plusReady(function(){
+				var BaseUrl=plus.storage.getItem("BaseUrl");
+				var custom=JSON.parse(plus.storage.getItem("Custom"));//接收登陆对象
+				var info={
+					AppId:custom.AppId
+				};
+				mui.ajax({
+					url:BaseUrl+"/Mobile/NewF",
+					data:info,
+					success:function(data){
+						Action(data);
+					},error: function(XMLHttpRequest, textStatus, errorThrown) {
+						console.log("请求对象XMLHttpRequest: " + XMLHttpRequest);
+						console.log("错误类型textStatus: " + textStatus);
+						console.log("异常对象errorThrown: " + errorThrown);
+					}
+				});//ajax
+			});
+			function Action(data){
+				Vue NewList=new Vue({
+					el:"",
+					data:{
+						obj:data
+					}
+				});
+			}
+//			mui.ready(function(){
+//				var connection=$.hubConnection("http://litianle.ngrok.xiaomiqiu.cn/signalr",{useDefaultPath:false}); //创建连接
+//				var chat=connection.createHubProxy("MobileHub");
+//				connection.start().done(function(){
+//					console.log("Start");
+//				}).fail(function(error){
+//					console.log(error);
+//				});	
+//				chat.on("hello",function(msg){
+//					console.log("msg:"+JSON.stringify(msg))
+//				});
+//			});//plusready
 		</script>
 	</body>
 
