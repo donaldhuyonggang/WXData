@@ -8,7 +8,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 	</head>
 	<style type="text/css">
-		#TagBox a{
+		#TagBox a {
 			border: 1px solid lightgreen;
 			color: lightgreen;
 			display: inline-block;
@@ -16,108 +16,188 @@
 			padding: 2px 5px;
 			border-radius: 10px;
 		}
-		#TagBox{
-			padding-left:15px ;
+		
+		#TagBox {
+			padding-left: 15px;
 		}
-		#Content input{
+		
+		#Content input {
 			background-color: transparent;
-			border:none;
+			border: none;
 			border-bottom: 1px solid #ccc;
 			margin: 0;
 		}
-		#Content input:focus{
+		
+		#Content input:focus {
 			border-bottom: 1px solid green;
 		}
-		#Content>li{
-			
-			margin-top:15px ;
+		
+		#Content>li {
+			margin-top: 15px;
 			overflow: hidden;
 		}
-		.title{
+		
+		.title {
 			line-height: 20px;
 			padding-left: 8px;
 		}
-		.title p{
+		
+		.title p {
 			margin: 0;
 		}
-		.input_warp textarea{
-			background-color:transparent ;
+		
+		.input_warp textarea {
+			background-color: transparent;
 			border: none;
 			border-bottom: 1px solid #ccc;
 		}
-		.input_warp textarea:focus{
+		
+		.input_warp textarea:focus {
 			border-bottom: 1px solid green;
 		}
 	</style>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title mui-text-left">设置备注和标签</h1>
-		    <button type="button" class="mui-btn mui-btn-green mui-pull-right">完成</button>
-		</header>
-		<div class="mui-content">
-			<ul id="Content" v-for="item in obj"  class="mui-list-unstyled">
-				<li>
-					<ul class="mui-list-unstyled">
-						<li class="title"><h5><p>备注名</p></h5></li>
-						<li><input type="text" class="mui-input-clear" name="" id=""  v-bind:value="item.UserName"/></li>
-					</ul>
-				</li>
-				<li>
-					<ul class="mui-list-unstyled">
-						<li class="title"><h5><p>标签</p></h5></li>
-						<li id="TagBox"><a v-for="tag in item.Tag">{{tag.TagName}}</a></li>
-					</ul>
-				</li>
-				<li>
-					<ul class="mui-list-unstyled">
-						<li class="title"><h5><p>电话</p></h5></li>
-						<li><input type="text" class="mui-input-clear" name="" id="" v-bind:value="item.Telphone" /></li>
-					</ul>
-				</li>
-				<li>
-					<ul class="mui-list-unstyled">
-						<li class="title"><h5><p>描述</p></h5></li>
-						<li class="input_warp"><textarea name="" rows="5" cols="">{{item.Remark}}</textarea></li>
-					</ul>
-				</li>
-			</ul>
+		<div class="content">
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title mui-text-left">设置备注和标签</h1>
+				<button type="button" id="Savebtn"  v-on:click="Btn" class="mui-btn mui-btn-green mui-pull-right" disabled="disabled">完成</button>
+			</header>
+			<div class="mui-content">
+				<ul id="Content" v-for="item in obj" class="mui-list-unstyled">
+					<li>
+						<ul class="mui-list-unstyled">
+							<li class="title">
+								<h5><p>备注名</p></h5></li>
+							<li><input type="text" class="mui-input-clear" name="UserName" v-on:input="Fuser" v-bind:value="item.UserName" /></li>
+						</ul>
+					</li>
+					<li>
+						<ul class="mui-list-unstyled">
+							<li class="title">
+								<h5><p>标签</p></h5></li>
+							<li id="TagBox">
+								<template v-if="item.Tag != ''">
+									<a class="mui-table-view-cell tags" v-for="tag in item.Tag">{{tag.TagName}}</a>
+								</template>
+								<template v-else>
+									<p style="padding-top:8px ;">添加标签对联系人进行分类</p>
+								</template>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<ul class="mui-list-unstyled">
+							<li class="title">
+								<h5><p>电话</p></h5></li>
+							<li><input type="text" class="mui-input-clear" name="Telphone"  v-on:input="Fuser" v-bind:value="item.Telphone" /></li>
+						</ul>
+					</li>
+					<li>
+						<ul class="mui-list-unstyled">
+							<li class="title">
+								<h5><p>描述</p></h5></li>
+							<li class="input_warp"><textarea name="Remark" v-on:input="Fuser"  rows="5" cols="">{{item.Remark}}</textarea></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.js"></script>
 		<script type="text/javascript">
-			mui.init()
-			mui.plusReady(function(){
-				var BaseUrl=plus.storage.getItem("BaseUrl");
+			mui.init({
+				beforeback:function() {
+			　　　　 //获得父页面的webview
+			        var list = plus.webview.currentWebview().opener();
+			　　　　 //触发父页面的自定义事件(refresh),从而进行刷新
+			        mui.fire(list, 'refresh');
+			        //返回true,继续页面关闭逻辑
+			        return true;
+			    }
+			});
+			mui.plusReady(function() {
+				var BaseUrl = plus.storage.getItem("BaseUrl");
 				var self = plus.webview.currentWebview();
 				var OpenID = self.OpenID; //接收
-				var info={
-					OpenID:OpenID
+				var info = {
+					OpenID: OpenID
 				}
 				mui.ajax({
-					url:BaseUrl+"/Mobile/UserIDL",
-					data:info,
-					success:function(data){
-						console.log(JSON.stringify(data));
+					url: BaseUrl + "/Mobile/UserIDL",
+					data: info,
+					success: function(data) {
 						Action(data);
-					},error:function(XMLHttpRequest,textStatus,errorThrown){
-							console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
-							console.log("错误类型textStatus: "+textStatus);
-							console.log("异常对象errorThrown: "+errorThrown);
+//						console.log(JSON.stringify(data));
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						console.log("请求对象XMLHttpRequest: " + XMLHttpRequest);
+						console.log("错误类型textStatus: " + textStatus);
+						console.log("异常对象errorThrown: " + errorThrown);
 					}
-				});//ajax
-				
-			});//Ready
-			function Action(data){
-				var UserTageInfo=new Vue({
-					el:".mui-content",
-					data:{
-						obj:data
+				}); //ajax
+			}); //Ready
+			User=phone=mark=true;  //声明全局变量保存信息状态
+			function Action(data) {
+				var UserTageInfo = new Vue({
+					el: ".content",
+					data: {
+						obj: data
+					},
+					methods: {
+						Fuser: function(event) {
+							//输入框改变事件
+							this.obj.forEach(function(v) {
+								if(event.target.name == "UserName"){
+									User = (event.target.value == v.UserName);
+								}else if(event.target.name=="Telphone"){
+									phone = (event.target.value == v.Telphone);
+								}else if(event.target.name=="Remark"){
+									mark = (event.target.value == v.Remark);
+								}
+							});//循环
+							if(User==phone==mark==true){
+								document.getElementById("Savebtn").setAttribute("disabled",true);
+							}else{
+								document.getElementById("Savebtn").removeAttribute("disabled");
+//								mui.back=function(e){
+//									var btnArray = ['取消', '保存'];
+//									mui.confirm("是否保存本次编辑"," ",btnArray,function(e){
+//										if(e.index==1){
+//											
+//										}else{
+//											
+//										}
+//									});
+//								}
+							}
+						},Btn:function(){
+							var name= document.getElementsByName("UserName")[0].value;
+							var Telphone= document.getElementsByName("Telphone")[0].value;
+							var Remark= document.getElementsByName("Remark")[0].value;
+							var info={
+								UserName:name,
+								Telphone:Telphone,
+								Remark:Remark,
+								OpenID:this.obj[0].OpenID
+							};
+							mui.ajax({
+								url: plus.storage.getItem("BaseUrl") + "/Mobile/UpUserIDL",
+								data:info,
+								success:function(data){
+									mui.back();
+								},error: function(XMLHttpRequest, textStatus, errorThrown) {
+									console.log("请求对象XMLHttpRequest: " + XMLHttpRequest);
+									console.log("错误类型textStatus: " + textStatus);
+									console.log("异常对象errorThrown: " + errorThrown);
+								}
+							});
+							//保存按钮点击事件
+						}
 					}
 				});
-			}
+			} //初始化数据
 		</script>
 	</body>
-
 </html>

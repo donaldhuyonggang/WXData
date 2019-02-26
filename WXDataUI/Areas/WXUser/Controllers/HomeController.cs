@@ -169,13 +169,13 @@ namespace WXDataUI.Areas.WXUser.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        //移除用户标签end
 
 
 
         /// <summary>
         /// 从服务器更新用户列表
         /// </summary>
+        /// 
         public ActionResult UpdateList()
         {
             ReturnResult rs = new ReturnResult();

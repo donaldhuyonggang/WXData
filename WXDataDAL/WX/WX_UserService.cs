@@ -10,6 +10,29 @@ namespace WXDataDAL.WX
 {
     public class WX_UserService: BaseDAL<WX_User>
     {
+        public bool NewUpdate(WX_User user)
+        {
+            WXDataEntities db = new WXDataEntities();
+            WX_User users = db.WX_User.Find(user.OpenID);
+            users.UserName = user.UserName;
+            users.Telphone = user.Telphone;
+            user.Remark = users.Remark;
+            return db.SaveChanges() > 0;
+        }
+
+        /// <summary>
+        /// 修改用户所属客服
+        /// </summary>
+        /// <param name="OpenId"></param>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        public bool UpUserId(string OpenId,int UserId) {
+            WXDataEntities db = new WXDataEntities();
+            WX_User user = db.WX_User.Find(OpenId);
+            user.UserId = UserId;
+            return db.SaveChanges() > 0;
+        }
+
         //给用户添加标签
         public bool AddTag(WX_User user, int tagid)
         {

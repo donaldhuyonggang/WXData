@@ -26,53 +26,75 @@
 		#NoBody ul li{
 			line-height: 50px;
 		}
+		.Head_Img{
+			position: relative;
+		}
+		.icon{
+			display: none;
+			position: absolute;
+		}
+		.dis{
+			display: block;
+		}
 	</style>
 	<body>
-		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title mui-text-left">保存为标签</h1>
-		    <button type="button" class="mui-btn mui-btn-green mui-pull-right">保存</button>
-		</header>
-		<div class="mui-content" id="HeaderImage">
-			<div v-for="item in obj" v-if="item.User != ''" id="Content">
-				<form class="mui-input-group" style="margin: 20px 0;">
-					<div v-for="tag in obj" class="mui-input-row">
-						<label>标签名字</label>
-						<input type="text" class="mui-input-clear" placeholder="输入名字" v-bind:value="tag.TagName">
-					</div>
-				</form>
-				<ul v-for="item in obj" class="mui-list-inline" id="TagBox">
-					<li v-for="object in item.User" class="mui-text-center OpenUserInfo">
-						<ul class="mui-list-unstyled" v-bind:OpenID="object.OpenID">
-							<li><img V-bind:src="object.HeadImageUrl" /></li>
-							<li style="max-width: 50px;" class="mui-ellipsis"><p v-if="object.UserName !=null">{{object.UserName}}</p><p v-else="object.UserNick !=null">{{object.UserNick}}</p></li>
-						</ul>
-					</li>
-					<li class="mui-ellipsis " id="add">
-						<ul class="mui-list-unstyled">
-							<li><img src="../../Images/Icon/add.png" style="border: 1px solid #CCCCCC;"/></li>
-							<li> <p>&nbsp;</p></li>
-						</ul>
-					</li>
-					<li class="mui-ellipsis ">
-						<ul class="mui-list-unstyled">
-							<li><img src="../../Images/Icon/jian.png" style="border: 1px solid #CCCCCC;"/></li>
-							<li> <p>&nbsp;</p></li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-			<div v-else id="NoBody">
-				<ul class="mui-list-unstyled mui-text-center">
-					<li><img src="../../Images/Icon/cry.png" width="80px"/></li>
-					<li><p><strong>该标签下还没有任何成员，快去添加吧</strong></p></li>
-				</ul>
+		<div id="HeaderImage">
+			<header class="mui-bar mui-bar-nav">
+			    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			    <h1 class="mui-title mui-text-left">保存为标签</h1>
+			    <button type="button" id="Savebtn" v-on:click="Btn" class="mui-btn mui-btn-green mui-pull-right" disabled="disabled">保存</button>
+			</header>
+			<div class="mui-content" >
+				<div v-for="item in obj"  id="Content">
+					<form class="mui-input-group" style="margin: 20px 0;">
+						<div v-for="tag in obj" class="mui-input-row">
+							<label>标签名字</label>
+								<input type="text" class="mui-input-clear" placeholder="输入名字" id="TagName" v-bind:TagID="tag.TagId"  v-on:input="FTitle" v-bind:value="tag.TagName">
+						</div>
+					</form>
+					<ul v-for="item in obj" class="mui-list-inline" id="TagBox">
+						<template v-for="object in item.User">
+							<li class="mui-text-center OpenUserInfo">
+								<ul class="mui-list-unstyled" v-bind:OpenID="object.OpenID" >
+									<li class="Head_Img">
+										<img src="../../Images/Icon/minus-circle-fill.png" class="icon" style="width: 25px;"/>
+										<img V-bind:src="object.HeadImageUrl" />
+									</li>
+									<li style="max-width: 50px;" class="mui-ellipsis"><p v-if="object.UserName !=null">{{object.UserName}}</p><p v-else="object.UserNick !=null">{{object.UserNick}}</p></li>
+								</ul>
+							</li>
+						</template>
+						<li class="mui-ellipsis " id="add">
+							<ul class="mui-list-unstyled">
+								<li><img src="../../Images/Icon/add.png" onclick="GoAddTag()" style="border: 1px solid #CCCCCC;"/></li>
+								<li> <p>&nbsp;</p></li>
+							</ul>
+						</li>
+						<li class="mui-ellipsis">
+							<ul class="mui-list-unstyled">
+								<li><img src="../../Images/Icon/jian.png" onclick="LoseTag(this)"  style="border: 1px solid #CCCCCC;"/></li>
+								<li> <p>&nbsp;</p></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
+		
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.js"></script>
+		<script src="../../js/jquery-2.2.4.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init({
+				beforeback:function() {
+			　　　　 //获得父页面的webview
+			        var list = plus.webview.currentWebview().opener();
+			　　　　 //触发父页面的自定义事件(refresh),从而进行刷新
+			        mui.fire(list, 'refresh');
+			        //返回true,继续页面关闭逻辑
+			        return true;
+			    }
+			})
 			mui.plusReady(function(){
 				var self = plus.webview.currentWebview();
 				var TagId = self.TagId; //接收
@@ -80,6 +102,7 @@
 				var custom=JSON.parse(plus.storage.getItem("Custom"));//获取登陆对象
 				var info={
 					UserId:custom.UserId,
+					AppID:custom.AppId,
 					TagId:TagId
 				};
 				mui.ajax({
@@ -93,16 +116,98 @@
 							console.log("异常对象errorThrown: "+errorThrown);
 					}
 				});//ajax
+				window.addEventListener('refresh', function(e){//执行刷新
+				    location.reload();
+				});//刷新页面
 			});//窗体加载
+			
 			function Action(data){
 				var UserTag=new Vue({
 					el:"#HeaderImage",
 					data:{
 						obj:data
+					},methods:{
+						FTitle:function(event){
+							if(event.target.value==this.obj[0].TagName||event.target.value.trim()==""){
+								document.getElementById("Savebtn").setAttribute("disabled",true);
+							}else{
+								document.getElementById("Savebtn").removeAttribute("disabled");
+							}
+						},Btn:function(){
+							//修改标签标题
+							var info={
+								TagName:document.getElementById("TagName").value,
+								TagId:this.obj[0].TagId,
+								AppId:this.obj[0].AppId,
+							};
+							mui.ajax({
+								url:plus.storage.getItem("BaseUrl")+"/Mobile/EditTag",
+								data:info,
+								success:function(data){
+									mui.back();
+								},error:function(XMLHttpRequest,textStatus,errorThrown){
+										console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+										console.log("错误类型textStatus: "+textStatus);
+										console.log("异常对象errorThrown: "+errorThrown);
+								}
+							});//调用修改方法
+						}//Btn
 					}
 				});
-			}
+			};
+			function GoAddTag(){
+				var TagID=document.getElementById("TagName").getAttribute("TagID");
+				$(".icon").removeClass("dis");//隐藏图标
+				$(".Head_Img").removeAttr("onclick");//移除点击事件
+				mui.openWindow({
+				    id:"AddTag",
+				    url:"../Tag/AddTag.html",
+				    extras:{
+				      	TagID:TagID,//自定义扩展参数，可以用来处理页面间传值
+				      	IsAdd:0
+				    },
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+//					      aniShow:slide-in-right,//页面显示动画，默认为”slide-in-right“；
+				      duration:500//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...'//等待对话框上显示的提示内容
+				    }
+				});//新开窗体
+			};
+			function LoseTag(obj){
+				$(obj).parent().parent().parent().remove();
+				$(".icon").addClass("dis");
+				$(".Head_Img").attr("onclick","RemoveHad(this);");
+			};
+			function RemoveHad(obj){
+				//删除标签下的用户
+				var OpenID=$(obj).parent().attr("OpenID");
+				var TagID=document.getElementById("TagName").getAttribute("TagID");
+				var custom=JSON.parse(plus.storage.getItem("Custom"));
+				var info={
+					OpenID:OpenID,
+					tagId:TagID,
+					AppId:custom.AppId
+				};
+				mui.ajax({
+					url:plus.storage.getItem("BaseUrl")+"/Mobile/RemoveTag",
+					data:info,
+					success:function(data){
+						if(!data){
+							return
+						}
+					},error:function(XMLHttpRequest,textStatus,errorThrown){
+							console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+							console.log("错误类型textStatus: "+textStatus);
+							console.log("异常对象errorThrown: "+errorThrown);
+					}
+				});
+				$(obj).parent().parent().remove();
+			};
 		</script>
 	</body>
-
 </html>

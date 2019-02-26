@@ -99,13 +99,13 @@ namespace WXDataUI.Areas.WXUser.Controllers
         public ActionResult EditTag(WX_UserTag tag)
         {
             TagService ser = new TagService(WXAPP.AppId, WXAPP.AppSecret);
-            GetTagList();
             JObject jo = JObject.Parse(ser.Update(tag.TagId, tag.TagName));
             var result = new
             {
                 errcode = jo["errcode"],
                 errmsg = jo["errmsg"]
             };
+            GetTagList();
             return Json(result,JsonRequestBehavior.AllowGet);
         }
 

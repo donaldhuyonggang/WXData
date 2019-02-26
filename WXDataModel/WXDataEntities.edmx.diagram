@@ -7,6 +7,9 @@
       <Diagram DiagramId="0a9620ee1b67496a900e7f1c456d1d90" Name="Diagram1">
         <EntityTypeShape EntityType="WXDataModel.SYS_Department" Width="1.5" PointX="5.25" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="WXDataModel.SYS_Function" Width="1.5" PointX="6" PointY="9" IsExpanded="true" />
+      <Diagram DiagramId="b37f0d4161e342eeae7d534d66acbc78" Name="Diagram1">
+        <EntityTypeShape EntityType="WXDataModel.SYS_Department" Width="1.5" PointX="5.25" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WXDataModel.SYS_Function" Width="1.5" PointX="6" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="WXDataModel.SYS_Log" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WXDataModel.SYS_Role" Width="1.5" PointX="8.25" PointY="17.375" IsExpanded="true" />
         <EntityTypeShape EntityType="WXDataModel.SYS_Setting" Width="1.5" PointX="5.25" PointY="22.25" IsExpanded="true" />

@@ -16,9 +16,11 @@
 		</header>
 		<div class="mui-content">
 		    <ul id="UserGroup"  class="mui-table-view">
-	   	        <li v-for="item in obj" class="mui-table-view-cell" v-bind:GroupID="item.GroupId">
-	   	           {{item.GroupName}}({{item.Count}})
-	   	        </li>
+	   	        <template v-for="item in obj">
+	   	        	<li v-if="item.GroupId !=0" class="mui-table-view-cell" v-bind:GroupID="item.GroupId">
+		   	           {{item.GroupName}}({{item.Count}})
+		   	        </li>
+	   	        </template>
 	   	    </ul>
 		</div>
 		<script src="../../js/mui.min.js"></script>

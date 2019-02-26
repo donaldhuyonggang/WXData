@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.AspNet.SignalR;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,17 +32,16 @@ namespace WXDataUI.App_Start
 
         public void Service()
         {
-
-
             while (true)
             {
                 var list = eventQueueBLL.Where(x => x.MsgState == 1);
-
                 foreach (var item in list)
                 {
                     switch (item.Event)
                     { 
                         case "subscribe":
+                            var context = GlobalHost.ConnectionManager.GetHubContext<MobileHub>();
+                            context.Clients.All.hello(1);
                             Subscribe(item);
                             break;
                         case "unsubscribe":
@@ -105,7 +105,6 @@ namespace WXDataUI.App_Start
         public void GetUserInfo(string openId,string appId,string appSecret)
         {
             UserService userSvr = new UserService(appId, appSecret);
-
             string json = userSvr.Info(openId);
             JObject jo = JObject.Parse(json); 
             WX_User modal = userBLL.GetByPK(openId);
@@ -152,6 +151,7 @@ namespace WXDataUI.App_Start
                 modal1.QR_Scene_String = jo["qr_scene_str"].ToString();
                 modal1.UserId = GetUserIdByScene(jo["qr_scene"].ToString());
                 userBLL.Update(modal1);
+                
             }
         }
         public int? GetUserIdByScene(string scene)

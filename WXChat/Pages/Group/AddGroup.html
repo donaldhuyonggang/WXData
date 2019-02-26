@@ -1,11 +1,13 @@
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/mui.indexedlist.css" />
+	</head>
 		<style>
 			html,
 			.mui-content,
@@ -37,12 +39,11 @@
 				line-height: 42px;
 			}
 		</style>
-	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title mui-text-left">选择联系人</h1>
-		    <button type="button" id="Savebtn" onclick="SaveBtn()" class="mui-btn mui-btn-green mui-pull-right" disabled="disabled">确定</button>
+		    <button type="button" id="Savebtn" class="mui-btn mui-btn-green mui-pull-right" disabled="disabled">确定</button>
 		</header>
 		<div class="mui-content">
 			<div id='list' class="mui-indexed-list">
@@ -101,28 +102,12 @@
 				</div>
 			</div>
 		</div>
-		
 		<script type="text/javascript" src="../../js/jquery-2.2.4.js" ></script>
 		<script src="../../js/jquery-indexedlist.js"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.js"></script>
 		<script type="text/javascript">
-			mui.init({
-				beforeback:function() {
-			　　　　 //获得父页面的webview
-			        var list = plus.webview.currentWebview().opener();
-			　　　　 //触发父页面的自定义事件(refresh),从而进行刷新
-			        mui.fire(list, 'refresh');
-			        //返回true,继续页面关闭逻辑
-			        return true;
-			    }
-			});
-			var header = document.querySelector('header.mui-bar');
-			$('#list').IndexedList({
-				$bar: $('.mui-indexed-list-bar'), // 存储索引的盒子
-				$inner: $('.mui-indexed-list-inner'), // 列表盒子
-				$alert: $('.mui-indexed-list-alert') // 显示索引提示的盒子
-			});
+			mui.init()
 			mui.plusReady(function(){
 				var BaseUrl=plus.storage.getItem("BaseUrl");
 				var custom=JSON.parse(plus.storage.getItem("Custom"));//接收登陆对象
@@ -140,84 +125,7 @@
 							console.log("异常对象errorThrown: "+errorThrown);
 					}
 				});//页面主体数据
-			}); //plus
-			
-			function SaveBtn(){
-				var custom=JSON.parse(plus.storage.getItem("Custom"));//接收登陆对象
-				var self = plus.webview.currentWebview();//获取页面对象
-				var arr=document.getElementsByClassName("Check");//获取列表对象
-				var BaseUrl=plus.storage.getItem("BaseUrl");
-				var obj=[];
-				for (var i=0;i<arr.length;i++) {
-					if (arr[i].checked&& !arr[i].disabled) {
-						obj.push(arr[i].getAttribute("MyID"));
-					}
-				}
-				if(self.IsAdd==1){
-					var serch=document.getElementById("search").value;
-					if(serch!=""){
-						var info={
-							AppId:custom.AppId,
-							TagName:serch
-						}
-						mui.ajax({
-							url:BaseUrl+"/Mobile/FindTag",
-							data:info,
-							success:function(data){
-								if(data){
-									mui.toast("该标签名已存在")
-								}else{
-									var info2={
-										tagName:serch,
-										AppId:custom.AppId,
-										OpenId:JSON.stringify(obj) 
-									};
-									mui.ajax({
-										url:BaseUrl+"/Mobile/AddTagAndUse",
-										data:info2,
-										success:function(data){
-											if (data.Result) {
-												mui.back();
-											} else{
-												mui.toast("系统错误");
-											}
-										},error:function(XMLHttpRequest,textStatus,errorThrown){
-											console.log("请求对象XMLHttpRequest: "+XMLHttpRequest.responseText);
-											console.log("错误类型textStatus: "+textStatus);
-											console.log("异常对象errorThrown: "+errorThrown);
-										}
-									});//ajax 新增标签并添加用户
-								}//else
-							},error:function(XMLHttpRequest,textStatus,errorThrown){
-								console.log("请求对象XMLHttpRequest: "+XMLHttpRequest.responseText);
-								console.log("错误类型textStatus: "+textStatus);
-								console.log("异常对象errorThrown: "+errorThrown);
-							}
-						}); //查询标签名是否已存在
-					}else{
-						mui.toast("请填写标签名");
-					}
-				}else{
-					var info={
-						tagid:self.TagID,
-						AppId:custom.AppId,
-						OpenId:JSON.stringify(obj) 
-					}
-					mui.ajax({
-						url:BaseUrl+"/Mobile/AddTag",
-						data:info,
-						success:function(data){
-							if(data.errmsg=="ok"){
-								mui.back();
-							}
-						},error:function(XMLHttpRequest,textStatus,errorThrown){
-								console.log("请求对象XMLHttpRequest: "+XMLHttpRequest.responseText);
-								console.log("错误类型textStatus: "+textStatus);
-								console.log("异常对象errorThrown: "+errorThrown);
-						}
-					});//ajax
-				}
-			}//保存按钮单击
+			});//plusready
 			
 			function Action(data){
 				var custom=JSON.parse(plus.storage.getItem("Custom"));//接收登陆对象
@@ -242,36 +150,7 @@
 						}
 					}
 				}); //vue
-				if(self.IsAdd==0){
-					var info={
-						UserId:custom.UserId,
-						AppID:custom.AppId,
-						TagId:self.TagID
-					};
-					mui.ajax({
-						url:plus.storage.getItem("BaseUrl")+"/Mobile/TagInfo",
-						data:info,
-						success:function(data){
-							data.forEach(function(v){
-								checke=v.User;
-								for (var i=0;i<check.length;i++) {
-									v.User.forEach(function(s){
-										if(check[i].getAttribute("MyID")==s.OpenID){
-											check[i].setAttribute("checked",true);  //选中
-											check[i].setAttribute("disabled",true); //禁用
-										}
-									});
-								}
-							});
-						},error:function(XMLHttpRequest,textStatus,errorThrown){
-								console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
-								console.log("错误类型textStatus: "+textStatus);
-								console.log("异常对象errorThrown: "+errorThrown);
-						}
-					});//ajax
-				}//在已有新增
-				
-			}//Action 初始方法
+			}
 		</script>
 	</body>
 

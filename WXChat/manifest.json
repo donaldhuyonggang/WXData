@@ -423,13 +423,16 @@
 				"refer": [
 					"Pages/User/UserInfo.html",
 					"Pages/Tag/AllTag.html",
-					"Pages/Group/UserGroup.html"
+					"Pages/Group/UserGroup.html",
+					"Pages/User/NewFriend.html"
 				],
 				"priority": 0
 			},
 			"Pages/User/Chart.html": {
 				"resources": [
-					"js/vue.js"
+					"js/vue.js",
+					"js/mui.min.js",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -449,7 +452,9 @@
 					"Pages/User/Chart.html",
 					"fonts/mui.ttf",
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/jquery.signalR-2.1.2.min.js",
+					"js/jquery-1.10.2.min.js"
 				],
 				"refer": [
 					"Pages/User/MailList.html",
@@ -459,9 +464,16 @@
 				"priority": 0
 			},
 			"Pages/Tag/AllTag.html": {
-				"resources": [],
+				"resources": [
+					"fonts/mui.ttf",
+					"js/vue.js",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"js/jquery-2.2.4.js"
+				],
 				"refer": [
-					"Pages/Tag/SaveTag.html"
+					"Pages/Tag/SaveTag.html",
+					"Pages/Tag/AddTag.html"
 				],
 				"priority": 0
 			},
@@ -469,9 +481,18 @@
 				"resources": [
 					"Images/Icon/jian.png",
 					"Images/Icon/cry.png",
-					"Images/Icon/add.png"
+					"Images/Icon/add.png",
+					"js/vue.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"Images/Icon/minus-circle-fill.png",
+					"js/jquery-2.2.4.js"
 				],
-				"refer": [],
+				"refer": [
+					"Pages/Tag/AddTag.html",
+					"Pages/Tag/NewTag.html"
+				],
 				"priority": 0
 			},
 			"Pages/User/UserInfo.html": {
@@ -487,7 +508,12 @@
 				"priority": 0
 			},
 			"Pages/Group/UserGroup.html": {
-				"resources": [],
+				"resources": [
+					"js/vue.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
 				"refer": [
 					"Pages/Group/SaveGroup.html"
 				],
@@ -501,7 +527,9 @@
 					"js/vue.js",
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/jquery-2.2.4.js",
+					"Images/Icon/minus-circle-fill.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -512,6 +540,54 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"Pages/Tag/AddTag.html": {
+				"resources": [
+					"js/jquery-2.2.4.js",
+					"js/vue.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/mui.indexedlist.css",
+					"js/jquery-indexedlist.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"Pages/Tag/NewTag.html": {
+				"resources": [
+					"js/vue.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/mui.indexedlist.css",
+					"js/jquery-indexedlist.js",
+					"js/jquery-2.2.4.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"Pages/User/NewFriend.html": {
+				"resources": [
+					"js/jquery.signalR-2.1.2.min.js",
+					"js/jquery-1.10.2.min.js",
+					"js/vue.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"Pages/test.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"js/jquery.signalR-2.1.2.min.js",
+					"js/jquery-1.10.2.min.js"
 				],
 				"refer": [],
 				"priority": 0
