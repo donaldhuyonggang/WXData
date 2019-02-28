@@ -1,0 +1,88 @@
+﻿@using WXDataModel
+@{ 
+    List<WX_Media> ImgList = ViewBag.ImgList as List<WX_Media>;
+}
+<form action="/" method="post" id="form">
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">新增图文素材</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-sm-3">文章封面</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="thumb_media_id" id="thumb_media_id">
+                            @foreach (var i in ImgList)
+                            {
+                                <option value="@i.MediaId" mediaName="@i.MediaName">@i.MediaName</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3">封面预览:</label>
+                    <div class="col-sm-9">
+                        <img src="#" alt="" id="thumb" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3" for="title">文章标题</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="title" id="title" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3" for="author">作者</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="author" id="author" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3" for="digest">摘要</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="digest" id="digest" placeholder="如果本字段为没有填写，则默认抓取正文前64个字" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3" for="author">内容</label>
+                    <div class="col-sm-9">
+                        <textarea name="content" class="form-control" id="content"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3" for="content_source_url">原文地址</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="content_source_url" id="content_source_url" />
+                    </div>
+                </div>
+                <input type="hidden" name="show_cover_pic" value="1" />
+                <input type="hidden" name="need_open_comment" value="1" />
+                <input type="hidden" name="only_fans_can_comment" value="1" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <input type="button" id="Upload" name="Upload" class="btn btn-primary" value="保存">
+            </div>
+
+
+
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+
+<script>
+    $(function () {
+        $("#thumb_media_id").change(function () {
+            $("#thumb").prop("src", "/Upload/" + $("#thumb_media_id").find("option:selected").attr("mediaName"))
+        });
+        $("#Upload").click(function () {
+            $.post("/WXMedia/News/Add", $("#form").serialize(), function (r) {
+                console.info(r);
+            });
+        });
+    });
+</script>

@@ -1,8 +1,11 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2019-02-26 17:44:54                          */
+/* Created on:     2019-02-27 19:18:39                          */
 /*==============================================================*/
-
+create database WXData
+go
+use WXData
+go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -303,6 +306,13 @@ if exists (select 1
            where  id = object_id('WX_Menu')
             and   type = 'U')
    drop table WX_Menu
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('WX_MenuEvent')
+            and   type = 'U')
+   drop table WX_MenuEvent
 go
 
 if exists (select 1
@@ -1118,6 +1128,24 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '≈≈–Ú∫≈',
    'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'MenuSort'
+go
+
+/*==============================================================*/
+/* Table: WX_MenuEvent                                          */
+/*==============================================================*/
+create table WX_MenuEvent (
+   MenuKey              varchar(20)          not null,
+   ResponType           varchar(20)          null,
+   ResponContent        nvarchar(max)        null,
+   constraint PK_WX_MENUEVENT primary key (MenuKey)
+)
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '≤Àµ•ID',
+   'user', @CurrentUser, 'table', 'WX_MenuEvent', 'column', 'MenuKey'
 go
 
 /*==============================================================*/

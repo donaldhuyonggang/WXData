@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WXDataModel;
 using WXService.Utility;
 
 namespace WXService.Service
@@ -117,6 +118,29 @@ namespace WXService.Service
             return respJson;
         }
 
-
+        public string AddNews(WX_Media_News news)
+        {
+            var json = new
+            {
+                articles = new List<Object>()
+                {
+                    new 
+                    {
+                        title = news.title,
+                        thumb_media_id = news.thumb_media_id,
+                        author = news.author,
+                        digest = news.digest,
+                        show_cover_pic = news.show_cover_pic,
+                        content = news.content,
+                        content_source_url = news.content_source_url,
+                        need_open_comment = news.need_open_comment,
+                        only_fans_can_comment = news.only_fans_can_comment,
+                    }
+                }
+            };
+            string url = string.Format(MEDIA_ADD_NEWS, this.Get_Access_Token());
+            string respJson = MyHttpUtility.SendPost(url, JsonConvert.SerializeObject(json));
+            return respJson;
+        }
     }
 }

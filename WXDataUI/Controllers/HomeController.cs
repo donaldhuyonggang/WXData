@@ -7,7 +7,9 @@ using System.Web;
 using System.Web.Mvc;
 using WXDataBLL.WXCustom;
 using WXDataBLL.WXEvent;
+using WXDataBLL.WXMenu;
 using WXDataModel;
+using WXDataModel.Extend;
 using WXService.Service;
 using WXService.Utility;
 
@@ -29,6 +31,8 @@ namespace WXDataUI.Controllers
             {
                 string xml = MyHttpUtility.ReadRequest(this.Request);
                 int createTime = Convert.ToInt32(XmlUtility.GetSingleNodeInnerText(xml, "/xml/CreateTime"));
+                string fromUserName = XmlUtility.GetSingleNodeInnerText(xml, "/xml/FromUserName");
+                string toUserName = XmlUtility.GetSingleNodeInnerText(xml, "/xml/ToUserName");
                 string msgType = XmlUtility.GetSingleNodeInnerText(xml, "/xml/MsgType");
                 if(msgType == "event")
                 {//事件
@@ -43,6 +47,16 @@ namespace WXDataUI.Controllers
                         AppId = id
                     };
                     new WX_EventQueueManager().Add(info);
+
+                    //回复消息
+                    string key = XmlUtility.GetSingleNodeInnerText(xml, "/xml/EventKey");
+                    WX_MenuEventManager manager = new WX_MenuEventManager();
+                    var eve = manager.Where(e => e.MenuKey.Equals(key)).FirstOrDefault();
+                    if (eve != null)
+                    {
+                        string respXml = eve.GetXML(toUserName,fromUserName);
+                        return Content(respXml);
+                    }
                 }
                 else { //消息
                     WX_Queue info = new WX_Queue()

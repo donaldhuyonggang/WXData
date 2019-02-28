@@ -183,6 +183,7 @@
     <Compile Include="Models\GetCharSpellCode.cs" />
     <Compile Include="Models\LoadingColor.cs" />
     <Compile Include="Models\ReturnResult.cs" />
+    <Compile Include="Models\WX_Media_News.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -339,6 +340,7 @@
     <Content Include="Areas\WXMedia\Views\Home\Index.cshtml" />
     <Content Include="Areas\WXMedia\Views\Home\AddMedia.cshtml" />
     <Content Include="Areas\WXMedia\Views\News\Index.cshtml" />
+    <Content Include="Areas\WXMedia\Views\News\Add.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />

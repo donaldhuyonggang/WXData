@@ -1,13 +1,10 @@
 ﻿@using WXDataModel
 
-@*@using (Html.BeginForm("AddMedia", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {*@
 
 
 
 <div class="modal-dialog" style="width:600px">
     <div class="modal-content">
-        @*<form action="/WXMedia/Home/AddMedia" id="media" method="post" enctype="multipart/form-data">*@
 @using (Html.BeginForm("AddMedia", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
             <div class="modal-header">
@@ -38,12 +35,7 @@
                 <input type="submit" name="Upload" class="btn btn-primary" value="保存">
             </div>
 }
-        @*</form>*@
-        
-            @*<text>选择上传文件：</text><input name="file" type="file" id="file" />
-            <br />
-            <br />
-            <input type="submit" name="Upload" value="Upload" />*@
+     
         
 
     </div><!-- /.modal-content -->
@@ -52,26 +44,6 @@
 
 <script>
     $(function () {
-        //$("#submit").click(function () {
-        //    var data = $("#media").serialize();
-        //    console.info(data);
-        //    //$.post("/WXMedia/Home/AddMedia", data, function (r) {
 
-        //    //});
-        //    $.ajax({
-        //        url: "/WXMedia/Home/AddMedia",
-        //        type: 'post',
-        //        data: data,
-        //        contentType: false,  //必须: 需要设置为false,不然后台拿不到数据
-        //        processData: false,  //必须: 传送DOM信息,所以设为false
-        //        dataType: "json",
-        //        success: function (res) {
-        //        },
-        //        error: function (res) {
-
-        //        }
-
-        //    });
-        //});
     });
 </script>

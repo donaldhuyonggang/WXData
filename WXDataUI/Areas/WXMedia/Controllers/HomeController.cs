@@ -26,7 +26,7 @@ namespace WXDataUI.Areas.WXMedia.Controllers
         public ActionResult Index(int index = 1,int size = 3)
         {
             //SyncImage();
-            ViewBag.PageList = new PageList<WX_Media>(new WX_MediaManager().Where(m => m.AppId.Equals(WXAPP.AppId)), 1, 3);
+            ViewBag.PageList = new PageList<WX_Media>(new WX_MediaManager().Where(m => m.AppId.Equals(WXAPP.AppId) && (!m.MediaType.Equals("news"))), index, size);
             return View();
         }
 
@@ -80,7 +80,7 @@ namespace WXDataUI.Areas.WXMedia.Controllers
         {
             string json = new MediaService(WXAPP.AppId, WXAPP.AppSecret).Get("image");
             JObject jo = JObject.Parse(json);
-            if (!string.IsNullOrEmpty(jo["errcode"].ToString()))
+            if (jo["errcode"] != null)
             {
                 return Content("<script> alert('错误:"+jo["errmsg"].ToString() +"');</script>");
             }
@@ -123,10 +123,11 @@ namespace WXDataUI.Areas.WXMedia.Controllers
         /// 测试用群发消息
         /// </summary>
         /// <param name="text"></param>
-        public void Send(string text)
+        public void Send()
         {
+            var news = new WX_MediaManager().Where(m => m.MediaType.Equals("news"))[0];
             List<string> openIdList = WXAPP.WX_User.ToList().GetOpenIdList();
-            string result = new MessageService(WXAPP.AppId,WXAPP.AppSecret).Send(openIdList, text);
+            string result = new MessageService(WXAPP.AppId,WXAPP.AppSecret).Send(news);
             WX_CustomMsgManager manager = new WX_CustomMsgManager();
             JObject json = JObject.Parse(result);
             if (json["errcode"].ToString().Equals("0"))
@@ -139,7 +140,7 @@ namespace WXDataUI.Areas.WXMedia.Controllers
                         OpenID = i,
                         AppId = WXAPP.AppId,
                         CreateTime = DateTime.Now,
-                        Content = text,
+                        Content = news.MediaContent,
                         MsgSource = "客服",
                         MsgType = "text",
 

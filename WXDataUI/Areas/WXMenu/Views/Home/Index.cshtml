@@ -108,18 +108,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @*@foreach (var i in MyPage)
-                                {
-                                    <tr class="text-center">
-                                        <td><input type="checkbox" name="name" value="" class="ck" openId="@i.OpenID"></td>
-                                        <td>@i.GetFollowStatus()</td>
-                                        <td>
-                                            <ul class="list-inline marg operation">
-                                                <li class="Find btn btn-success" data-toggle="tooltip" data-placement="right" title="查看"><a href="/WXUser/Home/UserInfo/@i.OpenID" data-toggle="modal" data-target="#EditWXUser" class="glyphicon glyphicon-search"></a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                }*@
                             </tbody>
                         </table>
                     </div>
@@ -179,6 +167,7 @@
         GetMenu();
         $("#Sync").click(function () {
             $.post("/WXMenu/Home/Sync", function (r) {
+                console.info(r);
                 if (r.errcode == 0) {
                     alert("提交成功!");
                 } else {
@@ -191,6 +180,22 @@
                 GetMenu();
             });
         });
+
+        //删除
+        $(document).on("click", ".DeleteMenu", function () {
+            var id = $(this).attr("data-id");
+            if (confirm("确定要删除吗?")) {
+                $.post("/WXMenu/Home/Delete/" + id, function (r) {
+                    if (r) {
+                        GetMenu();
+                    } else {
+                        alert("error");
+                    }
+
+                });
+            }
+        });
+        //删除end
     });
     function GetMenu(){
         $.post("/WXMenu/Home/Select_gzh_id", function (result) {
@@ -206,7 +211,9 @@
                     + "<td>"
                     + "<ul class='list-inline marg operation'>"
                     +   "<li class='Find btn btn-success' data-toggle='tooltip' data-placement='right' title='查看'>"
-                    +       "<a href='#' data-toggle='modal' data-target='#' class='glyphicon glyphicon-search'></a></li>"
+                    + "<a href='#' data-toggle='modal' data-target='#' class='glyphicon glyphicon-search'></a></li>"
+                    + "<li class='Find btn btn-danger DeleteMenu' data-toggle='tooltip' data-placement='right' data-id='" + obj.MenuId + "' title='删除' >"
+                    + "<a href='#' data-toggle='modal' data-target='#' class='glyphicon glyphicon-remove '  ></a></li>"
                     + "</ul></td></tr>";
 
             });

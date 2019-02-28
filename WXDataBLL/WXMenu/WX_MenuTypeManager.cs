@@ -7,7 +7,7 @@ using WXDataModel;
 
 namespace WXDataBLL.WXMenu
 {
-    public class WX_MenuTypeManger : BaseBLL<WX_MenuType>
+    public class WX_MenuTypeManager : BaseBLL<WX_MenuType>
     {
         
     }

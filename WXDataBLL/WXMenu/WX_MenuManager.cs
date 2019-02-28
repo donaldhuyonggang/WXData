@@ -10,7 +10,7 @@ namespace WXDataBLL.WXMenu
     /// <summary>
     /// 微信菜单管理-李政
     /// </summary>
-    public class WX_MenuManger : BaseBLL<WXDataModel.WX_Menu>
+    public class WX_MenuManager : BaseBLL<WXDataModel.WX_Menu>
     {
         /// <summary>
         /// 根据id逻辑删除菜单

@@ -164,6 +164,7 @@
 @section scripts{
     <script>
         $(function () {
+            $("a[PageIndex=@PageList.PageIndex]").parents("li").addClass("active");
             $('[data-toggle="tooltip"]').tooltip();
             $("#Sync").click(function () {
                 $.post("/WXMedia/Home/SyncImage", function (r) {
@@ -172,7 +173,16 @@
                 })
 
             });
+            $(".pagination").delegate("a[PageIndex]","click",function () {
+                location.href = "/WXMedia/Home/Index?index="+$(this).attr("PageIndex");
+            });
 
+            $("#NextPage").on("click",function(){
+                location.href = "/WXMedia/Home/Index?index=@PageList.NextPage";
+            });
+            $("#PrevPage").on("click",function(){
+                location.href = "/WXMedia/Home/Index?index=@PageList.PreviousPage";
+            });
             //GetMedia();
 
         });
@@ -194,7 +204,7 @@
                                "<td>" + obj.UploadTime + "</td>" +
                                "<td>" +
                                    "<ul class=\"list-inline marg operation\">" +
-                                      
+
                                        "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看详情\">" +
                                        "   <a href=\"#\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
                                        "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
