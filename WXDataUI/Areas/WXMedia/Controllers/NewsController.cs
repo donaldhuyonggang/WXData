@@ -43,8 +43,9 @@ namespace WXDataUI.Areas.WXMedia.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
-        public void Sync()
+        public ActionResult Sync()
         {
+            var r = false;
             var json = JObject.Parse(new MediaService(WXAPP.AppId, WXAPP.AppSecret).Get("news"));
             int total_count = Convert.ToInt32(json["total_count"].ToString());
             int item_count = Convert.ToInt32(json["total_count"].ToString());
@@ -81,14 +82,15 @@ namespace WXDataUI.Areas.WXMedia.Controllers
                     if (info != null)
                     {
                         media.MyMediaId = info.MyMediaId;
-                        var r = manager.Update(media);
+                        r = manager.Update(media);
                     }
                     else
                     {
-                        var r = manager.Add(media);
+                        r = manager.Add(media);
                     }
                 }
             }
+            return Json(r, JsonRequestBehavior.AllowGet);
         }
     }
 }

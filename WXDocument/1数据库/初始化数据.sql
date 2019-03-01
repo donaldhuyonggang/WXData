@@ -54,7 +54,7 @@ insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (4,'我的菜单',null,'/WXMenu/Home/Index','模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (5,'公共素材管理',null,'/WXMedia/Home/Index','模块',null)
 insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (5,'图文消息管理',null,'/WXMedia/News/Index','模块',null)
-
+insert into SYS_Function(ParentID,FunctionName,ImageUrl,FunctionUrl,FunctionType,Remark) values (4,'菜单事件管理',null,'/WXMenu/Event/Index','模块',null)
 
 
 --新增功能end

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,5 +49,13 @@ namespace WXDataModel.Extend
         {
             return new WXDataEntities().WX_Media.Where(m => m.MediaId.Equals(news.thumb_media_id) && m.MediaType.Equals("image")).FirstOrDefault().MediaContent;
         }
+
+        public static string GetMediaId(this WX_Media_News news)
+        {
+            var content = JsonConvert.SerializeObject(news).Replace("\\", "");
+            return new WXDataEntities().WX_Media.Where(m => m.MediaContent.Equals(content)).FirstOrDefault().MediaId;
+        }
+
+        
     }
 }

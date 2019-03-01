@@ -38,6 +38,52 @@ namespace WXService.Service
             string respJson = MyHttpUtility.SendPost(url, JsonConvert.SerializeObject(json));
             return respJson;
         }
- 
+
+        /// <summary>
+        /// 发送图片
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public string SendImage(string openId, string mediaId)
+        {
+            string access_token = this.Get_Access_Token();
+            string url = string.Format(CUSTOM_SEND_URL, access_token);
+            var json = new
+            {
+                touser = openId,
+                msgtype = "image",
+                image = new
+                {
+                    media_id = mediaId
+                }
+            };
+            string respJson = MyHttpUtility.SendPost(url, JsonConvert.SerializeObject(json));
+            return respJson;
+        }
+
+
+        /// <summary>
+        /// 发送语音
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public string SendVoice(string openId, string mediaId)
+        {
+            string access_token = this.Get_Access_Token();
+            string url = string.Format(CUSTOM_SEND_URL, access_token);
+            var json = new
+            {
+                touser = openId,
+                msgtype = "voice",
+                voice = new
+                {
+                    media_id = mediaId
+                }
+            };
+            string respJson = MyHttpUtility.SendPost(url, JsonConvert.SerializeObject(json));
+            return respJson;
+        }
     }
 }

@@ -162,6 +162,7 @@
     <Compile Include="Areas\WXCustom\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXCustom\Controllers\QRController.cs" />
     <Compile Include="Areas\WXCustom\WXCustomAreaRegistration.cs" />
+    <Compile Include="Areas\WXMenu\Controllers\EventController.cs" />
     <Compile Include="Areas\WXMedia\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXMedia\Controllers\NewsController.cs" />
     <Compile Include="Areas\WXMedia\WXMediaAreaRegistration.cs" />
@@ -341,6 +342,8 @@
     <Content Include="Areas\WXMedia\Views\Home\AddMedia.cshtml" />
     <Content Include="Areas\WXMedia\Views\News\Index.cshtml" />
     <Content Include="Areas\WXMedia\Views\News\Add.cshtml" />
+    <Content Include="Areas\WXMenu\Views\Event\Index.cshtml" />
+    <Content Include="Areas\WXMenu\Views\Event\Add.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />

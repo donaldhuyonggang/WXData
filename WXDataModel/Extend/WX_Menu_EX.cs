@@ -71,6 +71,10 @@ namespace WXDataModel.Extend
             return new JObject(new JProperty("button", staff));
         }
 
-
+        public static bool IsHasEvent(this WX_Menu menu)
+        {
+            var r = new WXDataEntities().WX_MenuEvent.Where(m => m.MenuKey.Equals(menu.MenuKey)).Count() > 0;
+            return r;
+        }
     }
 }
