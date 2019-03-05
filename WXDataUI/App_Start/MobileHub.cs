@@ -33,8 +33,8 @@ namespace WXDataUI.App_Start
                 CM.MsgType = item.MsgType;
                 CM.XmlContent = item.XmlContent;
                 new WXDataBLL.WXCustom.WX_QueueManager().Delete(item.MsgId);//删除
-                new WXDataBLL.WXCustom.WX_CustomMsgManger().Add(CM); //添加到数据库
-                var info = new WXDataBLL.WXCustom.WX_CustomMsgManger().GetByPK(CM.MsgId);
+                new WXDataBLL.WXCustom.WX_CustomMsgManager().Add(CM); //添加到数据库
+                var info = new WXDataBLL.WXCustom.WX_CustomMsgManager().GetByPK(CM.MsgId);
                 msg.Add(info);//添加到集合
             }
             Clients.User(UserId.ToString()).Send(msg);

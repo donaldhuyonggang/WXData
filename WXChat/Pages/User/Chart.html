@@ -37,23 +37,21 @@
 	<body>
 		<div class="mui-content">
 			<ul class="mui-table-view" id="MyVe">
-				<li v-for="(all,key) in obj" class="mui-table-view-cell mui-media FansLi" v-bind:OpenId="all.Key">
-					<template v-for="value in all">
-						<a href="javascript:;" v-for="(item,index) in value.msgs" v-if="index==0">
-							<div id="ImgBox">
-								<span class="mui-badge bag none"></span>
-								<img class="mui-media-object mui-pull-left" v-bind:src="item.HeadImageUrl">
+				<li v-for="item in obj" class="mui-table-view-cell mui-media FansLi" v-bind:OpenId="item.info.OpenID">
+					<a href="javascript:;" >
+						<div id="ImgBox">
+							<span class="mui-badge bag none"></span>
+							<img class="mui-media-object mui-pull-left" v-bind:src="item.info.HeadImageUrl">
+						</div>
+						<div class="mui-media-body">
+							<div class="mui-row">
+								<div v-if="item.info.UserName !=null" class="mui-col-xs-8 mui-ellipsis">{{item.info.UserName}}</div>
+								<div v-else class="mui-col-xs-8 mui-ellipsis">{{item.info.UserNick}}</div>
+								<p class="mui-col-xs-4 mui-text-right Time">{{item.info.CreateTime}}</p>
 							</div>
-							<div class="mui-media-body">
-								<div class="mui-row">
-									<div v-if="item.UserName !=null" class="mui-col-xs-8 mui-ellipsis">{{item.UserName}}</div>
-									<div v-else class="mui-col-xs-8 mui-ellipsis">{{item.UserNick}}</div>
-									<p class="mui-col-xs-4 mui-text-right Time">{{item.CreateTime}}</p>
-								</div>
-								<p class="mui-ellipsis UsContent">{{item.Content}}</p>
-							</div>
-						</a>
-					</template>
+							<p class="mui-ellipsis UsContent">{{item.info.Content}}</p>
+						</div>
+					</a>
 				</li>
 			</ul>
 		</div>
@@ -76,7 +74,7 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.js"></script>
-		<script type="text/javascript" src="../../js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.10.2.min.js" ></script>
 		<script type="text/javascript" src="../../js/jquery.signalR-2.1.2.min.js"></script>
 		<script type="text/javascript">
 			(function($, doc) {
@@ -113,6 +111,7 @@
 						url: BaseUrl + "/Mobile/SelCustom",
 						data: userinfo,
 						success: function(data) {
+							console.log(JSON.stringify(data));
 							Action(data);
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -139,42 +138,53 @@
 							var li=document.getElementsByClassName("FansLi");
 							var UserMsg=event.detail.info;
 							UserMsg.forEach(function(v){
-								for (var i=0;i<li.length;i++) {
-									if(li[i].getAttribute("OpenId")==v.info.OpenID){
-//										console.log(li[i].getAttribute("OpenId")==v.info.OpenID);
-										console.log(li[i].childNodes[0].lastChild.innerHTML);
-//										li[i].children.getElementsByClassName(".bag")[0].removeClass("none").innerText=v.Count;
-//										li[i].children.getElementsByClassName(".Time")[0].innerText=v.CreateTime;
-//										li[i].children.getElementsByClassName(".UsContent")[0].innerText=v.info.Content;
-									}//IF
-									else{
-										var Name;
-										if(v.UserName){
-											Name=v.info.userName;
-										}else{
-											Name=v.info.UserNick;
-										}
-										var $before=$("<li  class=\"mui-table-view-cell mui-media FansLi\" OpenId=\""+v.info.OpenID+"\">"+
-											"<a href=\"javascript:;\">"+
-												"<div id=\"ImgBox\">"+
-													"<span class=\"mui-badge bag\">"+v.Count+"</span>"+
-													"<img class=\"mui-media-object mui-pull-left\" v-bind:src=\""+v.info.HeadImageUrl+"\">"+
-												"</div>"+
-												"<div class=\"mui-media-body\">"+
-													"<div class=\"mui-row\">"+
-														"<div class=\"mui-col-xs-8 mui-ellipsis\">"+Name+"</div>"+
-														"<p class=\"mui-col-xs-4 mui-text-right\">"+v.info.CreateTime+"</p>"+
-													"</div>"+
-													"<p class=\"mui-ellipsis\">"+v.info.Content+"</p>"+
-												"</div>"+
-											"</a>"+
-										"</li>");
-										$("#MyVe").prepend($before);
-									}//else
-								}//For
+								$("#MyVe").innerHTML="<li>cao</li>";
+								if(li.length<=0){
+//									Apend(v);
+								}else{
+									for(var i=0;i<li.length;i++){
+										if(li[i].getAttribute("OpenId")==v.info.OpenID){
+											li[i].childNodes[0].lastChild.childNodes[0].lastChild.innerText="";
+	//										li[i].children.getElementsByClassName(".bag")[0].removeClass("none").innerText=v.Count;
+	//										li[i].children.getElementsByClassName(".Time")[0].innerText=v.CreateTime;
+	//										li[i].children.getElementsByClassName(".UsContent")[0].innerText=v.info.Content;
+										}//IF
+										else{
+//											Apend(v);
+										}//else
+									}//For
+								}//else
 							})//Foreach1
 						})//PlusUser
 					}//action
+					
+					
+					
+					
+					var Apend=function(ms){
+							var Name;
+							if(ms.UserName){
+								Name=ms.info.userName;
+							}else{
+								Name=ms.info.UserNick;
+							}
+							var $before=$("<li  class=\"mui-table-view-cell mui-media FansLi\" OpenId=\""+ms.info.OpenID+"\">"+
+								"<a href=\"javascript:;\">"+
+									"<div id=\"ImgBox\">"+
+										"<span class=\"mui-badge bag\">"+ms.Count+"</span>"+
+										"<img class=\"mui-media-object mui-pull-left\" v-bind:src=\""+ms.info.HeadImageUrl+"\">"+
+									"</div>"+
+									"<div class=\"mui-media-body\">"+
+										"<div class=\"mui-row\">"+
+											"<div class=\"mui-col-xs-8 mui-ellipsis\">"+Name+"</div>"+
+											"<p class=\"mui-col-xs-4 mui-text-right\">"+ms.info.CreateTime+"</p>"+
+										"</div>"+
+										"<p class=\"mui-ellipsis\">"+ms.info.Content+"</p>"+
+									"</div>"+
+								"</a>"+
+							"</li>");
+							mui("#MyVe").prepend($before);
+					}
 				}); //plusReady
 			}(mui, document));
 		</script>

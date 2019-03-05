@@ -187,7 +187,8 @@
 			"Pages/User/UserInfo.html",
 			"Pages/Tag/AllTag.html",
 			"Pages/Group/UserGroup.html",
-			"Pages/User/NewFriend.html"
+			"Pages/User/NewFriend.html",
+			"Pages/User/Test.html"
 		]
 	},
 	"Pages/User/Chart.html": {
