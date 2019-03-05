@@ -11,16 +11,18 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title mui-text-left">分组</h1>
-		    <button type="button" class="mui-btn  mui-pull-right">新增</button>
+		    <h1 class="mui-title mui-text-left">选择群发</h1>
 		</header>
 		<div class="mui-content">
 		    <ul id="UserGroup"  class="mui-table-view">
 	   	        <template v-for="item in obj">
-	   	        	<li v-if="item.GroupId !=0" class="mui-table-view-cell" v-bind:GroupID="item.GroupId">
-		   	           {{item.GroupName}}({{item.Count}})
+	   	        	<li  v-if="item.Count>0" v-on:click="Tosend"  class="mui-table-view-cell" v-bind:id="item.TagId">
+		   	           {{item.TagName}}({{item.Count}})
 		   	        </li>
 	   	        </template>
+	   	        <li class="mui-table-view-cell" id="Other">
+	   	        	其他好友
+	   	        </li>
 	   	    </ul>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -31,10 +33,11 @@
 				var BaseUrl=plus.storage.getItem("BaseUrl");//获取路径
 				var custom=JSON.parse(plus.storage.getItem("Custom"));//获取登陆对象
 				var info={
-					UserID:custom.UserId,
-				}
+					UserId:custom.UserId,
+					AppId:custom.AppId
+				};
 				mui.ajax({
-					url:BaseUrl+"/Mobile/UserOnGroup",
+					url:BaseUrl+"/Mobile/UserOnTag",
 					data:info,
 					success:function(data){
 						Action(data);
@@ -44,39 +47,58 @@
 							console.log("异常对象errorThrown: "+errorThrown);
 					}
 				});//ajax
-				mui('.mui-content').on('tap','#UserGroup li',function(){
-					var GroupID=this.getAttribute("GroupID");
-					mui.openWindow({
-						id:"SaveGroup",
-						url:"../Group/SaveGroup.html",
-						extras:{
-					      	GroupID:GroupID//自定义扩展参数，可以用来处理页面间传值
-					    },
-					    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
-					    show:{
-					      autoShow:true,//页面loaded事件发生后自动显示，默认为true
-//					      aniShow:slide-in-right,//页面显示动画，默认为”slide-in-right“；
-					      duration:100//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
-					    },
-					    waiting:{
-					      autoShow:true,//自动显示等待框，默认为true
-					      title:'正在加载...'//等待对话框上显示的提示内容
-					    }
-					});
-				});//open
-				
 				setTimeout(function(){
 					var currentView = plus.webview.currentWebview();
 					currentView.show('slide-in-right',200);
 					plus.nativeUI.closeWaiting();
 				},500)//显示页面
 				
+				mui(".mui-content").on("tap","#Other",function(){
+					mui.openWindow({
+					    id:"SaveGroup",
+					    url:"../Group/AddGroup.html",
+					    extras:{
+					      	TagID:event.target.id,//自定义扩展参数，可以用来处理页面间传值
+					    },
+					    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+					    show:{
+					      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+	//					      aniShow:slide-in-right,//页面显示动画，默认为”slide-in-right“；
+					      duration:500//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					    },
+					    waiting:{
+					      autoShow:true,//自动显示等待框，默认为true
+					      title:'正在加载...'//等待对话框上显示的提示内容
+					    }
+					});//刷新
+				}); //tap
 			});//Ready
+			
 			function Action(data){
 				var MyGroup=new Vue({
 					el:"#UserGroup",
 					data:{
 						obj:data
+					},methods:{
+						Tosend:function(event){
+							mui.openWindow({
+							    id:"SaveGroup",
+							    url:"../Group/SaveGroup.html",
+							    extras:{
+							      	TagID:event.target.id,//自定义扩展参数，可以用来处理页面间传值
+							    },
+							    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+							    show:{
+							      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+			//					      aniShow:slide-in-right,//页面显示动画，默认为”slide-in-right“；
+							      duration:500//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+							    },
+							    waiting:{
+							      autoShow:true,//自动显示等待框，默认为true
+							      title:'正在加载...'//等待对话框上显示的提示内容
+							    }
+							});//刷新
+						}
 					}
 				});//vue
 			}

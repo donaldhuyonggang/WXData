@@ -20,19 +20,21 @@
 		</header>
 		<div class="mui-content">
 			<ul class="mui-table-view">
-			    <li class="mui-table-view-cell mui-media">
-			    	<div class="mui-row">
-			    		<img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">
-			            <div class="mui-media-body mui-col-xs-8">
-		                	幸福
-			                <p class="mui-ellipsis">能和心爱的人一起睡觉</p>
-			            </div>
-			            <div class="mui-col-xs-2 receive mui-text-right">
-			            	<button v-if="ses" type="button" class="mui-btn-mini mui-btn-success">接受</button>
-			            	<p v-else="ses">已接受</p>
-			            </div>
-			    	</div>
-			    </li>
+				<template v-for="item in obj">
+					<li class="mui-table-view-cell mui-media">
+				    	<div class="mui-row">
+				    		<img class="mui-media-object mui-pull-left" v-bind:src="item.HeadImageUrl">
+				            <div class="mui-media-body mui-col-xs-8">
+			                	{{item.UserNick}}
+				                <p class="mui-ellipsis">{{item.Province}} {{item.City}}</p>
+				            </div>
+				            <div class="mui-col-xs-2 receive mui-text-right">
+				            	<button  type="button" v-on:click="btnClick" class="mui-btn-mini mui-btn-success" v-bind:id="item.OpenID">接受</button>
+				            </div>
+				    	</div>
+				    </li>
+				</template>
+			    
 			</ul>
 		</div>
 		
@@ -43,14 +45,16 @@
 		<script src="../../js/vue.js"></script>
 		
 		<script type="text/javascript">
-			mui.init()
-			var Receive=new Vue({
-				el:".receive",
-				data:{
-					ses:1==1
-				}
+			mui.init({
+				beforeback:function() {
+			　　　　 //获得父页面的webview
+			        var list = plus.webview.currentWebview().opener();
+			　　　　 //触发父页面的自定义事件(refresh),从而进行刷新
+			        mui.fire(list, 'refresh');
+			        //返回true,继续页面关闭逻辑
+			        return true;
+			    }
 			});
-			
 			mui.plusReady(function(){
 				var BaseUrl=plus.storage.getItem("BaseUrl");
 				var custom=JSON.parse(plus.storage.getItem("Custom"));//接收登陆对象
@@ -68,27 +72,38 @@
 						console.log("异常对象errorThrown: " + errorThrown);
 					}
 				});//ajax
-			});
+			});//plusReady
 			function Action(data){
-				Vue NewList=new Vue({
-					el:"",
+				var custom=JSON.parse(plus.storage.getItem("Custom"));//接收登陆对象
+				var Friends=new Vue({
+					el:".mui-content",
 					data:{
 						obj:data
+					},methods:{
+						btnClick:function(event){
+							var OpenID= event.target.getAttribute("id");
+							var li=event.target.parentNode.parentNode.parentNode;
+							var info={
+								OpenId:OpenID,
+								UserId:custom.UserId
+							}//数据
+							mui.ajax({
+								url:plus.storage.getItem("BaseUrl")+"/Mobile/UpNewF",
+								data:info,
+								success:function(data){
+									if(data){
+										li.parentNode.removeChild(li);
+									}
+								},error:function(XMLHttpRequest,textStatus,errorThrown){
+										console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+										console.log("错误类型textStatus: "+textStatus);
+										console.log("异常对象errorThrown: "+errorThrown);
+								}
+							}); // ajax
+						}
 					}
 				});
-			}
-//			mui.ready(function(){
-//				var connection=$.hubConnection("http://litianle.ngrok.xiaomiqiu.cn/signalr",{useDefaultPath:false}); //创建连接
-//				var chat=connection.createHubProxy("MobileHub");
-//				connection.start().done(function(){
-//					console.log("Start");
-//				}).fail(function(error){
-//					console.log(error);
-//				});	
-//				chat.on("hello",function(msg){
-//					console.log("msg:"+JSON.stringify(msg))
-//				});
-//			});//plusready
+			}//Action
 		</script>
 	</body>
 

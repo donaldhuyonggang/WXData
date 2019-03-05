@@ -20,6 +20,7 @@ namespace WXDataUI.App_Start
     public class AutoService
     {
         WX_EventQueueManager eventQueueBLL = new WX_EventQueueManager();
+        WX_QueueManager QueueBLL = new WX_QueueManager();
         WX_AppManager appBLL = new WX_AppManager();
         WX_UserManager userBLL = new WX_UserManager();
         SYS_UserManager sys_UserBLL = new SYS_UserManager();
@@ -35,6 +36,7 @@ namespace WXDataUI.App_Start
             while (true)
             {
                 var list = eventQueueBLL.Where(x => x.MsgState == 1);
+               
                 foreach (var item in list)
                 {
                     switch (item.Event)
@@ -54,9 +56,36 @@ namespace WXDataUI.App_Start
                     item.MsgState = 2;
                     eventQueueBLL.Update(item);//把事件改为已处理
                 }
+                List<WX_Queue> Queue = QueueBLL.GetAll().OrderByDescending(s=>s.CreateTime).ToList();
+                if (Queue!=null)
+                {
+                    SelCustom(Queue);
+                }
             }
         }
+        public void SelCustom(List<WX_Queue> Queue)
+        {
+            var Result = Queue.GroupBy(s => s.OpenID).Select(s => new
+            {
+                Count = s.Count(),
+                info = s.Select(x => new
+                {
+                    x.OpenID,
+                    x.WX_User.HeadImageUrl,
+                    x.WX_User.UserId,
+                    x.WX_User.UserNick,
+                    x.WX_User.UserName,
+                    CreateTime = DateTimeUtility.DATE(Convert.ToDateTime(x.CreateTime)),
+                    Content = XmlUtility.GetSingleNodeInnerText(x.XmlContent, "/xml/Content")
+                }).FirstOrDefault()
+            });
+            foreach (var item in Result)
+            {
+                var context = GlobalHost.ConnectionManager.GetHubContext<MobileHub>();
+                context.Clients.User(item.info.UserId.ToString()).PlusUse(Result);
 
+            }
+        }
         public void Scan(WX_EventQueue info)
         {
             string eventKey=XmlUtility.GetSingleNodeInnerText(info.XmlContent, "/xml/EventKey");
@@ -98,7 +127,6 @@ namespace WXDataUI.App_Start
             if (app != null) { 
                 CustomService customSvr = new CustomService(app.AppId,app.AppSecret);
                 customSvr.SendText(info.OpenID, "欢迎您关注公众号");
-
                 GetUserInfo(info.OpenID, app.AppId, app.AppSecret);
             }
         }

@@ -12,6 +12,8 @@ using System.Collections;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WXService.Service;
+using WXDataBLL.WXCustom;
+
 
 namespace WXDataUI.Areas.Base.Controllers
 {
@@ -25,7 +27,7 @@ namespace WXDataUI.Areas.Base.Controllers
         {
             return View();
         }
-       
+
         /// <summary>
         /// 登陆
         /// </summary>
@@ -57,7 +59,7 @@ namespace WXDataUI.Areas.Base.Controllers
         /// <returns></returns>
         public ActionResult GetAllUserInfo(int UserID)
         {
-            List<WX_User> UserInfo = new WX_UserManager().Where(s => s.UserId == UserID).ToList(); //获取所有该客服下的用户
+            List<WX_User> UserInfo = new WX_UserManager().Where(s => s.UserId == UserID&&s.UserState!="退订").ToList(); //获取所有该客服下的用户
             List<GetCharSpellCode> UserCode = new List<GetCharSpellCode>(); //存储所有用户以及首字母
             Dictionary<string, List<GetCharSpellCode>> Dic = new Dictionary<string, List<GetCharSpellCode>>(); //将用户以键值对的方式存储
             foreach (WX_User item in UserInfo)
@@ -144,9 +146,10 @@ namespace WXDataUI.Areas.Base.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public ActionResult UpUserIDL(WX_User user) {
+        public ActionResult UpUserIDL(WX_User user)
+        {
             var info = new WX_UserManager().NewUpdate(user);
-            return Json(info,JsonRequestBehavior.AllowGet);
+            return Json(info, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -154,9 +157,9 @@ namespace WXDataUI.Areas.Base.Controllers
         /// </summary>
         /// <param name="UserId">客服编号</param>
         /// <returns></returns>
-        public ActionResult UserOnTag(int UserId,string AppId)
-            {
-            var info = new WX_UserTagManager().Where(s => s.WX_User.Where(x => x.UserId == UserId) != null && s.AppId==AppId).Select(s => new
+        public ActionResult UserOnTag(int UserId, string AppId)
+        {
+            var info = new WX_UserTagManager().Where(s => s.WX_User.Where(x => x.UserId == UserId) != null && s.AppId == AppId).Select(s => new
             {
                 //UserStr= JsonConvert.SerializeObject(s.WX_User.Select(x => new
                 //{
@@ -172,14 +175,14 @@ namespace WXDataUI.Areas.Base.Controllers
             return Json(info, JsonRequestBehavior.AllowGet);
         }
 
-        
+
         /// <summary>
         /// 根据标签编号和客服编号查询所有用户
         /// </summary>
         /// <param name="UserId"></param>
         /// <param name="TagId"></param>
         /// <returns></returns>
-        public ActionResult TagInfo(int UserId, int TagId,string AppID)
+        public ActionResult TagInfo(int UserId, int TagId, string AppID)
         {
             var info = new WX_UserTagManager().Where(x => x.TagId == TagId && x.WX_User.Where(s => s.UserId == UserId) != null && x.AppId == AppID).Select(s => new
             {
@@ -202,9 +205,10 @@ namespace WXDataUI.Areas.Base.Controllers
         /// 从数据库查找标签是否存在
         /// </summary>
         /// <returns></returns>
-        public ActionResult FindTag(string TagName,string AppId) {
+        public ActionResult FindTag(string TagName, string AppId)
+        {
             var info = new WX_UserTagManager().Where(x => x.TagName == TagName && x.AppId == AppId).Count() > 0;
-            return Json(info,JsonRequestBehavior.AllowGet);
+            return Json(info, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -235,7 +239,7 @@ namespace WXDataUI.Areas.Base.Controllers
         /// <param name="appId"></param>
         /// <param name="tagName"></param>
         /// <returns></returns>
-        public ActionResult AddTagAndUse(string AppId, string tagName,string OpenId)
+        public ActionResult AddTagAndUse(string AppId, string tagName, string OpenId)
         {
             WX_App app = new WX_AppManager().GetByPK(AppId);
             TagService ser = new TagService(app.AppId, app.AppSecret);
@@ -280,7 +284,7 @@ namespace WXDataUI.Areas.Base.Controllers
         /// 删除该标签下的用户
         /// </summary>
         /// <returns></returns>
-        public ActionResult RemoveTag(string OpenID, int tagId,string AppId)
+        public ActionResult RemoveTag(string OpenID, int tagId, string AppId)
         {
             var Ap = new WX_AppManager().GetByPK(AppId);
             JObject jo = JObject.Parse(new UserService(Ap.AppId, Ap.AppSecret).RemoveTag(OpenID, tagId));
@@ -303,7 +307,7 @@ namespace WXDataUI.Areas.Base.Controllers
         /// <param name="openId"></param>
         /// <param name="tagid"></param>
         /// <returns></returns>
-        public ActionResult AddTag(string OpenId, string AppId,int tagid=0)
+        public ActionResult AddTag(string OpenId, string AppId, int tagid = 0)
         {
             List<string> openIdList = JsonConvert.DeserializeObject<List<string>>(OpenId);
 
@@ -340,7 +344,7 @@ namespace WXDataUI.Areas.Base.Controllers
                 errcode = jo["errcode"],
                 errmsg = jo["errmsg"]
             };
-            GetTagList(Ap.AppId,Ap.AppSecret);
+            GetTagList(Ap.AppId, Ap.AppSecret);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -348,7 +352,7 @@ namespace WXDataUI.Areas.Base.Controllers
         /// 从服务器更新标签集合
         /// </summary>
         /// <returns></returns>
-        public List<WX_UserTag> GetTagList(string AppID,string Secret)
+        public List<WX_UserTag> GetTagList(string AppID, string Secret)
         {
             WX_UserTagManager manager = new WX_UserTagManager();
             TagService ser = new TagService(AppID, Secret);
@@ -435,16 +439,17 @@ namespace WXDataUI.Areas.Base.Controllers
         /// 查询未分配客服的用户
         /// </summary>
         /// <returns></returns>
-        public ActionResult NewF(string AppId) {
+        public ActionResult NewF(string AppId)
+        {
             var info = new WX_UserManager().Where(s => s.AppId == AppId && s.UserId == null).Select(x => new
             {
                 x.UserNick,
                 x.OpenID,
                 x.HeadImageUrl,
                 x.City,
-                x.Country
+                x.Province
             });
-            return Json(info,JsonRequestBehavior.AllowGet);
+            return Json(info, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -453,9 +458,129 @@ namespace WXDataUI.Areas.Base.Controllers
         /// <param name="OpenId"></param>
         /// <param name="UserId"></param>
         /// <returns></returns>
-        public ActionResult UpNewF(string OpenId,int UserId) {
-            var info = new WX_UserManager().UpUserId(OpenId,UserId);
-            return Json(info,JsonRequestBehavior.AllowGet);
+        public ActionResult UpNewF(string OpenId, int UserId)
+        {
+            var info = new WX_UserManager().UpUserId(OpenId, UserId);
+            return Json(info, JsonRequestBehavior.AllowGet);
+        }
+        
+        /// <summary>
+        /// 聊天队列
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <param name="AppId"></param>
+        /// <returns></returns>
+        public ActionResult SelCustom(int UserId, string AppId)
+        {
+            var dic = new Dictionary<string,dynamic>();
+            var userList = new WX_CustomMsgManger().Where(x => x.UserId == UserId && x.AppId == AppId).OrderByDescending(s=>s.CreateTime);
+            foreach (var item in userList)
+            {
+                if (!dic.ContainsKey(item.OpenID))
+                {
+                    var msgs = new List<object>();
+                    msgs.Add(new
+                    {
+                        item.OpenID,
+                        item.WX_User.HeadImageUrl,
+                        item.Content,
+                        item.WX_User.UserName,
+                        item.WX_User.UserNick,
+                        CreateTime = DateTimeUtility.DATE(Convert.ToDateTime(item.CreateTime))
+                        
+                    });
+                    dic.Add(item.OpenID, new { msgs });
+                }else
+                {
+                    var msg = dic[item.OpenID];
+                    msg.msgs.Add(new
+                    {
+                        item.OpenID,
+                        item.WX_User.HeadImageUrl,
+                        item.Content,
+                        item.WX_User.UserName,
+                        item.WX_User.UserNick,
+                        CreateTime = DateTimeUtility.DATE(Convert.ToDateTime(item.CreateTime))
+                    });
+                }
+            }
+            var result = dic.ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        /// <summary>
+        /// 删除queue表的数据添加到Custom
+        /// </summary>
+        /// <param name="MsgId"></param>
+        /// <param name="UserId"></param>
+        /// <param name="AppId"></param>
+        /// <returns></returns>
+        //public ActionResult FansMsg(string MsgId, int UserId, string AppId)
+        //{
+        //    var Que = new WX_QueueManager().GetByPK(MsgId);
+        //    WX_CustomMsg CM = new WX_CustomMsg();
+        //    CM.MsgId = Que.MsgId;
+        //    CM.OpenID = Que.OpenID;
+        //    CM.UserId = UserId;
+        //    CM.AppId = AppId;
+        //    CM.CreateTime = Que.CreateTime;
+        //    CM.Content = XmlUtility.GetSingleNodeInnerText(Que.XmlContent, "/xml/Content");
+        //    CM.MsgSource = "粉丝";
+        //    CM.MsgType = Que.MsgType;
+        //    CM.XmlContent = Que.XmlContent;
+        //    var del = new WX_QueueManager().Delete(Que.MsgId);//删除
+        //    new WX_CustomMsgManger().Add(CM); //添加到数据库
+        //    return Json(del, JsonRequestBehavior.AllowGet);
+        //}
+
+        
+        public ActionResult FansMsg(int UserId, string AppId,string OpenID)
+        {
+            List<WX_Queue> list = new WX_QueueManager().Where(s => s.MsgState == 1 && s.OpenID.Equals(OpenID));
+            var msg = new List<object>();
+            foreach (WX_Queue item in list)
+            {
+                WX_CustomMsg CM = new WX_CustomMsg();
+                CM.MsgId = item.MsgId;
+                CM.OpenID = item.OpenID;
+                CM.UserId = UserId;
+                CM.AppId = AppId;
+                CM.CreateTime = item.CreateTime;
+                CM.Content = XmlUtility.GetSingleNodeInnerText(item.XmlContent, "/xml/Content");
+                CM.MsgSource = "粉丝";
+                CM.MsgType = item.MsgType;
+                CM.XmlContent = item.XmlContent;
+                new WX_QueueManager().Delete(item.MsgId);//删除
+                new WX_CustomMsgManger().Add(CM); //添加到数据库
+                var info = new WX_CustomMsgManger().Where(s=>s.MsgId==CM.MsgId).Select(s=>new {
+                    content=s.Content,
+                    s.WX_User.HeadImageUrl,
+                    s.MsgType
+                });
+                msg.Add(info);//添加到集合
+            }
+            return Json(msg,JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 发送消息给用户
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public ActionResult TaleToUser(WX_CustomMsg msg)
+        {
+            msg.MsgId = Guid.NewGuid().ToString();
+            msg.CreateTime = DateTime.Now;
+            msg.MsgSource = "客服";
+            var Ap = new WX_AppManager().GetByPK(msg.AppId);
+
+            //发送到微信
+            CustomService customSvr = new CustomService(Ap.AppId, Ap.AppSecret);
+            customSvr.SendText(msg.OpenID, msg.Content);
+            bool IsTrue = new WX_CustomMsgManger().Add(msg);
+            return Json(IsTrue, JsonRequestBehavior.AllowGet);
         }
     }
 }
