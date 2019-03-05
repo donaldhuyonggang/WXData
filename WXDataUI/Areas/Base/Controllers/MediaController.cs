@@ -13,6 +13,8 @@ namespace WXDataUI.Areas.Base.Controllers
     /// <summary>
     /// 素材管理控制器
     /// </summary>
+    /// 
+    [LoginFilter(Message = "素材管理")]
     [RightFilter(Message = "素材管理")]
     public class MediaController : Controller
     {

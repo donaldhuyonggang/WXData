@@ -7,11 +7,13 @@ using WXDataBLL;
 using WXDataBLL.Base;
 using WXDataModel;
 using WXDataModel.Extend;
+using WXDataUI.Filter;
 using WXDataUI.Models;
 using WXService.Service;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
+    
     public class HomeController : Controller
     {
         public HomeController()
@@ -19,9 +21,13 @@ namespace WXDataUI.Areas.Base.Controllers
 
         }
         // GET: Base/Home
+        [LoginFilter(Message = "Action")]
         public ActionResult Index()
         {
-            return View();
+            if (Session["SYSUSER"] != null)
+                return View();
+            else
+                return Redirect("Login");
         }
 
         
