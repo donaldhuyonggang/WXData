@@ -40,5 +40,11 @@ namespace WXDataUI.Areas.WXMenu.Controllers
             var r = new WX_MenuEventManager().Add(me);
             return Json(r, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Delete(string key)
+        {
+            var r = new WX_MenuEventManager().Delete(new object[]{ WXAPP.AppId, key });
+            return Json(r, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -78,8 +78,8 @@
                                         <td>
                                             <ul class="list-inline marg operation">
                                                 
-                                                <li class="Dele btn btn-danger" data-toggle="tooltip" data-placement="right" title="删除">
-                                                    <a href="#" class="glyphicon glyphicon-remove deleteById"></a>
+                                                <li class="Dele btn btn-danger deleteByKey" key="@i.MenuKey"  data-toggle="tooltip" data-placement="right" title="删除">
+                                                    <a href="#" class="glyphicon glyphicon-remove"></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -102,4 +102,13 @@
         </div>
     </div>
 </div>
-<script></script>
+<script>
+    $(function () {
+        $(".deleteByKey").click(function () {
+            var key = $(this).attr("key");
+            $.post("/WXMenu/Event/Delete", "key=" + key, function () {
+                location.reload();
+            });
+        });
+    });
+</script>

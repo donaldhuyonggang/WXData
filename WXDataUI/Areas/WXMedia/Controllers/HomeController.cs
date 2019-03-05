@@ -30,7 +30,13 @@ namespace WXDataUI.Areas.WXMedia.Controllers
             return View();
         }
 
-        [HttpGet]
+        public ActionResult GetPage(int index = 1, int size = 3)
+        {
+            var PageList = new PageList<WX_Media>(new WX_MediaManager().Where(m => m.AppId.Equals(WXAPP.AppId) && (!m.MediaType.Equals("news"))), index, size);
+            return Json(PageList,JsonRequestBehavior.AllowGet);
+        }
+
+       [HttpGet]
         public ActionResult AddMedia()
         {
             return PartialView();
@@ -53,22 +59,28 @@ namespace WXDataUI.Areas.WXMedia.Controllers
             }
             else
             {
-                //文件大小不为0
                 HttpPostedFileBase files = Request.Files[0];
-                string url = Server.MapPath("/Upload/") + files.FileName;
+                string fileName = (!string.IsNullOrEmpty(form["FileName"])) ? form["FileName"]: files.FileName;
+                string format = files.FileName.Substring(files.FileName.LastIndexOf('.'));
+                if(fileName.IndexOf(format) == -1)
+                {
+                    fileName += format;
+                }
+                //文件大小不为0
+                string url = Server.MapPath("/Upload/") + fileName;
                 files.SaveAs(url);
                 MediaService ser = new MediaService(WXAPP.AppId,WXAPP.AppSecret);
-                JObject jo = ser.PostImage(files.FileName); //返回一个mediaid和url
+                JObject jo = ser.PostImage(fileName); //返回一个mediaid和url
                 if (jo != null)//新增成功
                 {
                     var r = new WX_MediaManager().Add(new WX_Media()
                     {
                         AppId = WXAPP.AppId,
                         MediaId = jo["media_id"].ToString(),
-                        MediaName = files.FileName,
+                        MediaName = fileName,
                         MediaType = "image",
                         MediaContent = jo["url"].ToString(),
-                        UploadTime = DateTime.Now
+                        UploadTime = DateTime.Now,
                     });
                     
                 }
@@ -103,7 +115,7 @@ namespace WXDataUI.Areas.WXMedia.Controllers
                         MediaContent = i["url"].ToString(),
                         //UploadTime = DateTime_EX.GetDateTime(Convert.ToInt32(i["update_Time"].ToString()))
                     };
-                    var info = manager.Where(m => m.AppId.Equals(media.AppId) && m.MediaId.Equals(media.MediaId)).FirstOrDefault();
+                    var info = manager.GetByMediaId(media.MediaId, media.AppId);
                     if(info != null)
                     {
                         media.MyMediaId = info.MyMediaId;
@@ -115,6 +127,20 @@ namespace WXDataUI.Areas.WXMedia.Controllers
                 }
             }
             return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Delete(string mediaid)
+        {
+            WX_MediaManager manager = new WX_MediaManager();
+            var json = JObject.Parse(new MediaService(WXAPP.AppId, WXAPP.AppSecret).Delete(mediaid));
+            if (json["errcode"].ToString().Equals("0"))
+            {
+                var info = manager.GetByMediaId(mediaid, WXAPP.AppId);
+                var r = manager.Delete(info.MyMediaId);
+                return Json(r, JsonRequestBehavior.AllowGet);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+            
         }
 
 

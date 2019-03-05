@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <label class="col-sm-3">封面预览:</label>
                     <div class="col-sm-9">
-                        <img src="#" alt="" id="thumb" />
+                        <img src="#" alt="" id="thumb" style="max-width:120px" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -82,6 +82,8 @@
         $("#Upload").click(function () {
             $.post("/WXMedia/News/Add", $("#form").serialize(), function (r) {
                 console.info(r);
+                $("#AddNews").modal('hide');
+                Sync();
             });
         });
     });

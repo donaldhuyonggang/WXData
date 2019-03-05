@@ -46,5 +46,9 @@ namespace WXDataBLL
         {
             return dal.Delete(pk);
         }
+        public virtual bool Delete(object[] pkList)
+        {
+            return dal.Delete(pkList);
+        }
     }
 }

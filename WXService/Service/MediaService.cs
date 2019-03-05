@@ -16,6 +16,7 @@ namespace WXService.Service
         private const string MEDIA_ADD_NEWS = "https://api.weixin.qq.com/cgi-bin/material/add_news?access_token={0}";
         private const string MEDIA_ADD_MATERIAL = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token={0}&type={1}";
         private const string MEDIA_GET = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token={0}";
+        private const string MEDIA_DELETE_MATERIAL = "https://api.weixin.qq.com/cgi-bin/material/del_material?access_token={0}";
 
         private const string MEDIA_UPLOAD_TEMP = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token={0}&type={1}";
         private string FileName { get; set; }
@@ -143,6 +144,16 @@ namespace WXService.Service
                 type = type,
                 offset = offset,
                 count = count,
+            };
+            string respJson = MyHttpUtility.SendPost(url, JsonConvert.SerializeObject(json));
+            return respJson;
+        }
+        public string Delete(string mediaId)
+        {
+            string url = string.Format(MEDIA_DELETE_MATERIAL, this.Get_Access_Token());
+            var json = new
+            {
+                media_id = mediaId
             };
             string respJson = MyHttpUtility.SendPost(url, JsonConvert.SerializeObject(json));
             return respJson;
