@@ -34,7 +34,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title mui-text-right" ><strong class="mui-icon mui-icon-more"></strong></h1>
+		    <!--<h1 class="mui-title mui-text-right" ><strong class="mui-icon mui-icon-more"></strong></h1>-->
 		</header>
 		<div class="mui-content">
 			<div id="User">
@@ -77,12 +77,12 @@
 						</div>
 		            </li>
 		        </ul>
+		         <ul id="toChat" class="mui-table-view" style="margin-top: 20px; color: skyblue;">
+	                <li class="mui-table-view-cell mui-text-center">
+	                   	<a><span class="mui-icon mui-icon-chatbubble"></span>发消息</a>
+	                </li>
+	         	</ul>
 			</div>
-	        <ul id="toChat" class="mui-table-view" style="margin-top: 20px; color: skyblue;">
-                <li class="mui-table-view-cell mui-text-center">
-                   	<a><span class="mui-icon mui-icon-chatbubble"></span>发消息</a>
-                </li>
-         	</ul>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.js"></script>
@@ -108,7 +108,7 @@
 				});//ajax
 				mui('.mui-content').on('tap','#Tag_Click',function(){
 					mui.openWindow({
-					    id:"Remarks",
+					    id:"Remarks.html",
 					    url:"../User/Remarks.html",
 					    extras:{
 					      	OpenID:OpenID//自定义扩展参数，可以用来处理页面间传值
@@ -126,6 +126,10 @@
 					});//新开窗体
 					
 				}); //TagClick
+				
+				mui('.mui-content').on('tap','#toChat',function(){
+					mui.toast("111");
+				});//发送消息
 				
 				window.addEventListener('refresh', function(e){//执行刷新
 				    location.reload();

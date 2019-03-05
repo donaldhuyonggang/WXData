@@ -42,44 +42,27 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title mui-text-left">保存分组</h1>
-		    <button type="button" class="mui-btn mui-btn-green mui-pull-right">保存</button>
+		    <h1 class="mui-title mui-text-left">用户预览</h1>
 		</header>
 		<div class="mui-content" id="HeaderImage">
 			<div v-for="item in obj" id="Content">
-				<form class="mui-input-group" style="margin: 20px 0;">
-					<div v-for="tag in obj" class="mui-input-row">
-						<label>组名</label>
-						<input type="text" class="mui-input-clear" placeholder="输入名字" v-bind:value="tag.GroupName">
-					</div>
-				</form>
 				<ul v-for="item in obj" class="mui-list-inline" id="GrooupBox">
 					<template  v-for="object in item.User">
 						<li class="mui-text-center OpenUserInfo">
 							<ul  class="mui-list-unstyled" v-bind:OpenID="object.OpenID">
 								<li class="Head_Img">
-									<img src="../../Images/Icon/minus-circle-fill.png" class="icon" style="width: 25px;"/>
 									<img V-bind:src="object.HeadImageUrl" />
 								</li>
-								<li style="max-width: 50px;" class="mui-ellipsis"><p v-if="object.UserName !=null">{{object.UserName}}</p><p v-else="object.UserNick !=null">{{object.UserNick}}</p></li>
+								<li style="max-width: 50px;" class="mui-ellipsis">
+									<p v-if="object.UserName !=null">{{object.UserName}}</p>
+									<p v-else="object.UserNick !=null">{{object.UserNick}}</p>
+								</li>
 							</ul>
 						</li>
 					</template>
-					<li class="mui-ellipsis">
-						<ul class="mui-list-unstyled">
-							<li id="add"><img src="../../Images/Icon/add.png" style="border: 1px solid #CCCCCC;"/></li>
-							<li> <p>&nbsp;</p></li>
-						</ul>
-					</li>
-					<li class="mui-ellipsis" >
-						<ul class="mui-list-unstyled">
-							<li><img src="../../Images/Icon/jian.png" onclick="LoseTag(this)" style="border: 1px solid #CCCCCC;"/></li>
-							<li> <p>&nbsp;</p></li>
-						</ul>
-					</li>
 				</ul>
 				<div class="mui-content-padded">
-					<button type="button" class="mui-btn mui-btn-danger mui-btn-block">删除该分组</button>
+					<button type="button" class="mui-btn mui-btn-green mui-btn-block">确认用户</button>
 				</div>
 			</div>
 		</div>
@@ -90,21 +73,19 @@
 			mui.init();
 			mui.plusReady(function(){
 				var self = plus.webview.currentWebview();
-				var GroupId = self.GroupID; //接收
 				var BaseUrl=plus.storage.getItem("BaseUrl");
 				var custom=JSON.parse(plus.storage.getItem("Custom"));//获取登陆对象
 				var info={
-					UserID:custom.UserId,
-					GroupID:GroupId
+					UserId:custom.UserId,
+					AppID:custom.AppId,
+					TagId:self.TagID
 				};
-				mui('.mui-content').on('tap','li',function(){
-					mui.toast('11')	
-				});
 				mui.ajax({
-					url:BaseUrl+"/Mobile/GroupInfo",
+					url:BaseUrl+"/Mobile/TagInfo",
 					data:info,
 					success:function(data){
 						Action(data);
+						console.log(JSON.stringify(data));
 					},error:function(XMLHttpRequest,textStatus,errorThrown){
 							console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
 							console.log("错误类型textStatus: "+textStatus);
@@ -112,6 +93,7 @@
 					}
 				});//ajax
 			});//Ready
+			
 			function Action(data){
 				var UserGroup=new Vue({
 					el:"#HeaderImage",
@@ -120,16 +102,6 @@
 					}
 				});
 			}//Action
-			function LoseTag(obj){
-				$(obj).parent().parent().parent().remove();
-				$(".icon").addClass("dis");
-				$(".Head_Img").attr("onclick","RemoveHad(this);");
-			}
-			function RemoveHad(obj){
-				//删除标签
-				var OpenID=$(obj).parent().attr("OpenID");
-				$(obj).parent().parent().remove();
-			}
 		</script>
 	</body>
 	

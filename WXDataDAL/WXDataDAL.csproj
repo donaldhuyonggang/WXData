@@ -49,6 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SYS\SYS_RoleService.cs" />
     <Compile Include="WXMenu\WXMenuService.cs" />
+    <Compile Include="WX\WX_CustomMsgService.cs" />
     <Compile Include="WX\WX_UserTagService.cs" />
     <Compile Include="WX\WX_UserService.cs" />
   </ItemGroup>

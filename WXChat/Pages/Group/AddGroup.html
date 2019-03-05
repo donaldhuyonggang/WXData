@@ -47,11 +47,6 @@
 		</header>
 		<div class="mui-content">
 			<div id='list' class="mui-indexed-list">
-				<template v-if="IsShow">
-					<div class="mui-indexed-list-search mui-input-row" >
-						<input type="search" id="search" v-on:input="ISMail" class="mui-input-clear" placeholder="输入名称">
-					</div>
-				</template>
 				<div class="mui-indexed-list-bar">
 					<a>A</a>
 					<a>B</a>
@@ -136,7 +131,6 @@
 					el:"#list",
 					data:{
 						obj:data,
-						IsShow:self.IsAdd==1
 					},methods:{
 						ISMail:function(event){
 							for (var i=0;i<check.length;i++) {

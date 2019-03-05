@@ -401,7 +401,8 @@
 			"Pages/login.html": {
 				"resources": [
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"Pages/index.html"
@@ -432,9 +433,13 @@
 				"resources": [
 					"js/vue.js",
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/jquery.signalR-2.1.2.min.js",
+					"js/jquery-1.10.2.min.js"
 				],
-				"refer": [],
+				"refer": [
+					"Pages/User/im-Chart.html"
+				],
 				"priority": 0
 			},
 			"Pages/User/MyInfo.html": {
@@ -454,12 +459,15 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"js/jquery.signalR-2.1.2.min.js",
-					"js/jquery-1.10.2.min.js"
+					"js/jquery-1.10.2.min.js",
+					"Pages/User/Test.html",
+					"Pages/User/MailList.html"
 				],
 				"refer": [
-					"Pages/User/MailList.html",
 					"Pages/User/MyInfo.html",
-					"Pages/User/SaoSao.html"
+					"Pages/User/SaoSao.html",
+					"Pages/User/Source.html",
+					"Pages/User/im-Chart.html"
 				],
 				"priority": 0
 			},
@@ -515,7 +523,8 @@
 					"css/mui.min.css"
 				],
 				"refer": [
-					"Pages/Group/SaveGroup.html"
+					"Pages/Group/SaveGroup.html",
+					"Pages/Group/AddGroup.html"
 				],
 				"priority": 0
 			},
@@ -588,6 +597,47 @@
 					"css/mui.min.css",
 					"js/jquery.signalR-2.1.2.min.js",
 					"js/jquery-1.10.2.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"Pages/User/im-Chart.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"js/mui.imageViewer.js",
+					"css/app.css",
+					"css/mui.imageviewer.css",
+					"js/arttmpl.js",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"js/vue.js",
+					"css/IM-Chat.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"Pages/User/SaoSao.html": {
+				"resources": [
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"Pages/User/Source.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/app.css",
+					"css/mui.min.css",
+					"Images/f809cce4074f5c51f5483aed4b6b5406.jpg"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"Pages/User/Test.html": {
+				"resources": [
+					"js/vue.js",
+					"js/mui.min.js",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0

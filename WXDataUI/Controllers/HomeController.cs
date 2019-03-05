@@ -75,5 +75,9 @@ namespace WXDataUI.Controllers
 
             return Redirect(url);
         }
+
+        public ActionResult Test() {
+            return View();
+        }
     }
 }

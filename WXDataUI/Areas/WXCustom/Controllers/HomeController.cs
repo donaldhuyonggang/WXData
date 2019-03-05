@@ -169,7 +169,6 @@ namespace WXDataUI.Areas.WXCustom.Controllers
                 CM.MsgSource = "粉丝";
                 CM.MsgType = item.MsgType;
                 CM.XmlContent = item.XmlContent;
-
                 new WXDataBLL.WXCustom.WX_QueueManager().Delete(item.MsgId);//删除
                 new WXDataBLL.WXCustom.WX_CustomMsgManger().Add(CM); //添加到数据库
                 var info = new WXDataBLL.WXCustom.WX_CustomMsgManger().GetByPK(CM.MsgId);
