@@ -14,6 +14,7 @@ namespace WXDataModel
     
     public partial class WX_CustomMsg
     {
+        public int Id { get; set; }
         public string MsgId { get; set; }
         public string OpenID { get; set; }
         public Nullable<int> UserId { get; set; }

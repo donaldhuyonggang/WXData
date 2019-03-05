@@ -10,19 +10,11 @@ namespace WXDataModel.Extend
 {
     public static class WX_Menu_EX
     {
-        public static JObject GetJson(this WX_Menu menu, JArray info)
+        private static JObject GetJson(this WX_Menu menu, JArray info)
         {
             JObject staff = new JObject();
-            //string s = "";
             if(menu.WX_Menu1.Count() > 0)   //返回子菜单合集
             {
-                //var data = new
-                //{
-                //    name = menu.MenuName,
-                //    sub_button =  GetJson(menu.WX_Menu1.ToList())
-                //};
-                //s = JsonConvert.SerializeObject(data);
-                //var temp = GetJson(menu.WX_Menu1.ToList());
                 JArray sub_button = new JArray();
                 foreach (var i in menu.WX_Menu1)
                 {
@@ -48,26 +40,12 @@ namespace WXDataModel.Extend
             {
                 if(menu.TypeId == 1)
                 {
-                    //var data = new
-                    //{
-                    //    type = menu.WX_MenuType.TypeName,
-                    //    name = menu.MenuName,
-                    //    key = menu.MenuKey
-                    //};
-                    //s = JsonConvert.SerializeObject(data);
                     staff.Add(new JProperty("type", menu.WX_MenuType.TypeName));
                     staff.Add(new JProperty("name", menu.MenuName));
                     staff.Add(new JProperty("key", menu.MenuKey));
                 }
                 else
                 {
-                    //var data = new
-                    //{
-                    //    type = menu.WX_MenuType.TypeName,
-                    //    name = menu.MenuName,
-                    //    url = menu.MenuUrl
-                    //};
-                    //s = JsonConvert.SerializeObject(data);
                     staff.Add(new JProperty("type", menu.WX_MenuType.TypeName));
                     staff.Add(new JProperty("name", menu.MenuName));
                     staff.Add(new JProperty("url", menu.MenuUrl));
@@ -93,6 +71,10 @@ namespace WXDataModel.Extend
             return new JObject(new JProperty("button", staff));
         }
 
-
+        public static bool IsHasEvent(this WX_Menu menu)
+        {
+            var r = new WXDataEntities().WX_MenuEvent.Where(m => m.MenuKey.Equals(menu.MenuKey)).Count() > 0;
+            return r;
+        }
     }
 }

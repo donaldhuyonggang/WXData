@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WXDataDAL.WXMenu;
 
 namespace WXDataBLL.WXMenu
 {
     /// <summary>
     /// 微信菜单管理-李政
     /// </summary>
-    public class WX_MenuManger : BaseBLL<WXDataModel.WX_Menu>
+    public class WX_MenuManager : BaseBLL<WXDataModel.WX_Menu>
     {
         /// <summary>
         /// 根据id逻辑删除菜单
@@ -18,7 +19,7 @@ namespace WXDataBLL.WXMenu
         /// <returns></returns>
         public bool Delect_id(int id)
         {
-            return new WXDataDAL.WXMenu.WXMenuService().Delect_id(id);
+            return new WXMenuService().Delect_id(id);
         }
 
         /// <summary>
@@ -26,7 +27,7 @@ namespace WXDataBLL.WXMenu
         /// </summary>
         /// <returns></returns>
         public bool Add_zi_pd(int id) {
-            return new WXDataDAL.WXMenu.WXMenuService().Add_zi_pd(id);
+            return new WXMenuService().Add_zi_pd(id);
         }
 
         /// <summary>
@@ -35,7 +36,12 @@ namespace WXDataBLL.WXMenu
         /// <param name="id"></param>
         /// <returns></returns>
         public bool Add_yiji_pd(string AppId) {
-            return new WXDataDAL.WXMenu.WXMenuService().Add_yiji_pd(AppId);
+            return new WXMenuService().Add_yiji_pd(AppId);
+        }
+
+        public bool Clear(string appid)
+        {
+            return new WXMenuService().Clear(appid);
         }
     }
 }

@@ -1,0 +1,156 @@
+﻿@using WXDataModel
+@using WXDataUI.Helpers
+@{
+    ViewBag.Title = "Index";
+    PageList<WX_Media_News> PageList = ViewBag.PageList as PageList<WX_Media_News>;
+}
+@section styles{
+
+    <link href="~/Content/Common.css" rel="stylesheet" />
+
+}
+
+
+<div class="appcontent">
+    <div class="col-xs-12 padd">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="rightheadingone">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseRight" aria-expanded="true" aria-controls="collapseRight">
+                            查询内容
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseRight" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="rightheadingone">
+                    <div class="panel-body">
+                        <div class="col-xs-11">
+                            <div class="form-inline topfind">
+
+                            </div>
+
+                        </div>
+                        <div class="col-xs-1">
+                            <div>
+                                <a href="#" class="btn btn-default">查询</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="datalist">
+                <nav class="navbar marg  navbar-default navbar-static-top">
+                    <div class="col-xs-12">
+                        <h5 class="navbar-text navbar-left">数据列表<a href="#" class="navbar-link"></a></h5>
+                        <div class="navbar-text navbar-right ">
+                            <ul class="list-inline marg">
+                                <li>
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <a href="/WXMedia/News/Add" data-toggle="modal" data-target="#AddNews">新增</a>
+                                </li>
+                                <li><i class="glyphicon glyphicon-minus"></i><a href="#">删除</a></li>
+                                <li><i class="glyphicon glyphicon-refresh"></i><a href="#" id="Sync">同步</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="datacontent">
+                    <div class="fromcontent">
+                        <table class="table table-bordered table-hover NewList">
+                            <thead>
+                                <tr class="text-center">
+                                    <th><input type="checkbox" name="name" id="CheckAll" /></th>
+                                    <th>标题</th>
+                                    <th>作者</th>
+                                    <th>摘要</th>
+                                    <th>内容</th>
+                                    <th>地址</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in PageList)
+                                {
+                                    <tr class="text-center">
+                                        <td><input type="checkbox" name="name" class="ck" /></td>
+                                        <td>@i.title</td>
+                                        <td>@i.author</td>
+                                        <td>@i.digest</td>
+                                        <td>@i.content</td>
+                                        <td><a href="@i.url">预览</a></td>
+                                        <td>
+                                            <ul class="list-inline marg operation">
+                                                <li class="Upda btn btn-info" data-toggle="tooltip" data-placement="right" title="查看详情">
+                                                    <a href="#" class="glyphicon glyphicon-pencil"></a>
+                                                </li>
+                                                <li class="Dele btn btn-danger" data-toggle="tooltip" data-placement="right" title="删除">
+                                                    <a href="#" class="glyphicon glyphicon-remove deleteById"></a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                @if (PageList.HasPreviousPage)
+                                {
+                                    <li>
+                                        <a href="#" id="PrevPage" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="disabled">
+                                        <a href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                @for (var i = 1; i <= PageList.TotalPages; i++)
+                                {
+                                    <li><a href="#" PageIndex="@i">@i</a></li>
+                                }
+                                @if (PageList.HasNextPage)
+                                {
+                                    <li>
+                                        <a href="#" id="NextPage" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="disabled">
+                                        <a href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                }
+
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#Sync").click(function () {
+            $.post("/WXMedia/News/Sync", function () {
+                location.reload();
+            });
+        });
+    });
+</script>

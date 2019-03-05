@@ -77,7 +77,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
                 errcode = jo["errcode"].ToString(),
                 errmsg = jo["errmsg"].ToString()
             };
-            if (result.errcode.Equals(0))
+            if (result.errcode.Equals("0"))
             {
                 new WX_UserTagManager().Delete(tagid,WXAPP.AppId);
             }

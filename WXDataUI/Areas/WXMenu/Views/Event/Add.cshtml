@@ -1,0 +1,90 @@
+﻿@using WXDataModel
+@using WXDataModel.Extend
+@{ 
+    List<WX_Menu> MenuList = ViewBag.MenuList as List<WX_Menu>;
+    List<WX_Media_News> NewsList = ViewBag.NewsList as List<WX_Media_News>;
+}
+
+<form action="/" method="post" id="form">
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">新增菜单事件</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-sm-3">菜单Key</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="MenuKey" id="MenuKey">
+                            @foreach (var i in MenuList)
+                            {
+                                <option value="@i.MenuKey">@i.MenuName</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3">返回消息类型:</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="ResponType" id="ResponType">
+                            <option value="text">文本</option>
+                            <option value="news">图文消息</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" type="text">
+                    <label class="col-sm-3" for="title">返回内容:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="ResponContent1" id="ResponContent1" />
+                    </div>
+                </div>
+                <div class="form-group" style="display:none;" type="news">
+                    <label class="col-sm-3" for="author">返回图文消息:</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="ResponContent2" id="ResponContent2">
+                            @foreach (var i in NewsList)
+                            {
+                                <option value="@i">@i.GetMediaId()</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <input type="button" id="Upload" name="Upload" class="btn btn-primary" value="保存">
+            </div>
+
+
+
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</form>
+<script>
+    $(function () {
+        $("#ResponType").change(function(){
+            var value = $(this).val();
+            $("div[type]").hide();
+            $("div[type='" + value + "']").show();
+        });
+        $("#Upload").click(function () {
+            var data = {
+                MenuKey: $("#MenuKey").val(),
+                ResponType: $("#ResponType").val(),
+                ResponContent: $("div[type='" + $("#ResponType").val() + "']").find("input[name]").val()
+            };
+            console.info(data);
+            $.post("/WXMenu/Event/Add", data, function (r) {
+                if (r) {
+                    $("#EditEvent").modal('hide');
+                    location.reload();
+                }
+            });
+        });
+    });
+
+</script>

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WXDataModel;
 
-namespace WXDataBLL.WXCustom
+namespace WXDataBLL.WXMenu
 {
-    public class WX_CustomMsgManger:BaseBLL<WXDataModel.WX_CustomMsg>
+    public class WX_MenuTypeManager : BaseBLL<WX_MenuType>
     {
         
     }

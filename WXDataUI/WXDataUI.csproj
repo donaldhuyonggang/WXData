@@ -162,6 +162,9 @@
     <Compile Include="Areas\WXCustom\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXCustom\Controllers\QRController.cs" />
     <Compile Include="Areas\WXCustom\WXCustomAreaRegistration.cs" />
+    <Compile Include="Areas\WXMenu\Controllers\EventController.cs" />
+    <Compile Include="Areas\WXMedia\Controllers\HomeController.cs" />
+    <Compile Include="Areas\WXMedia\Controllers\NewsController.cs" />
     <Compile Include="Areas\WXMedia\WXMediaAreaRegistration.cs" />
     <Compile Include="Areas\WXMenu\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXMenu\WXMenuAreaRegistration.cs" />
@@ -175,11 +178,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CurlHelper.cs" />
     <Compile Include="Helpers\PageList.cs" />
     <Compile Include="Models\Controller_EX.cs" />
     <Compile Include="Models\GetCharSpellCode.cs" />
     <Compile Include="Models\LoadingColor.cs" />
     <Compile Include="Models\ReturnResult.cs" />
+    <Compile Include="Models\WX_Media_News.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -333,6 +338,12 @@
     <Content Include="Areas\WXUser\Views\Tag\DeleteTag.cshtml" />
     <Content Include="Areas\WXUser\Views\Tag\EditTag.cshtml" />
     <Content Include="Areas\WXMenu\Views\Home\AddMenu.cshtml" />
+    <Content Include="Areas\WXMedia\Views\Home\Index.cshtml" />
+    <Content Include="Areas\WXMedia\Views\Home\AddMedia.cshtml" />
+    <Content Include="Areas\WXMedia\Views\News\Index.cshtml" />
+    <Content Include="Areas\WXMedia\Views\News\Add.cshtml" />
+    <Content Include="Areas\WXMenu\Views\Event\Index.cshtml" />
+    <Content Include="Areas\WXMenu\Views\Event\Add.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
@@ -379,7 +390,6 @@
     <Folder Include="Areas\WXApp\Views\Shared\" />
     <Folder Include="Areas\WXCustom\Models\" />
     <Folder Include="Areas\WXCustom\Views\Shared\" />
-    <Folder Include="Areas\WXMedia\Controllers\" />
     <Folder Include="Areas\WXMedia\Models\" />
     <Folder Include="Areas\WXMedia\Views\Shared\" />
     <Folder Include="Areas\WXMenu\Models\" />
@@ -387,6 +397,7 @@
     <Folder Include="Areas\WXUser\Models\" />
     <Folder Include="Areas\WXUser\Views\Group\" />
     <Folder Include="Areas\WXUser\Views\Shared\" />
+    <Folder Include="Upload\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>

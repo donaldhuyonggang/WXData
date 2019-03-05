@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using WXDataModel;
@@ -31,11 +32,20 @@ namespace WXDataDAL
 
         public virtual bool Add(T info)
         {
-            using (WXDataEntities db = new WXDataEntities())
+            try
             {
-                db.Set<T>().Add(info);
-                return db.SaveChanges() > 0;
+                // 写数据库
+                using (WXDataEntities db = new WXDataEntities())
+                {
+                    db.Set<T>().Add(info);
+                    return db.SaveChanges() > 0;
+                }
             }
+            catch (DbEntityValidationException dbEx)
+            {
+                return false;
+            }
+            
         }
 
         public virtual bool Update(T info)

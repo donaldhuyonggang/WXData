@@ -17,6 +17,15 @@ namespace WXDataModel.Extend
             return user.SYS_User == null ? "未分配" : user.SYS_User.UserName;
         }
 
+        public static List<string> GetOpenIdList(this List<WX_User> userList)
+        {
+            List<string> openIdList = new List<string>();
+            foreach (var i in userList)
+            {
+                openIdList.Add(i.OpenID);
+            }
+            return openIdList;
+        }
       
     }
 }

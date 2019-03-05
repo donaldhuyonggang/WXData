@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,6 +58,12 @@ namespace WXDataDAL.WXMenu
             {
                 return false;
             }
+        }
+        public bool Clear(string appid)
+        {
+            WXDataEntities db = new WXDataEntities();
+            var result = db.Database.ExecuteSqlCommand(@"Delete from WX_Menu where AppId=@AppId", new SqlParameter("AppId", appid));
+            return result > 0;
         }
     }
 }

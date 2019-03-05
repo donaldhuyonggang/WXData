@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2019-02-22 16:35:03                          */
+/* Created on:     2019-02-27 19:18:39                          */
 /*==============================================================*/
 create database WXData
 go
@@ -306,6 +306,13 @@ if exists (select 1
            where  id = object_id('WX_Menu')
             and   type = 'U')
    drop table WX_Menu
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('WX_MenuEvent')
+            and   type = 'U')
+   drop table WX_MenuEvent
 go
 
 if exists (select 1
@@ -828,6 +835,7 @@ go
 /* Table: WX_CustomMsg                                          */
 /*==============================================================*/
 create table WX_CustomMsg (
+   Id                   int                  identity,
    MsgId                varchar(50)          not null,
    OpenID               VARCHAR(50)          null,
    UserId               int                  null,
@@ -838,7 +846,7 @@ create table WX_CustomMsg (
    MediaId              varchar(50)          null,
    MsgType              varchar(20)          null,
    XmlContent           nvarchar(max)        null,
-   constraint PK_WX_CUSTOMMSG primary key (MsgId)
+   constraint PK_WX_CUSTOMMSG primary key (Id)
 )
 go
 
@@ -969,8 +977,8 @@ go
 create table WX_Media (
    MyMediaId            int                  identity,
    AppId                varchar(50)          null,
-   MediaId              varchar(50)          null,
-   MediaName            varchar(50)          null,
+   MediaId              varchar(200)         null,
+   MediaName            varchar(200)         null,
    MediaType            varchar(50)          null,
    MediaContent         nvarchar(max)        null,
    MediaState           int                  null,
@@ -1120,6 +1128,24 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '≈≈–Ú∫≈',
    'user', @CurrentUser, 'table', 'WX_Menu', 'column', 'MenuSort'
+go
+
+/*==============================================================*/
+/* Table: WX_MenuEvent                                          */
+/*==============================================================*/
+create table WX_MenuEvent (
+   MenuKey              varchar(20)          not null,
+   ResponType           varchar(20)          null,
+   ResponContent        nvarchar(max)        null,
+   constraint PK_WX_MENUEVENT primary key (MenuKey)
+)
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '≤Àµ•ID',
+   'user', @CurrentUser, 'table', 'WX_MenuEvent', 'column', 'MenuKey'
 go
 
 /*==============================================================*/

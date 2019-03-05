@@ -54,6 +54,9 @@
     <Compile Include="Extend\DateTime_EX.cs" />
     <Compile Include="Extend\SYS_Function_EX.cs" />
     <Compile Include="Extend\SYS_Role_EX.cs" />
+    <Compile Include="Extend\WX_Media_EX.cs" />
+    <Compile Include="Extend\WX_Media_News.cs" />
+    <Compile Include="Extend\WX_MenuEvent_EX.cs" />
     <Compile Include="Extend\WX_Menu_EX.cs" />
     <Compile Include="Extend\WX_User_EX.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,6 +109,9 @@
       <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_Menu.cs">
+      <DependentUpon>WXDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WX_MenuEvent.cs">
       <DependentUpon>WXDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WX_MenuType.cs">

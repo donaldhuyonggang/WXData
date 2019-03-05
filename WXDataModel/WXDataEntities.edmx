@@ -98,8 +98,9 @@
         </EntityType>
         <EntityType Name="WX_CustomMsg">
           <Key>
-            <PropertyRef Name="MsgId" />
+            <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MsgId" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="OpenID" Type="varchar" MaxLength="50" />
           <Property Name="UserId" Type="int" />
@@ -130,8 +131,8 @@
           </Key>
           <Property Name="MyMediaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AppId" Type="varchar" MaxLength="50" />
-          <Property Name="MediaId" Type="varchar" MaxLength="50" />
-          <Property Name="MediaName" Type="varchar" MaxLength="50" />
+          <Property Name="MediaId" Type="varchar" MaxLength="200" />
+          <Property Name="MediaName" Type="varchar" MaxLength="200" />
           <Property Name="MediaType" Type="varchar" MaxLength="50" />
           <Property Name="MediaContent" Type="nvarchar(max)" />
           <Property Name="MediaState" Type="int" />
@@ -150,6 +151,16 @@
           <Property Name="MenuUrl" Type="nvarchar" MaxLength="255" />
           <Property Name="MenuVisable" Type="int" />
           <Property Name="MenuSort" Type="int" />
+        </EntityType>
+        <EntityType Name="WX_MenuEvent">
+          <Key>
+            <PropertyRef Name="AppId" />
+            <PropertyRef Name="MenuKey" />
+          </Key>
+          <Property Name="AppId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MenuKey" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ResponType" Type="varchar" MaxLength="20" />
+          <Property Name="ResponContent" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="WX_MenuType">
           <Key>
@@ -461,6 +472,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WX_MenuEvent_WX_App">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="1" />
+          <End Role="WX_MenuEvent" Type="Self.WX_MenuEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_MenuEvent">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WX_QR_REFERENCE_SYS_USER">
           <End Role="SYS_User" Type="Self.SYS_User" Multiplicity="0..1" />
           <End Role="WX_QR" Type="Self.WX_QR" Multiplicity="*" />
@@ -621,6 +644,7 @@
           <EntitySet Name="WX_EventQueue" EntityType="Self.WX_EventQueue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Media" EntityType="Self.WX_Media" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Menu" EntityType="Self.WX_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WX_MenuEvent" EntityType="Self.WX_MenuEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_MenuType" EntityType="Self.WX_MenuType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_QR" EntityType="Self.WX_QR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WX_Queue" EntityType="Self.WX_Queue" Schema="dbo" store:Type="Tables" />
@@ -699,6 +723,10 @@
           <AssociationSet Name="FK_WX_MENU_REFERENCE_WX_MENUT" Association="Self.FK_WX_MENU_REFERENCE_WX_MENUT">
             <End Role="WX_MenuType" EntitySet="WX_MenuType" />
             <End Role="WX_Menu" EntitySet="WX_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_MenuEvent_WX_App" Association="Self.FK_WX_MenuEvent_WX_App">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_MenuEvent" EntitySet="WX_MenuEvent" />
           </AssociationSet>
           <AssociationSet Name="FK_WX_QR_REFERENCE_SYS_USER" Association="Self.FK_WX_QR_REFERENCE_SYS_USER">
             <End Role="SYS_User" EntitySet="SYS_User" />
@@ -855,6 +883,7 @@
           <NavigationProperty Name="WX_CustomMsg" Relationship="Self.FK_WX_CUSTO_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_CustomMsg" />
           <NavigationProperty Name="WX_Media" Relationship="Self.FK_WX_MEDIA_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_Media" />
           <NavigationProperty Name="WX_Menu" Relationship="Self.FK_WX_MENU_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_Menu" />
+          <NavigationProperty Name="WX_MenuEvent" Relationship="Self.FK_WX_MenuEvent_WX_App" FromRole="WX_App" ToRole="WX_MenuEvent" />
           <NavigationProperty Name="WX_QR" Relationship="Self.FK_WX_QR_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_QR" />
           <NavigationProperty Name="WX_Queue" Relationship="Self.FK_WX_QUEUE_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_Queue" />
           <NavigationProperty Name="WX_User" Relationship="Self.FK_WX_USER_REFERENCE_WX_APP" FromRole="WX_App" ToRole="WX_User" />
@@ -871,8 +900,9 @@
         </EntityType>
         <EntityType Name="WX_CustomMsg">
           <Key>
-            <PropertyRef Name="MsgId" />
+            <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MsgId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="OpenID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Int32" />
@@ -906,8 +936,8 @@
           </Key>
           <Property Name="MyMediaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MediaId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MediaName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MediaId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MediaName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="MediaType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MediaContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MediaState" Type="Int32" />
@@ -931,6 +961,17 @@
           <NavigationProperty Name="WX_Menu1" Relationship="Self.FK_WX_MENU_REFERENCE_WX_MENU" FromRole="WX_Menu" ToRole="WX_Menu1" />
           <NavigationProperty Name="WX_Menu2" Relationship="Self.FK_WX_MENU_REFERENCE_WX_MENU" FromRole="WX_Menu1" ToRole="WX_Menu" />
           <NavigationProperty Name="WX_MenuType" Relationship="Self.FK_WX_MENU_REFERENCE_WX_MENUT" FromRole="WX_Menu" ToRole="WX_MenuType" />
+        </EntityType>
+        <EntityType Name="WX_MenuEvent">
+          <Key>
+            <PropertyRef Name="AppId" />
+            <PropertyRef Name="MenuKey" />
+          </Key>
+          <Property Name="AppId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MenuKey" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ResponType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ResponContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WX_App" Relationship="Self.FK_WX_MenuEvent_WX_App" FromRole="WX_MenuEvent" ToRole="WX_App" />
         </EntityType>
         <EntityType Name="WX_MenuType">
           <Key>
@@ -1224,6 +1265,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WX_MenuEvent_WX_App">
+          <End Role="WX_App" Type="Self.WX_App" Multiplicity="1" />
+          <End Role="WX_MenuEvent" Type="Self.WX_MenuEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WX_App">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="WX_MenuEvent">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WX_QR_REFERENCE_WX_APP">
           <End Role="WX_App" Type="Self.WX_App" Multiplicity="0..1" />
           <End Role="WX_QR" Type="Self.WX_QR" Multiplicity="*" />
@@ -1365,6 +1418,7 @@
           <EntitySet Name="WX_EventQueue" EntityType="Self.WX_EventQueue" />
           <EntitySet Name="WX_Media" EntityType="Self.WX_Media" />
           <EntitySet Name="WX_Menu" EntityType="Self.WX_Menu" />
+          <EntitySet Name="WX_MenuEvent" EntityType="Self.WX_MenuEvent" />
           <EntitySet Name="WX_MenuType" EntityType="Self.WX_MenuType" />
           <EntitySet Name="WX_QR" EntityType="Self.WX_QR" />
           <EntitySet Name="WX_Queue" EntityType="Self.WX_Queue" />
@@ -1434,6 +1488,10 @@
           <AssociationSet Name="FK_WX_MENU_REFERENCE_WX_APP" Association="Self.FK_WX_MENU_REFERENCE_WX_APP">
             <End Role="WX_App" EntitySet="WX_App" />
             <End Role="WX_Menu" EntitySet="WX_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WX_MenuEvent_WX_App" Association="Self.FK_WX_MenuEvent_WX_App">
+            <End Role="WX_App" EntitySet="WX_App" />
+            <End Role="WX_MenuEvent" EntitySet="WX_MenuEvent" />
           </AssociationSet>
           <AssociationSet Name="FK_WX_QR_REFERENCE_WX_APP" Association="Self.FK_WX_QR_REFERENCE_WX_APP">
             <End Role="WX_App" EntitySet="WX_App" />
@@ -1584,6 +1642,7 @@
           <EntitySetMapping Name="WX_CustomMsg">
             <EntityTypeMapping TypeName="WXDataModel.WX_CustomMsg">
               <MappingFragment StoreEntitySet="WX_CustomMsg">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="MsgId" ColumnName="MsgId" />
                 <ScalarProperty Name="OpenID" ColumnName="OpenID" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1637,6 +1696,16 @@
                 <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
                 <ScalarProperty Name="MenuVisable" ColumnName="MenuVisable" />
                 <ScalarProperty Name="MenuSort" ColumnName="MenuSort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WX_MenuEvent">
+            <EntityTypeMapping TypeName="WXDataModel.WX_MenuEvent">
+              <MappingFragment StoreEntitySet="WX_MenuEvent">
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
+                <ScalarProperty Name="ResponType" ColumnName="ResponType" />
+                <ScalarProperty Name="ResponContent" ColumnName="ResponContent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
