@@ -46,7 +46,7 @@
                         <select class="form-control" name="ResponContent2" id="ResponContent2">
                             @foreach (var i in NewsList)
                             {
-                                <option value="@i">@i.GetMediaId()</option>
+                                <option value="@i.GetMediaId()">@i.title</option>
                             }
                         </select>
                     </div>
@@ -75,7 +75,7 @@
             var data = {
                 MenuKey: $("#MenuKey").val(),
                 ResponType: $("#ResponType").val(),
-                ResponContent: $("div[type='" + $("#ResponType").val() + "']").find("input[name]").val()
+                ResponContent: $("div[type='" + $("#ResponType").val() + "']").find("[name]").val()
             };
             console.info(data);
             $.post("/WXMenu/Event/Add", data, function (r) {

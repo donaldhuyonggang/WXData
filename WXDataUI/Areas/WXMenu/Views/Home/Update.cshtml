@@ -1,0 +1,159 @@
+﻿@using WXDataModel
+
+@{ 
+    WX_Menu MyMenu = ViewBag.Menu as WX_Menu;
+}
+
+<form action="/" method="post" id="form1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">创建菜单</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-sm-3">菜单类型</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="MenuType" id="MenuType">
+                            @if (MyMenu.ParentMenuId != null)
+                            {
+                                <option value="1">一级菜单</option>
+                                <option value="2" selected>二级菜单</option>
+                            }
+                            else
+                            {
+                                <option value="1" selected>一级菜单</option>
+                                <option value="2">二级菜单</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" style="display:none;">
+                    <label class="col-sm-3">父菜单</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="ParentMenuId" id="ParentMenuId">
+                            @foreach (var i in (ViewBag.PList) as List<WX_Menu>)
+                            {
+                                if (MyMenu.ParentMenuId != null && MyMenu.ParentMenuId.Equals(i.MenuId))
+                                {
+                                    <option value="@i.MenuId" selected>@i.MenuName</option>
+                                }
+                                else
+                                {
+                                    <option value="@i.MenuId">@i.MenuName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3"></label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="TypeId" id="TypeId">
+                            @foreach (var i in (ViewBag.MenuType) as List<WX_MenuType>)
+                            {
+                                if (MyMenu.TypeId.Equals(i.TypeId))
+                                {
+                                    <option value="@i.TypeId" selected>@i.TypeName</option>
+                                }
+                                else
+                                {
+                                    <option value="@i.TypeId">@i.TypeName</option>
+                                }
+
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3" for="MenuName">菜单名称</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="MenuName" id="MenuName" class="form-control" value="@MyMenu.MenuName" />
+                    </div>
+                </div>
+                <div class="form-group" type="2">
+                    <label class="col-sm-3" for="MenuUrl">菜单Url</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="MenuUrl" id="MenuUrl" class="form-control" value="@MyMenu.MenuUrl" />
+                    </div>
+                </div>
+                <div class="form-group" type="1">
+                    <label class="col-sm-3" for="MenuKey">菜单Key</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="MenuKey" id="MenuKey" class="form-control" value="@MyMenu.MenuKey" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <input type="button" id="submit" class="btn btn-primary" value="保存">
+            </div>
+
+
+        </div><!-- /.modal-content -->
+    </div>
+
+</form>
+
+<script>
+    $(function () {
+        $("#MenuType").change(function () {
+            if ($(this).val() == "2") {
+                $("#ParentMenuId").parents(".form-group").show();
+            } else {
+                $("#ParentMenuId").parents(".form-group").hide();
+            }
+        });
+        $("#TypeId").change(function () {
+            if ($(this).val() == "1") {
+                $("#MenuKey").parents(".form-group").show();
+                $("#MenuUrl").parents(".form-group").hide();
+            } else {
+                $("#MenuUrl").parents(".form-group").show();
+                $("#MenuKey").parents(".form-group").hide();
+            }
+        });
+
+        $("#submit").click(function () {
+            var data;
+            if ($("#MenuType").val() == "1") {
+                data = {
+                    MenuName : $("#MenuName").val(),
+                    MenuKey : $("#MenuKey").val(),
+                    MenuUrl: $("#MenuUrl").val(),
+                    TypeId: $("#TypeId").val(),
+                    MenuId:@MyMenu.MenuId,
+                };
+            } else {
+                data = {
+                    MenuName: $("#MenuName").val(),
+                    MenuKey: $("#MenuKey").val(),
+                    MenuUrl: $("#MenuUrl").val(),
+                    TypeId : $("#TypeId").val(),
+                    MenuId:@MyMenu.MenuId,
+                    ParentMenuId: $("#ParentMenuId").val()
+                };
+            }
+            console.info(data);
+            $.ajax({
+                url: "/WXMenu/Home/Update",
+                type: "post",
+                contentType: "Application/JSON",
+                data: JSON.stringify(data),
+                success: function (r) {
+                    console.info(r);
+                    if (r) {
+                        $("#EditMenu").modal("hide");
+                        alert("ok");
+                        GetMenu();
+                    } else {
+                        alert("修改失败");
+                    }
+                }
+            });
+        });
+
+
+    });
+</script>

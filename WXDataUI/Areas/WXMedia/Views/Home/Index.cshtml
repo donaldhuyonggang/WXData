@@ -98,11 +98,9 @@
                                         <td>@i.UploadTime</td>
                                         <td>
                                             <ul class="list-inline marg operation">
-                                                <li class="Upda btn btn-info" data-toggle="tooltip" data-placement="right" title="查看详情">
-                                                    <a href="#" class="glyphicon glyphicon-pencil"></a>
-                                                </li>
+                                                
                                                 <li class="Dele btn btn-danger" data-toggle="tooltip" data-placement="right" title="删除">
-                                                    <a href="#" class="glyphicon glyphicon-remove deleteById"></a>
+                                                    <a href="#" class="glyphicon glyphicon-remove deleteById " mediaid="@i.MediaId"></a>
                                                 </li>
                                             </ul>
                                         </td>
@@ -184,6 +182,11 @@
                 location.href = "/WXMedia/Home/Index?index=@PageList.PreviousPage";
             });
             //GetMedia();
+            $(".deleteById").click(function () {
+                $.post("/WXMedia/Home/Delete", "mediaid=" + $(this).attr("mediaid"), function (r) {
+                    GetMedia();
+                });
+            });
 
         });
         function GetMedia() {
@@ -205,10 +208,8 @@
                                "<td>" +
                                    "<ul class=\"list-inline marg operation\">" +
 
-                                       "<li class=\"Upda btn btn-info\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"查看详情\">" +
-                                       "   <a href=\"#\" class=\"glyphicon glyphicon-pencil\"></a></li>" +
                                        "<li class=\"Dele btn btn-danger\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"删除\">" +
-                                       "   <a href=\"#\" class=\"glyphicon glyphicon-remove deleteById\"></a></li>" +
+                                       "   <a href=\"#\" mediaid=" + obj.MediaId + " class=\"glyphicon glyphicon-remove deleteById\"></a></li>" +
                                    "</ul>" +
                                "</td>" +
                            "</tr>";

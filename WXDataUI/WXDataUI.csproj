@@ -174,6 +174,7 @@
     <Compile Include="Areas\WXUser\WXUserAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filter\LoginFilter.cs" />
     <Compile Include="Filter\RightFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -344,6 +345,7 @@
     <Content Include="Areas\WXMedia\Views\News\Add.cshtml" />
     <Content Include="Areas\WXMenu\Views\Event\Index.cshtml" />
     <Content Include="Areas\WXMenu\Views\Event\Add.cshtml" />
+    <Content Include="Areas\WXMenu\Views\Home\Update.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />

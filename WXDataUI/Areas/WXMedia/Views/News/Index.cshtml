@@ -7,7 +7,14 @@
 @section styles{
 
     <link href="~/Content/Common.css" rel="stylesheet" />
-
+    <style>
+        .tf{
+            text-overflow: ellipsis;
+            /*white-space: nowrap;*/
+            overflow: hidden;
+            width: 200px;
+        }
+    </style>
 }
 
 
@@ -78,8 +85,8 @@
                                         <td><input type="checkbox" name="name" class="ck" /></td>
                                         <td>@i.title</td>
                                         <td>@i.author</td>
-                                        <td>@i.digest</td>
-                                        <td>@i.content</td>
+                                        <td class="tf">@i.digest</td>
+                                        <td class="tf">@i.content</td>
                                         <td><a href="@i.url">预览</a></td>
                                         <td>
                                             <ul class="list-inline marg operation">
@@ -148,9 +155,13 @@
 <script>
     $(function () {
         $("#Sync").click(function () {
-            $.post("/WXMedia/News/Sync", function () {
-                location.reload();
-            });
+            Sync();
         });
+
     });
+    function Sync() {
+        $.post("/WXMedia/News/Sync", function () {
+            location.reload();
+        });
+    }
 </script>

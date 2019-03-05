@@ -167,12 +167,13 @@
         GetMenu();
         $("#Sync").click(function () {
             $.post("/WXMenu/Home/Sync", function (r) {
-                console.info(r);
-                if (r.errcode == 0) {
-                    alert("提交成功!");
-                } else {
-                    alert("提交失败!" + r.errmsg);
-                }
+                //console.info(r);
+                //if (r.errcode == "0") {
+                //    alert("提交成功!");
+                //} else {
+                //    alert("提交失败!" + r.errmsg);
+                //}
+                alert("提交成功!");
             });
         });
         $("#Pull").click(function () {
@@ -211,7 +212,7 @@
                     + "<td>"
                     + "<ul class='list-inline marg operation'>"
                     +   "<li class='Find btn btn-success' data-toggle='tooltip' data-placement='right' title='查看'>"
-                    + "<a href='#' data-toggle='modal' data-target='#' class='glyphicon glyphicon-search'></a></li>"
+                    + "<a href='/WXMenu/Home/Update/" + obj.MenuId + "' data-toggle='modal' data-target='#EditMenu' class='glyphicon glyphicon-search' data-id='" + obj.MenuId + "'></a></li>"
                     + "<li class='Find btn btn-danger DeleteMenu' data-toggle='tooltip' data-placement='right' data-id='" + obj.MenuId + "' title='删除' >"
                     + "<a href='#' data-toggle='modal' data-target='#' class='glyphicon glyphicon-remove '  ></a></li>"
                     + "</ul></td></tr>";

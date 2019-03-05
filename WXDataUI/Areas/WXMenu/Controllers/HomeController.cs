@@ -95,6 +95,22 @@ namespace WXDataUI.Areas.WXMenu.Controllers
             bool pd = new WX_MenuManager().Delect_id(id);
             return Json(pd, JsonRequestBehavior.AllowGet);
         }
+        //更新菜单
+        [HttpGet]
+        public ActionResult Update(int id)
+        {
+            ViewBag.MenuType = new WX_MenuTypeManager().GetAll();
+            ViewBag.PList = new WX_MenuManager().Where(g => g.AppId == WXAPP.AppId && g.ParentMenuId == null && g.MenuVisable == 0 && g.WX_Menu1.Count() < 5).ToList();//获取当前公众号的所有一级菜单
+            ViewBag.Menu = new WX_MenuManager().GetByPK(id);
+            return PartialView();
+        }
+        public ActionResult Update(WX_Menu info)
+        {
+            info.AppId = WXAPP.AppId;
+            var r = new WX_MenuManager().Update(info);
+            return Json(r,JsonRequestBehavior.AllowGet);
+        }
+        //更新菜单end
 
         [HttpGet]
         /// <summary>
