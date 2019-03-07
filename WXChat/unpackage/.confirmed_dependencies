@@ -296,6 +296,9 @@
 			"css/mui.min.css",
 			"js/jquery-2.2.4.js",
 			"Images/Icon/minus-circle-fill.png"
+		],
+		"refer": [
+			"Pages/Group/GroupSend.html"
 		]
 	},
 	"Pages/User/Remarks.html": {
@@ -376,7 +379,34 @@
 		"resources": [
 			"js/vue.js",
 			"js/mui.min.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/jquery-1.10.2.min.js"
+		]
+	},
+	"Pages/Group/GroupSend.html": {
+		"resources": [
+			"js/mui.imageViewer.js",
+			"css/IM-Chat.css",
+			"js/vue.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.imageviewer.css",
+			"js/arttmpl.js"
+		]
+	},
+	"Pages/Group/AddGroup.html": {
+		"resources": [
+			"js/jquery-2.2.4.js",
+			"js/vue.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.indexedlist.css",
+			"js/jquery-indexedlist.js"
+		],
+		"refer": [
+			"Pages/Group/GroupSend.html"
 		]
 	}
 }

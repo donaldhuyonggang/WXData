@@ -58,9 +58,6 @@
 		<script type="text/javascript" charset="utf-8">
 			mui.init({
 				preloadPages:[{
-					id:"Chart.html",
-					url:"User/Chart.html"
-				},{
 					id:"im-Chart.html",
 					url:"User/im-Chart.html"
 				}]
@@ -68,6 +65,7 @@
 			
 			//存储页面 集合
 			var subpages = ['User/Chart.html', 'User/MailList.html','User/Source.html','User/MyInfo.html'];
+			 
 			//子页面的样式
 			var subpage_style = {
 				top: '45px',
@@ -125,7 +123,6 @@
 				var chat=connection.createHubProxy("MobileHub");
 				connection.start().done(function(){
 					console.log("Start");
-					//chat.server.Hello();
 				}).fail(function(error){
 					console.log(error);
 				});	
@@ -136,9 +133,8 @@
 				chat.on("PlusUse",function(info){
 					//微信信息条数
 					var magqueue=0;
-					var cart=plus.webview.getWebviewById("Chart.html");
+					var cart=plus.webview.getWebviewById("User/Chart.html");
 					var imChart=plus.webview.getWebviewById("im-Chart.html");
-//					plus.storage.setItem("imChart",JSON.stringify(imChart));
 					info.forEach(function(v){
 						magqueue=magqueue+v.Count
 					});
@@ -148,11 +144,8 @@
 					mui.fire(cart,"PlusUse",{
 						info:info
 					});
-					
 					var isOpen= plus.storage.getItem("isOpen");
-					//imChart.evalJS("aa()");
 					if(isOpen=="1"){
-//						imChart.show();
 						mui.fire(imChart,"OneUser",{
 							info:info
 						});//调用聊天页面	

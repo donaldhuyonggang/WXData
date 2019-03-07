@@ -43,7 +43,7 @@
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title mui-text-left">选择联系人</h1>
-		    <button type="button" id="Savebtn" class="mui-btn mui-btn-green mui-pull-right" disabled="disabled">确定</button>
+		    <button type="button" id="Savebtn" onclick="BtnClick()" class="mui-btn mui-btn-green mui-pull-right" disabled="disabled">确定</button>
 		</header>
 		<div class="mui-content">
 			<div id='list' class="mui-indexed-list">
@@ -121,6 +121,33 @@
 					}
 				});//页面主体数据
 			});//plusready
+			function BtnClick(){
+				var arr=document.getElementsByClassName("Check");//获取列表对象
+				var obj=[];
+				for (var i=0;i<arr.length;i++) {
+					if (arr[i].checked&& !arr[i].disabled) {
+						obj.push(arr[i].getAttribute("MyID"));
+					}
+				}
+				mui.openWindow({
+				    id:"GroupSend.html",
+				    url:"../Group/GroupSend.html",
+				    extras:{
+				      	openIdList:obj//自定义扩展参数，可以用来处理页面间传值
+				    },
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+//					      aniShow:slide-in-right,//页面显示动画，默认为”slide-in-right“；
+				      duration:500//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...'//等待对话框上显示的提示内容
+				    }
+				});//新开窗体
+			}
+			
 			
 			function Action(data){
 				var custom=JSON.parse(plus.storage.getItem("Custom"));//接收登陆对象

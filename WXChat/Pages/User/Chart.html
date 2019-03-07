@@ -18,17 +18,20 @@
 			.mui-content>.mui-table-view:first-child {
 				margin: 0;
 			}
-			#ImgBox{
+			
+			#ImgBox {
 				position: relative;
 			}
-			.bag{
+			
+			.bag {
 				position: absolute;
 				left: 2.5em;
 				top: -0.3em;
 				background: red;
 				color: white;
 			}
-			.none{
+			
+			.none {
 				display: none;
 			}
 		</style>
@@ -37,22 +40,29 @@
 	<body>
 		<div class="mui-content">
 			<ul class="mui-table-view" id="MyVe">
-				<li v-for="item in obj" class="mui-table-view-cell mui-media FansLi" v-bind:OpenId="item.info.OpenID">
-					<a href="javascript:;" >
-						<div id="ImgBox">
-							<span class="mui-badge bag none"></span>
-							<img class="mui-media-object mui-pull-left" v-bind:src="item.info.HeadImageUrl">
-						</div>
-						<div class="mui-media-body">
-							<div class="mui-row">
-								<div v-if="item.info.UserName !=null" class="mui-col-xs-8 mui-ellipsis">{{item.info.UserName}}</div>
-								<div v-else class="mui-col-xs-8 mui-ellipsis">{{item.info.UserNick}}</div>
-								<p class="mui-col-xs-4 mui-text-right Time">{{item.info.CreateTime}}</p>
+				<template v-for="item in obj">
+					<li class="mui-table-view-cell mui-media FansLi" v-bind:OpenId="item.info.OpenID">
+						<a href="javascript:;">
+							<div id="ImgBox">
+								<template v-if="item.Count > 0">
+									<span class="mui-badge bag">{{item.Count}}</span>
+								</template>
+								<template v-else>
+									<span class="mui-badge bag none"></span>
+								</template>
+								<img class="mui-media-object mui-pull-left" v-bind:src="item.info.HeadImageUrl">
 							</div>
-							<p class="mui-ellipsis UsContent">{{item.info.Content}}</p>
-						</div>
-					</a>
-				</li>
+							<div class="mui-media-body">
+								<div class="mui-row">
+									<div v-if="item.info.UserName !=null" class="mui-col-xs-8 mui-ellipsis">{{item.info.UserName}}</div>
+									<div v-else class="mui-col-xs-8 mui-ellipsis">{{item.info.UserNick}}</div>
+									<p class="mui-col-xs-4 mui-text-right Time">{{item.info.CreateTime}}</p>
+								</div>
+								<p class="mui-ellipsis UsContent">{{item.info.Content}}</p>
+							</div>
+						</a>
+					</li>
+				</template>
 			</ul>
 		</div>
 		<div id="UserSheet" class="mui-popover mui-popover-bottom mui-popover-action">
@@ -74,120 +84,105 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.js"></script>
-		<script type="text/javascript" src="../../js/jquery-1.10.2.min.js" ></script>
-		<script type="text/javascript" src="../../js/jquery.signalR-2.1.2.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript">
-			(function($, doc) {
-				mui.init({
-					gestureConfig: {
-						tap: true, //默认为true
-						doubletap: true, //默认为false
-						longtap: true, //默认为false
-						swipe: true, //默认为true
-						drag: true, //默认为true
-						hold: false, //默认为false，不监听
-						release: false //默认为false，不监听
-					},preloadPages:[{
-						id:"im-Chart.html",
-						url:"User/im-Chart.html"
-					}]
+			mui.init({
+				gestureConfig: {
+					tap: true, //默认为true
+					doubletap: true, //默认为false
+					longtap: true, //默认为false
+					swipe: true, //默认为true
+					drag: true, //默认为true
+					hold: false, //默认为false，不监听
+					release: false //默认为false，不监听
+				},
+			});
+			var VM = new Vue({
+				el: "#MyVe",
+				data: {
+					obj:[],
+				}
+			}); //vue
+			mui.plusReady(function() {
+				var BaseUrl = plus.storage.getItem("BaseUrl");
+				var custom = JSON.parse(plus.storage.getItem("Custom")); //获取登陆对象
+				var info = null; //接收用户标识
+				mui('.mui-content').on('longtap', '.FansLi', function() {
+					info = this.getAttribute('mydata'); //获取当前长按的粉丝
+					mui('#UserSheet').popover('toggle'); //打开菜单选项
+				}); //长按某个粉丝信息
+				mui("#UserSheet").on('tap', '.mui-popover>ul>li', function() {
+					alert(info);
+				}); //弹出菜单操作
+				var userinfo = {
+					UserId: custom.UserId,
+					AppId: custom.AppId
+				}
+				mui.ajax({
+					url: BaseUrl + "/Mobile/SelCustom",
+					data: userinfo,
+					success: function(data) {
+						Action(data);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						console.log("请求对象XMLHttpRequest: " + XMLHttpRequest);
+						console.log("错误类型textStatus: " + textStatus);
+						console.log("异常对象errorThrown: " + errorThrown);
+					}
+				}); //ajax
+				
+				mui(".mui-content").on("tap", ".FansLi", function() {
+					var Open = this.getAttribute("OpenID");
+					var imChart = plus.webview.getWebviewById("im-Chart.html");
+					imChart.show();
+//					console.log(this.childNodes[0].firstChild.firstChild.);
+					$(this).find(".bag").hide();
+					plus.storage.setItem("isOpen", "1");
+					plus.storage.setItem("thatUse", Open);
+					
 				});
-				mui.plusReady(function() {
-					var BaseUrl = plus.storage.getItem("BaseUrl");
-					var custom = JSON.parse(plus.storage.getItem("Custom")); //获取登陆对象
-					var info = null; //接收用户标识
-					mui('.mui-content').on('longtap', '.FansLi', function() {
-						info = this.getAttribute('mydata'); //获取当前长按的粉丝
-						mui('#UserSheet').popover('toggle'); //打开菜单选项
-					}); //长按某个粉丝信息
-					mui("#UserSheet").on('tap', '.mui-popover>ul>li', function() {
-						alert(info);
-					}); //弹出菜单操作
-					var userinfo = {
-						UserId: custom.UserId,
-						AppId: custom.AppId
-					}
-					mui.ajax({
-						url: BaseUrl + "/Mobile/SelCustom",
-						data: userinfo,
-						success: function(data) {
-							console.log(JSON.stringify(data));
-							Action(data);
-						},
-						error: function(XMLHttpRequest, textStatus, errorThrown) {
-							console.log("请求对象XMLHttpRequest: " + XMLHttpRequest);
-							console.log("错误类型textStatus: " + textStatus);
-							console.log("异常对象errorThrown: " + errorThrown);
-						}
-					}); //ajax
-					mui(".mui-content").on("tap",".FansLi",function(){
-						var Open=this.getAttribute("OpenID");
-						var imChart=plus.webview.getWebviewById("im-Chart.html");
-						imChart.show();
-						plus.storage.setItem("isOpen","1"); 
-						plus.storage.setItem("thatUse",Open);
-					});
-					var Action=function(data){
-						var VM = new Vue({
-							el: "#MyVe",
-							data: {
-								obj: data,
-							}
-						});//vue
-						window.addEventListener('PlusUse', function(event){
-							var li=document.getElementsByClassName("FansLi");
-							var UserMsg=event.detail.info;
-							UserMsg.forEach(function(v){
-								$("#MyVe").innerHTML="<li>cao</li>";
-								if(li.length<=0){
-//									Apend(v);
-								}else{
-									for(var i=0;i<li.length;i++){
-										if(li[i].getAttribute("OpenId")==v.info.OpenID){
-											li[i].childNodes[0].lastChild.childNodes[0].lastChild.innerText="";
-	//										li[i].children.getElementsByClassName(".bag")[0].removeClass("none").innerText=v.Count;
-	//										li[i].children.getElementsByClassName(".Time")[0].innerText=v.CreateTime;
-	//										li[i].children.getElementsByClassName(".UsContent")[0].innerText=v.info.Content;
-										}//IF
-										else{
-//											Apend(v);
-										}//else
-									}//For
-								}//else
-							})//Foreach1
-						})//PlusUser
-					}//action
-					
-					
-					
-					
-					var Apend=function(ms){
-							var Name;
-							if(ms.UserName){
-								Name=ms.info.userName;
+				var Action = function(data) {
+					VM.obj=data;
+					window.addEventListener('PlusUse', function(event) {
+						var UserMsg = event.detail.info;
+						for(var j=0;j<UserMsg.length;j++){ //循环用户发送过来的消息
+							if(isExists(UserMsg[j].info.OpenID)){
+								var obj=VM.obj;
+								for(var i=0;i<obj.length;i++){
+									if(obj[i].info.OpenID==UserMsg[j].info.OpenID){
+										obj[i].Count=UserMsg[j].Count;
+										obj[i].info.CreateTime=UserMsg[j].info.CreateTime;
+										obj[i].info.Content=UserMsg[j].info.Content;
+										VM.obj=obj;
+									}
+								}//FOR
 							}else{
-								Name=ms.info.UserNick;
-							}
-							var $before=$("<li  class=\"mui-table-view-cell mui-media FansLi\" OpenId=\""+ms.info.OpenID+"\">"+
-								"<a href=\"javascript:;\">"+
-									"<div id=\"ImgBox\">"+
-										"<span class=\"mui-badge bag\">"+ms.Count+"</span>"+
-										"<img class=\"mui-media-object mui-pull-left\" v-bind:src=\""+ms.info.HeadImageUrl+"\">"+
-									"</div>"+
-									"<div class=\"mui-media-body\">"+
-										"<div class=\"mui-row\">"+
-											"<div class=\"mui-col-xs-8 mui-ellipsis\">"+Name+"</div>"+
-											"<p class=\"mui-col-xs-4 mui-text-right\">"+ms.info.CreateTime+"</p>"+
-										"</div>"+
-										"<p class=\"mui-ellipsis\">"+ms.info.Content+"</p>"+
-									"</div>"+
-								"</a>"+
-							"</li>");
-							mui("#MyVe").prepend($before);
+								VM.obj.push({
+									Count:UserMsg[j].Count,
+									info:{
+										OpenID:UserMsg[j].info.OpenID,
+										HeadImageUrl:UserMsg[j].info.HeadImageUrl,
+										Content:UserMsg[j].info.Content,
+										UserName:UserMsg[j].info.UserName,
+										UserNick:UserMsg[j].info.UserNick,
+										CreateTime:UserMsg[j].info.CreateTime
+									}
+								});//PUSH
+							}//if else
+						}//for
+					}) //PlusUser
+				} //action
+			}); //plusReady
+			function isExists(OpenID){
+				var obj = VM.obj;//获取 vue中的数据
+				for (var i=0;i<obj.length&&obj!=null;i++) { //循环vue 中的数据
+					if(OpenID==obj[i].info.OpenID){ 
+						return true	;
 					}
-				}); //plusReady
-			}(mui, document));
+				}
+				return	 false;
+			}
+			
 		</script>
 	</body>
-
 </html>

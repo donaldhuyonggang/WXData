@@ -128,7 +128,11 @@
 				}); //TagClick
 				
 				mui('.mui-content').on('tap','#toChat',function(){
-					mui.toast("111");
+					var Open = OpenID;
+					var imChart = plus.webview.getWebviewById("im-Chart.html");
+					imChart.show();
+					plus.storage.setItem("isOpen", "1");
+					plus.storage.setItem("thatUse", Open);
 				});//发送消息
 				
 				window.addEventListener('refresh', function(e){//执行刷新
