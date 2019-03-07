@@ -8,11 +8,14 @@ using WXDataBLL.Base;
 using WXDataBLL.WXCustom;
 using WXDataModel;
 using WXDataModel.Extend;
+using WXDataUI.Filter;
 using WXDataUI.Helpers;
 using WXService.Service;
 
 namespace WXDataUI.Areas.WXMedia.Controllers
 {
+
+    [RightFilter(Message = "素材管理")]
     public class HomeController : Controller
     {
         public WX_App WXAPP

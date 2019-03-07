@@ -19,6 +19,7 @@
     <link href="/Content/dashboard.css" rel="stylesheet" />
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/jquery.cookie.js"></script>
     <style>
         #CheckAll{
             width:100%;
@@ -75,6 +76,13 @@
         .table>thead>tr>th{
             text-align: center;
         }
+        #SysSetting span[sign]{
+            display:block;
+            text-align:center;
+        }
+        #SysSetting span[sign]:hover{
+            background:#afafaf;
+        }
     </style>
     @RenderSection("styles", required: false)
 
@@ -99,7 +107,18 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">设置</a></li>
+                    <li id="SysSetting">
+                        <div class="dropdown" style="padding: 15px 15px;padding-bottom: 0;">
+                            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    style="background: #283643;color: #999;border: none;">
+                                换色
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dLabel" style="min-width: 100px;">
+                                <li><span sign="default">默认</span></li>
+                                <li><span sign="blue">天蓝</span></li>
+                            </ul>
+                        </div>
+                    </li>
                     <li><a href="#">帮助</a></li>
                     <li>
                         <a href="#" data-toggle="modal" data-backdrop="false"
@@ -297,6 +316,7 @@
     <script>
         $(function () {
 
+            GetNavStyle();
             //设置模态框属性
             $('.modal').on('hidden.bs.modal', function (e) {
                 $(this).removeData();
@@ -356,6 +376,38 @@
         }
         //保持导航栏状态end
         
+        //cookie设置
+        $("#SysSetting span[sign]").click(function () {
+            var sign = $(this).attr("sign");
+            //console.info(sign);
+            $.cookie('NavStyle', sign, { expires: 7, path: '/' });
+            GetNavStyle();
+        });
+
+        function GetNavStyle(){
+            var sign = $.cookie('NavStyle');
+            var backgroundColor = "";
+            var borderColor = "";
+            var fontColor = "";
+            console.info(sign);
+            if (sign == "default") {
+                backgroundColor = "#283643";
+                borderColor = "#283643";
+                fontColor = "#999";
+            } else if (sign == "blue") {
+                backgroundColor = "#00e0ff";
+                borderColor = "#00e0ff";
+                fontColor = "#fff";
+            }
+            $("body>nav").css({ "background-color": backgroundColor });
+            $("body>div.content,div.sidebar,div.sidebar .panel,div.sidebar .panel-heading,.sidebar .panel-body").css({ "background-color": backgroundColor, "border-color": borderColor });
+            $(".sidebar a").css({ "color": fontColor });
+            $("#navbar").css({ "background-color": backgroundColor, "border-color": borderColor });
+            $("#navbar ul.nav>li>a").css({ "color": fontColor });
+            $("#SysSetting button").css({ "background-color": backgroundColor, "color": fontColor });
+            
+        }
+        //cookie设置end
 
 
         //function GetFunction (){

@@ -43,7 +43,10 @@ namespace WXDataUI.Filter
         public override void OnResultExecuting(ResultExecutingContext filterContext)
         {
             base.OnResultExecuting(filterContext);
-            filterContext.HttpContext.Response.Redirect("/Base/Home/Login");
+            if (filterContext.HttpContext.Session["SYSUSER"] == null)
+            {
+                filterContext.HttpContext.Response.Redirect("/Base/Home/Login");
+            }
             //filterContext.HttpContext.Response.Write("返回Result之前" + Message + "<br />");
         }
         /// <summary>

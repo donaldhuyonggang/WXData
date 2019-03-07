@@ -8,11 +8,14 @@ using System.Web.Mvc;
 using WXDataBLL.Base;
 using WXDataModel;
 using WXDataModel.Extend;
+using WXDataUI.Filter;
 using WXDataUI.Helpers;
 using WXService.Service;
 
 namespace WXDataUI.Areas.WXMedia.Controllers
 {
+
+    [RightFilter(Message = "图文消息管理")]
     public class NewsController : Controller
     {
         public WX_App WXAPP

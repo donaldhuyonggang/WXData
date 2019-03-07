@@ -473,7 +473,7 @@ namespace WXDataUI.Areas.Base.Controllers
         public ActionResult SelCustom(int UserId, string AppId)
         {
             var dic = new Dictionary<string,dynamic>();
-            var userList = new WX_CustomMsgManger().Where(x => x.UserId == UserId && x.AppId == AppId).OrderByDescending(s=>s.CreateTime);
+            var userList = new WX_CustomMsgManager().Where(x => x.UserId == UserId && x.AppId == AppId).OrderByDescending(s=>s.CreateTime);
             foreach (var item in userList)
             {
                 if (!dic.ContainsKey(item.OpenID))
@@ -553,8 +553,8 @@ namespace WXDataUI.Areas.Base.Controllers
                 CM.MsgType = item.MsgType;
                 CM.XmlContent = item.XmlContent;
                 new WX_QueueManager().Delete(item.MsgId);//删除
-                new WX_CustomMsgManger().Add(CM); //添加到数据库
-                var info = new WX_CustomMsgManger().Where(s=>s.MsgId==CM.MsgId).Select(s=>new {
+                new WX_CustomMsgManager().Add(CM); //添加到数据库
+                var info = new WX_CustomMsgManager().Where(s=>s.MsgId==CM.MsgId).Select(s=>new {
                     content=s.Content,
                     s.WX_User.HeadImageUrl,
                     s.MsgType
@@ -579,7 +579,7 @@ namespace WXDataUI.Areas.Base.Controllers
             //发送到微信
             CustomService customSvr = new CustomService(Ap.AppId, Ap.AppSecret);
             customSvr.SendText(msg.OpenID, msg.Content);
-            bool IsTrue = new WX_CustomMsgManger().Add(msg);
+            bool IsTrue = new WX_CustomMsgManager().Add(msg);
             return Json(IsTrue, JsonRequestBehavior.AllowGet);
         }
     }

@@ -24,5 +24,10 @@ namespace WXDataBLL.WXUser
         {
             return new WX_UserService().RemoveTag(user, tagid);
         }
+
+        public bool ClearTag(WX_User user)
+        {
+            return new WX_UserService().ClearTag(user);
+        }
     }
 }

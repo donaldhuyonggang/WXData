@@ -56,5 +56,15 @@ namespace WXDataDAL.WX
                 return result > 0;
             }
         }
+        //清空标签表
+        public bool ClearTag(WX_User user)
+        {
+            using (var db = new WXDataEntities())
+            {
+                var p_openid = new SqlParameter("@openid", user.OpenID);
+                var result = db.Database.ExecuteSqlCommand(@"Delete from WX_UserTagRelation where OpenId=@openid", p_openid);
+                return result > 0;
+            }
+        }
     }
 }

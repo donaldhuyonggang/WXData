@@ -222,6 +222,7 @@ namespace WXDataUI.Areas.WXUser.Controllers
                         {
                             manager.Update(user);
                         }
+                        var r = manager.ClearTag(user);
                         foreach (var t in userJo["tagid_list"].Children())
                         {
                             manager.AddTag(user, Convert.ToInt32(t));
