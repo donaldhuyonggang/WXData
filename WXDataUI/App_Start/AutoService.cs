@@ -138,6 +138,7 @@ namespace WXDataUI.App_Start
             WX_User modal = userBLL.GetByPK(openId);
             if (modal == null)
             {
+                if (jo["subscribe"].ToString().Equals("0")) return;
                 modal = new WX_User();
                 modal.AppId = appId;
                 modal.OpenID = openId;
@@ -151,7 +152,7 @@ namespace WXDataUI.App_Start
                 modal.SubscribeTime = DateTime.Now;
                 modal.UserState = "正常";
                 modal.Remark = jo["remark"].ToString();
-                modal.GroupId = 1;//新用户
+                //modal.GroupId = 1;//新用户
                 modal.Subscribe_Scene = jo["subscribe_scene"].ToString();
                 modal.QR_Scene = jo["qr_scene"].ToString();
                 modal.QR_Scene_String = jo["qr_scene_str"].ToString();

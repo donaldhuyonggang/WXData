@@ -7,9 +7,12 @@ using WXDataBLL.Base;
 using WXDataBLL.WXMenu;
 using WXDataModel;
 using WXDataModel.Extend;
+using WXDataUI.Filter;
 
 namespace WXDataUI.Areas.WXMenu.Controllers
 {
+
+    [RightFilter(Message = "菜单事件管理")]
     public class EventController : Controller
     {
         public WX_App WXAPP

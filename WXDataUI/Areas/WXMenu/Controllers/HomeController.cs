@@ -7,10 +7,13 @@ using System.Web.Mvc;
 using WXDataBLL.WXMenu;
 using WXDataModel;
 using WXDataModel.Extend;
+using WXDataUI.Filter;
 using WXService.Service;
 
 namespace WXDataUI.Areas.WXMenu.Controllers
 {
+
+    [RightFilter(Message = "菜单管理")]
     public class HomeController : Controller
     {
         public WX_App WXAPP
