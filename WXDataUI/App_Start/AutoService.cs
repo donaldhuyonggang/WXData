@@ -83,7 +83,6 @@ namespace WXDataUI.App_Start
             {
                 var context = GlobalHost.ConnectionManager.GetHubContext<MobileHub>();
                 context.Clients.User(item.info.UserId.ToString()).PlusUse(Result);
-
             }
         }
         public void Scan(WX_EventQueue info)

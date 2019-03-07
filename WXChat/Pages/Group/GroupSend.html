@@ -6,10 +6,10 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<!--<link rel="stylesheet" href="../../css/app.css" />-->
 		<link rel="stylesheet" href="../../css/mui.imageviewer.css" />
 		<link rel="stylesheet" href="../../css/IM-Chat.css" />
 	</head>
+
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
@@ -87,6 +87,7 @@
 				$.plusReady(function() {
 					var BaseUrl = plus.storage.getItem("BaseUrl");
 					var custom = JSON.parse(plus.storage.getItem("Custom"));
+					var selfY=plus.webview.currentWebview();
 					var showKeyboard = function() {
 						if($.os.ios) {
 							var webView = plus.webview.currentWebview().nativeInstanceObject();
@@ -105,28 +106,21 @@
 					var Old_back = mui.back;
 					mui.back = function() {
 						Old_back();
-						plus.storage.removeItem("isOpen");
-						plus.storage.removeItem("thatUse");
-						plus.storage.removeItem("record");
-						location.reload();
 					};
 					var record = [{
 						sender: '',
 						type: '',
 						content:'',
 					}];
-					
 					//发送信息到后台
 					var SendSer = function(sen) {
 						var info = {
-							AppId: custom.AppId,
+							appId: custom.AppId,
 							Content: sen.content,
-							MsgType: sen.type,
-							UserId: custom.UserId,
-							OpenID: plus.storage.getItem("thatUse")
+							OpenId:JSON.stringify(selfY.openIdList)
 						}
 						mui.ajax({
-							url: BaseUrl + "/Mobile/TaleToUser",
+							url: BaseUrl + "/Mobile/GroupSend",
 							data: info,
 							success: function(data) {
 							},
@@ -218,48 +212,6 @@
 						SendSer(msg);
 						bindMsgList();
 					}
-					var bind=function(msg){
-						var OpenId = plus.storage.getItem("thatUse");
-						if(msg.info.OpenID == OpenId) {
-							var info = {
-								OpenID: OpenId,
-								UserId: custom.UserId,
-								AppId: custom.AppId
-							}
-							mui.ajax({
-								aync:false,
-								url: BaseUrl + "/Mobile/FansMsg",
-								data: info,
-								success: function(data) { 
-									if(data != "") {
-										data.forEach(function(v) {
-											v.forEach(function(e) {
-												record.push({
-													sender: 'zx',
-													type: e.MsgType,
-													content:e.content,
-													HeaderImg:e.HeadImageUrl
-												})
-											});
-											bindMsgList();
-										});
-									}
-								},
-								error: function(XMLHttpRequest, textStatus, errorThrown) {
-									console.log("请求对象XMLHttpRequest: " + XMLHttpRequest);
-									console.log("错误类型textStatus: " + textStatus);
-									console.log("异常对象errorThrown: " + errorThrown);
-								}
-							});
-						}
-					}
-					//自动数据
-					window.addEventListener("OneUser", function(event) { 
-						var UserQueue = event.detail.info;
-						UserQueue.forEach(function(v) {
-							bind(v);
-						});
-					});
 					//让输入框获取焦点
 					function msgTextFocus() {
 						ui.boxMsgText.focus();
@@ -487,7 +439,6 @@
 				}); //plusReady
 			}(mui, document))
 		</script>
-		
-		
 	</body>
+
 </html>
