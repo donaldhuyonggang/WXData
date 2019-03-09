@@ -156,7 +156,9 @@
 					var cart=plus.webview.getWebviewById("User/Chart.html");
 					var imChart=plus.webview.getWebviewById("im-Chart.html");
 					info.forEach(function(v){
-						magqueue=magqueue+v.Count
+						if(v.AppId==custom.AppId){
+							magqueue=magqueue+v.Count
+						}
 					});
 					if(magqueue>0){
 						document.getElementById("queue").innerText=magqueue;
