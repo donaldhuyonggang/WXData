@@ -87,6 +87,8 @@
 				$.plusReady(function() {
 					var BaseUrl = plus.storage.getItem("BaseUrl");
 					var custom = JSON.parse(plus.storage.getItem("Custom"));
+					var header =document.getElementById("head").innerHTML;
+					console.log(header);
 					var showKeyboard = function() {
 						if($.os.ios) {
 							var webView = plus.webview.currentWebview().nativeInstanceObject();
@@ -138,22 +140,24 @@
 						});
 					}
 					
-					var createUpload=function(f){
-						var task = plus.uploader.createUpload(BaseUrl+"/Upload/", 
-	                    { method:"POST",blocksize:204800,priority:100 },
-		                    function ( t, status ) {
-		                        // 上传完成
-		                        console.log(JSON.stringify(t));
-		                        if ( status == 200 ) { 
-		                            alert( "Upload success: " + t.url );
-		                        } else {
-		                            alert( "Upload failed: " + status );
-		                        }
-		                    }
-		                );
-		                task.addFile(f, {key:f.substr(f.lastIndexOf('/')),name:f.substr(f.lastIndexOf('/'))} );
-		                task.start();
-					}
+//					var createUpload=function(f){
+//						console.log("11");
+//						var task = plus.uploader.createUpload(BaseUrl+"/Upload", 
+//	                    { method:"POST",blocksize:204800,priority:100 },
+//		                    function ( t, status ) {
+//		                        // 上传完成
+//		                        console.log(JSON.stringify(t));
+//		                        if ( status == 200 ) { 
+//		                            alert( "Upload success: " + t.url );
+//		                        } else {
+//		                            alert( "Upload failed: " + status );
+//		                        }
+//		                    }
+//		                );
+//		                task.addFile(f, {key:"121",name:f.substr(f.lastIndexOf('/')+1)} );
+//		                task.start();
+//					}
+					
 					var ui = {
 						body: doc.querySelector('body'),
 						footer: doc.querySelector('footer'),
@@ -339,7 +343,6 @@
 											content: "file://" + plus.io.convertLocalFileSystemURL(path),
 										});
 										console.log(plus.io.convertLocalFileSystemURL(path));
-										createUpload(plus.io.convertLocalFileSystemURL(path));
 									}, function(err) {});
 									break;
 								case 2:
@@ -350,7 +353,6 @@
 											content: path,
 										});
 										console.log(path);
-										createUpload(path);
 									}, function(err) {}, null);
 									break;
 							}
@@ -391,7 +393,6 @@
 							plus.nativeUI.toast("不能获取录音对象");
 							return;
 						}
-
 						//计算录音时间
 						startTimestamp = (new Date()).getTime();
 						recorder.record({

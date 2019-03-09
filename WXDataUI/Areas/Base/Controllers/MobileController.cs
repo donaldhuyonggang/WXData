@@ -175,6 +175,21 @@ namespace WXDataUI.Areas.Base.Controllers
             return Json(info, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// 查询所有星标好友
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <returns></returns>
+        //public ActionResult GetStar(int UserID,string AppID) {
+        //    var result = new WX_UserManager().Where(x=>x.UserId==UserID&&x.AppId==x.WX_UserTag.Select(s=>new { s.AppId}).ToString()&&x.WX_UserTag.Where(s=>s.TagId==2)!=null && x.AppId == AppID).Select(x=>new {
+        //        x.OpenID,
+        //        x.UserNick,
+        //        x.UserName,
+        //        x.HeadImageUrl
+        //    }).ToList();
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
+
 
         /// <summary>
         /// 根据标签编号和客服编号查询所有用户
@@ -521,6 +536,13 @@ namespace WXDataUI.Areas.Base.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <param name="AppId"></param>
+        /// <param name="OpenID"></param>
+        /// <returns></returns>
         public ActionResult FansMsg(int UserId, string AppId,string OpenID)
         {
             List<WX_Queue> list = new WX_QueueManager().Where(s => s.MsgState == 1 && s.OpenID.Equals(OpenID));
@@ -582,6 +604,14 @@ namespace WXDataUI.Areas.Base.Controllers
             MessageService MS = new MessageService(Ap.AppId,Ap.AppSecret);
             var result= MS.Send(openIdList, Content);
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UploadImg(object imgDatas) {
+            if (Request.Files.Count == 0) {
+                return Json("文件数为0上传不成功", JsonRequestBehavior.AllowGet);
+            }
+            var file = Request.Files["Media"];
+            return Content("");
         }
     }
 }
