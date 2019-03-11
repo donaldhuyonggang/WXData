@@ -555,7 +555,17 @@ namespace WXDataUI.Areas.Base.Controllers
                 CM.UserId = UserId;
                 CM.AppId = AppId;
                 CM.CreateTime = item.CreateTime;
-                CM.Content = XmlUtility.GetSingleNodeInnerText(item.XmlContent, "/xml/Content");
+                switch (item.MsgType)
+                {
+                    case "text":
+                        CM.Content = XmlUtility.GetSingleNodeInnerText(item.XmlContent, "/xml/Content");
+                        break;
+                    case "image":
+                        CM.Content=XmlUtility.GetSingleNodeInnerText(item.XmlContent, "/xml/PicUrl");
+                        break;
+                    default:
+                        break;
+                }
                 CM.MsgSource = "粉丝";
                 CM.MsgType = item.MsgType;
                 CM.XmlContent = item.XmlContent;

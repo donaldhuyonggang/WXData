@@ -78,6 +78,7 @@ namespace WXDataUI.App_Start
                     x.WX_User.UserNick,
                     x.WX_User.UserName,
                     x.WX_App.AppId,
+                    x.MsgType,
                     CreateTime = DateTimeUtility.DATE(Convert.ToDateTime(x.CreateTime)),
                     Content = XmlUtility.GetSingleNodeInnerText(x.XmlContent, "/xml/Content")
                 }).FirstOrDefault()

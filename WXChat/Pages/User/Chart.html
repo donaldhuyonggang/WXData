@@ -144,6 +144,9 @@
 						var UserMsg = event.detail.info;
 						console.log(JSON.stringify(UserMsg));
 						for(var j=0;j<UserMsg.length;j++){ //循环用户发送过来的消息
+							if(UserMsg[j].info.MsgType=="image"){
+								UserMsg[j].info.Content="图片";
+							}
 							if(UserMsg[j].info.AppId==custom.AppId){
 								if(isExists(UserMsg[j].info.OpenID)){
 									var obj=VM.obj;
