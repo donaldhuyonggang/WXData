@@ -151,7 +151,7 @@ namespace WXDataUI.Areas.WXMenu.Controllers
             var str = new MenuService(WXAPP.AppId, WXAPP.AppSecret).Get();
             var json = JObject.Parse(str)["menu"]["button"];
             WX_MenuManager manager = new WX_MenuManager();
-            manager.Clear(WXAPP.AppId);
+            var r = manager.Clear(WXAPP.AppId);
             foreach (var i in json.Children())
             {
                 var menu = new WX_Menu();
