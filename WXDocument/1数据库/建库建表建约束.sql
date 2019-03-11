@@ -1,11 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2019-02-27 19:18:39                          */
+/* Created on:     2019/3/9 10:52:42                            */
 /*==============================================================*/
-create database WXData
-go
-use WXData
-go
+
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
@@ -131,6 +128,13 @@ if exists (select 1
    where r.fkeyid = object_id('WX_Menu') and o.name = 'FK_WX_MENU_REFERENCE_WX_MENU')
 alter table WX_Menu
    drop constraint FK_WX_MENU_REFERENCE_WX_MENU
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('WX_MenuEvent') and o.name = 'FK_WX_MENUE_REFERENCE_WX_APP')
+alter table WX_MenuEvent
+   drop constraint FK_WX_MENUE_REFERENCE_WX_APP
 go
 
 if exists (select 1
@@ -1135,9 +1139,10 @@ go
 /*==============================================================*/
 create table WX_MenuEvent (
    MenuKey              varchar(20)          not null,
+   AppId                varchar(50)          not null,
    ResponType           varchar(20)          null,
    ResponContent        nvarchar(max)        null,
-   constraint PK_WX_MENUEVENT primary key (MenuKey)
+   constraint PK_WX_MENUEVENT primary key (MenuKey, AppId)
 )
 go
 
@@ -1146,6 +1151,13 @@ select @CurrentUser = user_name()
 execute sp_addextendedproperty 'MS_Description', 
    '²Ëµ¥ID',
    'user', @CurrentUser, 'table', 'WX_MenuEvent', 'column', 'MenuKey'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '¹«ÖÚºÅID',
+   'user', @CurrentUser, 'table', 'WX_MenuEvent', 'column', 'AppId'
 go
 
 /*==============================================================*/
@@ -1663,6 +1675,11 @@ go
 alter table WX_Menu
    add constraint FK_WX_MENU_REFERENCE_WX_MENU foreign key (ParentMenuId)
       references WX_Menu (MenuId)
+go
+
+alter table WX_MenuEvent
+   add constraint FK_WX_MENUE_REFERENCE_WX_APP foreign key (AppId)
+      references WX_App (AppId)
 go
 
 alter table WX_QR

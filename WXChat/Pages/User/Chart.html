@@ -47,9 +47,6 @@
 								<template v-if="item.Count > 0">
 									<span class="mui-badge bag">{{item.Count}}</span>
 								</template>
-								<template v-else>
-									<span class="mui-badge bag none"></span>
-								</template>
 								<img class="mui-media-object mui-pull-left" v-bind:src="item.info.HeadImageUrl">
 							</div>
 							<div class="mui-media-body">
@@ -145,30 +142,36 @@
 					VM.obj=data;
 					window.addEventListener('PlusUse', function(event) {
 						var UserMsg = event.detail.info;
+						console.log(JSON.stringify(UserMsg));
 						for(var j=0;j<UserMsg.length;j++){ //循环用户发送过来的消息
-							if(isExists(UserMsg[j].info.OpenID)){
-								var obj=VM.obj;
-								for(var i=0;i<obj.length;i++){
-									if(obj[i].info.OpenID==UserMsg[j].info.OpenID){
-										obj[i].Count=UserMsg[j].Count;
-										obj[i].info.CreateTime=UserMsg[j].info.CreateTime;
-										obj[i].info.Content=UserMsg[j].info.Content;
-										VM.obj=obj;
-									}
-								}//FOR
-							}else{
-								VM.obj.push({
-									Count:UserMsg[j].Count,
-									info:{
-										OpenID:UserMsg[j].info.OpenID,
-										HeadImageUrl:UserMsg[j].info.HeadImageUrl,
-										Content:UserMsg[j].info.Content,
-										UserName:UserMsg[j].info.UserName,
-										UserNick:UserMsg[j].info.UserNick,
-										CreateTime:UserMsg[j].info.CreateTime
-									}
-								});//PUSH
-							}//if else
+							if(UserMsg[j].info.MsgType=="image"){
+								UserMsg[j].info.Content="图片";
+							}
+							if(UserMsg[j].info.AppId==custom.AppId){
+								if(isExists(UserMsg[j].info.OpenID)){
+									var obj=VM.obj;
+									for(var i=0;i<obj.length;i++){
+										if(obj[i].info.OpenID==UserMsg[j].info.OpenID){
+											obj[i].Count=UserMsg[j].Count;
+											obj[i].info.CreateTime=UserMsg[j].info.CreateTime;
+											obj[i].info.Content=UserMsg[j].info.Content;
+											VM.obj=obj;
+										}
+									}//FOR
+								}else{
+									VM.obj.push({
+										Count:UserMsg[j].Count,
+										info:{
+											OpenID:UserMsg[j].info.OpenID,
+											HeadImageUrl:UserMsg[j].info.HeadImageUrl,
+											Content:UserMsg[j].info.Content,
+											UserName:UserMsg[j].info.UserName,
+											UserNick:UserMsg[j].info.UserNick,
+											CreateTime:UserMsg[j].info.CreateTime
+										}
+									});//PUSH
+								}//if else
+							}
 						}//for
 					}) //PlusUser
 				} //action

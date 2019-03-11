@@ -208,7 +208,11 @@
 			"js/mui.picker.js",
 			"js/mui.poppicker.js",
 			"css/mui.poppicker.css",
-			"css/mui.picker.css"
+			"css/mui.picker.css",
+			"js/vue.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		]
 	},
 	"Pages/index.html": {

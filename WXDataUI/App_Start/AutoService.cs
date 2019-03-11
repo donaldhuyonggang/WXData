@@ -43,8 +43,10 @@ namespace WXDataUI.App_Start
                     { 
                         case "subscribe":
                             var context = GlobalHost.ConnectionManager.GetHubContext<MobileHub>();
-                            context.Clients.All.hello(1);
                             Subscribe(item);
+
+                            context.Clients.All.hello(1);
+                            
                             break;
                         case "unsubscribe":
                            UnSubscribe(item);
@@ -75,6 +77,8 @@ namespace WXDataUI.App_Start
                     x.WX_User.UserId,
                     x.WX_User.UserNick,
                     x.WX_User.UserName,
+                    x.WX_App.AppId,
+                    x.MsgType,
                     CreateTime = DateTimeUtility.DATE(Convert.ToDateTime(x.CreateTime)),
                     Content = XmlUtility.GetSingleNodeInnerText(x.XmlContent, "/xml/Content")
                 }).FirstOrDefault()
