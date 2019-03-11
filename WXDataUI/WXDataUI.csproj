@@ -179,6 +179,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SummaryHelper.cs" />
     <Compile Include="Helpers\CurlHelper.cs" />
     <Compile Include="Helpers\PageList.cs" />
     <Compile Include="Models\Controller_EX.cs" />

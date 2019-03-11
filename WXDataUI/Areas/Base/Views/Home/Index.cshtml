@@ -4,6 +4,11 @@
 @section styles{
     <link href="/Content/Index.css" rel="stylesheet" />    
     @*<link href="/Content/iconfont.css" rel="stylesheet" />*@
+    <style>
+        .small-box-inner p{
+            margin-top:20px;
+        }
+    </style>
 }
 
 
@@ -22,8 +27,8 @@
                 <div class="small-box-inner">
                     <h1 class="data fg-lightskyblue">100</h1>
                     <p>新订单</p>
-                    <a class="more" href="#" title="查看更多">查看更多</a>
-                    <span class="status arrow-down">95.9% <i class="glyphicon glyphicon-arrow-down"></i></span>
+                    @*<a class="more" href="#" title="查看更多">查看更多</a>*@
+                    @*<span class="status arrow-down">95.9% <i class="glyphicon glyphicon-arrow-down"></i></span>*@
                 </div>
             </div>
         </div>
@@ -35,7 +40,7 @@
                 <div class="small-box-inner">
                     <h1 class="data fg-green">656</h1>
                     <p>新访客</p>
-                    <a class="more" href="#" title="查看更多">查看更多</a>
+                    @*<a class="more" href="#" title="查看更多">查看更多</a>*@
                 </div>
             </div>
         </div>
@@ -47,7 +52,7 @@
                 <div class="small-box-inner">
                     <h1 class="data fg-yellow">36</h1>
                     <p>新评论</p>
-                    <a class="more" href="#" title="查看更多">查看更多</a>
+                    @*<a class="more" href="#" title="查看更多">查看更多</a>*@
                 </div>
             </div>
         </div>
@@ -60,11 +65,9 @@
                     <h1 class="data fg-red">
                         $2,340
                     </h1>
-                    <h2>
-                        销售金额
-                    </h2>
-                    <p class="text-muted">最近30天</p>
-                    <span class="status arrow-up">95.9%</span>
+                    <p>销售金额</p>
+                    @*<p class="text-muted">最近30天</p>*@
+                    @*<span class="status arrow-up">95.9%</span>*@
                 </div>
             </div>
         </div>
@@ -73,7 +76,7 @@
         <section class="col-lg-7 widget-drag ui-sortable">
             <div class="box chart">
                 <div class="box-header ui-sortable-handle" data-trigger="drag">
-                    <h3 class="box-title">图表</h3>
+                    <h3 class="box-title">关注人数来源</h3>
                     <div class="box-tools pull-right">
                         <button class="" type="button" data-toggle="collapse">
                             <i class="iconfont icon-minus"></i>
@@ -95,7 +98,7 @@
         <section class="col-lg-5 widget-drag ui-sortable">
             <div class="box chart">
                 <div class="box-header ui-sortable-handle" data-trigger="drag">
-                    <h3 class="box-title">浏览器使用</h3>
+                    <h3 class="box-title">关注人数变化</h3>
                     <div class="box-tools pull-right">
                         <button class="" type="button" data-toggle="collapse">
                             <i class="iconfont icon-minus"></i>
@@ -141,6 +144,10 @@
             'Navigator'
         ]
     };
+
+    
+
+
     var options = {
         animation: {
             easing: 'easeOutBounce',
@@ -153,18 +160,86 @@
             }
         }
     };
+    var lineChartOptions = {
+        //Boolean - If we should show the scale at all
+        showScale: true,
+   
+        //Boolean - whether to make the chart responsive to window resizing
+        responsive: true,
+    };
+
     function Init() {
-    
-        var myChart1 = new Chart(ctx1, {
-            //type: 'doughnut',
-            type:'polarArea',
-            data: data,
-            options: options
+        InitPop();
+        InitLine();
+    }
+    function InitPop() {
+        var mydata = {
+            datasets: [{
+                data: [],
+                backgroundColor: [
+                    'rgba(255, 108, 96, 1)',
+                    'rgba(255, 153, 78, 1)',
+                    'rgba(245, 217, 74, 1)',
+                    'rgba(40, 193, 110, 1)',
+                    'rgba(29, 159, 189, 1)',
+                    'rgba(114, 83, 52, 1)',
+                    'rgba(130, 57, 53, 1)',
+                    'rgba(254, 254, 254, 1)',
+                    'rgba(30, 41, 61, 1)',
+                ],
+                label: '七天内新增用户来源'
+            }],
+            labels: []
+        };
+        $.post("/Base/Home/GetUserSummary", function (r) {
+            console.info(r);
+            $.each(r, function (i, obj) {
+                if (obj.val != 0) {
+                    mydata.datasets[0].data.push(obj.val);
+                    mydata.labels.push(obj.key);
+                }
+            });
+            console.info(mydata);
+
+            var myChart1 = new Chart(ctx1, {
+                //type: 'doughnut',
+                type: 'polarArea',
+                data: mydata,
+                options: options
+            });
         });
-        var myChart2 = new Chart(ctx2, {
-            data: data,
-            type: 'bar',
-            options: options
+
+    }
+
+    function InitLine() {
+        var mydata = {
+            datasets: [{
+                label: "关注人数",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: []
+            }],
+            labels: []
+        };
+        $.post("/Base/Home/GetUserCumulate", function (r) {
+            //console.info(r);
+            var list = JSON.parse(r).list;
+            $.each(list, function (i, obj) {
+                //console.info(obj);
+                mydata.datasets[0].data.push(obj.cumulate_user);
+                mydata.labels.push(obj.ref_date);
+            });
+            console.info(mydata);
+
+            var myChart2 = new Chart(ctx2, {
+                data: mydata,
+                type: 'line',
+                options: lineChartOptions
+            });
         });
-}
+    }
 </script>
