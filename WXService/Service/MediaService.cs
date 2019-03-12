@@ -19,13 +19,18 @@ namespace WXService.Service
         private const string MEDIA_DELETE_MATERIAL = "https://api.weixin.qq.com/cgi-bin/material/del_material?access_token={0}";
 
         private const string MEDIA_UPLOAD_TEMP = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token={0}&type={1}";
+        private const string MEDIA_GET_TEMP = "https://api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}";
         private string FileName { get; set; }
         public MediaService(string appId, string appSecert) 
             : base(appId, appSecert)
         {
         }
 
-
+        /// <summary>
+        /// 获取curl上传文件命令
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         private string GetCommand(string url)
         {
             return string.Format(" -F media=@\"{0}\" \""+ url +"\""
@@ -34,12 +39,23 @@ namespace WXService.Service
                 );
         }
         /// <summary>
+        /// 获取curl上传文件命令
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private string GetTempCommand(string url)
+        {
+            return string.Format(" -I -G  \"" + url + "\""
+                );
+        }
+
+        /// <summary>
         /// 运行cmd命令
         /// 不显示命令窗口
         /// </summary>
         /// <param name="cmdExe">指定应用程序的完整路径</param>
         /// <param name="cmdStr">执行命令行参数</param>
-        public static string RunCmd2(string cmdStr)
+        public static string RunCmd(string cmdStr)
         {
             try
             {
@@ -90,7 +106,7 @@ namespace WXService.Service
                 this.FileName = AppDomain.CurrentDomain.BaseDirectory + "Upload/" + filename;
                 string command = GetCommand(string.Format(MEDIA_ADD_MATERIAL,this.Get_Access_Token(),"image"));
                 //执行命令获取mediaid
-                string backdata = RunCmd2(command);
+                string backdata = RunCmd(command);
                 JObject obj = JObject.Parse(backdata);
                 JToken media_id = obj["media_id"];
                 if (media_id == null)
@@ -119,7 +135,7 @@ namespace WXService.Service
                 this.FileName = AppDomain.CurrentDomain.BaseDirectory + "Upload/" + filename;
                 string command = GetCommand(string.Format(MEDIA_UPLOAD_TEMP, this.Get_Access_Token(), filetype));
                 //执行命令获取mediaid
-                string backdata = RunCmd2(command);
+                string backdata = RunCmd(command);
                 JObject obj = JObject.Parse(backdata);
                 JToken media_id = obj["media_id"];
                 if (media_id == null)
@@ -135,7 +151,13 @@ namespace WXService.Service
         #endregion
 
 
-
+        /// <summary>
+        /// 获取永久素材
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="offset"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public string Get(string type,int offset = 0,int count = 20)
         {
             string url = string.Format(MEDIA_GET, this.Get_Access_Token());
@@ -148,6 +170,11 @@ namespace WXService.Service
             string respJson = MyHttpUtility.SendPost(url, JsonConvert.SerializeObject(json));
             return respJson;
         }
+        /// <summary>
+        /// 根据mediaid删除永久素材
+        /// </summary>
+        /// <param name="mediaId"></param>
+        /// <returns></returns>
         public string Delete(string mediaId)
         {
             string url = string.Format(MEDIA_DELETE_MATERIAL, this.Get_Access_Token());
@@ -158,7 +185,11 @@ namespace WXService.Service
             string respJson = MyHttpUtility.SendPost(url, JsonConvert.SerializeObject(json));
             return respJson;
         }
-
+        /// <summary>
+        /// 添加图文消息
+        /// </summary>
+        /// <param name="news"></param>
+        /// <returns></returns>
         public string AddNews(WX_Media_News news)
         {
             var json = new
@@ -181,6 +212,30 @@ namespace WXService.Service
             };
             string url = string.Format(MEDIA_ADD_NEWS, this.Get_Access_Token());
             string respJson = MyHttpUtility.SendPost(url, JsonConvert.SerializeObject(json));
+            return respJson;
+        }
+
+        /// <summary>
+        /// 获取临时素材url
+        /// </summary>
+        /// <param name="mediaid"></param>
+        /// <returns></returns>
+        public string GetTempUrl(string mediaid)
+        {
+
+            string url = string.Format(MEDIA_GET_TEMP, this.Get_Access_Token(), mediaid);
+            string command = GetTempCommand(url);
+            string respJson = RunCmd(command);
+
+            //string url = string.Format("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}"
+            //    ,this.Get_Access_Token(),
+            //    mediaid);
+            //var json = new
+            //{
+            //    access_token = this.Get_Access_Token(),
+            //    media_id = mediaid
+            //};
+            //string respJson = MyHttpUtility.SendGet(url);
             return respJson;
         }
     }

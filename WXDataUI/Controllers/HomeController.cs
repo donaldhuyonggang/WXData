@@ -70,7 +70,12 @@ namespace WXDataUI.Controllers
                         MsgType = msgType,
                         AppId = id
                     };
-                    new WX_QueueManager().Add(info);
+                    WX_QueueManager manager = new WX_QueueManager();
+                    if(manager.GetByPK(info.MsgId) == null)
+                    {
+                        var r = manager.Add(info);
+                    }
+                    
                 }
 
 
