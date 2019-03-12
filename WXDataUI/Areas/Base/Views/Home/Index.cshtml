@@ -25,8 +25,8 @@
                     <i class="glyphicon glyphicon-shopping-cart"></i>
                 </div>
                 <div class="small-box-inner">
-                    <h1 class="data fg-lightskyblue">100</h1>
-                    <p>新订单</p>
+                    <h1 class="data fg-lightskyblue" id="AllCount">100</h1>
+                    <p>总用户数</p>
                     @*<a class="more" href="#" title="查看更多">查看更多</a>*@
                     @*<span class="status arrow-down">95.9% <i class="glyphicon glyphicon-arrow-down"></i></span>*@
                 </div>
@@ -38,8 +38,8 @@
                     <i class="glyphicon glyphicon-eye-open"></i>
                 </div>
                 <div class="small-box-inner">
-                    <h1 class="data fg-green">656</h1>
-                    <p>新访客</p>
+                    <h1 class="data fg-green" id="ChangeCount">656</h1>
+                    <p>关注变化</p>
                     @*<a class="more" href="#" title="查看更多">查看更多</a>*@
                 </div>
             </div>
@@ -50,8 +50,8 @@
                     <i class="glyphicon glyphicon-comment"></i>
                 </div>
                 <div class="small-box-inner">
-                    <h1 class="data fg-yellow">36</h1>
-                    <p>新评论</p>
+                    <h1 class="data fg-yellow" id="NewCount">36</h1>
+                    <p>上周新增用户</p>
                     @*<a class="more" href="#" title="查看更多">查看更多</a>*@
                 </div>
             </div>
@@ -62,10 +62,10 @@
                     <i class="glyphicon glyphicon-stats"></i>
                 </div>
                 <div class="small-box-inner">
-                    <h1 class="data fg-red">
+                    <h1 class="data fg-red" id="CancelCount">
                         $2,340
                     </h1>
-                    <p>销售金额</p>
+                    <p>上周取关用户</p>
                     @*<p class="text-muted">最近30天</p>*@
                     @*<span class="status arrow-up">95.9%</span>*@
                 </div>
@@ -193,14 +193,16 @@
         };
         $.post("/Base/Home/GetUserSummary", function (r) {
             console.info(r);
-            $.each(r, function (i, obj) {
+            $.each(r.list, function (i, obj) {
                 if (obj.val != 0) {
                     mydata.datasets[0].data.push(obj.val);
                     mydata.labels.push(obj.key);
                 }
             });
-            console.info(mydata);
-
+            //console.info(mydata);
+            $("#NewCount").html(r.new_user);
+            $("#CancelCount").html(r.cancel_user);
+            $("#ChangeCount").html((r.new_user - r.cancel_user));
             var myChart1 = new Chart(ctx1, {
                 //type: 'doughnut',
                 type: 'polarArea',
@@ -228,13 +230,15 @@
         $.post("/Base/Home/GetUserCumulate", function (r) {
             //console.info(r);
             var list = JSON.parse(r).list;
+            var t = 0;
             $.each(list, function (i, obj) {
                 //console.info(obj);
                 mydata.datasets[0].data.push(obj.cumulate_user);
                 mydata.labels.push(obj.ref_date);
+                t = obj.cumulate_user;
             });
-            console.info(mydata);
-
+            //console.info(mydata);
+            $("#AllCount").html(t);
             var myChart2 = new Chart(ctx2, {
                 data: mydata,
                 type: 'line',

@@ -89,11 +89,15 @@ namespace WXDataUI.Areas.Base.Controllers
             {
                 return null;
             }
+            var new_user = 0;
+            var cancel_user = 0;
             Dictionary<string, int> dic = new Dictionary<string, int>();
             foreach (var i in json["list"])
             {
                 string key = Convert.ToInt32(i["user_source"]).GetSummary();
                 int value = Convert.ToInt32(i["new_user"]);
+                new_user += Convert.ToInt32(i["new_user"]);
+                cancel_user += Convert.ToInt32(i["cancel_user"]);
                 if (dic.Keys.Contains(key))
                 {
                     dic[key] += value;
@@ -109,8 +113,13 @@ namespace WXDataUI.Areas.Base.Controllers
             {
                 list.Add(new SummaryHelper() { key = i, val = dic[i] });
             }
-
-            return Json(list, JsonRequestBehavior.AllowGet);
+            var respJson = new
+            {
+                list = list,
+                new_user = new_user,
+                cancel_user = cancel_user,
+            };
+            return Json(respJson, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetUserCumulate()
         {

@@ -10,13 +10,22 @@ namespace WXDataModel.Extend
 {
     public static class WX_Media_EX
     {
+        /// <summary>
+        /// 媒体转图文
+        /// </summary>
+        /// <param name="media"></param>
+        /// <returns></returns>
         public static WX_Media_News TransitionToNews(this WX_Media media)
         {
             if (media == null) return null;
             if (!media.MediaType.Equals("news")) return null;
             return Trans(media.MediaContent);
         }
-
+        /// <summary>
+        /// 媒体转图文
+        /// </summary>
+        /// <param name="media"></param>
+        /// <returns></returns>
         public static List<WX_Media_News> TransitionToNews(this List<WX_Media> list)
         {
             List<WX_Media_News> news = new List<WX_Media_News>();
