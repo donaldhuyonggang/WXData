@@ -128,6 +128,8 @@
 					}
 				}); //ajax
 				
+				
+				
 				mui(".mui-content").on("tap", ".FansLi", function() {
 					var Open = this.getAttribute("OpenID");
 					var imChart = plus.webview.getWebviewById("im-Chart.html");
@@ -142,10 +144,14 @@
 					VM.obj=data;
 					window.addEventListener('PlusUse', function(event) {
 						var UserMsg = event.detail.info;
-						console.log(JSON.stringify(UserMsg));
+						if(UserMsg==""){
+							return
+						}
 						for(var j=0;j<UserMsg.length;j++){ //循环用户发送过来的消息
 							if(UserMsg[j].info.MsgType=="image"){
 								UserMsg[j].info.Content="图片";
+							}else if(UserMsg[j].info.MsgType=="voice"){
+								UserMsg[j].info.Content="语音";
 							}
 							if(UserMsg[j].info.AppId==custom.AppId){
 								if(isExists(UserMsg[j].info.OpenID)){

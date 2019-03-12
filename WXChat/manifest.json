@@ -635,9 +635,12 @@
 					"js/mui.min.js",
 					"css/app.css",
 					"css/mui.min.css",
-					"Images/f809cce4074f5c51f5483aed4b6b5406.jpg"
+					"Images/f809cce4074f5c51f5483aed4b6b5406.jpg",
+					"js/vue.js"
 				],
-				"refer": [],
+				"refer": [
+					"Pages/Group/UserGroup.html"
+				],
 				"priority": 0
 			},
 			"Pages/User/Test.html": {

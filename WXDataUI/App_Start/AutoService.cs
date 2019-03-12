@@ -36,17 +36,20 @@ namespace WXDataUI.App_Start
             while (true)
             {
                 var list = eventQueueBLL.Where(x => x.MsgState == 1);
-               
+                var user = userBLL.Where(s => s.UserId == null).GroupBy(s => s.AppId).Select(s => new {
+                    Count = s.Count(),
+                    info = s.Select(x => new {
+                        x.AppId
+                    }).FirstOrDefault()
+                });
+                    var context = GlobalHost.ConnectionManager.GetHubContext<MobileHub>();
+                    context.Clients.All.hello(user);
                 foreach (var item in list)
                 {
                     switch (item.Event)
                     { 
                         case "subscribe":
-                            var context = GlobalHost.ConnectionManager.GetHubContext<MobileHub>();
                             Subscribe(item);
-
-                            context.Clients.All.hello(1);
-                            
                             break;
                         case "unsubscribe":
                            UnSubscribe(item);
@@ -59,14 +62,27 @@ namespace WXDataUI.App_Start
                     eventQueueBLL.Update(item);//把事件改为已处理
                 }
                 List<WX_Queue> Queue = QueueBLL.GetAll().OrderByDescending(s=>s.CreateTime).ToList();
-                if (Queue!=null)
+                if (Queue != null)
                 {
                     SelCustom(Queue);
+                }
+                var Result2 = Queue.GroupBy(s => s.AppId).Select(s => new
+                {
+                    Count = s.Count(),
+                    info = s.Select(x => new {
+                        x.WX_User.UserId,
+                        x.AppId
+                    }).FirstOrDefault()
+                });
+                foreach (var item in Result2)
+                {
+                    context.Clients.User(item.info.UserId.ToString()).msgCount(Result2);
                 }
             }
         }
         public void SelCustom(List<WX_Queue> Queue)
         {
+            var context = GlobalHost.ConnectionManager.GetHubContext<MobileHub>();
             var Result = Queue.GroupBy(s => s.OpenID).Select(s => new
             {
                 Count = s.Count(),
@@ -85,7 +101,7 @@ namespace WXDataUI.App_Start
             });
             foreach (var item in Result)
             {
-                var context = GlobalHost.ConnectionManager.GetHubContext<MobileHub>();
+                
                 context.Clients.User(item.info.UserId.ToString()).PlusUse(Result);
             }
         }

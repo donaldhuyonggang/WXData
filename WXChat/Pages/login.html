@@ -72,15 +72,13 @@
 						data:info,
 						success: function(data) {
 							if(data) {
-								if(data.RoleId==1){
+								if(data.RoleId==1||data.RoleId==2){
 									mui.openWindow({
 										url: 'index.html',
 										id: 'index'
 									});
-								}else if (data.RoleId==2) {
-									alert(data.RoleId);
 								}else{
-									alert(data.RoleId);
+									console.log("登陆错误");
 								}
 								plus.storage.setItem("Custom",JSON.stringify(data));//存储用户信息
 							} else {

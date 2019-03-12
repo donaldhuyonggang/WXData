@@ -84,49 +84,72 @@
 					url:BaseUrl+"/Mobile/TagInfo",
 					data:info,
 					success:function(data){
-						Action(data);
+						UserGroup.obj=data;
 					},error:function(XMLHttpRequest,textStatus,errorThrown){
 							console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
 							console.log("错误类型textStatus: "+textStatus);
 							console.log("异常对象errorThrown: "+errorThrown);
 					}
 				});//ajax
-			});//Ready
-			
-			function Action(data){
 				var UserGroup=new Vue({
 					el:"#HeaderImage",
 					data:{
-						obj:data
+						obj:[]
 					},
 					methods:{
 						btn:function(event){
 							var openIdList=[];
-							data.forEach(function(v){
+							UserGroup.obj.forEach(function(v){
 								v.User.forEach(function(s){
 									openIdList.push(s.OpenID);
 								});
 							});
-							mui.openWindow({
-							    id:"GroupSend.html",
-							    url:"../Group/GroupSend.html",
-							    extras:{
-							      	openIdList:openIdList//自定义扩展参数，可以用来处理页面间传值
-							    },
-							    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
-							    show:{
-							      autoShow:true,//页面loaded事件发生后自动显示，默认为true
-		//					      aniShow:slide-in-right,//页面显示动画，默认为”slide-in-right“；
-							      duration:500//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
-							    },
-							    waiting:{
-							      autoShow:true,//自动显示等待框，默认为true
-							      title:'正在加载...'//等待对话框上显示的提示内容
-							    }
-							});//新开窗体
+							if(self.type=="media"){
+								var info={
+									tagId:self.TagID,
+									mediaId:self.mediaId,
+									AppId:custom.AppId
+								}
+								console.log(JSON.stringify(info));
+								mui.ajax({
+									url:BaseUrl+"/mobile/SendNews",
+									data:info,
+									success:function(data){
+										console.log(JSON.stringify(data));
+									},error:function(XMLHttpRequest,textStatus,errorThrown){
+											console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+											console.log("错误类型textStatus: "+textStatus);
+											console.log("异常对象errorThrown: "+errorThrown);
+									}
+								});
+							}else{
+								mui.openWindow({
+								    id:"GroupSend.html",
+								    url:"../Group/GroupSend.html",
+								    extras:{
+								      	openIdList:openIdList,//自定义扩展参数，可以用来处理页面间传值
+								      	TagId:self.TagID
+								    },
+								    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+								    show:{
+								      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+			//					      aniShow:slide-in-right,//页面显示动画，默认为”slide-in-right“；
+								      duration:500//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+								    },
+								    waiting:{
+								      autoShow:true,//自动显示等待框，默认为true
+								      title:'正在加载...'//等待对话框上显示的提示内容
+								    }
+								});//新开窗体
+							}
+							
 						}
 					}
 				});
+			});//Ready
+			
+			function Action(data){
+				
 			}//Action
 		</script>
 	</body>

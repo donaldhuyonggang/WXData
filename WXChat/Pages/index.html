@@ -36,7 +36,7 @@
 		</header>
 		<nav id="ButtomBar" class="mui-bar mui-bar-tab">
 			<a href="User/Chart.html" class="mui-tab-item mui-active ButtomBar-item">
-				<span class="mui-icon mui-icon-chatbubble"><span class="mui-badge " id="queue"></span></span>
+				<span class="mui-icon mui-icon-chatbubble" id="queue"></span>
 				<span class="mui-tab-label">消息</span>
 			</a>
 			<a href="User/MailList.html" class="mui-tab-item ButtomBar-item">
@@ -114,10 +114,6 @@
     					id:"SaoSao.html",
 					});
 				}); //给加号捆版事件
-				
-//				mui.back=function(){
-//					return;
-//				}//禁用返回事件
 				var backButtonPress = 0;
 				mui.back = function(event) {
 				    backButtonPress++;
@@ -147,22 +143,32 @@
 					console.log(error);
 				});	
 				chat.on("hello",function(msg){
-					count=count+msg;
-					document.getElementById("mail").innerHTML="<span class=\"mui-badge\">"+ count +"</span>";
+					if(msg!=""){
+						msg.forEach(function(v){
+							if(v.info.AppId==custom.AppId){
+								document.getElementById("mail").innerHTML="<span class=\"mui-badge\">"+ v.Count +"</span>";
+							}
+						});
+					}else{
+						document.getElementById("mail").innerHTML="";
+					}
+				});
+				chat.on("msgCount",function(msg){
+					if(msg!=""){
+						msg.forEach(function(v){
+							if(v.info.AppId==custom.AppId){
+								document.getElementById("queue").innerHTML="<span class=\"mui-badge\">"+ v.Count +"</span>";
+							}
+						})
+					}else{
+						console.log("11");
+						document.getElementById("queue").innerHTML="";
+					}
 				});
 				chat.on("PlusUse",function(info){
 					//微信信息条数
-					var magqueue=0;
 					var cart=plus.webview.getWebviewById("User/Chart.html");
 					var imChart=plus.webview.getWebviewById("im-Chart.html");
-					info.forEach(function(v){
-						if(v.AppId==custom.AppId){
-							magqueue=magqueue+v.Count
-						}
-					});
-					if(magqueue>0){
-						document.getElementById("queue").innerText=magqueue;
-					}
 					mui.fire(cart,"PlusUse",{
 						info:info
 					});

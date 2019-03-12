@@ -185,7 +185,7 @@
     <Compile Include="Models\GetCharSpellCode.cs" />
     <Compile Include="Models\LoadingColor.cs" />
     <Compile Include="Models\ReturnResult.cs" />
-    <Compile Include="Models\WX_Media_News.cs" />
+    <Compile Include="Models\WX_Media_News1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

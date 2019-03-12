@@ -31,7 +31,7 @@
 										<%=( item.content|| '&nbsp;&nbsp;') %>
 									<% } else if(item.type=='image' ) { %>
 										<img class="msg-content-image" src="<%=(item.content)%>" style="max-width: 100px;" />
-									<% } else if(item.type=='sound' ) { %>
+									<% } else if(item.type=='voice' ) { %>
 										<span class="mui-icon mui-icon-mic" style="font-size: 18px;font-weight: bold;"></span>
 										<span class="play-state">点击播放</span>
 									<% } %>
@@ -138,25 +138,6 @@
 							}
 						});
 					}
-					
-//					var createUpload=function(f){
-//						console.log("11");
-//						var task = plus.uploader.createUpload(BaseUrl+"/Upload", 
-//	                    { method:"POST",blocksize:204800,priority:100 },
-//		                    function ( t, status ) {
-//		                        // 上传完成
-//		                        console.log(JSON.stringify(t));
-//		                        if ( status == 200 ) { 
-//		                            alert( "Upload success: " + t.url );
-//		                        } else {
-//		                            alert( "Upload failed: " + status );
-//		                        }
-//		                    }
-//		                );
-//		                task.addFile(f, {key:"121",name:f.substr(f.lastIndexOf('/')+1)} );
-//		                task.start();
-//					}
-					
 					var ui = {
 						body: doc.querySelector('body'),
 						footer: doc.querySelector('footer'),
@@ -176,7 +157,7 @@
 					var msgItemTap = function(msgItem, event) {
 						var msgType = msgItem.getAttribute('msg-type');
 						var msgContent = msgItem.getAttribute('msg-content')
-						if(msgType == 'sound') {
+						if(msgType == 'voice') {
 							player = plus.audio.createPlayer(msgContent);
 							var playState = msgItem.querySelector('.play-state');
 							playState.innerText = '正在播放...';
@@ -218,10 +199,13 @@
 					var send = function(msg) {
 						//将消息内容体push进record
 						record.push(msg);
-						SendSer(msg);
+						if(msg.type=="text"){
+							SendSer(msg);
+						}
 						bindMsgList();
 					}
 					var bind=function(msg){
+						//获取用户列表消息
 						var OpenId = plus.storage.getItem("thatUse");
 						if(msg.info.OpenID == OpenId) {
 							var info = {
@@ -242,7 +226,7 @@
 													type: e.MsgType,
 													content:e.content,
 													HeaderImg:e.HeadImageUrl
-												})
+												});
 											});
 											bindMsgList();
 										});
@@ -341,7 +325,7 @@
 											type: 'image',
 											content: "file://" + plus.io.convertLocalFileSystemURL(path),
 										});
-										console.log(plus.io.convertLocalFileSystemURL(path));
+										upLoadimg("file://" + plus.io.convertLocalFileSystemURL(path),"image");
 									}, function(err) {});
 									break;
 								case 2:
@@ -351,12 +335,43 @@
 											type: 'image',
 											content: path,
 										});
-										console.log(path);
+										upLoadimg(path,"image");
 									}, function(err) {}, null);
 									break;
 							}
 						});
 					}, false);
+					var upLoadimg=function(path,type){
+						 var task = plus.uploader.createUpload( BaseUrl+"/mobile/Upload", 
+						 { method:"POST",blocksize:204800,priority:100 },
+						 function ( t, status ) {
+								// 上传完成
+								if ( status == 200 ) {
+									var info={
+										AppId:custom.AppId,
+										fileName:t.responseText,
+										fileType:type,
+										OpenId:plus.storage.getItem("thatUse")
+									}
+									mui.ajax({
+										url:BaseUrl+"/mobile/SendImageUser",
+										data:info,
+										success:function(data){
+											console.log(JSON.stringify(data));
+										},error: function(XMLHttpRequest, textStatus, errorThrown) {
+											console.log("请求对象XMLHttpRequest: " + XMLHttpRequest);
+											console.log("错误类型textStatus: " + textStatus);
+											console.log("异常对象errorThrown: " + errorThrown);
+										}
+									});
+								} else {
+									alert( "Upload failed: " + status );
+								}
+							}
+						);
+						task.addFile(path,{key:'myfile'}); 
+						task.start();
+					}
 					//按住语音显示与隐藏
 					var setSoundAlertVisable = function(show) {
 						if(show) {
@@ -400,9 +415,10 @@
 							if(recordCancel) return;
 							send({
 								sender: 'self',
-								type: 'sound',
+								type: 'voice',
 								content: path,
 							});
+							upLoadimg(path,"voice");
 						}, function(e) {
 							plus.nativeUI.toast("录音时出现异常: " + e.message);
 						});
@@ -485,7 +501,10 @@
 						}
 					});
 				}); //plusReady
+				
+				
 			}(mui, document))
+			
 		</script>
 		
 		
