@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace GitTest
 {
-    class Program
+    class Class2
     {
-        static void Main(string[] args)
-        {
 
 
-        }
+
     }
 }
