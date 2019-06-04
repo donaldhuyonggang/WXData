@@ -22,7 +22,7 @@ namespace WXDataDAL.WX
                 var p_tagid = new SqlParameter("@tagid", tagid);
                 var result = db.Database.ExecuteSqlCommand(@"Delete from WX_UserTagRelation where TagId=@tagid", p_tagid);
                 result = db.SaveChanges();
-            }
+            }     
             return base.Delete(new object[] { tagid, appid });
         }
     }
