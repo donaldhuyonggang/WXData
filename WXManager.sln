@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WXDataModel", "WXDataModel\WXDataModel.csproj", "{4925BB63-A6F9-4B87-AD78-F4959FAF5324}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WXService", "WXService\WXService.csproj", "{830E0A30-8499-4158-B623-9AE3FE5CB6EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WXChat", "WXChat\WXChat.csproj", "{5AAF580B-426D-452F-9D0F-ABE9CBF65FAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitTest", "GitTest\GitTest.csproj", "{1CF2784D-47E8-47FD-97B0-923180DBAC75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{5AAF580B-426D-452F-9D0F-ABE9CBF65FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AAF580B-426D-452F-9D0F-ABE9CBF65FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AAF580B-426D-452F-9D0F-ABE9CBF65FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CF2784D-47E8-47FD-97B0-923180DBAC75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CF2784D-47E8-47FD-97B0-923180DBAC75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CF2784D-47E8-47FD-97B0-923180DBAC75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CF2784D-47E8-47FD-97B0-923180DBAC75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
