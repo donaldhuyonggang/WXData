@@ -19,6 +19,8 @@ namespace WXDataDAL.WX
         {
             using (var db = new WXDataEntities())
             {
+
+
                 var p_tagid = new SqlParameter("@tagid", tagid);
                 var result = db.Database.ExecuteSqlCommand(@"Delete from WX_UserTagRelation where TagId=@tagid", p_tagid);
                 result = db.SaveChanges();
