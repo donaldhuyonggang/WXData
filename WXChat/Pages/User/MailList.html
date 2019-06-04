@@ -96,8 +96,7 @@
 						        </a>
 						    </li>
 						</ul>
-
-						<li data-group="★" class="mui-table-view-divider mui-indexed-list-group">星标好友</li>
+						<!--<li data-group="★" class="mui-table-view-divider mui-indexed-list-group">星标好友</li>
 					    <li class="individual mui-table-view-cell mui-indexed-list-item">
 					        <a href="javascript:;" MyID="of_EO00-KLk0NNt-fg5qRF11xK9E">
 					            <img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">
@@ -105,7 +104,7 @@
 					                CBD
 					            </div>
 					        </a>
-					    </li>
+					    </li>-->
 					    <ul v-for="item in obj" class="mui-list-unstyled">
 					    	<li v-for="key in item.Key" v-bind:data-group="key" class="mui-table-view-divider mui-indexed-list-group">{{key}}</li>
 					    	<li v-for="value in item.Value" class="individual mui-table-view-cell mui-indexed-list-item">
@@ -191,9 +190,24 @@
 							console.log("错误类型textStatus: "+textStatus);
 							console.log("异常对象errorThrown: "+errorThrown);
 					}
+					
 				}); //ajax
 				
-				
+//				var star={
+//					UserID:custom.UserId,
+//					AppID:custom.AppId
+//				}
+//				mui.ajax({
+//					url:BaseUrl+"/mobile/GetStar",
+//					data:star,
+//					success:function(data){
+//						console.log(JSON.stringify(data));
+//					},error:function(XMLHttpRequest,textStatus,errorThrown){
+//							console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+//							console.log("错误类型textStatus: "+textStatus);
+//							console.log("异常对象errorThrown: "+errorThrown);
+//					}
+//				});
 				
 				window.addEventListener('refresh', function(e){//执行刷新
 				    location.reload();

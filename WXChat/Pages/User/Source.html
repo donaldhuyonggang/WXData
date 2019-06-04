@@ -9,24 +9,93 @@
 		<link rel="stylesheet" href="../../css/app.css" />
 	</head>
 	<div class="mui-content">
-		<div class="mui-card">
-			<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(../../Images/f809cce4074f5c51f5483aed4b6b5406.jpg)"></div>
+		<div class="mui-card" v-for="item in obj" >
+			<div class="mui-card-header mui-card-media" style="height:40vw;">
+				<img v-bind:src="item.thumb_url" style="height:100%;width: 100%;"/>
+			</div>
 			<div class="mui-card-content">
 				<div class="mui-card-content-inner">
-					<p>Posted on January 18, 2016</p>
-					<p style="color: #333;">这里显示文章摘要，让读者对文章内容有个粗略的概念...</p>
+					<p>标题：{{item.title}}</p>
+					<p style="color: #333;">{{item.content}}</p>
 				</div>
 			</div>
 			<div class="mui-card-footer">
-				<a class="mui-card-link">Like</a>
-				<a class="mui-card-link">Read more</a>
+				<a class="mui-card-link" v-bind:id="item.thumb_media_id" v-on:click="send">发送</a>
+				<a class="mui-card-link" v-bind:src="item.url" v-on:click="opens">查看更多</a>
 			</div>
 		</div>
+		
 	</div>
 	<body>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init()
+			mui.plusReady(function(){
+				var BaseUrl=plus.storage.getItem("BaseUrl");
+				var custom=JSON.parse(plus.storage.getItem("Custom"));
+				var info={
+					AppId:custom.AppId
+				}
+				mui.ajax({
+					url:BaseUrl+"/mobile/Sync",
+					data:info,
+					success:function(data){
+						data.forEach(function(v){
+							v.thumb_url=BaseUrl+"/Upload/"+v.thumb_url;
+						});
+						MyVue.obj=data;
+						console.log(JSON.stringify(MyVue.obj));
+					},error:function(XMLHttpRequest,textStatus,errorThrown){
+							console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+							console.log("错误类型textStatus: "+textStatus);
+							console.log("异常对象errorThrown: "+errorThrown);
+					}
+				});//ajax
+				
+				var MyVue=new Vue({
+					el:".mui-content",
+					data:{
+						obj:[]
+					},methods:{
+						opens:function(event){
+							mui.openWindow({
+							    url:event.target.getAttribute("src"),
+							    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+							    show:{
+							      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+			//					      aniShow:slide-in-right,//页面显示动画，默认为”slide-in-right“；
+							      duration:500//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+							    },
+							    waiting:{
+							      autoShow:true,//自动显示等待框，默认为true
+							      title:'正在加载...'//等待对话框上显示的提示内容
+							    }
+							});//新开窗体
+						},
+						send:function(event){
+							mui.openWindow({
+							    id:"UserGroup.html",
+							    url:"../Group/UserGroup.html",
+							    extras:{
+							      	mediaID:event.target.getAttribute("id"),
+							      	type:"media"
+							    },
+							    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+							    show:{
+							      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+		//					      aniShow:slide-in-right,//页面显示动画，默认为”slide-in-right“；
+							      duration:500//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+							    },
+							    waiting:{
+							      autoShow:true,//自动显示等待框，默认为true
+							      title:'正在加载...'//等待对话框上显示的提示内容
+							    }
+							});//新开窗体
+						}
+					}
+				});
+			});
 		</script>
 	</body>
 

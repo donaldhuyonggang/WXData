@@ -105,6 +105,8 @@ namespace WXDataUI.Areas.Base.Controllers
         [HttpPost]
         public ActionResult AddApp(WX_App app)
         {
+            app.AppId = app.AppId.Trim();
+            app.AppSecret = app.AppSecret.Trim();
             app.AppState = "正常";
             ReturnResult result = new ReturnResult();
             result.ErrorMsg = "新增失败!";

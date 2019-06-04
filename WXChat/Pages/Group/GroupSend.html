@@ -131,23 +131,6 @@
 							}
 						});
 					}
-					
-					var createUpload=function(f){
-						var task = plus.uploader.createUpload(BaseUrl+"/Upload/", 
-	                    { method:"POST",blocksize:204800,priority:100 },
-		                    function ( t, status ) {
-		                        // 上传完成
-		                        console.log(JSON.stringify(t));
-		                        if ( status == 200 ) { 
-		                            alert( "Upload success: " + t.url );
-		                        } else {
-		                            alert( "Upload failed: " + status );
-		                        }
-		                    }
-		                );
-		                task.addFile(f, {key:f.substr(f.lastIndexOf('/')),name:f.substr(f.lastIndexOf('/'))} );
-		                task.start();
-					}
 					var ui = {
 						body: doc.querySelector('body'),
 						footer: doc.querySelector('footer'),
@@ -209,7 +192,9 @@
 					var send = function(msg) {
 						//将消息内容体push进record
 						record.push(msg);
-						SendSer(msg);
+						if(msg.type=="text"){
+							SendSer(msg);	
+						}
 						bindMsgList();
 					}
 					//让输入框获取焦点
@@ -290,8 +275,7 @@
 											type: 'image',
 											content: "file://" + plus.io.convertLocalFileSystemURL(path),
 										});
-										console.log(plus.io.convertLocalFileSystemURL(path));
-										createUpload(plus.io.convertLocalFileSystemURL(path));
+										upLoadimg("file://" + plus.io.convertLocalFileSystemURL(path),"image");
 									}, function(err) {});
 									break;
 								case 2:
@@ -301,13 +285,48 @@
 											type: 'image',
 											content: path,
 										});
-										console.log(path);
-										createUpload(path);
+										upLoadimg(path,"image");
 									}, function(err) {}, null);
 									break;
 							}
 						});
 					}, false);
+					
+					var upLoadimg=function(path,type){
+						 var task = plus.uploader.createUpload( BaseUrl+"/mobile/Upload", 
+						 { method:"POST",blocksize:204800,priority:100 },
+						 function ( t, status ) {
+								// 上传完成
+								if ( status == 200 ) {
+									if(selfY.TagId==undefined){
+										mui.toast("暂不支持");
+										return;
+									}
+									var info={
+										AppId:custom.AppId,
+										fileName:t.responseText,
+										fileType:type,
+										tagId:selfY.TagId
+									}
+									mui.ajax({
+										url:BaseUrl+"/mobile/SendImageInGP",
+										data:info,
+										success:function(data){
+											console.log(JSON.stringify(data));
+										},error: function(XMLHttpRequest, textStatus, errorThrown) {
+											console.log("请求对象XMLHttpRequest: " + XMLHttpRequest);
+											console.log("错误类型textStatus: " + textStatus);
+											console.log("异常对象errorThrown: " + errorThrown);
+										}
+									});
+								} else {
+									alert( "Upload failed: " + status );
+								}
+							}
+						);
+						task.addFile(path,{key:'myfile'}); 
+						task.start();
+					}
 					//按住语音显示与隐藏
 					var setSoundAlertVisable = function(show) {
 						if(show) {
@@ -355,7 +374,8 @@
 								type: 'sound',
 								content: path,
 							});
-						}, function(e) {
+							upLoadimg(path,"voice");
+						}, function(e){
 							plus.nativeUI.toast("录音时出现异常: " + e.message);
 						});
 					}, false); //语音发送

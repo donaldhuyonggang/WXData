@@ -99,7 +99,7 @@
 											if(data.errmsg=="ok"){
 												li.parentNode.removeChild(li);
 											}else{
-												mui.toast("系统错误");
+												mui.toast("该标签无法删除");
 											}
 										},error:function(XMLHttpRequest,textStatus,errorThrown){
 												console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
@@ -119,7 +119,6 @@
 					}
 				});
 			}
-			
 			function AddBtn(){
 				mui.openWindow({
 				    id:"AddTag",

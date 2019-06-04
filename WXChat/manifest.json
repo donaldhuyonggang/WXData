@@ -448,7 +448,11 @@
 					"js/mui.picker.js",
 					"js/mui.poppicker.js",
 					"css/mui.poppicker.css",
-					"css/mui.picker.css"
+					"css/mui.picker.css",
+					"js/vue.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -631,9 +635,12 @@
 					"js/mui.min.js",
 					"css/app.css",
 					"css/mui.min.css",
-					"Images/f809cce4074f5c51f5483aed4b6b5406.jpg"
+					"Images/f809cce4074f5c51f5483aed4b6b5406.jpg",
+					"js/vue.js"
 				],
-				"refer": [],
+				"refer": [
+					"Pages/Group/UserGroup.html"
+				],
 				"priority": 0
 			},
 			"Pages/User/Test.html": {

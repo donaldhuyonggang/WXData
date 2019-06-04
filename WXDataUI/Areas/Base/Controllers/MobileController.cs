@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WXService.Service;
 using WXDataBLL.WXCustom;
-
+using WXDataModel.Extend;
 
 namespace WXDataUI.Areas.Base.Controllers
 {
@@ -174,6 +174,21 @@ namespace WXDataUI.Areas.Base.Controllers
             }).ToList();
             return Json(info, JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        /// 查询所有星标好友
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <returns></returns>
+        //public ActionResult GetStar(int UserID,string AppID) {
+        //    var result = new WX_UserManager().Where(x=>x.UserId==UserID&&x.AppId==x.WX_UserTag.Select(s=>new { s.AppId}).ToString()&&x.WX_UserTag.Where(s=>s.TagId==2)!=null && x.AppId == AppID).Select(x=>new {
+        //        x.OpenID,
+        //        x.UserNick,
+        //        x.UserName,
+        //        x.HeadImageUrl
+        //    }).ToList();
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
 
         /// <summary>
@@ -521,6 +536,13 @@ namespace WXDataUI.Areas.Base.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <param name="AppId"></param>
+        /// <param name="OpenID"></param>
+        /// <returns></returns>
         public ActionResult FansMsg(int UserId, string AppId,string OpenID)
         {
             List<WX_Queue> list = new WX_QueueManager().Where(s => s.MsgState == 1 && s.OpenID.Equals(OpenID));
@@ -533,7 +555,20 @@ namespace WXDataUI.Areas.Base.Controllers
                 CM.UserId = UserId;
                 CM.AppId = AppId;
                 CM.CreateTime = item.CreateTime;
-                CM.Content = XmlUtility.GetSingleNodeInnerText(item.XmlContent, "/xml/Content");
+                switch (item.MsgType)
+                {
+                    case "text":
+                        CM.Content = XmlUtility.GetSingleNodeInnerText(item.XmlContent, "/xml/Content");
+                        break;
+                    case "image":
+                        CM.Content=XmlUtility.GetSingleNodeInnerText(item.XmlContent, "/xml/PicUrl");
+                        break;
+                    case "voice":
+                        CM.Content = XmlUtility.GetSingleNodeInnerText(item.XmlContent, "/xml/MediaId");
+                        break;
+                    default:
+                        break;
+                }
                 CM.MsgSource = "粉丝";
                 CM.MsgType = item.MsgType;
                 CM.XmlContent = item.XmlContent;
@@ -569,7 +604,7 @@ namespace WXDataUI.Areas.Base.Controllers
         }
 
         /// <summary>
-        /// 群发
+        /// 群发文字
         /// </summary>
         /// <param name="openIdList"></param>
         /// <param name="text"></param>
@@ -580,8 +615,109 @@ namespace WXDataUI.Areas.Base.Controllers
             var Ap = new WX_AppManager().GetByPK(appId);
             List<string> openIdList = JsonConvert.DeserializeObject<List<string>>(OpenId);
             MessageService MS = new MessageService(Ap.AppId,Ap.AppSecret);
-            var result= MS.Send(openIdList, Content);
+            var result= MS.SendText(openIdList, Content);
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        /// <summary>
+        /// 图文
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Sync(string AppId) {
+            var Ap = new WX_AppManager().GetByPK(AppId);
+            var list = new WX_MediaManager().Where(m => m.AppId.Equals(Ap.AppId) && m.MediaType.Equals("news")).TransitionToNews();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 群发图片/语音
+        /// </summary>
+        /// <param name="AppId"></param>
+        /// <param name="fileName"></param>
+        /// <param name="fileType"></param>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        public ActionResult SendImageInGP(string AppId,string fileName,string fileType,int tagId) {
+            var Ap = new WX_AppManager().GetByPK(AppId);
+            MediaService ser = new MediaService(Ap.AppId, Ap.AppSecret);
+            JObject jo = ser.UploadTemp(fileName,fileType); //返回一个mediaid和url
+            var result = "";
+            if (jo != null)//新增成功
+            {
+                MessageService MS = new MessageService(Ap.AppId, Ap.AppSecret);
+                if (fileType == "image")
+                {
+                    result = MS.Image(tagId, jo["media_id"].ToString());
+                }
+                else if (fileType == "voice")
+                {
+                    result = MS.Voice(tagId, jo["media_id"].ToString());
+                }
+            }
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 群发图文
+        /// </summary>
+        /// <param name="AppId"></param>
+        /// <param name="mediaId"></param>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        public ActionResult SendNews(string AppId,string mediaId,int tagId) {
+            var Ap = new WX_AppManager().GetByPK(AppId);
+            MessageService MS = new MessageService(Ap.AppId,Ap.AppSecret);
+            var Js= MS.Send(mediaId, tagId);
+            return Json(Js,JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 发送图片/语音给用户
+        /// </summary>
+        /// <param name="AppId"></param>
+        /// <param name="OpenId"></param>
+        /// <param name="fileName"></param>
+        /// <param name="fileType"></param>
+        /// <returns></returns>
+        public ActionResult SendImageUser(string AppId,string OpenId,string fileName,string fileType) {
+            var Ap = new WX_AppManager().GetByPK(AppId);
+            MediaService ser = new MediaService(Ap.AppId, Ap.AppSecret);
+            JObject jo = ser.UploadTemp(fileName, fileType); //返回一个mediaid和url
+            var result = "";
+            if (jo != null)//新增成功
+            {
+                CustomService CS = new CustomService(Ap.AppId, Ap.AppSecret);
+                if (fileType == "image")
+                {
+                    result = CS.SendImage(OpenId, jo["media_id"].ToString());
+                }else if (fileType=="voice") {
+                    result = CS.SendVoice(OpenId, jo["media_id"].ToString());
+                }
+            }
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 图片上传
+        /// </summary>
+        /// <param name="myfile"></param>
+        /// <returns></returns>
+        public ActionResult Upload(HttpPostedFileBase myfile)
+        {
+            if (myfile==null) {
+                return Json(false,JsonRequestBehavior.AllowGet);
+            }
+            string fileName =Guid.NewGuid().ToString();
+            string format = myfile.FileName.Substring(myfile.FileName.LastIndexOf('.'));
+            if (fileName.IndexOf(format) == -1)
+            {
+                fileName += format;
+            }
+            //文件大小不为0
+            string url = Server.MapPath("/Upload/") + fileName;
+            myfile.SaveAs(url);
+            return Json(fileName, JsonRequestBehavior.AllowGet);
         }
     }
 }

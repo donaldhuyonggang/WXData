@@ -32,6 +32,7 @@
 			mui.plusReady(function(){
 				var BaseUrl=plus.storage.getItem("BaseUrl");//获取路径
 				var custom=JSON.parse(plus.storage.getItem("Custom"));//获取登陆对象
+				var self = plus.webview.currentWebview();//
 				var info={
 					UserId:custom.UserId,
 					AppId:custom.AppId
@@ -40,7 +41,7 @@
 					url:BaseUrl+"/Mobile/UserOnTag",
 					data:info,
 					success:function(data){
-						Action(data);
+						MyGroup.obj=data;
 					},error:function(XMLHttpRequest,textStatus,errorThrown){
 							console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
 							console.log("错误类型textStatus: "+textStatus);
@@ -72,20 +73,24 @@
 					    }
 					});//刷新
 				}); //tap
-			});//Ready
-			
-			function Action(data){
+				
 				var MyGroup=new Vue({
 					el:"#UserGroup",
 					data:{
-						obj:data
+						obj:[]
 					},methods:{
 						Tosend:function(event){
+							var type="mailList"
+							if(self.type!=undefined){
+								type=self.type
+							}
 							mui.openWindow({
 							    id:"SaveGroup",
 							    url:"../Group/SaveGroup.html",
 							    extras:{
 							      	TagID:event.target.id,//自定义扩展参数，可以用来处理页面间传值
+							      	type:type,
+							      	mediaId:self.mediaID
 							    },
 							    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
 							    show:{
@@ -101,7 +106,7 @@
 						}
 					}
 				});//vue
-			}
+			});//Ready
 		</script>
 	</body>
 

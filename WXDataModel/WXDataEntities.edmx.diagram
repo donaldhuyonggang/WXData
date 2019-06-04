@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4ee4db7343134d6a89b0b7d7c1a3fbc4" Name="Diagram1">
+      <Diagram DiagramId="1f49eaac9d1f4647af12a9c3558d46d6" Name="Diagram1">
         <EntityTypeShape EntityType="WXDataModel.SYS_Department" Width="1.5" PointX="5.25" PointY="18.625" IsExpanded="true" />
         <EntityTypeShape EntityType="WXDataModel.SYS_Function" Width="1.5" PointX="6" PointY="10.5" IsExpanded="true" />
         <EntityTypeShape EntityType="WXDataModel.SYS_Log" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
@@ -40,7 +40,7 @@
         <AssociationConnector Association="WXDataModel.FK_WX_CUSTO_REFERENCE_WX_APP" ManuallyRouted="false" />
         <AssociationConnector Association="WXDataModel.FK_WX_MEDIA_REFERENCE_WX_APP" ManuallyRouted="false" />
         <AssociationConnector Association="WXDataModel.FK_WX_MENU_REFERENCE_WX_APP" ManuallyRouted="false" />
-        <AssociationConnector Association="WXDataModel.FK_WX_MenuEvent_WX_App" ManuallyRouted="false" />
+        <AssociationConnector Association="WXDataModel.FK_WX_MENUE_REFERENCE_WX_APP" ManuallyRouted="false" />
         <AssociationConnector Association="WXDataModel.FK_WX_QR_REFERENCE_WX_APP" ManuallyRouted="false" />
         <AssociationConnector Association="WXDataModel.FK_WX_QUEUE_REFERENCE_WX_APP" ManuallyRouted="false" />
         <AssociationConnector Association="WXDataModel.FK_WX_USER_REFERENCE_WX_APP" ManuallyRouted="false" />

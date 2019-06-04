@@ -48,5 +48,20 @@ namespace WXDataModel
         /// 文章访问路径
         /// </summary>
         public string url { get; set; }
+
+
+        /// <summary>
+        /// 封面图片路径
+        /// </summary>
+        public string thumb_url{
+            get {
+                string url = "";
+                WXDataEntities db = new WXDataEntities();
+                url += db.WX_Media.Where(m => m.MediaId.Equals(this.thumb_media_id) && m.MediaType.Equals("image")).FirstOrDefault().MediaName;
+
+                return url;
+            }
+
+        }
     }
 }

@@ -162,6 +162,7 @@
     <Compile Include="Areas\WXCustom\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXCustom\Controllers\QRController.cs" />
     <Compile Include="Areas\WXCustom\WXCustomAreaRegistration.cs" />
+    <Compile Include="Areas\WXMedia\Controllers\TempController.cs" />
     <Compile Include="Areas\WXMenu\Controllers\EventController.cs" />
     <Compile Include="Areas\WXMedia\Controllers\HomeController.cs" />
     <Compile Include="Areas\WXMedia\Controllers\NewsController.cs" />
@@ -179,13 +180,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SummaryHelper.cs" />
     <Compile Include="Helpers\CurlHelper.cs" />
     <Compile Include="Helpers\PageList.cs" />
     <Compile Include="Models\Controller_EX.cs" />
     <Compile Include="Models\GetCharSpellCode.cs" />
     <Compile Include="Models\LoadingColor.cs" />
     <Compile Include="Models\ReturnResult.cs" />
-    <Compile Include="Models\WX_Media_News.cs" />
+    <Compile Include="Models\WX_Media_News1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -395,6 +397,7 @@
     <Folder Include="Areas\WXCustom\Views\Shared\" />
     <Folder Include="Areas\WXMedia\Models\" />
     <Folder Include="Areas\WXMedia\Views\Shared\" />
+    <Folder Include="Areas\WXMedia\Views\Temp\" />
     <Folder Include="Areas\WXMenu\Models\" />
     <Folder Include="Areas\WXMenu\Views\Shared\" />
     <Folder Include="Areas\WXUser\Models\" />

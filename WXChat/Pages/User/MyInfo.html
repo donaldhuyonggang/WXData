@@ -50,7 +50,7 @@
 				</li>
 			</ul>
 			<ul class="mui-table-view" style="margin-top: 25px;">
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell" id="Exit">
 					<a style="text-align: center;color: #FF3B30;">
 						退出登录
 					</a>
@@ -65,9 +65,6 @@
 			mui.init();
 			
 			mui.plusReady(function(){
-				mui.ajax({
-					
-				});//获取当前登陆账号下所管理的所有公众号 
 				var userPicker=new mui.PopPicker();
 				userPicker.setData([{
 						value: 'ywj',
@@ -111,6 +108,15 @@
 					});
 				}, false);
 				Active();
+				mui(".mui-content").on('tap','#Exit',function(){
+					var btn = ["确定", "取消"];
+				    mui.confirm('确定退出吗？', 'Hello MUI', btn, function(e) {
+				        if(e.index == 0) {
+				            plus.runtime.quit();
+				        }
+				    });
+				});
+				
 			});//加载事件
 			
 			function Active(){
@@ -126,7 +132,7 @@
 						fours:Users
 					}
 				});
-			}
+			}//Action
 		</script>
 	</body>
 </html>

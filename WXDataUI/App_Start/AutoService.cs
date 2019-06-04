@@ -36,14 +36,19 @@ namespace WXDataUI.App_Start
             while (true)
             {
                 var list = eventQueueBLL.Where(x => x.MsgState == 1);
-               
+                var user = userBLL.Where(s => s.UserId == null).GroupBy(s => s.AppId).Select(s => new {
+                    Count = s.Count(),
+                    info = s.Select(x => new {
+                        x.AppId
+                    }).FirstOrDefault()
+                });
+                    var context = GlobalHost.ConnectionManager.GetHubContext<MobileHub>();
+                    context.Clients.All.hello(user);
                 foreach (var item in list)
                 {
                     switch (item.Event)
                     { 
                         case "subscribe":
-                            var context = GlobalHost.ConnectionManager.GetHubContext<MobileHub>();
-                            context.Clients.All.hello(1);
                             Subscribe(item);
                             break;
                         case "unsubscribe":
@@ -57,14 +62,27 @@ namespace WXDataUI.App_Start
                     eventQueueBLL.Update(item);//把事件改为已处理
                 }
                 List<WX_Queue> Queue = QueueBLL.GetAll().OrderByDescending(s=>s.CreateTime).ToList();
-                if (Queue!=null)
+                if (Queue != null)
                 {
                     SelCustom(Queue);
+                }
+                var Result2 = Queue.GroupBy(s => s.AppId).Select(s => new
+                {
+                    Count = s.Count(),
+                    info = s.Select(x => new {
+                        x.WX_User.UserId,
+                        x.AppId
+                    }).FirstOrDefault()
+                });
+                foreach (var item in Result2)
+                {
+                    context.Clients.User(item.info.UserId.ToString()).msgCount(Result2);
                 }
             }
         }
         public void SelCustom(List<WX_Queue> Queue)
         {
+            var context = GlobalHost.ConnectionManager.GetHubContext<MobileHub>();
             var Result = Queue.GroupBy(s => s.OpenID).Select(s => new
             {
                 Count = s.Count(),
@@ -75,13 +93,15 @@ namespace WXDataUI.App_Start
                     x.WX_User.UserId,
                     x.WX_User.UserNick,
                     x.WX_User.UserName,
+                    x.WX_App.AppId,
+                    x.MsgType,
                     CreateTime = DateTimeUtility.DATE(Convert.ToDateTime(x.CreateTime)),
                     Content = XmlUtility.GetSingleNodeInnerText(x.XmlContent, "/xml/Content")
                 }).FirstOrDefault()
             });
             foreach (var item in Result)
             {
-                var context = GlobalHost.ConnectionManager.GetHubContext<MobileHub>();
+                
                 context.Clients.User(item.info.UserId.ToString()).PlusUse(Result);
             }
         }
@@ -151,7 +171,7 @@ namespace WXDataUI.App_Start
                 modal.SubscribeTime = DateTime.Now;
                 modal.UserState = "正常";
                 modal.Remark = jo["remark"].ToString();
-                //modal.GroupId = 1;//新用户
+                //modal.GroupId = 0;//新用户
                 modal.Subscribe_Scene = jo["subscribe_scene"].ToString();
                 modal.QR_Scene = jo["qr_scene"].ToString();
                 modal.QR_Scene_String = jo["qr_scene_str"].ToString();

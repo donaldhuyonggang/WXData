@@ -14,8 +14,8 @@ namespace WXDataModel
     
     public partial class WX_MenuEvent
     {
-        public string AppId { get; set; }
         public string MenuKey { get; set; }
+        public string AppId { get; set; }
         public string ResponType { get; set; }
         public string ResponContent { get; set; }
     
